@@ -24,19 +24,7 @@
         border-spacing: 0;
     }
 
-    table th {
 
-        color: #fff;
-        background-color: #28C0DE;
-        border-top: 1px black solid;
-        border-bottom: 1px black solid;
-    }
-
-    table td {
-        padding: 10px;
-        border-top: 1px black solid;
-        border-bottom: 1px black solid;
-    }
 
     tr:nth-child(even) {
         background-color: #DFEBF8;
