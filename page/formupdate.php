@@ -217,25 +217,21 @@ include '../elemen/header.php';?>
                                                     <h4 class="col-md-12 modal-title text-left" style="color:black;">
                                                         STEP ASSIGMENT</h4>
                                                 </div>
-                                                <div class="form-group row text-center" id="step1">
-
-                                                    <div class="col-md-3">
-                                                        <h5>STEP</h5>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <h5>APPROVAL</h5>
-                                                    </div>
-                                                    <div class="col-md-1">
-                                                        <h5></h5>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <h5>DATE</h5>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <h5>PIC</h5>
-                                                    </div>
-                                                </div>
-                                                <?php 
+                                                <div class="table table-responsive">
+                                                    <table class="table display nowrap" style="width:100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="align-middle text-center" hidden>ID STEP</th>
+                                                                <th class="align-middle text-center">STEP</th>
+                                                                <th class="align-middle text-center" colspan="2">
+                                                                    APPROVAL
+                                                                </th>
+                                                                <th class="align-middle text-center">DATE</th>
+                                                                <th class="align-middle text-center">PIC</th>
+                                                                <th class="align-middle text-center">ACTION</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <?php 
 													$progress = mysqli_query($link_yics,"SELECT nama_progress, id_prog FROM progress WHERE id_ket='1' ")or die(mysqli_error($link_yics));
 													if(mysqli_num_rows($progress)>0){
 													$no=1;
@@ -292,13 +288,13 @@ include '../elemen/header.php';?>
 														
 														if( $max_muncul>= $no){
 														    $text_muncul = "";
+                                                            // JIKA NO NYA LEBIH DARI MAX MUNCUL MAKA YANG MUNCUL d-none 
 														}else{
 														    $text_muncul = "d-none";
 														}
-
 														?>
 
-                                                <?php 	
+                                                        <?php 	
 												// $muncul = 1;
 												//   if($no == $muncul){
 													// $text_muncul = "";
@@ -306,70 +302,96 @@ include '../elemen/header.php';?>
 												//     $text_muncul = "d-none";
 												//     }  
 												//     ?>
+                                                        <tbody>
+                                                            <tr class="<?=$text_muncul?>" id="data<?=$no?>">
+                                                                <td hidden>
+                                                                    <input hidden type="text"
+                                                                        class="form-control bg-grey-200"
+                                                                        name="id_prog[]"
+                                                                        value="<?= $rows_progress['id_prog'] ?>">
+                                                                </td>
+                                                                <td class="align-middle text-center">
+                                                                    <input type="text" class="form-control bg-grey-200"
+                                                                        value="<?=$max_muncul?> <?=$no?> <?= $rows_progress['nama_progress']; ?>"
+                                                                        disabled>
+                                                                </td>
 
-                                                <div class="form-group row <?=$text_muncul?>" id="data<?=$no?>">
-
-                                                    <div class="col-md-3">
-                                                        <input type="text" class="form-control bg-grey-200"
-                                                            value="<?=$no?> <?= $rows_progress['nama_progress']; ?>"
-                                                            disabled>
-                                                        <input hidden type="text" class="form-control bg-grey-200"
-                                                            name="id_prog[]" value="<?= $rows_progress['id_prog'] ?>">
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <div class="custom-switches-stacked mt-2">
-                                                            <label class="custom-switch">
-                                                                <input id="reject_step<?=$no?>" data-id="<?=$no?>"
-                                                                    type="checkbox" name="reject_step<?=$no?>"
-                                                                    class="custom-switch-input reject"
-                                                                    data-plugin="switchery" data-color="#17b3a3"
-                                                                    value="0" <?=$chekreject?> autocomplete="off">
-                                                                <span class="custom-switch-indicator"></span>
-                                                                <span class="custom-switch-description">Reject</span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <div class="custom-switches-stacked mt-2">
-                                                            <label class="custom-switch">
-                                                                <input id="approve_step<?=$no?>" data-id="<?=$no?>"
-                                                                    type="checkbox" name="approve_step<?=$no?>"
-                                                                    value="1" data-color="#17b3a3"
-                                                                    class="custom-switch-input approve"
-                                                                    autocomplete="off" data-plugin="switchery"
-                                                                    <?=$chekapprove?>>
-                                                                <span class="custom-switch-indicator"></span>
-                                                                <span class="custom-switch-description">Approve</span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <div class="input-group-prepend">
-                                                            <input type="datetime-local" name="tgl[]"
-                                                                class="form-control bg-grey-200" value="<?= $time ?>"
-                                                                autocomplete="off">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-2 ">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text">
-                                                                <i class="icon wb-user" aria-hidden="true"></i>
-                                                            </span>
-
-                                                            <select name="pic[]" class="form-control bg-grey-200"
-                                                                autocomplete="off">
-                                                                <option value="<?= $_SESSION['yics_user']; ?>">
-                                                                    <?= $_SESSION['yics_nama']; ?></option>
-
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <?php 
+                                                                <td class="align-middle text-center">
+                                                                    <div class="custom-switches-stacked mt-2">
+                                                                        <label class="custom-switch">
+                                                                            <input id="reject_step<?=$no?>"
+                                                                                data-id="<?=$no?>" type="checkbox"
+                                                                                name="reject_step<?=$no?>"
+                                                                                class="custom-switch-input reject"
+                                                                                data-plugin="switchery"
+                                                                                data-color="#17b3a3" value="0"
+                                                                                <?=$chekreject?> autocomplete="off">
+                                                                            <span
+                                                                                class="custom-switch-indicator"></span>
+                                                                            <span
+                                                                                class="custom-switch-description">Reject</span>
+                                                                        </label>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="align-middle text-center">
+                                                                    <div class="custom-switches-stacked mt-2">
+                                                                        <label class="custom-switch">
+                                                                            <input id="approve_step<?=$no?>"
+                                                                                data-id="<?=$no?>" type="checkbox"
+                                                                                name="approve_step<?=$no?>" value="1"
+                                                                                data-color="#17b3a3"
+                                                                                class="custom-switch-input approve"
+                                                                                autocomplete="off"
+                                                                                data-plugin="switchery"
+                                                                                <?=$chekapprove?>>
+                                                                            <span
+                                                                                class="custom-switch-indicator"></span>
+                                                                            <span
+                                                                                class="custom-switch-description">Approve</span>
+                                                                        </label>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="align-middle text-center">
+                                                                    <div class="input-group-prepend">
+                                                                        <input type="datetime-local" name="tgl[]"
+                                                                            class="form-control bg-grey-200"
+                                                                            value="<?= $time ?>" autocomplete="off">
+                                                                    </div>
+                                                                </td>
+                                                                <td class="align-middle text-center">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text">
+                                                                            <i class="icon wb-user"
+                                                                                aria-hidden="true"></i>
+                                                                        </span>
+                                                                        <select name="pic[]"
+                                                                            class="form-control bg-grey-200"
+                                                                            autocomplete="off">
+                                                                            <option
+                                                                                value="<?= $_SESSION['yics_user']; ?>">
+                                                                                <?= $_SESSION['yics_nama']; ?></option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="align-middle text-center">
+                                                                    <a href="" data-toggle="tooltip"
+                                                                        data-original-title="Hapus">
+                                                                        <button type="button"
+                                                                            class="btn btn-icon btn-danger HapusData">
+                                                                            <i class="icon oi-trashcan"
+                                                                                aria-hidden="true"></i>
+                                                                        </button>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <?php 
 														$no++;
 													} 
 													}
 													?>
+                                                    </table>
+                                                </div>
                                                 <div class="row">
                                                     <div class=" col-md-12 text-right">
                                                         <button type="reset" class="btn btn-danger">Reset</button>
