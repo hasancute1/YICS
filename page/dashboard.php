@@ -24,7 +24,9 @@ if (!isset($_SESSION['yics_user'])) {
             <!-- Navbar Collapse -->
             <div class="collapse navbar-collapse navbar-collapse-toolbar" id="site-navbar-collapse">
                 <!-- Navbar left -->
-                <?php include '../elemen/navbarleft.php';?>
+                <?php 
+                include '../elemen/navbarleft.php';
+                ?>
                 <!-- End Navbar left -->
 
                 <!-- Navbar Right -->
@@ -75,7 +77,7 @@ if (!isset($_SESSION['yics_user'])) {
                             </ul>
                         </li>
                         <li class="site-menu-item has-sub">
-                            <a href="tracking.php">
+                            <a href="Tracking.php">
                                 <i class="site-menu-icon wb-shopping-cart" aria-hidden="true"></i>
                                 <span class="site-menu-title">TRACKING DOCUMENT</span>
                                 <span class="site-menu-tittle"></span>
@@ -526,6 +528,27 @@ include '../elemen/footer.php';?>
 
 
 
+    <?php 
+    // <!-- GRAFIK Consumtion Budget Yearly Investmment############################################################################## -->
+    $query_budget = mysqli_query($link_yics, "SELECT sum(budget) as budget FROM view_alokasi_budget WHERE status='aktif'") or die(mysqli_error($link_yics));
+
+    $get_data_budget = mysqli_fetch_assoc($query_budget);
+    $batas_bugdet_bulanan = $get_data_budget['budget'];     
+
+    if(mysqli_num_rows($query_budget)>0){
+
+        for ($i=0; $i <= 12; $i++) { 
+            $array_alokasi_budget[] = intval( $batas_bugdet_bulanan); 
+        }
+       
+        $alokasi_budget = json_encode($array_alokasi_budget);
+    }
+    
+    
+  ?>
+
+
+
 
     <!-- // javascript grfaik bar ########################-->
     <script>
@@ -548,9 +571,7 @@ include '../elemen/footer.php';?>
                     type: 'line',
                     label: "BUDGET  BODY DIVISION",
                     borderColor: Config.colors("grey", 800),
-                    data: [10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000,
-                        10000, 10000,
-                    ],
+                    data: <?= $alokasi_budget; ?>,
                     order: 1,
                 },
                 {
