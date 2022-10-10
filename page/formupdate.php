@@ -232,7 +232,19 @@ include '../elemen/header.php';?>
                                                             </tr>
                                                         </thead>
                                                         <?php 
-													$progress = mysqli_query($link_yics,"SELECT nama_progress, id_prog FROM progress WHERE id_ket='1' ")or die(mysqli_error($link_yics));
+
+                                                        // cari max step di tracking_prop
+                                                    $query_max_step = "SELECT
+                                                    max(step) as max_step from tracking_prop 
+                                                    JOIN progress on tracking_prop.id_prog = progress.id_prog
+                                                    WHERE tracking_prop.id_prop = '$id'
+                                                    ";
+                                                    $data_max_step = mysqli_query($link_yics, $query_max_step)or die (mysqli_error($link_yics));
+                                                    $get_max_step = mysqli_fetch_assoc($data_max_step);                                                   
+
+                                                    $max_step = intval($get_max_step['max_step']) + 1;
+                                                     
+													$progress = mysqli_query($link_yics,"SELECT nama_progress, id_prog , step FROM progress WHERE id_ket='1' ")or die(mysqli_error($link_yics));
 													if(mysqli_num_rows($progress)>0){
 													$no=1;
 													while($rows_progress = mysqli_fetch_assoc($progress))
@@ -270,7 +282,9 @@ include '../elemen/header.php';?>
                                                             $chekreject ="";
                                                               //  jika ada datanya maka $id_prog_next maka nilainya 0
                                                             $id_prog_next = 0;
-														}	
+														}
+
+
 														if($id_prog_next > 0 && $total > 0 ){
                                                             if($approve == 1){
                                                                 $max_muncul = $no+1;
@@ -286,12 +300,20 @@ include '../elemen/header.php';?>
                                                                 $max_muncul = 1;
                                                             }
 														
-														if( $max_muncul>= $no){
-														    $text_muncul = "";
-                                                            // JIKA NO NYA LEBIH DARI MAX MUNCUL MAKA YANG MUNCUL d-none 
-														}else{
-														    $text_muncul = "d-none";
-														}
+														// if( $max_muncul>= $no){
+														//     $text_muncul = "";
+                                                        //     // JIKA NO NYA LEBIH DARI MAX MUNCUL MAKA YANG MUNCUL d-none 
+														// }else{
+														//     $text_muncul = "d-none";
+														// }
+
+                                                        if( $rows_progress['step'] > $max_step ){
+
+                                                            $text_muncul = "d-none";
+
+                                                        }
+
+
 														?>
 
                                                         <?php 	
