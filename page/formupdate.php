@@ -395,6 +395,7 @@ include '../elemen/header.php';?>
                                                                     <div class="input-group-prepend">
                                                                         <input type="datetime-local" name="tgl[]"
                                                                             class="form-control bg-grey-200"
+                                                                            id="tgl-<?=$no?>"
                                                                             value="<?= $time ?>" autocomplete="off">
                                                                     </div>
                                                                 </td>
@@ -449,9 +450,15 @@ include '../elemen/header.php';?>
             // Dokumen sudah ready maka jalankan function
             $(document).ready(function() {
                 // jika class approve di klik maka
-                $(".approve").click(function() {
+                $(".approve").click(function() {                   
+                    
                     //attribut data-id ini masukkan ke variabel index
                     var index = $(this).attr('data-id');
+                    var index2 = parseInt(index)+1;                   
+                    
+                    // Buat tanggal index ini required
+                    $('#tgl-'+index).prop("required", true);                   
+
                     // varibael index ditambah 1 lalu masukkan ke variabel next_index
                     var next_index = Number(index) + 1;
                     // jika di html ini ada  checked
@@ -487,6 +494,10 @@ include '../elemen/header.php';?>
                     //  membuat var index yang hasilnya  dari attribut data ini
                     var index = $(this).attr('data-id');
                     var next_index = Number(index) + 1;
+
+                    // Buat tanggal index ini required
+                    $('#tgl-'+index).prop("required", true); 
+
                     // jika html ini ada checked 
                     if ($(this).is(':checked')) {
                         // maka cetak approve step variabel index
