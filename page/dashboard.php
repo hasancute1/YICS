@@ -347,7 +347,7 @@ if (!isset($_SESSION['yics_user'])) {
                                         </div>
                                         <div class="card-body card-shadow table-responsive">
                                             <table
-                                                class="table table-striped table-bordered w-full display nowrap example0">
+                                                class="table table-striped table-hover table-bordered w-full display nowrap example0">
                                                 <thead class="text-center">
                                                     <tr class="bg-info align-" height="10px">
                                                         <th class="align-middle text-center" hidden>ID DEP
@@ -377,7 +377,8 @@ if (!isset($_SESSION['yics_user'])) {
                           depart.id_dep AS id_dep,
                           depart.depart AS depart,
                           kategori_proposal.kategori AS kategori,
-                          time_fiscal.status,proposal.proposal AS proposal
+                          time_fiscal.status,
+                          proposal.proposal AS proposal
                           FROM proposal 
                           LEFT JOIN depart ON proposal.id_dep = depart.id_dep
                           LEFT JOIN kategori_proposal  ON proposal.id_kat = kategori_proposal.id_kat
@@ -387,7 +388,8 @@ if (!isset($_SESSION['yics_user'])) {
 						  // untuk memvalidasi apakah ada datanya
                           if(mysqli_num_rows($proposal)>0){
                            while($data = mysqli_fetch_assoc($proposal)){?>
-                                                    <tr class="align-middle text-center">
+                                                    <tr
+                                                        class="align-middle text-center <?php if ($no%2==0){ echo "bg-blue-100"; } else{ echo ""; } ?>">
                                                         <td class="align-middle text-center"><?php echo $no; ?></td>
                                                         <td class="align-middle text-center" hidden>
                                                             <?php echo $data['id_dep']; ?></td>

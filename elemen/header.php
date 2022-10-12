@@ -19,17 +19,6 @@
 
     <title>YICS</title>
     <style>
-    table {
-        border-collapse: collapse;
-        border-spacing: 0;
-    }
-
-
-
-    tr:nth-child(even) {
-        background-color: #DFEBF8;
-    }
-
     .warnadep1 {
         background-color: #ffcd17;
     }
