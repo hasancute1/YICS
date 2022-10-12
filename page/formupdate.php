@@ -228,7 +228,7 @@ include '../elemen/header.php';?>
                                                                 </th>
                                                                 <th class="align-middle text-center">DATE</th>
                                                                 <th class="align-middle text-center">PIC</th>
-                                                                <th class="align-middle text-center">ACTION</th>
+
                                                             </tr>
                                                         </thead>
                                                         <?php 
@@ -334,7 +334,7 @@ include '../elemen/header.php';?>
                                                                 </td>
                                                                 <td class="align-middle text-center">
                                                                     <input type="text" class="form-control bg-grey-200"
-                                                                        value="<?=$max_muncul?> <?=$no?> <?= $rows_progress['nama_progress']; ?>"
+                                                                        value=" <?=$no?> <?= $rows_progress['nama_progress']; ?>"
                                                                         disabled>
                                                                 </td>
 
@@ -346,7 +346,7 @@ include '../elemen/header.php';?>
                                                                                 name="reject_step<?=$no?>"
                                                                                 class="custom-switch-input reject"
                                                                                 data-plugin="switchery"
-                                                                                data-color="#17b3a3" value="0"
+                                                                                data-color="orange" value="0"
                                                                                 <?=$chekreject?> autocomplete="off">
                                                                             <span
                                                                                 class="custom-switch-indicator"></span>
@@ -395,16 +395,7 @@ include '../elemen/header.php';?>
                                                                         </select>
                                                                     </div>
                                                                 </td>
-                                                                <td class="align-middle text-center">
-                                                                    <a href="" data-toggle="tooltip"
-                                                                        data-original-title="Hapus">
-                                                                        <button type="button"
-                                                                            class="btn btn-icon btn-danger HapusData">
-                                                                            <i class="icon oi-trashcan"
-                                                                                aria-hidden="true"></i>
-                                                                        </button>
-                                                                    </a>
-                                                                </td>
+
                                                             </tr>
                                                         </tbody>
                                                         <?php 
