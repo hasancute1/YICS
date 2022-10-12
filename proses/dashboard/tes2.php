@@ -2,6 +2,7 @@
 include("../../config/config.php");
 
 if (isset ($_SESSION['yics_user'])){
+     
     if(isset($_POST['add'])){
 
      //     $totalData=$_POST['tgl'];
@@ -51,7 +52,7 @@ if (isset ($_SESSION['yics_user'])){
                $max +=1;
                if($jml_data > 0){
                    
-                    $sql = mysqli_query($link_yics,"UPDATE tracking_prop SET id_approval = '0', username = '$pic',  `time` = '$time' WHERE `id_prop` =  '$id_prop'  ");
+                    $sql = mysqli_query($link_yics,"UPDATE tracking_prop SET id_approval = '0', username = '$pic',  `time` = '$time' WHERE `id_prop` =  '$id_prop'");
                    
                     if(!$sql){
                          $_SESSION['info'] = "Gagal Disimpan";

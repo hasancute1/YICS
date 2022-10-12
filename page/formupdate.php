@@ -233,16 +233,26 @@ include '../elemen/header.php';?>
                                                         </thead>
                                                         <?php 
 
-                                                        // cari max step di tracking_prop
+                                                    // cari max step di tracking_prop
                                                     $query_max_step = "SELECT
                                                     max(step) as max_step from tracking_prop 
                                                     JOIN progress on tracking_prop.id_prog = progress.id_prog
                                                     WHERE tracking_prop.id_prop = '$id'
                                                     ";
                                                     $data_max_step = mysqli_query($link_yics, $query_max_step)or die (mysqli_error($link_yics));
-                                                    $get_max_step = mysqli_fetch_assoc($data_max_step);                                                   
+                                                    $get_max_step = mysqli_fetch_assoc($data_max_step);                                                     
+
+                                                    // cari Riject Step
+                                                    $query_reject_step = "SELECT
+                                                    max(step) as step from tracking_prop 
+                                                    JOIN progress on tracking_prop.id_prog = progress.id_prog
+                                                    WHERE tracking_prop.id_prop = '$id' and id_approval = 0
+                                                    ";
+                                                    $data_reject_step = mysqli_query($link_yics, $query_reject_step)or die (mysqli_error($link_yics));
+                                                    $get_reject_step = mysqli_fetch_assoc($data_reject_step);
 
                                                     $max_step = intval($get_max_step['max_step']) + 1;
+                                                    $reject_step = intval($get_reject_step['step']);
                                                      
 													$progress = mysqli_query($link_yics,"SELECT nama_progress, id_prog , step FROM progress WHERE id_ket='1' ")or die(mysqli_error($link_yics));
 													if(mysqli_num_rows($progress)>0){
@@ -307,10 +317,18 @@ include '../elemen/header.php';?>
 														//     $text_muncul = "d-none";
 														// }
 
-                                                        if( $rows_progress['step'] > $max_step ){
+                                                        if( $rows_progress['step'] > $max_step){
 
                                                             $text_muncul = "d-none";
 
+                                                        }
+
+                                                        if($reject_step){
+
+                                                            if($rows_progress['step'] > $reject_step){
+                                                                
+                                                                $text_muncul = "d-none";
+                                                            }
                                                         }
 
 
