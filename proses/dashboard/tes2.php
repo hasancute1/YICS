@@ -27,7 +27,7 @@ if (isset ($_SESSION['yics_user'])){
               $max +=1;
                if($jml_data > 0){
                    
-                    $sql = mysqli_query($link_yics,"UPDATE tracking_prop SET id_approval = '1', username = '$pic',  `time` = '$time'  WHERE `id_prop` =  '$id_prop' ");
+                    $sql = mysqli_query($link_yics,"UPDATE tracking_prop SET id_approval = '1', username = '$pic',  `time` = '$time'  WHERE `id_prop` =  '$id_prop' AND id_prog = '$prog' ");
                     // $delete = "DELETE FROM tracking_prop WHERE id_prop =  '$id_prop' AND id_prog >  '$max'";
                     // ECHO $delete."<br>";
                     // $hasil_delete = mysqli_query($link_yics, $delete)or die(mysqli_error($link_yics));
@@ -52,7 +52,7 @@ if (isset ($_SESSION['yics_user'])){
                $max +=1;
                if($jml_data > 0){
                    
-                    $sql = mysqli_query($link_yics,"UPDATE tracking_prop SET id_approval = '0', username = '$pic',  `time` = '$time' WHERE `id_prop` =  '$id_prop'");
+                    $sql = mysqli_query($link_yics,"UPDATE tracking_prop SET id_approval = '0', username = '$pic',  `time` = '$time' WHERE `id_prop` =  '$id_prop' AND id_prog = '$prog'");
                    
                     if(!$sql){
                          $_SESSION['info'] = "Gagal Disimpan";
