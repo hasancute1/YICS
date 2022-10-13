@@ -108,7 +108,7 @@ if (isset($_POST['submit'])) {
                 <div class="form-group form-material floating" data-plugin="formMaterial">
                     <input type="text" class="form-control empty" id="username" name="username" autocomplete="off"
                         required>
-                    <label class="floating-label font" for="username">username</label>
+                    <label class="floating-label font" for="username">NPK</label>
                 </div>
                 <div class="form-group form-material floating" data-plugin="formMaterial">
                     <input type="password" class="form-control empty" id="password" name="password" autocomplete="off"

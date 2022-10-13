@@ -456,7 +456,7 @@ include '../elemen/header.php';?>
                                                     </thead>
                                                     <tbody>
 
-                                                        <!-- query update progress -->
+                                                        <!-- query proposal control table -->
                                                         <?php   
                               $proposal = mysqli_query($link_yics ,"SELECT
                                 proposal.id_prop AS id_prop,
@@ -482,7 +482,7 @@ include '../elemen/header.php';?>
                                 
                                
                                 LEFT JOIN approval ON tracking_prop.id_approval = approval.id_approval
-                                WHERE tracking_prop.id_approval  = '1' AND progress.step = '5'"
+                                WHERE tracking_prop.id_approval  = '1' AND progress.step = '5' AND depart.id_dep= '1'"
                                 )
                                 or die (mysqli_error($link_yics));
                                 $no=1;
@@ -491,7 +491,7 @@ include '../elemen/header.php';?>
                                 while($data = mysqli_fetch_assoc($proposal)){?>
 
                                                         <tr
-                                                            class="<?php if ($no%2==0){ echo "bg-blue-100"; } else{ echo ""; } ?>">
+                                                            class="<?php if ($no%2==0){ echo "bg-blue-100"; } else{ echo ""; } ?> text-uppercase">
                                                             <td class="align-middle text-center"><?php echo $no; ?></td>
                                                             <td class="align-middle text-center">
                                                                 <?php echo $data['depart']; ?></td>
@@ -502,7 +502,8 @@ include '../elemen/header.php';?>
                                                                 data-toggle="modal">
                                                                 <?php echo $data['proposal']; ?>
                                                             </td>
-                                                            <td class="align-middle text-center">1,7</td>
+                                                            <td class="align-middle text-center">¥
+                                                                <?= round($data['cost']/105); ?></td>
                                                             <td class="align-middle text-center">Rp
                                                                 <?php echo number_format ($data['cost'],0,',','.'); ?>
                                                             </td>
@@ -674,20 +675,19 @@ include '../elemen/header.php';?>
                                                         placeholder="Diisi PIC Update" autocomplete="off">
                                                 </div>
                                             </div>
-
-
                                         </form>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Reset</button>
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Reset</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                             </div>
                         </div>
-                        <!-- End Modal Tammbah Data Control  Table Body 1-->
-                        <!-- End Page -->
+                    </div>
+                    <!-- End Modal Tammbah Data Control  Table Body 1-->
+                    <!-- End Page -->
 
-                        <!-- Footer -->
-                        <?php
+                    <!-- Footer -->
+                    <?php
 include '../elemen/footer.php';?>
