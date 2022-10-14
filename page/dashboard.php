@@ -1,6 +1,9 @@
 <!--header-->
 <?php
 include("../config/config.php");
+
+include("../proses/services/notifications.php");
+
 if (!isset($_SESSION['yics_user'])) {
   header('location: ../index.php');
 }
