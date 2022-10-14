@@ -2,6 +2,7 @@
 <?php
 
 include("../config/config.php");
+
 // periksa apakah user sudah login, cek kehadiran session name
 // jika tidak ada, redirect ke login.php
 if (!isset($_SESSION['yics_user'])) {

@@ -1,5 +1,7 @@
 <?php
 
+include("../proses/functions.php");
+
 $data_notif = query("SELECT * FROM notifications WHERE dest='".$_SESSION['yics_user']."'");
 
 ?>
@@ -13,19 +15,32 @@ $data_notif = query("SELECT * FROM notifications WHERE dest='".$_SESSION['yics_u
         <a class="nav-link" data-toggle="dropdown" href="javascript:void(0)" title="Notifications" aria-expanded="false"
             data-animation="scale-up" role="button">
             <i class="icon wb-bell" aria-hidden="true"></i>
-            <span class="badge badge-pill badge-danger up"><?= count($data_notif); ?></span>
+            <span class="badge badge-pill badge-danger up"><?php 
+            if(count($data_notif) > 0){
+                echo count($data_notif); 
+            }
+            ?></span>
         </a>
         <div class="dropdown-menu dropdown-menu-right dropdown-menu-media" role="menu">
             <div class="dropdown-menu-header">
                 <h5>NOTIFICATIONS</h5>
-                <span class="badge badge-round badge-danger">New <?= count($data_notif); ?></span>
+                <span class="badge badge-round badge-danger">
+                    <?php 
+                        if(count($data_notif) > 0){
+                            echo "New ". count($data_notif); 
+                        }
+                    ?>
+            </span>
             </div>
 
             <div class="list-group">
                 <div data-role="container">
                     <div data-role="content">
 
-                        <?php foreach($data_notif as $row) { ?>
+                        <?php 
+                        
+                        if($data_notif){
+                            foreach($data_notif as $row) { ?>
 
                         <a class="list-group-item dropdown-item" href="javascript:void(0)" role="menuitem">
                             <div class="media">
@@ -39,7 +54,10 @@ $data_notif = query("SELECT * FROM notifications WHERE dest='".$_SESSION['yics_u
                             </div>
                         </a>
 
-                        <?php } ?>
+                        <?php 
+                    
+                            } // penutup foreach
+                        } //penutup if ?>
 
 
                     </div>
