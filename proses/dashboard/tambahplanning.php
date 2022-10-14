@@ -1,15 +1,16 @@
 <?php 
 include("../../config/config.php");
 
+include("../services/notifications.php");
+
 if (isset ($_SESSION['yics_user'])){
-    if(isset($_POST['add'])){
+    if(isset($_POST['add'])){     
          // masukan data post ke variabel 
         $depart=$_POST['depart']; 
         $kategori=$_POST['kategori'];
         $proposal=$_POST ['proposal'];
         $cost=$_POST ['cost'];
-        $id_fis=$_POST ['id_fis'];
-       
+        $id_fis=$_POST ['id_fis'];              
 
         // cek username sudah ada apa blm?
         $qry = mysqli_query($link_yics, "SELECT proposal FROM proposal WHERE proposal = '$proposal' ")or die(mysqli_error($link_yics));
@@ -24,11 +25,26 @@ if (isset ($_SESSION['yics_user'])){
             $_SESSION['pesan'] = "Data Berhasil Disimpan";
             header('location: ../../page/dashboard.php');
          }
+         
          $inputproposal = "INSERT INTO proposal (`id_dep`,`id_kat`,`proposal`,`cost`,`id_fis`) VALUES ('$depart','$kategori','$proposal','$cost','$id_fis')"; 
          $sql = mysqli_query($link_yics, $inputproposal)or die(mysqli_error($link_yics));
+        
     // end logika pakai session
     // query insert boleh ngacak sesuai intonya
-            
+
+   // kirim notifikasi
+     kirim_notif([         
+         'dest' => '37932',
+         'message' => "Proposal baru telah ditambahkan",
+         'type' => "proposal",
+         'id_type' => 1          
+      ]);
+
+   // $input_notif = "INSERT INTO notifications (`username_admin`,`username_pic`,`type`,`id_type`,`status`,`message`) VALUES ('Admin','priana','proposal',1,'Pending','Pesan')"; 
+
+   // mysqli_query($link_yics, $input_notif)or die(mysqli_error($link_yics));  
+
+     
         
     }else if(isset ($_GET['del'])){
         //query delete
