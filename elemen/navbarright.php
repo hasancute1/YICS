@@ -1,4 +1,7 @@
 <?php
+
+$data_notif = query("SELECT * FROM notifications WHERE dest='".$_SESSION['yics_user']."'");
+
 ?>
 <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
     <li class="nav-item hidden-sm-down" id="toggleFullscreen">
@@ -10,73 +13,35 @@
         <a class="nav-link" data-toggle="dropdown" href="javascript:void(0)" title="Notifications" aria-expanded="false"
             data-animation="scale-up" role="button">
             <i class="icon wb-bell" aria-hidden="true"></i>
-            <span class="badge badge-pill badge-danger up">5</span>
+            <span class="badge badge-pill badge-danger up"><?= count($data_notif); ?></span>
         </a>
         <div class="dropdown-menu dropdown-menu-right dropdown-menu-media" role="menu">
             <div class="dropdown-menu-header">
                 <h5>NOTIFICATIONS</h5>
-                <span class="badge badge-round badge-danger">New 5</span>
+                <span class="badge badge-round badge-danger">New <?= count($data_notif); ?></span>
             </div>
 
             <div class="list-group">
                 <div data-role="container">
                     <div data-role="content">
+
+                        <?php foreach($data_notif as $row) { ?>
+
                         <a class="list-group-item dropdown-item" href="javascript:void(0)" role="menuitem">
                             <div class="media">
                                 <div class="pr-10">
                                     <i class="icon wb-order bg-red-600 white icon-circle" aria-hidden="true"></i>
                                 </div>
                                 <div class="media-body">
-                                    <h6 class="media-heading">A new order has been placed</h6>
-                                    <time class="media-meta" datetime="2018-06-12T20:50:48+08:00">5 hours ago</time>
+                                    <h6 class="media-heading"><?= $row['message'] ?></h6>
+                                    <time class="media-meta" datetime="2018-06-12T20:50:48+08:00">5 <?= $row['date'] ?></time>
                                 </div>
                             </div>
                         </a>
-                        <a class="list-group-item dropdown-item" href="javascript:void(0)" role="menuitem">
-                            <div class="media">
-                                <div class="pr-10">
-                                    <i class="icon wb-user bg-green-600 white icon-circle" aria-hidden="true"></i>
-                                </div>
-                                <div class="media-body">
-                                    <h6 class="media-heading">Completed the task</h6>
-                                    <time class="media-meta" datetime="2018-06-11T18:29:20+08:00">2 days ago</time>
-                                </div>
-                            </div>
-                        </a>
-                        <a class="list-group-item dropdown-item" href="javascript:void(0)" role="menuitem">
-                            <div class="media">
-                                <div class="pr-10">
-                                    <i class="icon wb-settings bg-red-600 white icon-circle" aria-hidden="true"></i>
-                                </div>
-                                <div class="media-body">
-                                    <h6 class="media-heading">Settings updated</h6>
-                                    <time class="media-meta" datetime="2018-06-11T14:05:00+08:00">2 days ago</time>
-                                </div>
-                            </div>
-                        </a>
-                        <a class="list-group-item dropdown-item" href="javascript:void(0)" role="menuitem">
-                            <div class="media">
-                                <div class="pr-10">
-                                    <i class="icon wb-calendar bg-blue-600 white icon-circle" aria-hidden="true"></i>
-                                </div>
-                                <div class="media-body">
-                                    <h6 class="media-heading">Event started</h6>
-                                    <time class="media-meta" datetime="2018-06-10T13:50:18+08:00">3 days ago</time>
-                                </div>
-                            </div>
-                        </a>
-                        <a class="list-group-item dropdown-item" href="javascript:void(0)" role="menuitem">
-                            <div class="media">
-                                <div class="pr-10">
-                                    <i class="icon fa-paper-plane bg-orange-600 white icon-circle"
-                                        aria-hidden="true"></i>
-                                </div>
-                                <div class="media-body">
-                                    <h6 class="media-heading">Message received</h6>
-                                    <time class="media-meta" datetime="2018-06-10T12:34:48+08:00">3 days ago</time>
-                                </div>
-                            </div>
-                        </a>
+
+                        <?php } ?>
+
+
                     </div>
                 </div>
             </div>
