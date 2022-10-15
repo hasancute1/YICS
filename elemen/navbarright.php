@@ -2,7 +2,7 @@
 
 include("../proses/functions.php");
 
-$data_notif = query("SELECT * FROM notifications WHERE dest='".$_SESSION['yics_user']."'");
+$data_notif = getNotif();
 
 ?>
 <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
@@ -42,13 +42,14 @@ $data_notif = query("SELECT * FROM notifications WHERE dest='".$_SESSION['yics_u
                         if($data_notif){
                             foreach($data_notif as $row) { ?>
 
-                        <a class="list-group-item dropdown-item" href="javascript:void(0)" role="menuitem">
+                        <a class="list-group-item dropdown-item" href="../page/formupdate.php?ubah=<?= $row['id_type'] ?>" role="menuitem">
                             <div class="media">
                                 <div class="pr-10">
                                     <i class="icon wb-order bg-red-600 white icon-circle" aria-hidden="true"></i>
                                 </div>
                                 <div class="media-body">
-                                    <h6 class="media-heading"><?= $row['message'] ?></h6>
+                                    <h6 class="media-heading"> <strong><?= ucwords($row['sender']) ?> </strong> <?= $row['message'] ?></h6>
+                                    <h4 class="media-heading"><?= $row['judul_prop'] ?></h4>
                                     <time class="media-meta" datetime="2018-06-12T20:50:48+08:00">5 <?= $row['date'] ?></time>
                                 </div>
                             </div>

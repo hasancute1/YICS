@@ -28,6 +28,8 @@ if (isset ($_SESSION['yics_user'])){
          
          $inputproposal = "INSERT INTO proposal (`id_dep`,`id_kat`,`proposal`,`cost`,`id_fis`) VALUES ('$depart','$kategori','$proposal','$cost','$id_fis')"; 
          $sql = mysqli_query($link_yics, $inputproposal)or die(mysqli_error($link_yics));
+
+         $last_id = mysqli_insert_id($link_yics);
         
     // end logika pakai session
     // query insert boleh ngacak sesuai intonya
@@ -35,9 +37,9 @@ if (isset ($_SESSION['yics_user'])){
    // kirim notifikasi
      kirim_notif([         
          'dest' => '37932',
-         'message' => "Proposal baru telah ditambahkan",
+         'message' => "Menambahkan proposal baru",
          'type' => "proposal",
-         'id_type' => 1          
+         'id_type' => $last_id          
       ]);
 
    // $input_notif = "INSERT INTO notifications (`username_admin`,`username_pic`,`type`,`id_type`,`status`,`message`) VALUES ('Admin','priana','proposal',1,'Pending','Pesan')"; 
