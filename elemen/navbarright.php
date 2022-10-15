@@ -2,7 +2,13 @@
 
 include("../proses/functions.php");
 
+// update notif
+if(isset($_GET["notif"])){
+   updateNotif($_GET["notif"]);
+}
+// ambil data notif
 $data_notif = getNotif();
+$notif_pending = get_notif_pending();
 
 ?>
 <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
@@ -15,22 +21,18 @@ $data_notif = getNotif();
         <a class="nav-link" data-toggle="dropdown" href="javascript:void(0)" title="Notifications" aria-expanded="false"
             data-animation="scale-up" role="button">
             <i class="icon wb-bell" aria-hidden="true"></i>
-            <span class="badge badge-pill badge-danger up"><?php 
-            if(count($data_notif) > 0){
-                echo count($data_notif); 
-            }
-            ?></span>
+
+            <?php if(count($notif_pending) > 0){ ?>
+                <span class="badge badge-pill badge-danger up"><?=count($notif_pending); ?></span>
+            <?php }?>
         </a>
         <div class="dropdown-menu dropdown-menu-right dropdown-menu-media" role="menu">
             <div class="dropdown-menu-header">
-                <h5>NOTIFICATIONS</h5>
-                <span class="badge badge-round badge-danger">
-                    <?php 
-                        if(count($data_notif) > 0){
-                            echo "New ". count($data_notif); 
-                        }
-                    ?>
-            </span>
+                <h5>NOTIFICATIONS</h5>                
+                    <?php if(count($notif_pending) > 0){ ?>
+                        <span class="badge badge-round badge-danger"><?= "New ". count($notif_pending); ?></span>
+                    <?php  }?>
+            
             </div>
 
             <div class="list-group">
@@ -40,17 +42,28 @@ $data_notif = getNotif();
                         <?php 
                         
                         if($data_notif){
-                            foreach($data_notif as $row) { ?>
+                        
+                        foreach($data_notif as $row) { 
+                            
+                            if($row['status'] == 'Pending'){
+                                $bg_notif = "bg-blue-400";
+                                $color_notif = "white";
+                            }else{
+                                $bg_notif = "";
+                                $color_notif = "";
+                            }
 
-                        <a class="list-group-item dropdown-item" href="../page/formupdate.php?ubah=<?= $row['id_type'] ?>" role="menuitem">
+                        ?>                        
+
+                        <a class="list-group-item dropdown-item <?= $bg_notif ?>" href="../page/formupdate.php?ubah=<?= $row['id_type'] ?>&notif=<?=$row['id_notif']?>" role="menuitem">
                             <div class="media">
                                 <div class="pr-10">
                                     <i class="icon wb-order bg-red-600 white icon-circle" aria-hidden="true"></i>
                                 </div>
                                 <div class="media-body">
-                                    <h6 class="media-heading"> <strong><?= ucwords($row['sender']) ?> </strong> <?= $row['message'] ?></h6>
-                                    <h4 class="media-heading"><?= $row['judul_prop'] ?></h4>
-                                    <time class="media-meta" datetime="2018-06-12T20:50:48+08:00">5 <?= $row['date'] ?></time>
+                                    <h6 class="media-heading <?=$color_notif ?>"> <strong><?= ucwords($row['sender']) ?> </strong> <?= $row['message'] ?></h6>
+                                    <h4 class="media-heading <?=$color_notif ?>"><?= strtoupper($row['judul_prop'])  ?></h4>
+                                    <time class="media-meta <?=$color_notif ?>" datetime="2018-06-12T20:50:48+08:00">5 <?= $row['date'] ?></time>
                                 </div>
                             </div>
                         </a>

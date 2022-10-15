@@ -16,8 +16,6 @@ function query($query){
         }
     }
 
-
-
    return $data;
 }
 
@@ -25,9 +23,33 @@ function query($query){
 // get notif
 function getNotif(){
 
-    $data = query("SELECT notif.*, proposal.proposal as judul_prop  FROM notifications as notif join proposal on id_type = proposal.id_prop WHERE dest='".$_SESSION['yics_user']."' ORDER BY id_notif DESC");
+    $data = query("SELECT notif.*, proposal.proposal as judul_prop  FROM notifications as notif join proposal on id_type = proposal.id_prop WHERE dest='".$_SESSION['yics_user']."' ORDER BY id_notif DESC limit 10");
 
     return $data;
+}
+
+// get notif
+function get_notif_pending(){
+
+    $data = query("SELECT notif.*, proposal.proposal as judul_prop  FROM notifications as notif join proposal on id_type = proposal.id_prop WHERE dest='".$_SESSION['yics_user']."' and status='Pending' ORDER BY id_notif DESC");
+
+    return $data;
+}
+
+// update notif
+function updateNotif($id){
+    global $link_yics;
+
+   if($id != ''){
+
+    $query = "UPDATE notifications SET status='Read' WHERE id_notif=$id";
+
+    $data_query = mysqli_query($link_yics, $query) or die(mysqli_error($link_yics)); 
+
+   }
+
+   return "notif berhasil diupdate";
+
 }
 
 

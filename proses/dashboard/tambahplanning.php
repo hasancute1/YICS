@@ -34,13 +34,19 @@ if (isset ($_SESSION['yics_user'])){
     // end logika pakai session
     // query insert boleh ngacak sesuai intonya
 
-   // kirim notifikasi
-     kirim_notif([         
+   //  Jika yang membuat proposal bukan Admin kirim notifikasi ke Admin
+    if($_SESSION['yics_user'] != '37932'){
+
+      // kirim notifikasi
+      kirim_notif([         
          'dest' => '37932',
          'message' => "Menambahkan proposal baru",
          'type' => "proposal",
          'id_type' => $last_id          
       ]);
+
+    }
+
 
    // $input_notif = "INSERT INTO notifications (`username_admin`,`username_pic`,`type`,`id_type`,`status`,`message`) VALUES ('Admin','priana','proposal',1,'Pending','Pesan')"; 
 
