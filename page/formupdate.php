@@ -412,6 +412,8 @@ include '../elemen/header.php';?>
                                                                             <option
                                                                                 value="<?= $_SESSION['yics_user']; ?>">
                                                                                 <?= $_SESSION['yics_nama']; ?></option>
+                                                                            <option
+                                                                                value="1234">Hasan</option>
                                                                         </select>
                                                                     </div>
                                                                 </td>
