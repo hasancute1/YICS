@@ -23,16 +23,16 @@ $notif_pending = get_notif_pending();
             <i class="icon wb-bell" aria-hidden="true"></i>
 
             <?php if(count($notif_pending) > 0){ ?>
-                <span class="badge badge-pill badge-danger up"><?=count($notif_pending); ?></span>
+            <span class="badge badge-pill badge-danger up"><?=count($notif_pending); ?></span>
             <?php }?>
         </a>
         <div class="dropdown-menu dropdown-menu-right dropdown-menu-media" role="menu">
             <div class="dropdown-menu-header">
-                <h5>NOTIFICATIONS</h5>                
-                    <?php if(count($notif_pending) > 0){ ?>
-                        <span class="badge badge-round badge-danger"><?= "New ". count($notif_pending); ?></span>
-                    <?php  }?>
-            
+                <h5>NOTIFICATIONS</h5>
+                <?php if(count($notif_pending) > 0){ ?>
+                <span class="badge badge-round badge-danger"><?= "New ". count($notif_pending); ?></span>
+                <?php  }?>
+
             </div>
 
             <div class="list-group">
@@ -53,17 +53,22 @@ $notif_pending = get_notif_pending();
                                 $color_notif = "";
                             }
 
-                        ?>                        
+                        ?>
 
-                        <a class="list-group-item dropdown-item <?= $bg_notif ?>" href="../page/formupdate.php?ubah=<?= $row['id_type'] ?>&notif=<?=$row['id_notif']?>" role="menuitem">
+                        <a class="list-group-item dropdown-item <?= $bg_notif ?>"
+                            href="../page/formupdate.php?ubah=<?= $row['id_type'] ?>&notif=<?=$row['id_notif']?>"
+                            role="menuitem">
                             <div class="media">
                                 <div class="pr-10">
                                     <i class="icon wb-order bg-red-600 white icon-circle" aria-hidden="true"></i>
                                 </div>
                                 <div class="media-body">
-                                    <h6 class="media-heading <?=$color_notif ?>"> <strong><?= ucwords($row['sender']) ?> </strong> <?= $row['message'] ?></h6>
-                                    <h4 class="media-heading <?=$color_notif ?>"><?= strtoupper($row['judul_prop'])  ?></h4>
-                                    <time class="media-meta <?=$color_notif ?>" datetime="2018-06-12T20:50:48+08:00">5 <?= $row['date'] ?></time>
+                                    <h6 class="media-heading <?=$color_notif ?>"> <strong><?= ucwords($row['sender']) ?>
+                                        </strong> <?= $row['message'] ?></h6>
+                                    <h4 class="media-heading <?=$color_notif ?>"><?= strtoupper($row['judul_prop'])  ?>
+                                    </h4>
+                                    <time class="media-meta <?=$color_notif ?>" datetime="2018-06-12T20:50:48+08:00">5
+                                        <?= $row['date'] ?></time>
                                 </div>
                             </div>
                         </a>
@@ -194,7 +199,7 @@ $notif_pending = get_notif_pending();
         <a class="nav-link navbar-avatar" data-toggle="dropdown" href="#" aria-expanded="false"
             data-animation="scale-up" role="button">
             <span class="avatar avatar-online">
-                <img src="../global/portraits/hasan2.jpg" alt="...">
+                <img src="../global/portraits/<?php echo $_SESSION ["yics_user"]; ?>.jpg" alt="...">
                 <i></i>
             </span>
         </a>
