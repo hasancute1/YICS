@@ -790,7 +790,7 @@ include '../elemen/footer.php';?>
                             <label class="col-md-2 col-form-label text-left" style="color:black;">Department</label>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <select name="depart" class="form-control">
+                                    <select name="depart" class="form-control" required>
                                         <option value="">Pilih Departement</option>
                                         <?php 
                                                 $depart = mysqli_query($link_yics,"SELECT * FROM depart") or die (mysqli_error($link_yics));
@@ -808,7 +808,7 @@ include '../elemen/footer.php';?>
                             <label class="col-md-2 col-form-label text-left" style="color:black;">Category</label>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <select name="kategori" type="text" class="form-control" id="category_prop">
+                                    <select name="kategori" type="text" class="form-control" required>
                                         <option value="">Pilih Category</option>
                                         <?php 
                                                 $kategori = mysqli_query($link_yics,"SELECT * FROM kategori_proposal") or die (mysqli_error($link_yics));
@@ -828,7 +828,7 @@ include '../elemen/footer.php';?>
                             <label class="col-md-2 col-form-label text-left" style="color:black;">Proposal</label>
                             <div class="col-md-10">
                                 <input type="text" class="form-control text-uppercase" name="proposal"
-                                    placeholder=" Judul Proposal" autocomplete="off">
+                                    placeholder=" Judul Proposal" autocomplete="off" required>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -838,7 +838,7 @@ include '../elemen/footer.php';?>
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Rp</span>
                                     </div>
-                                    <input required name="cost" type="number" class="form-control"
+                                    <input required name="cost" type="text" class="form-control" id="rupiah"
                                         placeholder="Isi Cost Proposal...">
                                 </div>
                             </div>
