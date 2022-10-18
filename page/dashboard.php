@@ -387,7 +387,7 @@ if (!isset($_SESSION['yics_user'])) {
                           LEFT JOIN depart ON proposal.id_dep = depart.id_dep
                           LEFT JOIN kategori_proposal  ON proposal.id_kat = kategori_proposal.id_kat
                           LEFT JOIN time_fiscal  ON proposal.id_fis = time_fiscal.id_fis  
-                          WHERE time_fiscal.status= 'aktif' ORDER BY depart.id_dep ASC")or die (mysqli_error($link_yics));
+                          WHERE time_fiscal.status= 'aktif' AND proposal.username= {$_SESSION['yics_user']} ORDER BY depart.id_dep ASC")or die (mysqli_error($link_yics));
                           $no=1;
 						  // untuk memvalidasi apakah ada datanya
                           if(mysqli_num_rows($proposal)>0){
