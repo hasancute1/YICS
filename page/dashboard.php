@@ -9,7 +9,9 @@ if (!isset($_SESSION['yics_user'])) {
   header('location: ../index.php');
 }
 ?>
-<?php include '../elemen/header.php';  ?>
+<?php include '../elemen/header.php';?>
+
+
 
 <!-- end header -->
 
@@ -377,18 +379,41 @@ if (!isset($_SESSION['yics_user'])) {
                                                 <tbody>
                                                     <!-- query untuk memunculkan kolom proposal -->
                                                     <?php 
-                          $proposal = mysqli_query($link_yics ,"SELECT id_prop,
-                          depart.id_dep AS id_dep,
-                          depart.depart AS depart,
-                          kategori_proposal.kategori AS kategori,
-                          time_fiscal.status,
-                          proposal.proposal AS proposal
-                          FROM proposal 
-                          LEFT JOIN depart ON proposal.id_dep = depart.id_dep
-                          LEFT JOIN kategori_proposal  ON proposal.id_kat = kategori_proposal.id_kat
-                          LEFT JOIN time_fiscal  ON proposal.id_fis = time_fiscal.id_fis  
-                          WHERE time_fiscal.status= 'aktif' AND proposal.username= {$_SESSION['yics_user']} ORDER BY depart.id_dep ASC")or die (mysqli_error($link_yics));
-                          $no=1;
+
+                          // jika yang login general user
+                          if( $_SESSION['yics_level'] == "1"){
+
+                            $proposal = mysqli_query($link_yics ,"SELECT id_prop,
+                            depart.id_dep AS id_dep,
+                            depart.depart AS depart,
+                            kategori_proposal.kategori AS kategori,
+                            time_fiscal.status,
+                            proposal.proposal AS proposal
+                            FROM proposal 
+                            LEFT JOIN depart ON proposal.id_dep = depart.id_dep
+                            LEFT JOIN kategori_proposal  ON proposal.id_kat = kategori_proposal.id_kat
+                            LEFT JOIN time_fiscal  ON proposal.id_fis = time_fiscal.id_fis  
+                            WHERE time_fiscal.status= 'aktif' AND proposal.username= {$_SESSION['yics_user']} ORDER BY depart.id_dep ASC")or die (mysqli_error($link_yics));
+                            $no=1;
+                          }else{
+
+                            $proposal = mysqli_query($link_yics ,"SELECT id_prop,
+                            depart.id_dep AS id_dep,
+                            depart.depart AS depart,
+                            kategori_proposal.kategori AS kategori,
+                            time_fiscal.status,
+                            proposal.proposal AS proposal
+                            FROM proposal 
+                            LEFT JOIN depart ON proposal.id_dep = depart.id_dep
+                            LEFT JOIN kategori_proposal  ON proposal.id_kat = kategori_proposal.id_kat
+                            LEFT JOIN time_fiscal  ON proposal.id_fis = time_fiscal.id_fis  
+                            WHERE time_fiscal.status= 'aktif' ORDER BY depart.id_dep ASC")or die (mysqli_error($link_yics));
+                            $no=1;
+
+                          }
+
+
+
 						  // untuk memvalidasi apakah ada datanya
                           if(mysqli_num_rows($proposal)>0){
                            while($data = mysqli_fetch_assoc($proposal)){?>
@@ -469,6 +494,7 @@ if (!isset($_SESSION['yics_user'])) {
                                                                     <i class="icon wb-eye" aria-hidden="true"></i>
                                                                 </button>
                                                             </a>
+                                                            <?php if($_SESSION['yics_level'] != '1'){ ?>
                                                             <a href="formupdate.php?ubah=<?php echo $data['id_prop']; ?>"
                                                                 data-toggle="tooltip"
                                                                 data-original-title="Update Progress ">
@@ -479,6 +505,7 @@ if (!isset($_SESSION['yics_user'])) {
                                                                     <i class="icon wb-upload" aria-hidden="true"></i>
                                                                 </button>
                                                             </a>
+                                                            <?php } ?>
                                                             <a href="formedit.php?edit=<?php echo $data['id_prop']; ?>"
                                                                 data-toggle="tooltip" data-original-title="edit">
                                                                 <button type="button"
@@ -487,6 +514,7 @@ if (!isset($_SESSION['yics_user'])) {
                                                                     <i class="icon wb-edit" aria-hidden="true"></i>
                                                                 </button>
                                                             </a>
+                                                            <?php if($_SESSION['yics_level'] != '1'){ ?>
                                                             <a href="../proses/dashboard/tambahplanning.php?del=<?php echo $data['id_prop']; ?>"
                                                                 data-toggle="tooltip" data-original-title="Hapus">
                                                                 <button type="button"
@@ -494,6 +522,8 @@ if (!isset($_SESSION['yics_user'])) {
                                                                     <i class="icon oi-trashcan" aria-hidden="true"></i>
                                                                 </button>
                                                             </a>
+                                                            <?php } ?>
+
                                                         </td>
 
 
