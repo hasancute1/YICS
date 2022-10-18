@@ -9,7 +9,10 @@ if (isset ($_SESSION['yics_user'])){
         $depart=$_POST['depart']; 
         $kategori=$_POST['kategori'];
         $proposal=$_POST ['proposal'];
-        $cost=$_POST ['cost'];
+
+        $cost_request=$_POST ['cost'];
+        $cost = str_replace('.','' ,$cost_request); 
+
         $id_fis=$_POST ['id_fis']; 
         $username =$_SESSION['yics_user']; 
        
