@@ -8,6 +8,14 @@ include("../config/config.php");
 if (!isset($_SESSION['yics_user'])) {
   header('location: ../index.php');
 }
+
+// jika yang login general user
+if ($_SESSION['yics_level'] == "1") {
+
+    header('location: dashboard.php');
+
+  }
+
 ?>
 <?php
 include '../elemen/header.php';?>
@@ -411,9 +419,7 @@ include '../elemen/header.php';?>
                                                                             autocomplete="off">
                                                                             <option
                                                                                 value="<?= $_SESSION['yics_user']; ?>">
-                                                                                <?= $_SESSION['yics_nama']; ?></option>
-                                                                            <option
-                                                                                value="1234">Hasan</option>
+                                                                                <?= $_SESSION['yics_nama']; ?></option>                                                                            
                                                                         </select>
                                                                     </div>
                                                                 </td>
