@@ -373,7 +373,9 @@ include '../elemen/header.php';?>
                                                     <tbody>
 
                                                         <!-- query proposal control table -->
-                                                        <?php   
+                                                        <?php 
+                              $id_dept = $_GET['dept'];
+
                               $proposal = mysqli_query($link_yics ,"SELECT
                                 proposal.id_prop AS id_prop,
                                 depart.id_dep AS id_dep,
@@ -398,7 +400,7 @@ include '../elemen/header.php';?>
                                 
                                
                                 LEFT JOIN approval ON tracking_prop.id_approval = approval.id_approval
-                                WHERE tracking_prop.id_approval  = '1' AND progress.step = '5' AND depart.id_dep= '1'"
+                                WHERE tracking_prop.id_approval  = '1' AND progress.step = '5' AND depart.id_dep='$id_dept'"
                                 )
                                 or die (mysqli_error($link_yics));
                                 $no=1;
