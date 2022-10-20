@@ -15,7 +15,29 @@ if (isset ($_SESSION['yics_user'])){
 
         $id_fis=$_POST ['id_fis']; 
         $username =$_SESSION['yics_user']; 
-       
+
+      //upload lampiran
+      //https://www.w3schools.com/php/php_file_upload.asp
+
+      $target_dir = "../../image/uploads/";   
+      $file_name =  basename($_FILES["lampiran"]["name"]);
+
+      $target_file = $target_dir . $file_name;       
+      $uploadOk = 1;
+      $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+      // Check if $uploadOk is set to 0 by an error
+      if ($uploadOk == 0) {       
+
+         $_SESSION['info'] = "Gagal Disimpan";
+         $_SESSION['pesan'] = "Lampiran tidak Sesuai";
+
+      // if everything is ok, try to upload file
+      } else { 
+
+         move_uploaded_file($_FILES["lampiran"]["tmp_name"], $target_file);
+      
+      } 
 
         // cek username sudah ada apa blm?
         $qry = mysqli_query($link_yics, "SELECT proposal FROM proposal WHERE proposal = '$proposal' ")or die(mysqli_error($link_yics));
@@ -31,7 +53,7 @@ if (isset ($_SESSION['yics_user'])){
             header('location: ../../page/dashboard.php');
          }
          
-         $inputproposal = "INSERT INTO proposal (`id_dep`,`username`,`id_kat`,`proposal`,`cost`,`id_fis`) VALUES ('$depart',$username,'$kategori','$proposal','$cost','$id_fis')"; 
+         $inputproposal = "INSERT INTO proposal (`id_dep`,`username`,`id_kat`,`proposal`,`cost`,`id_fis`,`lampiran`) VALUES ('$depart',$username,'$kategori','$proposal','$cost','$id_fis','$file_name')"; 
          $sql = mysqli_query($link_yics, $inputproposal)or die(mysqli_error($link_yics));
 
          $last_id = mysqli_insert_id($link_yics);
