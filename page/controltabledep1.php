@@ -223,10 +223,10 @@ include '../elemen/header.php';?>
                                                                 </a>
                                                                 <a href="javascript:void(0)" data-toggle="tooltip"
                                                                     data-original-title="Print">
-                                                                    <button type="button"
+                                                                    <!-- <button type="button"
                                                                         class="btn btn-icon btn-warning btn-outline">
                                                                         <i class="icon wb-print" aria-hidden="true"></i>
-                                                                    </button>
+                                                                    </button> -->
                                                                     <a data-toggle="tooltip"
                                                                         data-original-title="Tambah Data">
                                                                         <button type="button"
@@ -390,7 +390,7 @@ include '../elemen/header.php';?>
                                             </div>
                                             <div
                                                 class=" table table-responsive table-bordered text-center 10px table-striped text-nowrap">
-                                                <table class="table">
+                                                <table class="table" id="table-proposal">
                                                     <thead class="table-info">
                                                         <tr>
                                                             <th class="judul align-middle text-center" colspan="6">
@@ -691,3 +691,18 @@ include '../elemen/header.php';?>
                     <!-- Footer -->
                     <?php
 include '../elemen/footer.php';?>
+
+<script>
+
+$(document).ready(function() {
+    $('#table-proposal').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            'excel', 'pdf', 'print',
+            
+        ]
+    } );
+} );
+
+
+</script>
