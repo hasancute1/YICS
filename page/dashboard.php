@@ -51,7 +51,7 @@ if (!isset($_SESSION['yics_user'])) {
         <div class="site-menubar-body">
             <div>
                 <div><br><br>
-                    <ul class="site-menu" data-plugin="menu">
+                    <!-- <ul class="site-menu" data-plugin="menu">
                         <li class="site-menu-item has-sub active open ">
                             <a href="dashboard.php" class="animsition-link">
                                 <i class="site-menu-icon wb-dashboard" aria-hidden="true"></i>
@@ -137,7 +137,8 @@ if (!isset($_SESSION['yics_user'])) {
                                 </li>
                             </ul>
                         </li>
-                    </ul>
+                    </ul> -->
+                    <?php include '../elemen/sidebarleft.php';?>
                     <!-- Site Navbar Search -->
                     <?php include '../elemen/sidebar.php';?>
                     <!-- End Site Navbar Search -->
