@@ -19,7 +19,7 @@ $link_yics = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
         while ($rows_username = mysqli_fetch_assoc($query_username)) {          
           $username = $rows_username['username'];
             // $pass =  $npk;   
-            $pass =  "admbody";  
+            $pass =  "123";  
           // }
           $password = sha1($pass);
           mysqli_query($link_yics, "UPDATE  data_user SET pass = '$password' WHERE username = '$username' ") or die (mysqli_error($link_yics));
@@ -27,8 +27,8 @@ $link_yics = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
       } 
      ?>
 
-    
-     <div>Password Selesai diganti</div>
+
+<div>Password Selesai diganti</div>
 
 <?php
   // echo  $_POST['pass'];
