@@ -133,6 +133,11 @@ if (!isset($_SESSION['yics_user'])) {
                                         <span class="site-menu-title">Time Fiscal Setting</span>
                                     </a>
                                 </li>
+                                <li class="site-menu-item">
+                                    <a class="animsition-link" href="kurs_matauang.php">
+                                        <span class="site-menu-title">Kurs Mata Uang Asing</span>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                     </ul>
@@ -290,7 +295,7 @@ if (!isset($_SESSION['yics_user'])) {
                                                         AS total FROM view_alokasi_budget WHERE status='aktif'")) or die (mysqli_error($link_yics));;
                                                     ?>
                                                 <p class="white font-weight-100 m-0 font-size-18"><u>"Budget Rp
-                                                        <?php echo number_format ($card['total'],0,',','.'); ?>"</u></p>
+                                                        <?php echo number_format ($card['total'],0,'.','.'); ?>"</u></p>
                                             </div>
                                         </div>
                                     </div>
@@ -314,7 +319,7 @@ if (!isset($_SESSION['yics_user'])) {
                                                     <span class="white font-size-40 font-weight-100 mt-50">Rp
                                                         1.628</span>
                                                     <p class="white font-weight-100 m-0 font-size-18">"Budget Rp
-                                                        <?php echo number_format ($row_card['budget'],0,',','.'); ?>"
+                                                        <?php echo number_format ($row_card['budget']); ?>"
                                                     </p>
                                                     <p class="white font-weight-100 m-0"> Lihat Detail >></p>
                                                 </div>
@@ -685,9 +690,9 @@ include '../elemen/footer.php';?>
                             <div class="col-md-10">
                                 <div class="input-group">
                                     <?php 
-            $tambahalok = mysqli_query($link_yics ,"SELECT id_fis,periode FROM time_fiscal WHERE status= 'aktif'")or die (mysqli_error($link_yics));
-            $data = mysqli_fetch_assoc($tambahalok)
-          ?>
+                                                $tambahalok = mysqli_query($link_yics ,"SELECT id_fis,periode FROM time_fiscal WHERE status= 'aktif'")or die (mysqli_error($link_yics));
+                                                $data = mysqli_fetch_assoc($tambahalok)
+                                            ?>
                                     <input type="text" value="<?php echo $data['periode']; ?>" class="form-control"
                                         readonly>
                                     <input name="id_fis" type="text" value="<?php echo $data['id_fis']; ?>"
@@ -783,6 +788,7 @@ include '../elemen/footer.php';?>
                     <form action="../proses/dashboard/tambahplanning.php" method="post">
 
                         <input type="hidden" name="add">
+                        <input name="mata_uang" type="number" value="1" class="form-control" hidden>
                         <div class="form-group row">
                             <h4 class="col-md-12 modal-title text-left" style="color:black;">SUBJECT</h4>
                         </div>
