@@ -46,9 +46,10 @@ if (isset ($_SESSION['yics_user'])){
         // masukan data post ke variabel 
        $nama=$_POST ['nama'];
        $user=$_POST ['user'];
+       $area=$_POST ['area'];
        $role=$_POST ['role'];
        $password=SHA1($_POST ['password']);
-       $UbahUser = "UPDATE data_user SET nama='$nama',username='$user',pass='$password',id_level='$role' WHERE username = '$user'"; 
+       $UbahUser = "UPDATE data_user SET nama='$nama',username='$user',area='$area',pass='$password',id_level='$role' WHERE username = '$user'"; 
        echo $UbahUser;
        $sql = mysqli_query($link_yics, $UbahUser)or die(mysqli_error($link_yics));
     // logika pakai session
