@@ -266,6 +266,8 @@ include '../elemen/header.php';?>
                                                                     <th class="align-middle text-center" height="10px">
                                                                         NAMA</th>
                                                                     <th class="align-middle text-center" height="10px">
+                                                                        AREA</th>
+                                                                    <th class="align-middle text-center" height="10px">
                                                                         ROLE</th>
                                                                     <th class="align-middle text-center" height="10px">
                                                                         ACTION</th>
@@ -290,6 +292,8 @@ include '../elemen/header.php';?>
                                                                         <?php echo $data['username']; ?></td>
                                                                     <td class="align-middle text-center">
                                                                         <?php echo $data['nama']; ?></td>
+                                                                    <td class="align-middle text-center">
+                                                                        <?php echo $data['area']; ?></td>
                                                                     <td class="align-middle text-center">
                                                                         <?php echo $data['role_name']; ?></td>
                                                                     <td class="align-middle text-center">
