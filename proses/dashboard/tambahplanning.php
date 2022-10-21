@@ -11,6 +11,7 @@ if (isset ($_SESSION['yics_user'])){
         $proposal=$_POST ['proposal'];
         $cost=$_POST ['cost'];
         $id_fis=$_POST ['id_fis'];              
+        $id_matauang=$_POST ['mata_uang'];              
 
         // cek username sudah ada apa blm?
         $qry = mysqli_query($link_yics, "SELECT proposal FROM proposal WHERE proposal = '$proposal' ")or die(mysqli_error($link_yics));
@@ -26,7 +27,7 @@ if (isset ($_SESSION['yics_user'])){
             header('location: ../../page/dashboard.php');
          }
          
-         $inputproposal = "INSERT INTO proposal (`id_dep`,`id_kat`,`proposal`,`cost`,`id_fis`) VALUES ('$depart','$kategori','$proposal','$cost','$id_fis')"; 
+         $inputproposal = "INSERT INTO proposal (`id_dep`,`id_kat`,`proposal`,`cost`,`id_fis`,`id_matauang`) VALUES ('$depart','$kategori','$proposal','$cost','$id_fis','$id_matauang')"; 
          $sql = mysqli_query($link_yics, $inputproposal)or die(mysqli_error($link_yics));
 
          $last_id = mysqli_insert_id($link_yics);
