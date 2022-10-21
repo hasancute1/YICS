@@ -66,17 +66,17 @@ if (!isset($_SESSION['yics_user'])) {
                             </a>
                             <ul class="site-menu-sub">
                                 <li class="site-menu-item">
-                                    <a class="animsition-link" href="controltabledep1.php">
+                                    <a class="animsition-link" href="controltabledep.php">
                                         <span class="site-menu-title">Body Plant 1</span>
                                     </a>
                                 </li>
                                 <li class="site-menu-item">
-                                    <a class="animsition-link" href="controltabledep2.php">
+                                    <a class="animsition-link" href="controltabledep2_ex.php">
                                         <span class="site-menu-title">Body Plant 2</span>
                                     </a>
                                 </li>
                                 <li class="site-menu-item">
-                                    <a class="animsition-link" href="controltabledep3.php">
+                                    <a class="animsition-link" href="controltabledep3_ex.php">
                                         <span class="site-menu-title">BQC</span>
                                     </a>
                                 </li>

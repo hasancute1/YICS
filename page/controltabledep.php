@@ -392,6 +392,7 @@ include '../elemen/header.php';?>
                                 proposal.cost AS cost,
                                 konversi_matauang.dollar AS dollar,
                                 konversi_matauang.yen AS yen
+                              
                                 
                                 FROM tracking_prop   
                                 LEFT JOIN proposal  ON tracking_prop.id_prop = proposal.id_prop
