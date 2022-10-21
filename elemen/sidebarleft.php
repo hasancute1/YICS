@@ -90,6 +90,13 @@ $url_aktive = $uri[0];
                     <span class="site-menu-title">Time Fiscal Setting</span>
                 </a>
             </li>
+
+            <li class="site-menu-item">
+                <a class="animsition-link" href="kurs_matauang.php">
+                    <span class="site-menu-title">Kurs Mata Uang Asing</span>
+                </a>
+            </li>
+
         </ul>
     </li>
 </ul>
