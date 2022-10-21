@@ -471,7 +471,9 @@ include '../elemen/header.php';?>
                                 progress.step AS step,
                                 progress.nama_progress AS progress,
                                 approval.approval AS approval,
-                                proposal.cost AS cost
+                                proposal.cost AS cost,
+                                konversi_matauang.dollar AS dollar,
+                                konversi_matauang.yen AS yen
                                 
                                 FROM tracking_prop   
                                 LEFT JOIN proposal  ON tracking_prop.id_prop = proposal.id_prop
@@ -479,6 +481,7 @@ include '../elemen/header.php';?>
                                 LEFT JOIN kategori_proposal  ON proposal.id_kat = kategori_proposal.id_kat
                                 LEFT JOIN time_fiscal  ON proposal.id_fis = time_fiscal.id_fis
                                 LEFT JOIN progress  ON tracking_prop.id_prog = progress.id_prog
+                                LEFT JOIN konversi_matauang ON proposal.id_matauang = konversi_matauang.id_matauang
                                 
                                
                                 LEFT JOIN approval ON tracking_prop.id_approval = approval.id_approval
@@ -503,7 +506,9 @@ include '../elemen/header.php';?>
                                                                 <?php echo $data['proposal']; ?>
                                                             </td>
                                                             <td class="align-middle text-center">¥
-                                                                <?= round($data['cost']/105); ?></td>
+
+                                                                <?= number_format($data['cost']/$data['yen'], 1, '.', ','); ?>
+                                                            </td>
                                                             <td class="align-middle text-center">Rp
                                                                 <?php echo number_format ($data['cost'],0,',','.'); ?>
                                                             </td>
@@ -675,19 +680,21 @@ include '../elemen/header.php';?>
                                                         placeholder="Diisi PIC Update" autocomplete="off">
                                                 </div>
                                             </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger"
+                                                    data-dismiss="modal">Reset</button>
+                                                <button type="submit" class="btn btn-primary">Submit</button>
                                         </form>
                                     </div>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Reset</button>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
+
                             </div>
                         </div>
                     </div>
-                    <!-- End Modal Tammbah Data Control  Table Body 1-->
-                    <!-- End Page -->
+                </div>
+                <!-- End Modal Tammbah Data Control  Table Body 1-->
+                <!-- End Page -->
 
-                    <!-- Footer -->
-                    <?php
+                <!-- Footer -->
+                <?php
 include '../elemen/footer.php';?>
