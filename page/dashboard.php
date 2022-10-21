@@ -9,7 +9,9 @@ if (!isset($_SESSION['yics_user'])) {
   header('location: ../index.php');
 }
 ?>
-<?php include '../elemen/header.php';  ?>
+<?php include '../elemen/header.php';?>
+
+
 
 <!-- end header -->
 
@@ -131,11 +133,6 @@ if (!isset($_SESSION['yics_user'])) {
                                 <li class="site-menu-item">
                                     <a class="animsition-link" href="fiscalsetting.php">
                                         <span class="site-menu-title">Time Fiscal Setting</span>
-                                    </a>
-                                </li>
-                                <li class="site-menu-item">
-                                    <a class="animsition-link" href="kurs_matauang.php">
-                                        <span class="site-menu-title">Kurs Mata Uang Asing</span>
                                     </a>
                                 </li>
                             </ul>
@@ -382,18 +379,42 @@ if (!isset($_SESSION['yics_user'])) {
                                                 <tbody>
                                                     <!-- query untuk memunculkan kolom proposal -->
                                                     <?php 
-                          $proposal = mysqli_query($link_yics ,"SELECT id_prop,
-                          depart.id_dep AS id_dep,
-                          depart.depart AS depart,
-                          kategori_proposal.kategori AS kategori,
-                          time_fiscal.status,
-                          proposal.proposal AS proposal
-                          FROM proposal 
-                          LEFT JOIN depart ON proposal.id_dep = depart.id_dep
-                          LEFT JOIN kategori_proposal  ON proposal.id_kat = kategori_proposal.id_kat
-                          LEFT JOIN time_fiscal  ON proposal.id_fis = time_fiscal.id_fis  
-                          WHERE time_fiscal.status= 'aktif' ORDER BY depart.id_dep ASC")or die (mysqli_error($link_yics));
-                          $no=1;
+
+                          // jika yang login general user
+                          if( $_SESSION['yics_level'] == "1"){
+
+                            $proposal = mysqli_query($link_yics ,"SELECT id_prop,
+                            depart.id_dep AS id_dep,
+                            depart.depart AS depart,
+                            kategori_proposal.kategori AS kategori,
+                            time_fiscal.status,
+                            proposal.proposal AS proposal
+                            FROM proposal 
+                            LEFT JOIN depart ON proposal.id_dep = depart.id_dep
+                            LEFT JOIN kategori_proposal  ON proposal.id_kat = kategori_proposal.id_kat
+                            LEFT JOIN time_fiscal  ON proposal.id_fis = time_fiscal.id_fis  
+                            WHERE time_fiscal.status= 'aktif' AND proposal.username= {$_SESSION['yics_user']} ORDER BY depart.id_dep ASC")or die (mysqli_error($link_yics));
+                            $no=1;
+                          }else{
+
+                            $proposal = mysqli_query($link_yics ,"SELECT id_prop,
+                            depart.id_dep AS id_dep,
+                            depart.depart AS depart,
+                            kategori_proposal.kategori AS kategori,
+                            time_fiscal.status,
+                            proposal.proposal AS proposal,
+                            proposal.lampiran
+                            FROM proposal 
+                            LEFT JOIN depart ON proposal.id_dep = depart.id_dep
+                            LEFT JOIN kategori_proposal  ON proposal.id_kat = kategori_proposal.id_kat
+                            LEFT JOIN time_fiscal  ON proposal.id_fis = time_fiscal.id_fis  
+                            WHERE time_fiscal.status= 'aktif' ORDER BY depart.id_dep ASC")or die (mysqli_error($link_yics));
+                            $no=1;
+
+                          }
+
+
+
 						  // untuk memvalidasi apakah ada datanya
                           if(mysqli_num_rows($proposal)>0){
                            while($data = mysqli_fetch_assoc($proposal)){?>
@@ -408,7 +429,21 @@ if (!isset($_SESSION['yics_user'])) {
                                                         <td class="align-middle text-center">
                                                             <?php echo $data['kategori']; ?></td>
                                                         <td class="align-middle text-center text-uppercase">
-                                                            <?php echo $data['proposal']; ?></td>
+                                                            <?php if($data['lampiran']){ ?>
+                                                            <a href="../image/uploads/<?= $data['lampiran'] ?>"
+                                                                target="_blank">
+                                                                <?php echo $data['proposal']; ?>
+                                                            </a>
+
+                                                            <?php
+
+                                                             }else{ 
+                                                                echo $data['proposal']; 
+                                                            } 
+                                                            
+                                                            ?>
+
+                                                        </td>
                                                         <td class="align-middle text-center">
                                                             <!-- query update progress -->
                                                             <?php   
@@ -474,6 +509,7 @@ if (!isset($_SESSION['yics_user'])) {
                                                                     <i class="icon wb-eye" aria-hidden="true"></i>
                                                                 </button>
                                                             </a>
+                                                            <?php if($_SESSION['yics_level'] != '1'){ ?>
                                                             <a href="formupdate.php?ubah=<?php echo $data['id_prop']; ?>"
                                                                 data-toggle="tooltip"
                                                                 data-original-title="Update Progress ">
@@ -484,6 +520,7 @@ if (!isset($_SESSION['yics_user'])) {
                                                                     <i class="icon wb-upload" aria-hidden="true"></i>
                                                                 </button>
                                                             </a>
+                                                            <?php } ?>
                                                             <a href="formedit.php?edit=<?php echo $data['id_prop']; ?>"
                                                                 data-toggle="tooltip" data-original-title="edit">
                                                                 <button type="button"
@@ -492,6 +529,7 @@ if (!isset($_SESSION['yics_user'])) {
                                                                     <i class="icon wb-edit" aria-hidden="true"></i>
                                                                 </button>
                                                             </a>
+                                                            <?php if($_SESSION['yics_level'] != '1'){ ?>
                                                             <a href="../proses/dashboard/tambahplanning.php?del=<?php echo $data['id_prop']; ?>"
                                                                 data-toggle="tooltip" data-original-title="Hapus">
                                                                 <button type="button"
@@ -499,6 +537,8 @@ if (!isset($_SESSION['yics_user'])) {
                                                                     <i class="icon oi-trashcan" aria-hidden="true"></i>
                                                                 </button>
                                                             </a>
+                                                            <?php } ?>
+
                                                         </td>
 
 
@@ -785,7 +825,7 @@ include '../elemen/footer.php';?>
                 <div class="row">
                 </div>
                 <div class="modal-body">
-                    <form action="../proses/dashboard/tambahplanning.php" method="post">
+                    <form action="../proses/dashboard/tambahplanning.php" method="post" enctype="multipart/form-data">
 
                         <input type="hidden" name="add">
                         <input name="mata_uang" type="number" value="1" class="form-control" hidden>
@@ -858,6 +898,15 @@ include '../elemen/footer.php';?>
                                 </div>
                             </div>
                         </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" style="color:black;">Lampiran</label>
+
+                            <div class="col-md-4 input-group">
+                                <input class="form-control-file" type="file" name="lampiran" id="">
+                            </div>
+
+                        </div>
                 </div>
                 <div class="modal-footer">
                     <button type="reset" class="btn btn-danger">Reset</button>
@@ -910,6 +959,22 @@ include '../elemen/footer.php';?>
             } else {
                 $('#checkAll').prop('checked', false)
             }
-        })
+        });
+
+        $('#rupiah').keyup(function(event) {
+
+            // skip for arrow keys
+            if (event.which >= 37 && event.which <= 40) return;
+
+            // format number
+            $(this).val(function(index, value) {
+                return value
+                    .replace(/\D/g, "")
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            });
+        });
+
+
+
     })
     </script>

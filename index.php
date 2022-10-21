@@ -15,7 +15,7 @@ if (isset($_POST['submit'])) {
   if ($query_login->num_rows > 0) {
       $result_login = mysqli_fetch_assoc($query_login);
       $_SESSION['yics_user'] =  $username;
-      $_SESSION['yics_level'] =  $result_login['level'];
+      $_SESSION['yics_level'] =  $result_login['id_level'];
       $_SESSION['yics_nama'] =  $result_login['nama'];
       mysqli_free_result($query_login);      
       header("location: page/dashboard.php");

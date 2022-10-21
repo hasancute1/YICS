@@ -8,11 +8,16 @@ if (isset ($_SESSION['yics_user'])){
      
     if(isset($_POST['add'])){
 
-     //     $totalData=$_POST['tgl'];
-        
+         //$totalData=$_POST['tgl'];        
          $i = 1;
          $index = 0;
          $id_prop = $_POST['id_prop'];
+         //data proposal
+          $proposal = single_query("SELECT * FROM proposal WHERE id_prop={$id_prop}");
+        
+
+
+
          $id_pic = $_POST['pic']; //array
          $id_tgl = $_POST['tgl']; //aray
           $max = max($_POST['id_prog']);
@@ -126,10 +131,10 @@ if (isset ($_SESSION['yics_user'])){
      */
      // $notif = TRUE;
 
-     if($notif && $pic != $_SESSION['yics_user']){
+     if($notif){
 
           kirim_notif([         
-               'dest' => $pic,
+               'dest' => $proposal['username'],
                'message' => $pesan_notif,
                'type' => "proposal",
                'id_type' => $id_prop 

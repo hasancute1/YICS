@@ -43,93 +43,9 @@ include '../elemen/header.php';?>
         <div class="site-menubar-body">
             <div>
                 <div><br><br>
-                    <ul class="site-menu" data-plugin="menu">
-                        <li class="site-menu-item has-sub ">
-                            <a href="dashboard.php" class="animsition-link">
-                                <i class="site-menu-icon wb-dashboard" aria-hidden="true"></i>
-                                <span class="site-menu-title">DASHBOARD</span>
-                            </a>
-                        </li>
-                        <li class="site-menu-item has-sub active open">
-                            <a href="javascript:void(0)">
-                                <i class="site-menu-icon wb-table" aria-hidden="true"></i>
-                                <span class="site-menu-title">CONTROL TABLES</span>
-                                <span class="site-menu-arrow"></span>
-                            </a>
-                            <ul class="site-menu-sub">
-                                <li class="site-menu-item active open">
-                                    <a class="animsition-link" href="controltabledep1.php">
-                                        <span class="site-menu-title">Body Plant 1</span>
-                                    </a>
-                                </li>
-                                <li class="site-menu-item">
-                                    <a class="animsition-link" href="controltabledep2.php">
-                                        <span class="site-menu-title">Body Plant 2</span>
-                                    </a>
-                                </li>
-                                <li class="site-menu-item">
-                                    <a class="animsition-link" href="controltabledep3.php">
-                                        <span class="site-menu-title">BQC</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="site-menu-item has-sub">
-                            <a href="tracking.php">
-                                <i class="site-menu-icon wb-shopping-cart" aria-hidden="true"></i>
-                                <span class="site-menu-title">TRACKING DOCUMENT</span>
-                                <span class="site-menu-tittle"></span>
-                            </a>
-                        <li class="site-menu-item has-sub ">
-                            <a href="javascript:void(0)">
-                                <i class="site-menu-icon fa-database" aria-hidden="true"></i>
-                                <span class="site-menu-title">BUDGET</span>
-                                <span class="site-menu-arrow"></span>
-                            </a>
-                            <ul class="site-menu-sub">
-                                <li class="site-menu-item">
-                                    <a class="animsition-link" href="budgetdep1.php">
-                                        <span class="site-menu-title">Body Plant 1</span>
-                                    </a>
-                                </li>
-                                <li class="site-menu-item">
-                                    <a class="animsition-link" href="budgetdep2.php">
-                                        <span class="site-menu-title">Body Plant 2</span>
-                                    </a>
-                                </li>
-                                <li class="site-menu-item">
-                                    <a class="animsition-link" href="budgetdep3.php">
-                                        <span class="site-menu-title">BQC</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        </li>
-                        <li class="site-menu-item has-sub">
-                            <a href="javascript:void(0)">
-                                <i class="site-menu-icon wb-user" aria-hidden="true"></i>
-                                <span class="site-menu-title">ADMINISTRATOR</span>
-                                <span class="site-menu-arrow"></span>
-                            </a>
-                            <ul class="site-menu-sub">
-                                <li class="site-menu-item">
-                                    <a class="animsition-link" href="usersetting.php">
-                                        <span class="site-menu-title">User Setting</span>
-                                    </a>
-                                </li>
-                                <li class="site-menu-item">
-                                    <a class="animsition-link" href="categorysetting.php">
-                                        <span class="site-menu-title">Category Setting</span>
-                                    </a>
-                                </li>
-                                <li class="site-menu-item">
-                                    <a class="animsition-link" href="fiscalsetting.php">
-                                        <span class="site-menu-title">Time Fiscal Setting</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
+                    <!-- Site Navbar Search -->
+                    <?php include '../elemen/sidebarleft.php';?>
+
                     <!-- Site Navbar Search -->
                     <?php include '../elemen/sidebar.php';?>
                     <!-- End Site Navbar Search -->
@@ -223,10 +139,10 @@ include '../elemen/header.php';?>
                                                                 </a>
                                                                 <a href="javascript:void(0)" data-toggle="tooltip"
                                                                     data-original-title="Print">
-                                                                    <button type="button"
+                                                                    <!-- <button type="button"
                                                                         class="btn btn-icon btn-warning btn-outline">
                                                                         <i class="icon wb-print" aria-hidden="true"></i>
-                                                                    </button>
+                                                                    </button> -->
                                                                     <a data-toggle="tooltip"
                                                                         data-original-title="Tambah Data">
                                                                         <button type="button"
@@ -390,7 +306,7 @@ include '../elemen/header.php';?>
                                             </div>
                                             <div
                                                 class=" table table-responsive table-bordered text-center 10px table-striped text-nowrap">
-                                                <table class="table">
+                                                <table class="table" id="table-proposal">
                                                     <thead class="table-info">
                                                         <tr>
                                                             <th class="judul align-middle text-center" colspan="6">
@@ -457,7 +373,9 @@ include '../elemen/header.php';?>
                                                     <tbody>
 
                                                         <!-- query proposal control table -->
-                                                        <?php   
+                                                        <?php 
+                              $id_dept = $_GET['dept'];
+
                               $proposal = mysqli_query($link_yics ,"SELECT
                                 proposal.id_prop AS id_prop,
                                 depart.id_dep AS id_dep,
@@ -485,7 +403,7 @@ include '../elemen/header.php';?>
                                 
                                
                                 LEFT JOIN approval ON tracking_prop.id_approval = approval.id_approval
-                                WHERE tracking_prop.id_approval  = '1' AND progress.step = '5' AND depart.id_dep= '1'"
+                                WHERE tracking_prop.id_approval  = '1' AND progress.step = '5' AND depart.id_dep='$id_dept'"
                                 )
                                 or die (mysqli_error($link_yics));
                                 $no=1;
@@ -698,3 +616,15 @@ include '../elemen/header.php';?>
                 <!-- Footer -->
                 <?php
 include '../elemen/footer.php';?>
+
+                <script>
+                $(document).ready(function() {
+                    $('#table-proposal').DataTable({
+                        dom: 'Bfrtip',
+                        buttons: [
+                            'excel', 'pdf', 'print',
+
+                        ]
+                    });
+                });
+                </script>

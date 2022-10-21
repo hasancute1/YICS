@@ -83,6 +83,15 @@
     <link rel="stylesheet" href="../base/assets/sweetalert2/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="../base/assets/examples/css/structure/pagination.css">
 
+    <!-- data table for export -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
+
+
+   
+    
+
+
 
     <!-- <script src="assetmoris/datadonutmoris/grafikmoris.js"></script>  -->
     <!-- <link rel="stylesheet" href="../global/vendor/morris/morris.css"> -->
