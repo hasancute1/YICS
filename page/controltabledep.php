@@ -6,7 +6,17 @@ if (!isset($_SESSION['yics_user'])) {
 ?>
 <!--header-->
 <?php
-include '../elemen/header.php';?>
+include '../elemen/header.php';
+
+$judul = [
+    1 => "Body Plan 1",
+    2 => "Body Plan 2",
+    3 => "BQC"
+];
+
+$id_dept = $_GET['dept'];
+
+?>
 <!-- end header -->
 
 <body class="animsition">
@@ -58,7 +68,7 @@ include '../elemen/header.php';?>
                     <!-- Page -->
                     <div class="page">
                         <div class="page-header">
-                            <h1 class="page-title font-size-26 font-weight-600">Control Table Body Plant 1 (x Million)
+                            <h1 class="page-title font-size-26 font-weight-600">Control Table <?= $judul[$id_dept] ?> (x Million)
                             </h1>
                         </div>
 
@@ -187,7 +197,6 @@ include '../elemen/header.php';?>
 
                                                         <!-- query proposal control table -->
                                                         <?php 
-                              $id_dept = $_GET['dept'];
 
                               $proposal = mysqli_query($link_yics ,"SELECT
                                 proposal.id_prop AS id_prop,
