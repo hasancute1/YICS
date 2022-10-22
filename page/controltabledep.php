@@ -447,13 +447,30 @@ include '../elemen/footer.php';?>
 
                 <script>
                 $(document).ready(function() {
-                    $('.tableproposal').DataTable({
+                    
+                   var table =  $('.tableproposal').DataTable({
                         dom: 'Bfrtip',
                         buttons: [
-                            'excel', 'pdf', 'print',
+                            'excel',         
+                            {
+                            extend: 'print',
+                            text: 'Print',                              
+                            },
+                            {
+                                extend: 'pdf',
+                                title: 'Control Table',
+                                text: 'PDF',
+                                orientation : 'landscape',
+                                pageSize:'LEGAL'                  
+                            }
 
                         ],
                         scrollX: true
                     });
+
+                    table.buttons().container()
+                        .appendTo( $('.col-sm-6:eq(0)', table.table().container() ) );
+
+
                 });
                 </script>
