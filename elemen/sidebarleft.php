@@ -20,7 +20,8 @@ $url_aktive = $uri[0];
             <span class="site-menu-arrow"></span>
         </a>
         <ul class="site-menu-sub">
-            <li class="site-menu-item open <?= ($url_aktive == "controltabledep" && $_GET['dept'] == 1)? "active": ""; ?>">
+            <li
+                class="site-menu-item open <?= ($url_aktive == "controltabledep" && $_GET['dept'] == 1)? "active": ""; ?>">
                 <a class="animsition-link" href="controltabledep.php?dept=1">
                     <span class="site-menu-title">Body Plant 1</span>
                 </a>
@@ -51,18 +52,18 @@ $url_aktive = $uri[0];
         </a>
         <ul class="site-menu-sub">
             <li class="site-menu-item <?= ($url_aktive == "budgetdep1")? "active": ""; ?>"">
-                <a class="animsition-link" href="budgetdep1.php">
-                    <span class="site-menu-title">Body Plant 1</span>
+                <a class=" animsition-link" href="budgetdep1.php">
+                <span class="site-menu-title">Body Plant 1</span>
                 </a>
             </li>
             <li class="site-menu-item <?= ($url_aktive == "budgetdep2")? "active": ""; ?>"">
-                <a class="animsition-link" href="budgetdep2.php">
-                    <span class="site-menu-title">Body Plant 2</span>
+                <a class=" animsition-link" href="budgetdep2.php">
+                <span class="site-menu-title">Body Plant 2</span>
                 </a>
             </li>
             <li class="site-menu-item <?= ($url_aktive == "budgetdep3")? "active": ""; ?>"">
-                <a class="animsition-link" href="budgetdep3.php">
-                    <span class="site-menu-title">BQC</span>
+                <a class=" animsition-link" href="budgetdep3.php">
+                <span class="site-menu-title">BQC</span>
                 </a>
             </li>
         </ul>

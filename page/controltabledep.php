@@ -101,212 +101,25 @@ include '../elemen/header.php';?>
                                             </div>
                                         </div>
                                         <div class="col-md-2 text-right">
-                                            <button type="submit" class="btn btn-primary btn-floating btn-sm "><i
-                                                    aria-hidden="true"></i>GO</button>
+                                            <a href="">
+                                                <button type="submit" class="btn btn-primary btn-floating btn-sm "><i
+                                                        aria-hidden="true"></i>GO</button>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 col-md-12">
                                     <div class="card card-shadow">
-                                        <div class="card-header card-header-transparent">
+                                        <div class="card-header ">
                                             <div class="row">
                                                 <div class="col-lg-12 col-md-12">
                                                     <div class="row">
-                                                        <div class="col-lg-6 col-md-6">
-                                                            <div class="float-left">
-                                                                <div class="form-group">
-                                                                    <div class="input-group">
-                                                                        <span class="input-group-append">
-                                                                            <button type="submit"
-                                                                                class="btn btn-primary"><i
-                                                                                    class="icon wb-search"
-                                                                                    aria-hidden="true"></i></button>
-                                                                        </span>
-                                                                        <input type="text" class="form-control" name=""
-                                                                            placeholder="Search...">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6 col-md-6">
-                                                            <div class="float-right">
-                                                                <a href="" data-toggle="tooltip"
-                                                                    data-original-title="View">
-                                                                    <button type="button"
-                                                                        class="btn btn-success btn-icon btn-outline">
-                                                                        <i class="icon wb-eye" aria-hidden="true"></i>
-                                                                    </button>
-                                                                </a>
-                                                                <a href="javascript:void(0)" data-toggle="tooltip"
-                                                                    data-original-title="Print">
-                                                                    <!-- <button type="button"
-                                                                        class="btn btn-icon btn-warning btn-outline">
-                                                                        <i class="icon wb-print" aria-hidden="true"></i>
-                                                                    </button> -->
-                                                                    <a data-toggle="tooltip"
-                                                                        data-original-title="Tambah Data">
-                                                                        <button type="button"
-                                                                            class="btn btn-icon btn-outline btn-info"
-                                                                            data-toggle="modal"
-                                                                            data-target="#TambahControlTableBody1">
-                                                                            <i class="icon wb-plus"
-                                                                                aria-hidden="true"></i>
-                                                                        </button>
-                                                                    </a>
-                                                                    <!-- Modal Tammbah Data Control  Table Body 1 -->
-                                                                    <div class="modal fade modal-info "
-                                                                        id="TambahControlTableBody1" aria-hidden="true"
-                                                                        aria-labelledby="TambahControlTableBody1"
-                                                                        role="dialog" tabindex="-1">
-                                                                        <div
-                                                                            class="modal-dialog modal-simple modal-center modal-lg">
-                                                                            <div class="modal-content">
-                                                                                <div class="modal-header">
-                                                                                    <button type="button" class="close"
-                                                                                        data-dismiss="modal"
-                                                                                        aria-label="Close">
-                                                                                        <span
-                                                                                            aria-hidden="true">×</span>
-                                                                                    </button>
-                                                                                    <h3 class="modal-title">Input
-                                                                                        Investment Planning Control
-                                                                                        Table</h3>
-                                                                                </div>
-
-                                                                                <div class="modal-body">
-                                                                                    <form>
-                                                                                        <div class="form-group row">
-                                                                                            <h4 class="col-md-12 modal-title text-left"
-                                                                                                style="color:black;">
-                                                                                                SUBJECT</h4>
-                                                                                        </div>
-                                                                                        <div class="form-group row">
-                                                                                            <label
-                                                                                                class="col-md-2 col-form-label text-left"
-                                                                                                style="color:black;">Department</label>
-                                                                                            <div class="col-md-4">
-                                                                                                <div class="form-group">
-                                                                                                    <select
-                                                                                                        class="form-control">
-                                                                                                        <option>Pilih
-                                                                                                            Departement
-                                                                                                        </option>
-                                                                                                        <option>Body
-                                                                                                            Plant 1
-                                                                                                        </option>
-                                                                                                        <option>Body
-                                                                                                            Plant 2
-                                                                                                        </option>
-                                                                                                        <option>BQC
-                                                                                                        </option>
-                                                                                                    </select>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <label
-                                                                                                class="col-md-2 col-form-label text-left"
-                                                                                                style="color:black;">Category</label>
-                                                                                            <div class="col-md-4">
-                                                                                                <div class="form-group">
-                                                                                                    <select
-                                                                                                        class="form-control">
-                                                                                                        <option>Pilih
-                                                                                                            Category
-                                                                                                        </option>
-                                                                                                        <option>
-                                                                                                            Improvement
-                                                                                                        </option>
-                                                                                                        <option>
-                                                                                                            Replacement
-                                                                                                        </option>
-                                                                                                        <option>Other
-                                                                                                        </option>
-                                                                                                    </select>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="form-group row">
-                                                                                            <label
-                                                                                                class="col-md-2 col-form-label text-left"
-                                                                                                style="color:black;">Proposal</label>
-                                                                                            <div class="col-md-10">
-                                                                                                <input type="text"
-                                                                                                    class="form-control"
-                                                                                                    name="name"
-                                                                                                    placeholder=" Judul Proposal"
-                                                                                                    autocomplete="off">
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <hr>
-                                                                                        <div class="form-group row">
-                                                                                            <h4 class="col-md-12 modal-title text-left"
-                                                                                                style="color:black;">
-                                                                                                BUDGET</h4>
-                                                                                        </div>
-                                                                                        <div class="form-group row">
-                                                                                            <label
-                                                                                                class="col-md-2 col-form-label mt-4"
-                                                                                                style="color:black;">In
-                                                                                                RP</label>
-                                                                                            <div class="col-md-4">
-                                                                                                <span
-                                                                                                    style="color:red;font-size: 13px;font-style: italic;">*(Sisa
-                                                                                                    budget Rp
-                                                                                                    300)</span>
-                                                                                                <div
-                                                                                                    class="input-group">
-                                                                                                    <div
-                                                                                                        class="input-group-prepend">
-                                                                                                        <span
-                                                                                                            class="input-group-text">RP</span>
-                                                                                                    </div>
-                                                                                                    <input type="number"
-                                                                                                        class="form-control"
-                                                                                                        placeholder="Nominal Rupiah">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <label
-                                                                                                class="col-md-2 col-form-label mt-4"
-                                                                                                style="color:black;">In
-                                                                                                JPY</label>
-                                                                                            <div class="col-md-4">
-                                                                                                <span
-                                                                                                    style="color:red;font-size: 13px;font-style: italic;">*(Sisa
-                                                                                                    budget YJP
-                                                                                                    300)</span>
-                                                                                                <div
-                                                                                                    class="input-group">
-                                                                                                    <div
-                                                                                                        class="input-group-prepend">
-                                                                                                        <span
-                                                                                                            class="input-group-text">JPY</span>
-                                                                                                    </div>
-                                                                                                    <input type="number"
-                                                                                                        class="form-control"
-                                                                                                        placeholder="Nominal Yen">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </form>
-                                                                                </div>
-                                                                                <div class="modal-footer">
-                                                                                    <button type="button"
-                                                                                        class="btn btn-danger"
-                                                                                        data-dismiss="modal">Reset</button>
-                                                                                    <button type="submit"
-                                                                                        class="btn btn-primary">Submit</button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!-- End Modal Tammbah Data Control  Table Body 1-->
-                                                            </div>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div
-                                                class=" table table-responsive table-bordered text-center 10px table-striped text-nowrap">
-                                                <table class="table" id="table-proposal">
+                                                class=" card-body card-shadow table table-responsive table-bordered text-center 10px table-striped text-nowrap">
+                                                <table class="table tableproposal table-hover">
                                                     <thead class="table-info">
                                                         <tr>
                                                             <th class="judul align-middle text-center" colspan="6">
@@ -315,57 +128,57 @@ include '../elemen/header.php';?>
                                                                 IMPLEMENTATION CONTROL TABLE</th>
                                                         </tr>
                                                         <tr>
-                                                            <th class="judul align-middle text-center" rowspan="2"
-                                                                style="width:200px;" colspan="1">NO</th>
-                                                            <th class="judul align-middle text-center" rowspan="2"
-                                                                style="width :500px;">DEPEARTMENT</th>
-                                                            <th class="judul align-middle text-center" rowspan="2"
-                                                                style="width :500px;">CATEGORY</th>
-                                                            <th class="judul align-middle text-center" rowspan="2"
-                                                                style="width :500px;">DESCRIPTION</th>
-                                                            <th class="judul align-middle text-center" rowspan="2"
-                                                                style="width: 300px;">TOTAL MILL JPY</th>
-                                                            <th class="judul align-middle text-center" rowspan="2"
-                                                                style="width: 300px;">TOTAL MILL IDR</th>
-                                                            <th class="judul align-middle text-center" rowspan="2"
-                                                                style="width:20px;">No</th>
-                                                            <th class="judul align-middle text-center" colspan="2"
-                                                                style="width:300px;">IA No.</th>
-                                                            <th class="judul align-middle text-center" rowspan="2"
-                                                                style="width:300px;">DESCRIPTION</th>
-                                                            <th class="judul align-middle text-center" colspan="3"
-                                                                style="width:300px;">Original Currency</th>
-                                                            <th class="judul align-middle text-center" colspan="2"
-                                                                style="width:300px;">Actual In</th>
-                                                            <th class="judul align-middle text-center" colspan="2"
-                                                                style="width:300px;">Remaining</th>
-                                                            <th class="judul align-middle text-center" rowspan="2"
-                                                                style="width: 200px;">Valid Until</th>
+                                                            <th class="judul align-middle text-center" rowspan="2">NO
+                                                            </th>
+                                                            <th class="judul align-middle text-center" rowspan="2">
+                                                                DEPEARTMENT</th>
+                                                            <th class="judul align-middle text-center" rowspan="2">
+                                                                CATEGORY</th>
+                                                            <th class="judul align-middle text-center" rowspan="2">
+                                                                DESCRIPTION</th>
+                                                            <th class="judul align-middle text-center" rowspan="2">TOTAL
+                                                                MILL JPY</th>
+                                                            <th class="judul align-middle text-center" rowspan="2">TOTAL
+                                                                MILL IDR</th>
+                                                            <th class="judul align-middle text-center" rowspan="2">No
+                                                            </th>
+                                                            <th class="judul align-middle text-center" colspan="2">IA
+                                                                No.</th>
+                                                            <th class="judul align-middle text-center" rowspan="2">
+                                                                DESCRIPTION</th>
+                                                            <th class="judul align-middle text-center" colspan="3">
+                                                                Original Currency</th>
+                                                            <th class="judul align-middle text-center" colspan="2">
+                                                                Actual In</th>
+                                                            <th class="judul align-middle text-center" colspan="2">
+                                                                Remaining</th>
+                                                            <th class="judul align-middle text-center" rowspan="2">Valid
+                                                                Until</th>
                                                             <th class="judul align-middle text-center">Remark</th>
                                                             <th class="judul align-middle text-center table-danger"
-                                                                rowspan="2" style="width: 200px;">Action</th>
+                                                                rowspan="2">Action</th>
 
                                                         </tr>
                                                         <tr>
-                                                            <th class="align-middle text-center" style="width: 400px;">
+                                                            <th class="align-middle text-center">
                                                                 Subject</th>
-                                                            <th class="align-middle text-center" style="width: 400px;">
+                                                            <th class="align-middle text-center">
                                                                 IO</th>
-                                                            <th class="align-middle text-center" style="width: 100px;">
+                                                            <th class="align-middle text-center">
                                                                 JPY</th>
-                                                            <th class="align-middle text-center" style="width: 100px;">
+                                                            <th class="align-middle text-center">
                                                                 Rp</th>
-                                                            <th class="align-middle text-center" style="width: 100px;">
+                                                            <th class="align-middle text-center">
                                                                 1000USD</th>
-                                                            <th class="align-middle text-center" style="width: 100px;">
+                                                            <th class="align-middle text-center">
                                                                 JPY</th>
-                                                            <th class="align-middle text-center" style="width: 100px;">
+                                                            <th class="align-middle text-center">
                                                                 Rp</th>
-                                                            <th class="align-middle text-center" style="width: 100px;">
+                                                            <th class="align-middle text-center">
                                                                 JPY</th>
-                                                            <th class="align-middle text-center" style="width: 100px;">
+                                                            <th class="align-middle text-center">
                                                                 Rp</th>
-                                                            <th class="align-middle text-center" style="width: 100 px">
+                                                            <th class="align-middle text-center">
                                                                 CT Updated</th>
                                                         </tr>
 
@@ -445,18 +258,32 @@ include '../elemen/header.php';?>
                                                             <td class="align-middle text-center"></td>
                                                             <td class="align-middle text-center"></td>
                                                             <td class="align-middle text-center">
-                                                                <a data-toggle="tooltip" data-original-title="Edit">
+                                                                <a href="tracking.php">
                                                                     <button type="button"
-                                                                        class="btn btn-icon btn-success"
-                                                                        data-target="#EditControlTableBody1"
-                                                                        data-toggle="modal">
+                                                                        class="btn btn-icon btn-info  ">
+                                                                        <i class="icon wb-eye" aria-hidden="true"></i>
+                                                                    </button>
+                                                                </a>
+                                                                <a href="formupdate_ia.php">
+                                                                    <button type="button"
+                                                                        class="btn btn-icon btn-success">
+                                                                        <i class="icon wb-upload"
+                                                                            aria-hidden="true"></i>
+                                                                    </button>
+                                                                </a>
+
+                                                                <a href="formedit_ia.php">
+                                                                    <button type="button"
+                                                                        class="btn btn-icon btn-warning">
                                                                         <i class="icon wb-edit" aria-hidden="true"></i>
                                                                     </button>
                                                                 </a>
-                                                                <a href="javascript:void(0)" data-toggle="tooltip"
-                                                                    data-original-title="Hapus">
+
+
+                                                                <a href="../proses/dashboard/tambahplanning.php?del="
+                                                                    data-toggle="tooltip" data-original-title="Hapus">
                                                                     <button type="button"
-                                                                        class="btn btn-icon btn-danger HapusData">
+                                                                        class="btn btn-icon btn-danger">
                                                                         <i class="icon oi-trashcan"
                                                                             aria-hidden="true"></i>
                                                                     </button>
@@ -620,12 +447,13 @@ include '../elemen/footer.php';?>
 
                 <script>
                 $(document).ready(function() {
-                    $('#table-proposal').DataTable({
+                    $('.tableproposal').DataTable({
                         dom: 'Bfrtip',
                         buttons: [
                             'excel', 'pdf', 'print',
 
-                        ]
+                        ],
+                        scrollX: true
                     });
                 });
                 </script>
