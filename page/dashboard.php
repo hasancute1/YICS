@@ -3,7 +3,6 @@
 include("../config/config.php");
 
 include("../proses/services/notifications.php");
-// include("../proses/functions.php");
 
 if (!isset($_SESSION['yics_user'])) {
   header('location: ../index.php');
@@ -582,6 +581,8 @@ include '../elemen/footer.php';?>
 
     <?php 
     // <!-- GRAFIK Consumtion Budget Yearly Investmment############################################################################## -->
+
+    // alokasi budget
     $query_budget = mysqli_query($link_yics, "SELECT sum(budget) as budget FROM view_alokasi_budget WHERE status='aktif'") or die(mysqli_error($link_yics));
 
     $get_data_budget = mysqli_fetch_assoc($query_budget);
@@ -595,6 +596,22 @@ include '../elemen/footer.php';?>
        
         $alokasi_budget = json_encode($array_alokasi_budget);
     }
+
+    // Grafik Akumulasi Budget
+    // ambil dari table tracking_prop
+    $query_akumulasi = query("SELECT 
+        MONTH(tracking_prop.time) AS bulan, 
+        SUM(proposal.cost) AS cost
+        FROM tracking_prop 
+        JOIN proposal on tracking_prop.id_prop = proposal.id_prop
+        JOIN progress  ON tracking_prop.id_prog = progress.id_prog
+        WHERE tracking_prop.id_approval  = '1' AND progress.step = '5'
+        AND proposal.id_fis = '17'
+        GROUP BY  bulan
+        ");
+
+    // var_dump($query_akumulasi);
+
     
     
   ?>
