@@ -610,9 +610,30 @@ include '../elemen/footer.php';?>
         GROUP BY  bulan
         ");
 
-    // var_dump($query_akumulasi);
+    foreach($query_akumulasi as $row){
+        $query_akum_array[$row['bulan']] = $row['cost']; 
+    }
 
+
+    if(count($query_akumulasi)>0){
+
+        $total = 0;
+
+        for ($i=0; $i <= 12; $i++) { 
+
+            if(isset($query_akum_array[$i])){
+                $total += $query_akum_array[$i];
+            }else{
+                $total += 0;
+            }
+            
+            $data_comsumtion_budget[] = $total; 
+        }
     
+        $comsumtion_budget = json_encode($data_comsumtion_budget);
+    }
+
+    var_dump($query_akum_array);
     
   ?>
 
@@ -633,7 +654,7 @@ include '../elemen/footer.php';?>
                     label: "AKUMULASI KONSUMSI",
                     borderColor: Config.colors("green", 800),
                     hoverBackgroundColor: Config.colors("green", 200),
-                    data: [1250, 2000, 2500, 3000, 3500, 4000, 4500, ],
+                    data: <?php echo $comsumtion_budget; ?>,
                     order: 2,
                 },
                 {
