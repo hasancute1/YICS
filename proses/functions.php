@@ -69,5 +69,51 @@ function updateNotif($id){
 
 }
 
+function get_comsumtion_budget($id){
+
+        $fis_aktif = single_query("SELECT id_fis FROM time_fiscal WHERE status='aktif'");
+
+        // ambil dari table tracking_prop
+        $query_akumulasi = query("SELECT 
+        MONTH(tracking_prop.time) AS bulan, 
+        SUM(proposal.cost) AS cost
+        FROM tracking_prop 
+        JOIN proposal on tracking_prop.id_prop = proposal.id_prop
+        JOIN progress  ON tracking_prop.id_prog = progress.id_prog
+        WHERE tracking_prop.id_approval  = '1' AND progress.step = '5'
+        AND proposal.id_dep = ".$id."
+        AND proposal.id_fis = '".$fis_aktif['id_fis']."'
+        GROUP BY  bulan
+        ");       
+
+    foreach($query_akumulasi as $row){
+        $query_akum_array[$row['bulan']] = $row['cost']; 
+        // $list_bulan_aktif[] = $row['bulan']; 
+    }
+
+    $list_bulan = [4,5,6,7,8,9,10,11,12,1,2,3];
+    // $last_data_query = end($query_akumulasi);
+    // $bulan_terkahir = $last_data_query['bulan'];
+
+
+    if(count($query_akumulasi)>0){
+      
+
+        foreach ($list_bulan as $key => $bulan) { 
+            if(isset($query_akum_array[$bulan])){
+
+                $data_comsumtion_budget[] = intval( $query_akum_array[$bulan] ); 
+
+            }else{
+                $data_comsumtion_budget[] = 0; 
+            }
+        }
+    
+        return $data_comsumtion_budget;
+    }
+
+
+}
+
 
 ?>
