@@ -146,6 +146,15 @@ include '../elemen/header.php';?>
           </div>
             <!-- End first -->
 
+            <?php 
+
+            // data ia
+
+            $id_ia = $_GET['id_ia'];
+            $data_ia = single_query("SELECT * FROM ia where id_ia='".$id_ia."'");           
+
+            ?>
+
             <!-- Second Row -->          
           <div class="col-lg-12 col-md-12">
             <div class="card card-shadow" style="border-radius: 10px;">
@@ -153,7 +162,7 @@ include '../elemen/header.php';?>
                 <div class="row">
                   <div class="col-lg-4 col-md-4">
                     <div class="panel-heading">
-                      <h4 class=" text-left">P4/BDY/IP/07/21/I.4 .04.C-00005</h4> <hr style="border-color:grey;">
+                      <h4 class=" text-left"><?= $data_ia['ia'] ?></h4> <hr style="border-color:grey;">
                       <h5 class=" text-left">Procurement NB For Support Production</h5><hr style="border-color:grey;">
                     </div>                 
                   </div>
@@ -176,6 +185,18 @@ include '../elemen/header.php';?>
                     </div>   
                   </div>
                 </div>   
+
+                <?php 
+
+                $tracking_ia = query("SELECT * FROM tracking_ia
+                JOIN progress ON tracking_ia.id_prog = progress.id_prog 
+                WHERE tracking_ia.id_ia=".$id_ia."
+                AND id_ket != 1");
+
+                // var_dump($tracking_ia);
+
+
+                ?>
                 
                    
                 
@@ -183,34 +204,20 @@ include '../elemen/header.php';?>
                   <div class="col-lg-12 col-md-12">
                       <div class="pearls row">
                         <div class="pearl current col-3">
-                          <div class="pearl-icon"><i class="icon wb-user" aria-hidden="true"></i></div>
+                          <div class="pearl-icon"><i class="icon wb-user" aria-hidden="true"></i>
+                          </div>
                             <h3 class="pearl-tittle">RSS/RFN</h3>
                             <br>
                             <div class="list-group bg-blue-grey-100 bg-inherit text-left w-250 ml-5">
+                              <?php foreach($tracking_ia as $row){ ?>
                               <div class="list-group-item blue-grey-500">                              
                                   <i class="icon wb-check" aria-hidden="true"></i>
-                                  PIC<br>
+                                  <?= $row['nama_progress'] ?><br>
                                     <i class="icon oi-calendar" aria-hidden="true"></i>12 Juni 2022 | 17.30 wib <br>
                                     <i class="icon wb-user" aria-hidden="true"></i>by Effendi
-                                </div>                                
-                              <div class="list-group-item blue-grey-500">                              
-                                  <i class="icon wb-check" aria-hidden="true"></i>
-                                  SECT.HEAD<br>
-                                    <i class="icon oi-calendar" aria-hidden="true"></i>12 Juni 2022 | 17.30 wib <br>
-                                    <i class="icon wb-user" aria-hidden="true"></i>by Effendi
-                                </div>                                
-                              <div class="list-group-item blue-grey-500">                              
-                                  <i class="icon wb-check" aria-hidden="true"></i>
-                                  DEPT.HEAD<br>
-                                    <i class="icon oi-calendar" aria-hidden="true"></i>12 Juni 2022 | 17.30 wib <br>
-                                    <i class="icon wb-user" aria-hidden="true"></i>by Effendi
-                                </div>                                
-                              <div class="list-group-item blue-grey-500">                              
-                                  <i class="icon wb-check" aria-hidden="true"></i>
-                                  DIV.HEAD<br>
-                                    <i class="icon oi-calendar" aria-hidden="true"></i>12 Juni 2022 | 17.30 wib <br>
-                                    <i class="icon wb-user" aria-hidden="true"></i>by Effendi
-                                </div>                                
+                                </div>       
+                              <?php } ?>
+                                                           
                             </div>  
                         </div>
                          

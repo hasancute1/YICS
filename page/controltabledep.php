@@ -267,13 +267,13 @@ $id_dept = $_GET['dept'];
                                                             <td class="align-middle text-center"></td>
                                                             <td class="align-middle text-center"></td>
                                                             <td class="align-middle text-center">
-                                                                <a href="tracking.php">
+                                                                <a href="Tracking.php?id_ia=1">
                                                                     <button type="button"
                                                                         class="btn btn-icon btn-info  ">
                                                                         <i class="icon wb-eye" aria-hidden="true"></i>
                                                                     </button>
                                                                 </a>
-                                                                <a href="formupdate_ia.php">
+                                                                <a href="formupdate_ia.php?id_ia=1">
                                                                     <button type="button"
                                                                         class="btn btn-icon btn-success">
                                                                         <i class="icon wb-upload"
@@ -281,7 +281,7 @@ $id_dept = $_GET['dept'];
                                                                     </button>
                                                                 </a>
 
-                                                                <a href="formedit_ia.php">
+                                                                <a href="formedit_ia.php?id_ia=1">
                                                                     <button type="button"
                                                                         class="btn btn-icon btn-warning">
                                                                         <i class="icon wb-edit" aria-hidden="true"></i>
