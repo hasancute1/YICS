@@ -610,13 +610,35 @@ include '../elemen/footer.php';?>
         GROUP BY  bulan
         ");
 
-    // var_dump($query_akumulasi);
+    foreach($query_akumulasi as $row){
+        $query_akum_array[$row['bulan']] = $row['cost']; 
+        // $list_bulan_aktif[] = $row['bulan']; 
+    }
 
+    $list_bulan = [4,5,6,7,8,9,10,11,12,1,2,3];
+    // $last_data_query = end($query_akumulasi);
+    // $bulan_terkahir = $last_data_query['bulan'];
+
+
+    if(count($query_akumulasi)>0){
+
+        $total = 0;
+
+        foreach ($list_bulan as $key => $bulan) { 
+
+            if(isset($query_akum_array[$bulan])){
+                $total += $query_akum_array[$bulan];
+            }else{
+                $total += 0;
+            }
+            
+            $data_comsumtion_budget[] = $total; 
+        }
     
+        $comsumtion_budget = json_encode($data_comsumtion_budget);
+    } 
     
   ?>
-
-
 
 
     <!-- // javascript grfaik bar ########################-->
@@ -633,7 +655,7 @@ include '../elemen/footer.php';?>
                     label: "AKUMULASI KONSUMSI",
                     borderColor: Config.colors("green", 800),
                     hoverBackgroundColor: Config.colors("green", 200),
-                    data: [1250, 2000, 2500, 3000, 3500, 4000, 4500, ],
+                    data: <?php echo $comsumtion_budget; ?>,
                     order: 2,
                 },
                 {
@@ -649,7 +671,7 @@ include '../elemen/footer.php';?>
                     borderColor: Config.colors("yellow", 800),
                     hoverBackgroundColor: "rgba(255, 206, 86, 0.2)",
                     borderWidth: 2,
-                    data: [650, 450, 750, 500, 600, 450, 550]
+                    data: <?= json_encode( get_comsumtion_budget(1) ) ?>
                 },
                 {
                     label: "BODY PLANT  2",
@@ -657,7 +679,7 @@ include '../elemen/footer.php';?>
                     borderColor: Config.colors("red", 800),
                     hoverBackgroundColor: "rgba(255, 99, 132, 0.2)",
                     borderWidth: 2,
-                    data: [300, 200, 400, 250, 450, 350, 400]
+                    data: <?= json_encode( get_comsumtion_budget(2) ) ?>
                 },
                 {
                     label: "BQC",
@@ -665,7 +687,7 @@ include '../elemen/footer.php';?>
                     borderColor: Config.colors("purple", 800),
                     hoverBackgroundColor: "rgba(98, 168, 234, .3)",
                     borderWidth: 2,
-                    data: [300, 200, 400, 205, 450, 350, 400]
+                    data: <?= json_encode( get_comsumtion_budget(3) ) ?>
                 },
 
             ]
