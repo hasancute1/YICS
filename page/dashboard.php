@@ -597,6 +597,8 @@ include '../elemen/footer.php';?>
         $alokasi_budget = json_encode($array_alokasi_budget);
     }
 
+    $fis_aktif = single_query("SELECT id_fis FROM time_fiscal WHERE status='aktif'");
+
     // Grafik Akumulasi Budget
     // ambil dari table tracking_prop
     $query_akumulasi = query("SELECT 
@@ -606,7 +608,7 @@ include '../elemen/footer.php';?>
         JOIN proposal on tracking_prop.id_prop = proposal.id_prop
         JOIN progress  ON tracking_prop.id_prog = progress.id_prog
         WHERE tracking_prop.id_approval  = '1' AND progress.step = '5'
-        AND proposal.id_fis = '17'
+        AND proposal.id_fis = '".$fis_aktif['id_fis']."'
         GROUP BY  bulan
         ");
 
