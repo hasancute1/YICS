@@ -188,13 +188,39 @@ include '../elemen/header.php';?>
 
                 <?php 
 
-                $tracking_ia = query("SELECT * FROM tracking_ia
+                $tracking_ia_rss = query("SELECT * FROM tracking_ia
                 JOIN progress ON tracking_ia.id_prog = progress.id_prog 
                 WHERE tracking_ia.id_ia=".$id_ia."
-                AND id_ket != 1");
+                AND id_ket = 2");
+                $id_prog_rss = get_pluck($tracking_ia_rss , 'id_prog');                     
 
-                // var_dump($tracking_ia);
 
+                $tracking_ia_bp = query("SELECT * FROM tracking_ia
+                JOIN progress ON tracking_ia.id_prog = progress.id_prog 
+                WHERE tracking_ia.id_ia=".$id_ia."
+                AND id_ket = 3");
+                $id_prog_bp = get_pluck($tracking_ia_bp , 'id_prog');
+
+                $tracking_ia_pr = query("SELECT * FROM tracking_ia
+                JOIN progress ON tracking_ia.id_prog = progress.id_prog 
+                WHERE tracking_ia.id_ia=".$id_ia."
+                AND id_ket = 4");
+                $id_prog_pr = get_pluck($tracking_ia_pr , 'id_prog');
+
+                $tracking_ia_gr = query("SELECT * FROM tracking_ia
+                JOIN progress ON tracking_ia.id_prog = progress.id_prog 
+                WHERE tracking_ia.id_ia=".$id_ia."
+                AND id_ket = 5");
+                $id_prog_gr = get_pluck($tracking_ia_gr , 'id_prog');
+
+
+                // list Progress rss
+                $progress_rss = query("SELECT * FROM progress WHERE id_ket=2");
+                $progress_bp = query("SELECT * FROM progress WHERE id_ket=3");
+                $progress_pr = query("SELECT * FROM progress WHERE id_ket=4");
+                $progress_gr = query("SELECT * FROM progress WHERE id_ket=5");
+
+               
 
                 ?>
                 
@@ -209,8 +235,8 @@ include '../elemen/header.php';?>
                             <h3 class="pearl-tittle">RSS/RFN</h3>
                             <br>
                             <div class="list-group bg-blue-grey-100 bg-inherit text-left w-250 ml-5">
-                              <?php foreach($tracking_ia as $row){ ?>
-                              <div class="list-group-item blue-grey-500">                              
+                              <?php foreach($progress_rss as $row){ ?>
+                              <div class="list-group-item bg-<?= (in_array($row['id_prog'] , $id_prog_rss)? "teal":"gray") ?>-300">                              
                                   <i class="icon wb-check" aria-hidden="true"></i>
                                   <?= $row['nama_progress'] ?><br>
                                     <i class="icon oi-calendar" aria-hidden="true"></i>12 Juni 2022 | 17.30 wib <br>
@@ -227,120 +253,16 @@ include '../elemen/header.php';?>
                             <h3 class="pearl-tittle">BP/BPE APPROVAL</h3>
                             <br>
                             <div class="list-group bg-blue-grey-100 bg-inherit text-left w-250 ml-3">
-                              <div class="list-group-item blue-grey-500">                              
+                              
+                              <?php foreach($progress_bp as $row){ ?>
+                                <div class="list-group-item bg-<?= (in_array($row['id_prog'] , $id_prog_bp)? "teal":"gray") ?>-300">                              
                                   <i class="icon wb-check" aria-hidden="true"></i>
-                                    CREATE<br>
+                                  <?= $row['nama_progress'] ?><br>
                                     <i class="icon oi-calendar" aria-hidden="true"></i>12 Juni 2022 | 17.30 wib <br>
                                     <i class="icon wb-user" aria-hidden="true"></i>by Effendi
-                                </div>                                 
-                              <div class="list-group-item blue-grey-500">                              
-                                  <i class="icon wb-check" aria-hidden="true"></i>
-                                  DEPT.HEAD<br>
-                                    <i class="icon oi-calendar" aria-hidden="true"></i>12 Juni 2022 | 17.30 wib <br>
-                                    <i class="icon wb-user" aria-hidden="true"></i>by Effendi
-                                </div>                                 
-                              <div class="list-group-item blue-grey-500">                              
-                                  <i class="icon wb-check" aria-hidden="true"></i>
-                                  TAGGING<br>
-                                    <i class="icon oi-calendar" aria-hidden="true"></i>12 Juni 2022 | 17.30 wib <br>
-                                    <i class="icon wb-user" aria-hidden="true"></i>by Effendi
-                                </div>                                 
-                              <div class="list-group-item blue-grey-500">                              
-                                  <i class="icon wb-check" aria-hidden="true"></i>
-                                  MAXIMO<br>
-                                    <i class="icon oi-calendar" aria-hidden="true"></i>12 Juni 2022 | 17.30 wib <br>
-                                    <i class="icon wb-user" aria-hidden="true"></i>by Effendi
-                                </div>                                 
-                              <div class="list-group-item blue-grey-500">                              
-                                  <i class="icon wb-check" aria-hidden="true"></i>
-                                  FAM<br>
-                                    <i class="icon oi-calendar" aria-hidden="true"></i>12 Juni 2022 | 17.30 wib <br>
-                                    <i class="icon wb-user" aria-hidden="true"></i>by Effendi
-                                </div>                                 
-                              <div class="list-group-item blue-grey-500">                              
-                                  <i class="icon wb-check" aria-hidden="true"></i>
-                                  DIV.HEAD<br>
-                                    <i class="icon oi-calendar" aria-hidden="true"></i>12 Juni 2022 | 17.30 wib <br>
-                                    <i class="icon wb-user" aria-hidden="true"></i>by Effendi
-                                </div>                                 
-                              <div class="list-group-item blue-grey-500">                              
-                                  <i class="icon wb-check" aria-hidden="true"></i>
-                                  DIR (I)<br>
-                                    <i class="icon oi-calendar" aria-hidden="true"></i>12 Juni 2022 | 17.30 wib <br>
-                                    <i class="icon wb-user" aria-hidden="true"></i>by Effendi
-                                </div>                                 
-                              <div class="list-group-item blue-grey-500">                              
-                                  <i class="icon wb-check" aria-hidden="true"></i>
-                                  DIR (J)<br>
-                                    <i class="icon oi-calendar" aria-hidden="true"></i>12 Juni 2022 | 17.30 wib <br>
-                                    <i class="icon wb-user" aria-hidden="true"></i>by Effendi
-                                </div>                                 
-                              <div class="list-group-item blue-grey-500">                              
-                                  <i class="icon wb-check" aria-hidden="true"></i>
-                                  FIN (I)<br>
-                                    <i class="icon oi-calendar" aria-hidden="true"></i>12 Juni 2022 | 17.30 wib <br>
-                                    <i class="icon wb-user" aria-hidden="true"></i>by Effendi
-                                </div>                                 
-                              <div class="list-group-item blue-grey-500">                              
-                                  <i class="icon wb-check" aria-hidden="true"></i>
-                                  FIN (J)<br>
-                                    <i class="icon oi-calendar" aria-hidden="true"></i>12 Juni 2022 | 17.30 wib <br>
-                                    <i class="icon wb-user" aria-hidden="true"></i>by Effendi
-                                </div>                                 
-                              <div class="list-group-item blue-grey-500">                              
-                                  <i class="icon wb-check" aria-hidden="true"></i>
-                                  VPD<br>
-                                    <i class="icon oi-calendar" aria-hidden="true"></i>12 Juni 2022 | 17.30 wib <br>
-                                    <i class="icon wb-user" aria-hidden="true"></i>by Effendi
-                                </div>                                 
-                              <div class="list-group-item blue-grey-500">                              
-                                  <i class="icon wb-check" aria-hidden="true"></i>
-                                  PD<br>
-                                    <i class="icon oi-calendar" aria-hidden="true"></i>12 Juni 2022 | 17.30 wib <br>
-                                    <i class="icon wb-user" aria-hidden="true"></i>by Effendi
-                                </div>                                 
-                              <div class="list-group-item blue-grey-500">                              
-                                  <i class="icon wb-check" aria-hidden="true"></i>
-                                  BUDGET (I)<br>
-                                    <i class="icon oi-calendar" aria-hidden="true"></i>12 Juni 2022 | 17.30 wib <br>
-                                    <i class="icon wb-user" aria-hidden="true"></i>by Effendi
-                                </div>                                 
-                              <div class="list-group-item blue-grey-500">                              
-                                  <i class="icon wb-check" aria-hidden="true"></i>
-                                  BUDGET (J)<br>
-                                    <i class="icon oi-calendar" aria-hidden="true"></i>12 Juni 2022 | 17.30 wib <br>
-                                    <i class="icon wb-user" aria-hidden="true"></i>by Effendi
-                                </div>                                 
-                              <div class="list-group-item blue-grey-500">                              
-                                  <i class="icon wb-check" aria-hidden="true"></i>
-                                  IO<br>
-                                    <i class="icon oi-calendar" aria-hidden="true"></i>12 Juni 2022 | 17.30 wib <br>
-                                    <i class="icon wb-user" aria-hidden="true"></i>by Effendi
-                                </div>                                 
-                              <div class="list-group-item blue-grey-500">                              
-                                  <i class="icon wb-check" aria-hidden="true"></i>
-                                  AMCF<br>
-                                    <i class="icon oi-calendar" aria-hidden="true"></i>12 Juni 2022 | 17.30 wib <br>
-                                    <i class="icon wb-user" aria-hidden="true"></i>by Effendi
-                                </div>                                 
-                              <div class="list-group-item blue-grey-500">                              
-                                  <i class="icon wb-check" aria-hidden="true"></i>
-                                  PR<br>
-                                    <i class="icon oi-calendar" aria-hidden="true"></i>12 Juni 2022 | 17.30 wib <br>
-                                    <i class="icon wb-user" aria-hidden="true"></i>by Effendi
-                                </div>                                 
-                              <div class="list-group-item blue-grey-500">                              
-                                  <i class="icon wb-check" aria-hidden="true"></i>
-                                  PO<br>
-                                    <i class="icon oi-calendar" aria-hidden="true"></i>12 Juni 2022 | 17.30 wib <br>
-                                    <i class="icon wb-user" aria-hidden="true"></i>by Effendi
-                                </div>                                 
-                              <div class="list-group-item blue-grey-500">                              
-                                  <i class="icon wb-check" aria-hidden="true"></i>
-                                  SEND PO<br>
-                                    <i class="icon oi-calendar" aria-hidden="true"></i>12 Juni 2022 | 17.30 wib <br>
-                                    <i class="icon wb-user" aria-hidden="true"></i>by Effendi
-                                </div>                                 
+                                </div>    
+                              <?php } ?>
+                                                         
                             </div> 
                           </div>
 
@@ -349,13 +271,17 @@ include '../elemen/header.php';?>
                             <h3 class="pearl-tittle" data-toggle="dropdown">PR</h3>
                             <br>
                             <div class="list-group bg-blue-grey-100 bg-inherit text-left w-250 ml-10">
-                              <div class="list-group-item blue-grey-500">                              
+                           
+                            <?php foreach($progress_pr as $row){ ?>
+                            <div class="list-group-item bg-<?= (in_array($row['id_prog'] , $id_prog_pr)? "teal":"gray") ?>-300">                              
                                   <i class="icon wb-check" aria-hidden="true"></i>
-                                    PUD<br>
+                                  <?= $row['nama_progress'] ?><br>
                                     <i class="icon oi-calendar" aria-hidden="true"></i>12 Juni 2022 | 17.30 wib <br>
                                     <i class="icon wb-user" aria-hidden="true"></i>by Effendi
                                 </div>                                
-                            </div>                            
+                            </div>   
+                            <?php } ?>
+
                           </div>
 
                           <div class="pearl col-3">
@@ -363,13 +289,16 @@ include '../elemen/header.php';?>
                             <h3 class="pearl-tittle">GR</h3>
                             <br>
                             <div class="list-group bg-blue-grey-100 bg-inherit text-left w-250 ml-10">
-                              <div class="list-group-item blue-grey-500">                              
-                                  <i class="icon wb-check" aria-hidden="true"></i>
-                                    GOOD RECEIVE<br>
-                                    <i class="icon oi-calendar" aria-hidden="true"></i>12 Juni 2022 | 17.30 wib <br>
-                                    <i class="icon wb-user" aria-hidden="true"></i>by Effendi
-                                </div>                                
-                              
+                           
+                              <?php foreach($progress_gr as $row){ ?>                            
+                                  <div class="list-group-item bg-<?= (in_array($row['id_prog'] , $id_prog_gr)? "teal":"gray") ?>-300">                              
+                                    <i class="icon wb-check" aria-hidden="true"></i>
+                                    <?= $row['nama_progress'] ?><br>
+                                      <i class="icon oi-calendar" aria-hidden="true"></i>12 Juni 2022 | 17.30 wib <br>
+                                      <i class="icon wb-user" aria-hidden="true"></i>by Effendi
+                                  </div>                                                          
+                              <?php } ?>
+
                             </div>       
                           </div>
                                             

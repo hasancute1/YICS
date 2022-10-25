@@ -116,4 +116,18 @@ function get_comsumtion_budget($id){
 }
 
 
+function get_pluck($array,$item){
+
+    $data = array();
+    
+    foreach($array as $row){
+
+        $data[] = $row[$item];
+        
+    }
+
+    return $data;
+}
+
+
 ?>
