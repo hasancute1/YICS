@@ -129,5 +129,23 @@ function get_pluck($array,$item){
     return $data;
 }
 
+function get_item_trac_ia($array , $id_prog){
+
+    $data = array();
+
+    foreach($array as $row){
+
+        if($row['id_prog'] == $id_prog){
+            $data[] = $row;
+        }
+    }
+
+    if(isset($data[0])){
+        return $data[0];
+    }
+
+    return $data;
+}
+
 
 ?>

@@ -220,6 +220,8 @@ include '../elemen/header.php';?>
                 $progress_pr = query("SELECT * FROM progress WHERE id_ket=4");
                 $progress_gr = query("SELECT * FROM progress WHERE id_ket=5");
 
+                $status = FALSE;
+
                
 
                 ?>
@@ -235,12 +237,21 @@ include '../elemen/header.php';?>
                             <h3 class="pearl-tittle">RSS/RFN</h3>
                             <br>
                             <div class="list-group bg-blue-grey-100 bg-inherit text-left w-250 ml-5">
-                              <?php foreach($progress_rss as $row){ ?>
-                              <div class="list-group-item bg-<?= (in_array($row['id_prog'] , $id_prog_rss)? "teal":"gray") ?>-300">                              
-                                  <i class="icon wb-check" aria-hidden="true"></i>
+                              <?php foreach($progress_rss as $row){
+                              $status = in_array($row['id_prog'],$id_prog_rss);    
+                              $tracking = get_item_trac_ia($tracking_ia_rss , $row['id_prog']);                                                          
+                                ?>
+                            
+                              <div class="list-group-item bg-<?= ($status? "teal":"gray") ?>-300">          
+                                  <?=($status)? '<i class="icon wb-check" aria-hidden="true"></i>':''?>
                                   <?= $row['nama_progress'] ?><br>
-                                    <i class="icon oi-calendar" aria-hidden="true"></i>12 Juni 2022 | 17.30 wib <br>
-                                    <i class="icon wb-user" aria-hidden="true"></i>by Effendi
+
+                                    <i class="icon oi-calendar" aria-hidden="true"></i>
+                                    
+                                    <?=($status)?$tracking['time'] . ' WIB':'-'?>
+                                    
+                                    <br>
+                                    <i class="icon wb-user" aria-hidden="true"></i><?=($status)?'By Effendy':'-'?>
                                 </div>       
                               <?php } ?>
                                                            
@@ -254,12 +265,17 @@ include '../elemen/header.php';?>
                             <br>
                             <div class="list-group bg-blue-grey-100 bg-inherit text-left w-250 ml-3">
                               
-                              <?php foreach($progress_bp as $row){ ?>
+                              <?php foreach($progress_bp as $row){
+                                $status = in_array($row['id_prog'],$id_prog_rss);
+                                $tracking = get_item_trac_ia($tracking_ia_bp , $row['id_prog']);
+                                ?>
                                 <div class="list-group-item bg-<?= (in_array($row['id_prog'] , $id_prog_bp)? "teal":"gray") ?>-300">                              
-                                  <i class="icon wb-check" aria-hidden="true"></i>
+                                <?=($status)? '<i class="icon wb-check" aria-hidden="true"></i>':''?>
                                   <?= $row['nama_progress'] ?><br>
-                                    <i class="icon oi-calendar" aria-hidden="true"></i>12 Juni 2022 | 17.30 wib <br>
-                                    <i class="icon wb-user" aria-hidden="true"></i>by Effendi
+                                    <i class="icon oi-calendar" aria-hidden="true"></i>
+                                    <?=($status)?$tracking['time'] . ' WIB':'-'?>
+                                    <br>
+                                    <i class="icon wb-user" aria-hidden="true"></i><?=($status)?'By Effendy':'-'?>
                                 </div>    
                               <?php } ?>
                                                          
@@ -272,12 +288,17 @@ include '../elemen/header.php';?>
                             <br>
                             <div class="list-group bg-blue-grey-100 bg-inherit text-left w-250 ml-10">
                            
-                            <?php foreach($progress_pr as $row){ ?>
+                            <?php foreach($progress_pr as $row){ 
+                              $status = in_array($row['id_prog'],$id_prog_rss);
+                              $tracking = get_item_trac_ia($tracking_ia_pr , $row['id_prog']);
+                              ?>
                             <div class="list-group-item bg-<?= (in_array($row['id_prog'] , $id_prog_pr)? "teal":"gray") ?>-300">                              
-                                  <i class="icon wb-check" aria-hidden="true"></i>
+                                <?=($status)? '<i class="icon wb-check" aria-hidden="true"></i>':''?>
                                   <?= $row['nama_progress'] ?><br>
-                                    <i class="icon oi-calendar" aria-hidden="true"></i>12 Juni 2022 | 17.30 wib <br>
-                                    <i class="icon wb-user" aria-hidden="true"></i>by Effendi
+                                    <i class="icon oi-calendar" aria-hidden="true"></i>
+                                    <?=($status)?$tracking['time'] . ' WIB':'-'?>
+                                    <br>
+                                    <i class="icon wb-user" aria-hidden="true"></i><?=($status)?'By Effendy':'-'?>
                                 </div>                                
                             </div>   
                             <?php } ?>
@@ -290,12 +311,17 @@ include '../elemen/header.php';?>
                             <br>
                             <div class="list-group bg-blue-grey-100 bg-inherit text-left w-250 ml-10">
                            
-                              <?php foreach($progress_gr as $row){ ?>                            
+                              <?php foreach($progress_gr as $row){ 
+                                $status = in_array($row['id_prog'],$id_prog_rss);
+                                $tracking = get_item_trac_ia($tracking_ia_gr , $row['id_prog']);
+                                ?>                            
                                   <div class="list-group-item bg-<?= (in_array($row['id_prog'] , $id_prog_gr)? "teal":"gray") ?>-300">                              
-                                    <i class="icon wb-check" aria-hidden="true"></i>
+                                  <?=($status)? '<i class="icon wb-check" aria-hidden="true"></i>':''?>
                                     <?= $row['nama_progress'] ?><br>
-                                      <i class="icon oi-calendar" aria-hidden="true"></i>12 Juni 2022 | 17.30 wib <br>
-                                      <i class="icon wb-user" aria-hidden="true"></i>by Effendi
+                                      <i class="icon oi-calendar" aria-hidden="true"></i>
+                                      <?=($status)?$tracking['time'] . ' WIB':'-'?>
+                                      <br>
+                                      <i class="icon wb-user" aria-hidden="true"></i><?=($status)?'By Effendy':'-'?>
                                   </div>                                                          
                               <?php } ?>
 
