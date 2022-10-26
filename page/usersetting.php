@@ -45,7 +45,7 @@ include '../elemen/header.php';?>
                 <div><br><br>
                     <!-- Site Navbar Utama -->
                     <?php include '../elemen/sidebarleft.php';?>
-                    
+
                     <!-- Site Navbar Search -->
                     <?php include '../elemen/sidebar.php';?>
                     <!-- End Site Navbar Search -->
@@ -92,247 +92,158 @@ include '../elemen/header.php';?>
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-md-2  ">
-                                                    <div class="sticker">
-                                                        <h4 class="pull-left">ROLE USER</h4>
-                                                        <div class="nav-tabs-wrapper">
-                                                            <ul id="tabs"
-                                                                class="nav nav-tabs flex-column nav-stacked text-left"
-                                                                role="tablist" style="line-height: 10%;">
+                                                <div class="col-xl-12">
+                                                    <!-- Example Tabs Left -->
+                                                    <div class="example-wrap">
+                                                        <div class="nav-tabs-vertical" data-plugin="tabs">
+                                                            <ul class="nav nav-tabs mr-25" role="tablist">
+                                                                <h4 class="pull-left">ROLE USER</h4>
                                                                 <?php
-                                    $s_role = mysqli_query($link_yics, "SELECT * FROM user_role ORDER BY `id_role` ASC")or die(mysqli_error($link_yics));
-                                    $i = 0;
-                                    while($user_role = mysqli_fetch_assoc($s_role)){
-                                        //menampung id sebaga array tab
-                                        $tab[$i] = $user_role['id_role'];
-                                        $nama_role[$i] = $user_role['role_name'];
-                                        //membuat tab active terbuka untuk pertama kali
-                                        $setTab = (isset($_SESSION['tab']))? $_SESSION['tab'] : $tab[0];
-                                        $tab_active = ($setTab == $tab[$i])? "active" :"";
-                                    ?>
-                                                                <li class="nav-item mt-2">
-                                                                    <a class="btn btn-sm btn-link btn-info <?=$tab_active?> 
-                                              tab-<?=$tab_active?> list-tab" href="#<?=$user_role['id_role']?>"
-                                                                        id="<?=$user_role['id_role']?>"
-                                                                        data-name="<?=$user_role['role_name']?>"
-                                                                        role="tab" data-toggle="tab"
-                                                                        style="border-radius: 10px;">
-                                                                        <?=$user_role['role_name']?>
+                                $s_role = mysqli_query($link_yics, "SELECT * FROM user_role ORDER BY 'id_role' ASC") or die(mysqli_error($link_yics));
+                                $i = 0;
+                                while ($user_role = mysqli_fetch_assoc($s_role)) {
+                                  //menampung id sebaga array tab
+                                  $tab[$i] = $user_role['id_role'];
+                                  $nama_role[$i] = $user_role['role_name'];
+                                  //membuat tab active terbuka untuk pertama kali
+                                  $setTab = (isset($_SESSION['tab'])) ? $_SESSION['tab'] : $tab[0];
+                                  $tab_active = ($setTab == $tab[$i]) ? "active show" : "";
+                                  $tab_select = ($setTab == $tab[$i]) ? "true" : "false";
+                                ?>
+                                                                <li class="nav-item" role="presentation">
+                                                                    <a class="nav-link <?= $tab_active ?>"
+                                                                        data-toggle="tab"
+                                                                        href="#user<?= $user_role['id_role'] ?>"
+                                                                        aria-controls="user<?= $user_role['id_role'] ?>"
+                                                                        role="tab" aria-selected="<?= $tab_select ?>">
+                                                                        <?= $user_role['role_name'] ?>
                                                                     </a>
                                                                 </li>
                                                                 <?php
-                                        $i++;
-                                    }
-                                    ?>
+                                  $i++;
+                                }
+                                ?>
                                                             </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <?php
-                    $page = (isset($_GET['page'])>0)? $_GET['page'] : 1;
-                                        
-                    $limit = 5; // Jumlah data per halamannya
-                    
-                    // Untuk menentukan dari data ke berapa yang akan ditampilkan pada tabel yang ada di database
-                    $limit_start = ($page - 1 ) * $limit;
-                    if(isset($_GET['cari']) && $_GET['cari'] != ''){
-                      $cari = $_GET['cari'];
-                      $filter_cari = " WHERE username LIKE '%$cari%' OR  nama  LIKE '%$cari%' OR  role_name  LIKE '%$cari%'  ";
-                    }else{
-                      $cari = '';
-                      $filter_cari = '';
-                    }
-                    // Buat query untuk mengchek data  apakah ada data di tabel
-                    $query = "SELECT * FROM view_data_user $filter_cari ";
-                    $sql = mysqli_query($link_yics, $query )or die(mysqli_error($link_yics));
+                                                            <div class="tab-content py-15">
+                                                                <?php
+                                $user = mysqli_query($link_yics, "SELECT * FROM user_role ORDER BY 'id_role' ASC") or die(mysqli_error($link_yics));
+                                $x = 0;
+                                while ($user_role = mysqli_fetch_assoc($user)) {
+                                  //menampung id sebaga array tab
+                                  $isi[$x] = $user_role['id_role'];
+                                  $nama_role[$x] = $user_role['role_name'];
+                                  //membuat isi active terbuka untuk pertama kali
+                                  $setisi = (isset($_SESSION['isi'])) ? $_SESSION['isi'] : $isi[0];
+                                  $isi_active = ($setisi == $isi[$x]) ? "active show" : "";
+                                  $isi_select = ($setisi == $isi[$x]) ? "true" : "false";
+                                ?>
+                                                                <div class="tab-pane <?= $isi_active ?>"
+                                                                    id="user<?= $user_role['id_role'] ?>"
+                                                                    role="tabpanel">
+                                                                    <!-- Panel Basic -->
+                                                                    <div class="panel">
+                                                                        <header class="panel-heading">
+                                                                            <div class="panel-actions"></div>
+                                                                            <h3 class="panel-title">
+                                                                                <?= $user_role['role_name'] ?></h3>
+                                                                        </header>
+                                                                        <div class="panel-body">
+                                                                            <form id="wadahtabel" name="proses">
+                                                                                <table
+                                                                                    class="table table-hover dataTable table-striped w-full"
+                                                                                    data-plugin="dataTable">
+                                                                                    <thead class="bg-info">
+                                                                                        <tr>
+                                                                                            <th>NO</th>
+                                                                                            <th>USERNAME</th>
+                                                                                            <th>NAMA</th>
+                                                                                            <th>AREA</th>
+                                                                                            <th>ROLE</th>
+                                                                                            <th>ACTION</th>
+                                                                                            <th><input type="checkbox"
+                                                                                                    id="checkAll"></th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        <?php
+                                              $name = $user_role['role_name'];
+                                              $ur = mysqli_query($link_yics, "SELECT * FROM view_data_user WHERE role_name='$name'") or die(mysqli_error($link_yics));
+                                              $no = 1;
+                                              while ($data = mysqli_fetch_array($ur)) {
+                                              ?>
+                                                                                        <tr>
+                                                                                            <td><?= $no++; ?></td>
+                                                                                            <td><?= $data['username']; ?>
+                                                                                            </td>
+                                                                                            <td><?= $data['nama']; ?>
+                                                                                            </td>
+                                                                                            <td><?= $data['area']; ?>
+                                                                                            </td>
+                                                                                            <td><?= $data['role_name']; ?>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <i href=""
+                                                                                                    data-toggle="tooltip"
+                                                                                                    data-original-title="Edit">
+                                                                                                    <a href="formubahusersetting.php?ubah=<?php echo $data['username']; ?>"
+                                                                                                        class="btn btn-success btn-icon btn-outline btn-xs">
+                                                                                                        <i class="icon wb-edit"
+                                                                                                            aria-hidden="true"></i>
+                                                                                                    </a>
+                                                                                                </i>
+                                                                                                <i href="javascript:void(0)"
+                                                                                                    data-toggle="tooltip"
+                                                                                                    data-original-title="Hapus">
+                                                                                                    <a href="../proses/usersetting/user.php?del=<?php echo $data['username']; ?>"
+                                                                                                        class="btn btn-icon btn-danger btn-icon btn-outline btn-xs HapusData">
+                                                                                                        <i class="icon oi-trashcan"
+                                                                                                            aria-hidden="true"></i>
+                                                                                                    </a>
+                                                                                                </i>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <input name="check[]"
+                                                                                                    value="<?= $data['username']; ?>"
+                                                                                                    type="checkbox"
+                                                                                                    class="check">
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <?php
+                                              } ?>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </form>
+                                                                            <div class="row">
+                                                                                <div class="col-lg-6">
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-md-6 col-lg-6 text-right">
+                                                                                    <button class="btn bg-yellow-700"
+                                                                                        style="border-radius: 10px; color:white;"
+                                                                                        data-toggle="modal"
+                                                                                        data-target="#ModalResetPasswrod"><i
+                                                                                            class="icon fa-undo"></i>reset
+                                                                                        password</button>
+                                                                                    <button
+                                                                                        class="btn btn-md btn-danger HapusAll"
+                                                                                        style="border-radius: 10px;"><i
+                                                                                            class="icon fa-trash"></i>Hapus
+                                                                                        data</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
 
-                    // echo mysqli_num_rows($sql);
-                    $no = $limit_start + 1; // Untuk penomoran tabel
-
-                    ?>
-                                                <div class="col-md-10 border-left">
-                                                    <form action="" method="GET" class="row">
-                                                        <h4 class="text-title col-md-8 content-title"></h4>
-                                                        <div class="col-md-4 text-right">
-                                                            <div class="form-group">
-                                                                <div class="input-group">
-                                                                    <input style="background-color:#E4EAEC;" type="text"
-                                                                        class="form-control" name="cari"
-                                                                        placeholder="Search..." value="<?=$cari?>">
-                                                                    <span class="input-group-append">
-                                                                        <button type="submit" class="btn btn-primary"><i
-                                                                                class="icon wb-search"
-                                                                                aria-hidden="true"></i></button>
-                                                                        <a href="usersetting.php"
-                                                                            class="btn btn-danger">Reset</a>
-                                                                    </span>
+                                                                    </div>
+                                                                    <!-- End Panel Basic -->
                                                                 </div>
+                                                                <?php
+                                  $x++;
+                                }
+                                ?>
                                                             </div>
                                                         </div>
-                                                    </form>
-                                                    <form id="wadahtabel" class="table table-bordered text-nowrap"
-                                                        name="proses">
-                                                        <table class=" w-full">
-                                                            <thead class="text-center">
-                                                                <tr class="bg-info align-" height="10px">
-                                                                    <th class="align-middle text-center" height="10px">
-                                                                        NO</th>
-                                                                    <th class="align-middle text-center" height="10px">
-                                                                        USERNAME</th>
-                                                                    <th class="align-middle text-center" height="10px">
-                                                                        NAMA</th>
-                                                                    <th class="align-middle text-center" height="10px">
-                                                                        AREA</th>
-                                                                    <th class="align-middle text-center" height="10px">
-                                                                        ROLE</th>
-                                                                    <th class="align-middle text-center" height="10px">
-                                                                        ACTION</th>
-                                                                    <th class="align-middle text-center" height="10px">
-                                                                        <input type="checkbox" id="checkAll">
-                                                                    </th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <?php 
-                                // Cek apakah terdapat data page pada URL
-                                     
-                                      // buat logic data jika  ada data dan tidak  ada ada dengan parameter 0 
-                                      if(mysqli_num_rows($sql)>0){
-                                        $sql_data = mysqli_query($link_yics, $query." LIMIT $limit_start , $limit")or die(mysqli_error($link_yics));
-                                        while($data = mysqli_fetch_array($sql_data)){ // Ambil semua data dari hasil eksekusi $sql
-                                          ?>
-                                                                <tr>
-                                                                    <td class="align-middle text-center">
-                                                                        <?php echo $no; ?></td>
-                                                                    <td class="align-middle text-center">
-                                                                        <?php echo $data['username']; ?></td>
-                                                                    <td class="align-middle text-center">
-                                                                        <?php echo $data['nama']; ?></td>
-                                                                    <td class="align-middle text-center">
-                                                                        <?php echo $data['area']; ?></td>
-                                                                    <td class="align-middle text-center">
-                                                                        <?php echo $data['role_name']; ?></td>
-                                                                    <td class="align-middle text-center">
-                                                                        <i href="" data-toggle="tooltip"
-                                                                            data-original-title="Edit">
-                                                                            <a href="formubahusersetting.php?ubah=<?php echo $data['username']; ?>"
-                                                                                class="btn btn-success btn-icon btn-outline btn-xs">
-                                                                                <i class="icon wb-edit"
-                                                                                    aria-hidden="true"></i>
-                                                                            </a>
-                                                                        </i>
-                                                                        <i href="javascript:void(0)"
-                                                                            data-toggle="tooltip"
-                                                                            data-original-title="Hapus">
-                                                                            <a href="../proses/usersetting/user.php?del=<?php echo $data['username']; ?>"
-                                                                                class="btn btn-icon btn-danger btn-icon btn-outline btn-xs HapusData">
-                                                                                <i class="icon oi-trashcan"
-                                                                                    aria-hidden="true"></i>
-                                                                            </a>
-                                                                        </i>
-                                                                    </td>
-                                                                    <td class="align-middle text-center" height="10px">
-                                                                        <input name="check[]"
-                                                                            value="<?php echo $data['username']; ?>"
-                                                                            type="checkbox" class="check">
-                                                                    </td>
-                                                                </tr>
-                                                                <?php
-                                          $no++; // Tambah 1 setiap kali looping
-                                        }
-                                      }else{
-                                        ?>
-                                                                <tr>
-                                                                    <td colspan="6" class="text-center">Tidak Ada Data
-                                                                        Ditemukan </td>
-                                                                </tr>
-                                                                <?php
-                                      }
-                                      ?>
-                                                            </tbody>
-                                                        </table>
-                                                    </form>
-                                                    <!--Buat Paginationnya--->
-                                                    <div class="row">
-                                                        <div class="col-lg-8">
-                                                            <ul class="pagination">
-                                                                <!-- LINK FIRST AND PREV -->
-                                                                <?php
-                                            if($page == 1){ // Jika page adalah page ke 1, maka disable link PREV
-                                            ?>
-                                                                <li class="disabled page-item"><a class="page-link"
-                                                                        href="#">First</a></li>
-                                                                <li class="disabled page-item"><a class="page-link"
-                                                                        href="#">&laquo;</a></li>
-                                                                <?php
-                                            }else{ // Jika page bukan page ke 1
-                                              $link_prev = ($page > 1)? $page - 1 : 1;
-                                            ?>
-                                                                <li class="page-item"><a class="page-link"
-                                                                        href="usersetting.php?page=1">First</a></li>
-                                                                <li class="page-item"><a class="page-link"
-                                                                        href="usersetting.php?page=<?php echo $link_prev; ?>">&laquo;</a>
-                                                                </li>
-                                                                <?php
-                                            }
-                                            ?>
-
-                                                                <!-- LINK NUMBER -->
-                                                                <?php
-                                            // Buat query untuk menghitung semua jumlah data
-                                            $sql2 = mysqli_query($link_yics, "SELECT COUNT(*) AS jumlah FROM data_user");
-                                            $get_jumlah = mysqli_fetch_array($sql2);
-                                            
-                                            $jumlah_page = ceil($get_jumlah['jumlah'] / $limit); // Hitung jumlah halamannya
-                                            $jumlah_number = 1; // Tentukan jumlah link number sebelum dan sesudah page yang aktif
-                                            $start_number = ($page > $jumlah_number)? $page - $jumlah_number : 1; // Untuk awal link number
-                                            $end_number = ($page < ($jumlah_page - $jumlah_number))? $page + $jumlah_number : $jumlah_page; // Untuk akhir link number
-                                            
-                                            for($i = $start_number; $i <= $end_number; $i++){
-                                              $link_active = ($page == $i)? ' class="active page-item"' : '';
-                                            ?>
-                                                                <li<?php echo $link_active; ?>><a class="page-link"
-                                                                        href="usersetting.php?page=<?php echo $i; ?>"><?php echo $i; ?></a>
-                                                                    </li>
-                                                                    <?php
-                                            }
-                                            ?>
-
-                                                                    <!-- LINK NEXT AND LAST -->
-                                                                    <?php
-                                            // Jika page sama dengan jumlah page, maka disable link NEXT nya
-                                            // Artinya page tersebut adalah page terakhir 
-                                            if($page == $jumlah_page){ // Jika page terakhir
-                                            ?>
-                                                                    <li class="page-item disabled"><a class="page-link"
-                                                                            href="#">&raquo;</a></li>
-                                                                    <li class="page-item disabled"><a class="page-link"
-                                                                            href="#">Last</a></li>
-                                                                    <?php
-                                            }else{ // Jika Bukan page terakhir
-                                              $link_next = ($page < $jumlah_page)? $page + 1 : $jumlah_page;
-                                            ?>
-                                                                    <li class="page-item"><a class="page-link"
-                                                                            href="usersetting.php?page=<?php echo $link_next; ?>">&raquo;</a>
-                                                                    </li>
-                                                                    <li class="page-item"><a class="page-link"
-                                                                            href="usersetting.php?page=<?php echo $jumlah_page; ?>">Last</a>
-                                                                    </li>
-                                                                    <?php
-                                            }
-                                            ?>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="col-md-4 col-lg-4 text-right">
-                                                            <button class="btn bg-yellow-700"
-                                                                style="border-radius: 10px; color:white;"
-                                                                data-toggle="modal" data-target="#ModalResetPasswrod"><i
-                                                                    class="icon fa-undo"></i>reset password</button>
-                                                            <button class="btn btn-md btn-danger HapusAll"
-                                                                style="border-radius: 10px;"><i
-                                                                    class="icon fa-trash"></i>Hapus data</button>
-                                                        </div>
                                                     </div>
+                                                    <!-- End Example Tabs Left -->
                                                 </div>
                                             </div>
                                         </div>
@@ -356,8 +267,8 @@ include '../elemen/header.php';?>
 
                 <!-- Footer -->
                 <?php
-include '../elemen/footer.php';?>
-                <script src="cariuser.js"> </script>
+        include '../elemen/footer.php'; ?>
+
 
                 <!-- Modal tambah data Alokasi Budget -->
                 <div class="modal fade modal-info" id="ModalAlokasiBudget" aria-hidden="true"
@@ -379,7 +290,7 @@ include '../elemen/footer.php';?>
                                     <div class="form-group row">
                                         <label class="col-md-2 col-form-label" style="color:black;">Username</label>
                                         <div class="col-md-10">
-                                            <input id="bodydivision" type="text" class="form-control" name="user"
+                                            <input id="bodydivision" type="number" class="form-control" name="user"
                                                 placeholder="Silahkan isi username" autocomplete="off" required>
                                         </div>
                                     </div>
@@ -387,7 +298,8 @@ include '../elemen/footer.php';?>
                                         <label class="col-md-2 col-form-label" style="color:black;">Nama</label>
                                         <div class="col-md-10">
                                             <input type="text" class="form-control" name="nama"
-                                                placeholder="Silahkan isi nama" autocomplete="off" required>
+                                                placeholder="Silahkan isi nama" autocomplete="off"
+                                                onkeyup="this.value = this.value.toUpperCase()" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -395,16 +307,16 @@ include '../elemen/footer.php';?>
                                         <div class="col-md-10">
                                             <select class="form-control" id="dept_prop" name="role" required="">
                                                 <option value="">Pilih role</option>
-                                                <?php 
-                                                  $role = mysqli_query($link_yics, "SELECT * FROM user_role") or die (mysqli_error($link_yics));
-                                                  if(mysqli_num_rows( $role)>0){
-                                                    while( $rows_role = mysqli_fetch_assoc($role)){?>
+                                                <?php
+                        $role = mysqli_query($link_yics, "SELECT * FROM user_role") or die(mysqli_error($link_yics));
+                        if (mysqli_num_rows($role) > 0) {
+                          while ($rows_role = mysqli_fetch_assoc($role)) { ?>
                                                 <option value="<?php echo $rows_role['id_role']; ?>">
                                                     <?php echo $rows_role['role_name']; ?></option>
                                                 <?php
-                                                    }
-                                                  }                                                
-                                                ?>
+                          }
+                        }
+                        ?>
                                             </select>
                                         </div>
                                     </div>
@@ -538,14 +450,7 @@ include '../elemen/footer.php';?>
                     </script>
                     <!-- end query java script hapus data -->
 
-                    <script>
-                    $('.editall').on('click', function(e) {
-                        e.preventDefault();
-                        var getLink = 'mass_editMp.php';
-                        document.prosesmp.action = getLink;
-                        document.prosesmp.submit();
-                    });
-                    </script>
+
 
                     <script>
                     $(document).ready(function() {
