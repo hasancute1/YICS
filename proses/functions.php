@@ -147,5 +147,36 @@ function get_item_trac_ia($array , $id_prog){
     return $data;
 }
 
+function get_progress_bp($array , $nominal){
+    
+    $scope1 = [10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28]; // >500jt
+    $scope2 = [10,11,12,13,14,15,16,17,18,19,22,23,24,25,26,27,28]; // 49jt > 500jt hilangkan 20,21
+    $scope3 = [10,11,12,13,14,15,22,23,24,25,26,27,28]; //  < 49 jt
+
+    if($nominal < 49){
+        $progress = $scope3;
+
+    }elseif( $nominal >= 49 && $nominal <= 500){
+
+        $progress = $scope2;
+
+    }else{      
+
+        $progress = $scope1;
+
+    }
+
+    foreach ($array as $key => $value) {
+        
+        if(in_array($value['id_prog'] , $progress)){
+            $data []  = $value;
+        }
+        
+    }
+
+    return $data;
+}
+
+
 
 ?>

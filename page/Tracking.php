@@ -198,7 +198,8 @@ include '../elemen/header.php';?>
                 $tracking_ia_bp = query("SELECT * FROM tracking_ia
                 JOIN progress ON tracking_ia.id_prog = progress.id_prog 
                 WHERE tracking_ia.id_ia=".$id_ia."
-                AND id_ket = 3");
+                AND id_ket = 3");               
+
                 $id_prog_bp = get_pluck($tracking_ia_bp , 'id_prog');
 
                 $tracking_ia_pr = query("SELECT * FROM tracking_ia
@@ -222,6 +223,8 @@ include '../elemen/header.php';?>
 
                 $status = FALSE;
 
+                 // filter bp sesuai scope
+                 $limit_progress_bp =  get_progress_bp($progress_bp , $data_ia['nominal']); 
                
 
                 ?>
@@ -265,8 +268,8 @@ include '../elemen/header.php';?>
                             <br>
                             <div class="list-group bg-blue-grey-100 bg-inherit text-left w-250 ml-3">
                               
-                              <?php foreach($progress_bp as $row){
-                                $status = in_array($row['id_prog'],$id_prog_rss);
+                              <?php foreach($limit_progress_bp  as $row){
+                                $status = in_array($row['id_prog'],$id_prog_bp);
                                 $tracking = get_item_trac_ia($tracking_ia_bp , $row['id_prog']);
                                 ?>
                                 <div class="list-group-item bg-<?= (in_array($row['id_prog'] , $id_prog_bp)? "teal":"gray") ?>-300">                              
@@ -289,7 +292,7 @@ include '../elemen/header.php';?>
                             <div class="list-group bg-blue-grey-100 bg-inherit text-left w-250 ml-10">
                            
                             <?php foreach($progress_pr as $row){ 
-                              $status = in_array($row['id_prog'],$id_prog_rss);
+                              $status = in_array($row['id_prog'],$id_prog_pr);
                               $tracking = get_item_trac_ia($tracking_ia_pr , $row['id_prog']);
                               ?>
                             <div class="list-group-item bg-<?= (in_array($row['id_prog'] , $id_prog_pr)? "teal":"gray") ?>-300">                              
@@ -312,7 +315,7 @@ include '../elemen/header.php';?>
                             <div class="list-group bg-blue-grey-100 bg-inherit text-left w-250 ml-10">
                            
                               <?php foreach($progress_gr as $row){ 
-                                $status = in_array($row['id_prog'],$id_prog_rss);
+                                $status = in_array($row['id_prog'],$id_prog_gr);
                                 $tracking = get_item_trac_ia($tracking_ia_gr , $row['id_prog']);
                                 ?>                            
                                   <div class="list-group-item bg-<?= (in_array($row['id_prog'] , $id_prog_gr)? "teal":"gray") ?>-300">                              
