@@ -70,77 +70,109 @@ include '../elemen/header.php';?>
                   <h3 class=" text-left">SUBJECT</h3>
                   <hr style="border-color:grey;">
                 </div>  
-              </div>            
+              </div>    
+              
+              <form autocomplete="off" method="get" action="">             
+              <input type="hidden" name="id_ia" value="<?= $_GET['id_ia'] ?>">
               <div class="row card-body">
-                  <div class="col-lg-4 col-md-4">
+                  <div class="col-lg-2 col-md-2">
                     <h4>Department</h4>
-                        <form autocomplete="off">                      
+                           
+                          <?php $departement = query("SELECT * from depart"); ?>  
+                        
                           <div class="form-group">
-                            <select class="form-control">
-                              <option>Pilih Department</option>
-                              <option>BODY PLANT 1</option>
-                              <option>BODY PLANT 2</option>
-                              <option>BQC</option>                      
+                            <select class="form-control" name="departement" id="departement">
+                              <option >Pilih Department</option>
+                              <?php foreach($departement as $row){ ?>
+                                <option value="<?= $row['id_dep'] ?>"
+                                <?php 
+                                  if(isset($_GET['departement'])){ ?>
+                                    <?= ($_GET['departement'] == $row['id_dep'])?"selected":"" ?>
+                                <?php } ?> 
+
+
+                                class="terpilih"
+                                ><?= $row['depart'] ?></option>
+                              <?php } ?>                                             
                             </select>                            
                           </div>                            
-                      </form>                      
+                                         
                   </div>
-                  <div class="col-lg-4 col-md-4">
+                  <div class="col-lg-3 col-md-3">
                     <h4>Cost Type</h4>
-                        <form autocomplete="off">                      
+                         
+                        <?php $jenis_cost = query("SELECT * from kategori_proposal"); ?>           
                           <div class="form-group">
-                            <select class="form-control">
-                              <option>Jenis Cost</option>
-                              <option>Improvement</option>
-                              <option>Yearly Investment</option>                      
+                            <select class="form-control" name="cost_type" id="cost_type">
+                              <option>Pilih Cost Type</option>
+
+                              <?php foreach($jenis_cost as $row){ ?>
+                              <option value="<?= $row['id_kat'] ?>" 
+
+                              <?= (isset($_GET['cost_type']) &&  $_GET['cost_type'] == $row['id_kat'])?"selected":"" ?>
+                              class="terpilih"
+                              ><?= $row['kategori'] ?></option>
+
+                              <?php } ?>                                               
+                            
                             </select>
                           </div>                            
-                      </form>                      
+                                           
                   </div>  
                  
-                  <div class="col-lg-4 col-md-4">
+                  <div class="col-lg-6 col-md-6">
                     <h4>NO. IA</h4>
                     <div class="row">
-                        <div class="col-lg-5 col-md-5">
-                            <form autocomplete="off">
+                        <div class="col-lg-8 col-md-8">
+
+                            <?php $list_ia = query("SELECT * from ia"); ?>
+
                                 <div class="form-group">
-                                    <select class="form-control">
+                                    <select class="form-control" name="ia_selected" id="ia_selected">
                                         <option>Kode Depart.</option>
-                                        <option>A</option>
-                                        <option>B</option>
-                                        <option>C</option>
+                                        <?php foreach($list_ia as $row){ ?>
+                                        
+                                          <option value="<?= $row['id_ia'] ?>"
+                                          
+                                          <?= (isset($_GET['cost_type']) && $_GET['ia_selected'] == $row['id_ia'])?"selected":"" ?>
+                                          class="terpilih"
+                                          ><?= $row['ia'] ?></option>
+
+                                        <?php } ?>
+                                        
                                     </select>
                                 </div>
-                            </form>
+                          
                         </div>
-                        <div class="col-lg-1 col-md-1">
+                        <div class="col-lg-1/2 col-md-1/2">
                           <span class="font-size-20">-</span>
                         </div> 
-                        <div class="col-lg-6 col-md-6">
-                            <form autocomplete="off">
-                                <div class="form-group " data-plugin="formMaterial">
-                                    <input type="text"class="form-control " name="inputFloatingLarge"
-                                        placeholder="5 Angka Belakang">
-                                </div>
-                              </form>
+                        <div class="col">                          
+                        
+                            <div class="form-group " data-plugin="formMaterial">
+                                <input type="text"class="form-control " name="angka_belakang"
+                                    placeholder="5 Angka Belakang">
+                            </div>                        
+                                
                         </div> 
                       </div>   
                   </div>
                 <div class="card-footer col-lg-12 col-md-12 text-md-right bg-blue-100">
                   <a href="" data-toggle="tooltip" data-original-title="Reset">
-                          <button type="button" class="btn btn-danger">
+                          <button type="button" id="reset_form" class="btn btn-danger">
                             RESET
                           </button>
                           </a>
                       <a href="" data-toggle="tooltip" data-original-title="Search">
-                        <button type="button" class="btn btn-success btn-icon ">
+                        <button type="submit" class="btn btn-success btn-icon ">
                           <i class="icon wb-search" aria-hidden="true"></i>SEARCH
                         </button>
                       </a>
                 </div>
                                                    
               </div>
-              
+
+              </form>  
                                  
             </div>
           </div>
@@ -150,7 +182,16 @@ include '../elemen/header.php';?>
 
             // data ia
 
-            $id_ia = $_GET['id_ia'];
+            if($_GET['ia_selected'] != 0){
+              $id_ia = $_GET['ia_selected'];
+              
+            }else{
+              $id_ia = $_GET['id_ia'];
+            }
+            
+
+
+
             $data_ia = single_query("SELECT * FROM ia where id_ia='".$id_ia."'");           
 
             ?>
@@ -342,6 +383,17 @@ include '../elemen/header.php';?>
         
       </div>
     </div>
+
+
+    <script>
+
+      $('#reset_form').click(function(event){
+        event.preventDefault();
+
+        $(".terpilih").prop("selected", false);
+        
+      });
+    </script>
     
     <!-- End Page -->
 
