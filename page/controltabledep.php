@@ -241,9 +241,10 @@ $id_dept = $_GET['dept'];
                                                                 <?php echo $data['depart']; ?></td>
                                                             <td class="align-middle text-center">
                                                                 <?php echo $data['kategori']; ?></td>
-                                                            <td class="align-middle text-center"
+                                                            <td class="align-middle text-center row-prop"
                                                                 data-target="#EditControlTableBody1"
-                                                                data-toggle="modal">
+                                                                data-toggle="modal" 
+                                                                onclick="getProposal(<?= $data['id_prop'] ?>)">
                                                                 <?php echo $data['proposal']; ?>
                                                             </td>
                                                             <td class="align-middle text-center">¥
