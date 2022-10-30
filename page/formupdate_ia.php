@@ -86,6 +86,18 @@ include '../elemen/header.php';?>
                                         </div>
                                         <div class="card-body bg-white">
 
+                                        <?php 
+                                            
+                                            $id_ia = $_GET['id_ia'];
+                                            
+                                            $data_ia = single_query("SELECT * FROM ia 
+                                            JOIN proposal on ia.id_prop = proposal.id_prop
+                                            JOIN depart on proposal.id_dep = depart.id_dep
+                                            JOIN kategori_proposal on proposal.id_kat = kategori_proposal.id_kat
+                                            where id_ia='".$id_ia."'");                                           
+
+                                        ?>
+
 
 
                                             <form method="POST" action="../proses/dashboard/tes2.php">
@@ -103,14 +115,14 @@ include '../elemen/header.php';?>
                                                             placeholder=" Judul Proposal" autocomplete="off" value="">
                                                         <input readonly type="text" class="form-control bg-grey-100"
                                                             id="depart_edit" placeholder=" Judul Proposal"
-                                                            autocomplete="off" value="">
+                                                            autocomplete="off" value="<?= $data_ia['depart'] ?>">
                                                     </div>
                                                     <label class="col-md-2 col-form-label text-left"
                                                         style="color:black;">Category</label>
                                                     <div class="col-md-4">
                                                         <input readonly type="text" class="form-control bg-grey-100"
                                                             id="category_edit" placeholder=" Judul Proposal"
-                                                            autocomplete="off" value="">
+                                                            autocomplete="off" value="<?= $data_ia['kategori'] ?>">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -119,7 +131,7 @@ include '../elemen/header.php';?>
                                                     <div class="col-md-10">
                                                         <input readonly type="text" class="form-control bg-grey-100"
                                                             id="proposal_edit" placeholder=" Judul Proposal"
-                                                            autocomplete="off" value="">
+                                                            autocomplete="off" value="<?= $data_ia['proposal'] ?>">
                                                     </div>
                                                 </div>
                                                 <hr>
@@ -134,7 +146,7 @@ include '../elemen/header.php';?>
                                                         No.</label>
                                                     <div class="col-md-10">
                                                         <input type="text" class="form-control bg-grey-100" name="name"
-                                                            placeholder="Diisi No. IA" autocomplete="off">
+                                                            placeholder="Diisi No. IA" autocomplete="off" value="<?= $data_ia['ia'] ?>">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -158,7 +170,7 @@ include '../elemen/header.php';?>
                                                                 <span class="input-group-text">RP</span>
                                                             </div>
                                                             <input type="number" class="form-control bg-grey-100"
-                                                                placeholder="Nominal Rupiah">
+                                                                placeholder="Nominal Rupiah" value="<?= $data_ia['cost_ia'] ?>">
                                                         </div>
                                                     </div>
                                                     <label class="col-md-2 col-form-label" style="color:black;">In

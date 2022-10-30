@@ -265,7 +265,7 @@ include '../elemen/header.php';?>
                 $status = FALSE;
 
                  // filter bp sesuai scope
-                 $limit_progress_bp =  get_progress_bp($progress_bp , $data_ia['nominal']); 
+                 $limit_progress_bp =  get_progress_bp($progress_bp , $data_ia['cost_ia']); 
                
 
                 ?>
