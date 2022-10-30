@@ -182,7 +182,7 @@ include '../elemen/header.php';?>
 
             // data ia
 
-            if($_GET['ia_selected'] != 0){
+            if( isset($_GET['ia_selected']) && $_GET['ia_selected'] != 0){
               $id_ia = $_GET['ia_selected'];
               
             }else{
