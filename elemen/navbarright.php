@@ -57,16 +57,10 @@ $notif_pending = get_notif_pending();
 
                         <a class="list-group-item dropdown-item <?= $bg_notif ?>"
                             <?php if ($_SESSION['yics_level'] == "1") { ?>
-
                             href="../page/viewplan.php?ubah=<?= $row['id_type'] ?>&notif=<?=$row['id_notif']?>"
-                            
                             <?php }else{ ?>
-
                             href="../page/formupdate.php?ubah=<?= $row['id_type'] ?>&notif=<?=$row['id_notif']?>"
-                            
-                            <?php } ?>
-
-                            role="menuitem">
+                            <?php } ?> role="menuitem">
                             <div class="media">
                                 <div class="pr-10">
                                     <i class="icon wb-order bg-red-600 white icon-circle" aria-hidden="true"></i>

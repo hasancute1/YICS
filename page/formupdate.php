@@ -57,7 +57,7 @@ include '../elemen/header.php';?>
                 <div><br><br>
 
                     <?php include '../elemen/sidebarleft.php';?>
-                    
+
                     <!-- Site Navbar Search -->
                     <?php include '../elemen/sidebar.php';?>
                     <!-- End Site Navbar Search -->
@@ -320,8 +320,8 @@ include '../elemen/header.php';?>
                                                                     <div class="input-group-prepend">
                                                                         <input type="datetime-local" name="tgl[]"
                                                                             class="form-control bg-grey-200"
-                                                                            id="tgl-<?=$no?>"
-                                                                            value="<?= $time ?>" autocomplete="off">
+                                                                            id="tgl-<?=$no?>" value="<?= $time ?>"
+                                                                            autocomplete="off">
                                                                     </div>
                                                                 </td>
                                                                 <td class="align-middle text-center">
@@ -335,7 +335,7 @@ include '../elemen/header.php';?>
                                                                             autocomplete="off">
                                                                             <option
                                                                                 value="<?= $_SESSION['yics_user']; ?>">
-                                                                                <?= $_SESSION['yics_nama']; ?></option>                                                                            
+                                                                                <?= $_SESSION['yics_nama']; ?></option>
                                                                         </select>
                                                                     </div>
                                                                 </td>
@@ -375,14 +375,14 @@ include '../elemen/header.php';?>
             // Dokumen sudah ready maka jalankan function
             $(document).ready(function() {
                 // jika class approve di klik maka
-                $(".approve").click(function() {                   
-                    
+                $(".approve").click(function() {
+
                     //attribut data-id ini masukkan ke variabel index
                     var index = $(this).attr('data-id');
-                    var index2 = parseInt(index)+1;                   
-                    
+                    var index2 = parseInt(index) + 1;
+
                     // Buat tanggal index ini required
-                    $('#tgl-'+index).prop("required", true);                   
+                    $('#tgl-' + index).prop("required", true);
 
                     // varibael index ditambah 1 lalu masukkan ke variabel next_index
                     var next_index = Number(index) + 1;
@@ -421,7 +421,7 @@ include '../elemen/header.php';?>
                     var next_index = Number(index) + 1;
 
                     // Buat tanggal index ini required
-                    $('#tgl-'+index).prop("required", true); 
+                    $('#tgl-' + index).prop("required", true);
 
                     // jika html ini ada checked 
                     if ($(this).is(':checked')) {

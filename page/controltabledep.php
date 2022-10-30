@@ -9,8 +9,8 @@ if (!isset($_SESSION['yics_user'])) {
 include '../elemen/header.php';
 
 $judul = [
-    1 => "Body Plan 1",
-    2 => "Body Plan 2",
+    1 => "Body Plant 1",
+    2 => "Body Plant 2",
     3 => "BQC"
 ];
 
@@ -68,7 +68,8 @@ $id_dept = $_GET['dept'];
                     <!-- Page -->
                     <div class="page">
                         <div class="page-header">
-                            <h1 class="page-title font-size-26 font-weight-600">Control Table <?= $judul[$id_dept] ?> (x Million)
+                            <h1 class="page-title font-size-26 font-weight-600">Control Table <?= $judul[$id_dept] ?> (x
+                                Million)
                             </h1>
                         </div>
 
@@ -456,21 +457,21 @@ include '../elemen/footer.php';?>
 
                 <script>
                 $(document).ready(function() {
-                    
-                   var table =  $('.tableproposal').DataTable({
+
+                    var table = $('.tableproposal').DataTable({
                         dom: 'Bfrtip',
                         buttons: [
-                            'excel',         
+                            'excel',
                             {
-                            extend: 'print',
-                            text: 'Print',                              
+                                extend: 'print',
+                                text: 'Print',
                             },
                             {
                                 extend: 'pdf',
                                 title: 'Control Table',
                                 text: 'PDF',
-                                orientation : 'landscape',
-                                pageSize:'LEGAL'                  
+                                orientation: 'landscape',
+                                pageSize: 'LEGAL'
                             }
 
                         ],
@@ -478,7 +479,7 @@ include '../elemen/footer.php';?>
                     });
 
                     table.buttons().container()
-                        .appendTo( $('.col-sm-6:eq(0)', table.table().container() ) );
+                        .appendTo($('.col-sm-6:eq(0)', table.table().container()));
 
 
                 });
