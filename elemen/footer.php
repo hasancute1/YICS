@@ -114,6 +114,7 @@ Config.set('assets', '../base/assets');
     <script src="../base/assets/examples/js/uikit/tooltip-popover.js"></script>
     <script src="../base/assets/examples/css/charts/chartjs.css"></script>
     <script src="../base/assets/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <script src="../base/js/controltable.js"></script>
 
     <!-- for export datatable -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
