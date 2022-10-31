@@ -94,7 +94,15 @@ include '../elemen/header.php';?>
                                             JOIN proposal on ia.id_prop = proposal.id_prop
                                             JOIN depart on proposal.id_dep = depart.id_dep
                                             JOIN kategori_proposal on proposal.id_kat = kategori_proposal.id_kat
-                                            where id_ia='".$id_ia."'");                                           
+                                            where id_ia='".$id_ia."'");    
+                                            
+                                            
+                                            $progress_ia = query("SELECT * FROM progress where id_ket != 1");
+
+                                            // filter bp sesuai scope
+                                            $limit_progress_bp =  get_progress_bp($progress_ia , $data_ia['cost_ia']); 
+
+                                            // var_dump($limit_progress_bp);
 
                                         ?>
 
