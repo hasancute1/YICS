@@ -104,6 +104,23 @@ include '../elemen/header.php';?>
 
                                             // var_dump($limit_progress_bp);
 
+
+                                            $query_max_step = single_query("SELECT
+                                                    max(step) as max_step from tracking_ia
+                                                    JOIN progress on tracking_ia.id_prog = progress.id_prog
+                                                    WHERE tracking_ia.id_ia = '$id_ia'
+                                                    ");
+                                            $max_step =  $query_max_step['max_step'];
+
+
+                                            $query_reject_step = single_query("SELECT
+                                            max(step) as step from tracking_ia
+                                            JOIN progress on tracking_ia.id_prog = progress.id_prog
+                                            WHERE tracking_ia.id_ia = '$id_ia' and approval = 0
+                                            ");
+
+                                            $reject_step = $query_reject_step['step'];
+
                                         ?>
 
 
@@ -217,10 +234,30 @@ include '../elemen/header.php';?>
 													$no=1;
 													while($rows_progress = mysqli_fetch_assoc($progress))
 													{
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        if( $rows_progress['step'] > $max_step){
+
+                                                            $text_muncul = "d-none";
+
+                                                        }
+
+                                                        if($reject_step){
+
+                                                            if($rows_progress['step'] > $reject_step){
+                                                                
+                                                                $text_muncul = "d-none";
+                                                            }
+                                                        } 
+                                                        
+                                                        
+                                                        
                                                         ?>
 
                                                         <tbody>
-                                                            <tr class="">
+                                                            <tr class="<?=$text_muncul?>">
                                                                 <td hidden>
                                                                     <input hidden type="text"
                                                                         class="form-control bg-grey-200"
