@@ -6,6 +6,7 @@ if (isset ($_SESSION['yics_user'])){
          // masukan data post ke variabel 
         $nama=$_POST['nama'];
         $user=$_POST ['user'];
+        $area=$_POST ['area'];
         $role=$_POST ['role'];
         $password=SHA1($_POST ['password']);
 
@@ -22,7 +23,7 @@ if (isset ($_SESSION['yics_user'])){
             $_SESSION['pesan'] = "Data Berhasil Disimpan";
             header('location: ../../page/usersetting.php');
          }
-         $inputUser = "INSERT INTO data_user (`nama`,`username`,`pass`, `id_level`) VALUES ('$nama','$user','$password','$role')"; 
+         $inputUser = "INSERT INTO data_user (`nama`,`username`,`area`,`pass`, `id_level`) VALUES ('$nama','$user','$area','$password','$role')"; 
          $sql = mysqli_query($link_yics, $inputUser)or die(mysqli_error($link_yics));
     // end logika pakai session
     // query insert boleh ngacak sesuai intonya
