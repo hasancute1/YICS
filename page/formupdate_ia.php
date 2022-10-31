@@ -252,6 +252,11 @@ include '../elemen/header.php';?>
                                                             }
                                                         } 
                                                         
+
+                                                        // query ke tracking ia
+                                                        $data_tracking = single_query("SELECT * from tracking_ia                                                      
+                                                        where id_ia = ".$id_ia." and id_prog = ".$rows_progress['id_prog']."
+                                                        ");                                                       
                                                         
                                                         
                                                         ?>
@@ -277,7 +282,9 @@ include '../elemen/header.php';?>
                                                                                 class="custom-switch-input reject"
                                                                                 data-plugin="switchery"
                                                                                 data-color="orange" value="0"
-                                                                                autocomplete="off">
+                                                                                autocomplete="off"
+                                                                                <?= ($data_tracking['approval'] == 0)?"checked":"" ?>
+                                                                                >
                                                                             <span
                                                                                 class="custom-switch-indicator"></span>
                                                                             <span
@@ -293,7 +300,9 @@ include '../elemen/header.php';?>
                                                                                 value="1" data-color="#17b3a3"
                                                                                 class="custom-switch-input approve"
                                                                                 autocomplete="off"
-                                                                                data-plugin="switchery">
+                                                                                data-plugin="switchery"
+                                                                                <?= ($data_tracking['approval'] == 1)?"checked":"" ?>
+                                                                                >
                                                                             <span
                                                                                 class="custom-switch-indicator"></span>
                                                                             <span
