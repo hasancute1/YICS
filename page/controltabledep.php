@@ -242,12 +242,13 @@ $id_dept = $_GET['dept'];
                                                                 <?php echo $data['depart']; ?></td>
                                                             <td class="align-middle text-center">
                                                                 <?php echo $data['kategori']; ?></td>
-                                                            <td class="align-middle text-center row-prop"
-                                                                data-target="#EditControlTableBody1"
-                                                                data-toggle="modal" 
-                                                                onclick="getProposal(<?= $data['id_prop'] ?>)">
-                                                                <?php echo $data['proposal']; ?>
+
+                                                            <td class="align-middle text-center row-prop"><a
+                                                                    href="formnambah_ia.php">
+                                                                    <?php echo $data['proposal']; ?></a>
+
                                                             </td>
+
                                                             <td class="align-middle text-center">¥
 
                                                                 <?= number_format($data['cost']/$data['yen'], 1, '.', ','); ?>

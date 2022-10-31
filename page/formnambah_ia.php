@@ -78,16 +78,13 @@ include '../elemen/header.php';?>
                                             <div class="row">
                                                 <div class="col-lg-12 col-md-12">
                                                     <div class="float-left">
-                                                        <span class="font-size-20 bold">Form Edit No
+                                                        <span class="font-size-20 bold">Form Add No
                                                             IA</span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="card-body bg-white">
-
-
-
                                             <form>
                                                 <div class="form-group row">
                                                     <h4 class="col-md-12 modal-title text-left" style="color:black;">
@@ -124,9 +121,27 @@ include '../elemen/header.php';?>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <h4 class="col-md-12 modal-title text-left" style="color:black;">IA
+                                                    <h4 class="col-md-10 modal-title text-left" style="color:black;">IA
                                                         NO.
                                                     </h4>
+                                                    <div class="col-lg-2 col-md-2">
+                                                        <div class="text-right">
+                                                            <i data-toggle="tooltip"
+                                                                data-original-title="Tambah Kolom Ia">
+                                                                <button type="button"
+                                                                    class="btn btn-icon btn-outline btn-info btn-xs">
+                                                                    <i class="icon wb-plus" aria-hidden="true"></i>
+                                                                </button>
+                                                            </i>
+                                                            <i data-toggle="tooltip"
+                                                                data-original-title="Kurangi Kolom Ia">
+                                                                <button type="button"
+                                                                    class="btn btn-icon btn-outline btn-danger btn-xs">
+                                                                    <i class="icon wb-minus" aria-hidden="true"></i>
+                                                                </button>
+                                                            </i>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="form-group row">
                                                     <label class="col-md-2 col-form-label text-left"
@@ -177,27 +192,6 @@ include '../elemen/header.php';?>
                                                             <input type="number" class="form-control"
                                                                 placeholder="Nominal Yen">
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <h4 class="col-md-12 modal-title text-left" style="color:black;">
-                                                        Valid
-                                                        Update</h4>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-md-2 col-form-label text-left"
-                                                        style="color:black;">Valid
-                                                        Until </label>
-                                                    <div class="col-md-4">
-                                                        <input type="date" class="form-control" name="name"
-                                                            placeholder="Diisi tanggal updaate" autocomplete="off">
-                                                    </div>
-                                                    <label class="col-md-2 col-form-label text-left"
-                                                        style="color:black;">Remark
-                                                        Ct Update</label>
-                                                    <div class="col-md-4">
-                                                        <input type="text" class="form-control" name="name"
-                                                            placeholder="Diisi PIC Update" autocomplete="off">
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
