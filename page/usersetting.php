@@ -150,7 +150,7 @@ include '../elemen/header.php';?>
                                                                         <div class="panel-body">
                                                                             <form id="wadahtabel" name="proses">
                                                                                 <table
-                                                                                    class="table table-hover dataTable table-striped w-full"
+                                                                                    class=" text-uppercase table table-hover dataTable table-striped w-full"
                                                                                     data-plugin="dataTable">
                                                                                     <thead class="bg-info">
                                                                                         <tr>
@@ -290,22 +290,29 @@ include '../elemen/header.php';?>
                                     <div class="form-group row">
                                         <label class="col-md-2 col-form-label" style="color:black;">Username</label>
                                         <div class="col-md-10">
-                                            <input id="bodydivision" type="number" class="form-control" name="user"
-                                                placeholder="Silahkan isi username" autocomplete="off" required>
+                                            <input id="bodydivision" type="number" class="form-control text-uppercase"
+                                                name="user" placeholder="Silahkan isi npk" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-md-2 col-form-label" style="color:black;">Nama</label>
                                         <div class="col-md-10">
-                                            <input type="text" class="form-control" name="nama"
-                                                placeholder="Silahkan isi nama" autocomplete="off"
-                                                onkeyup="this.value = this.value.toUpperCase()" required>
+                                            <input type="text" class="form-control text-uppercase" name="nama"
+                                                placeholder="Silahkan isi nama" autocomplete="off" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-2 col-form-label" style="color:black;">Area</label>
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control text-uppercase" name="area"
+                                                placeholder="Silahkan isi area" autocomplete="off" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-md-2 col-form-label" style="color:black;">Role</label>
                                         <div class="col-md-10">
-                                            <select class="form-control" id="dept_prop" name="role" required="">
+                                            <select class="form-control text-uppercase" id="dept_prop" name="role"
+                                                required="">
                                                 <option value="">Pilih role</option>
                                                 <?php
                         $role = mysqli_query($link_yics, "SELECT * FROM user_role") or die(mysqli_error($link_yics));
@@ -323,7 +330,7 @@ include '../elemen/header.php';?>
                                     <div class="form-group row">
                                         <label class="col-md-2 col-form-label" style="color:black;">Password</label>
                                         <div class="col-md-10">
-                                            <input type="text" class="form-control" name="password"
+                                            <input type="text" class="form-control text-uppercase" name="password"
                                                 placeholder="Silahkan isi password" autocomplete="off" required>
                                         </div>
                                     </div>
