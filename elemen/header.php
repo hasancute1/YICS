@@ -52,6 +52,14 @@
 
         overflow-y: auto;
     }
+
+    td.myClassName {
+        text-align: center;
+    }
+
+    th.myClassName {
+        text-align: center;
+    }
     </style>
 
     <link rel="apple-touch-icon" href="../base/assets/images/apple-touch-icon.png">
@@ -88,8 +96,8 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
 
 
-   
-    
+
+
 
 
 

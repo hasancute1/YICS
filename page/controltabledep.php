@@ -9,8 +9,8 @@ if (!isset($_SESSION['yics_user'])) {
 include '../elemen/header.php';
 
 $judul = [
-    1 => "Body Plant 1",
-    2 => "Body Plant 2",
+    1 => "BODY PLANT 1",
+    2 => "BODY PLANT 2",
     3 => "BQC"
 ];
 
@@ -79,6 +79,7 @@ $id_dept = $_GET['dept'];
                                     <?php 
            $alokasi = mysqli_query($link_yics, "SELECT * FROM time_fiscal WHERE status='aktif'") or die(mysqli_error($link_yics));
            $data = mysqli_fetch_assoc($alokasi);
+           $_SESSION["periode"] =  $data["periode"];
             ?>
                                     <h6 class="font-size-18 font-weight-400">Periode ( <span
                                             style="color:red;"><?php echo $data['periode']; ?> </span> ) :
@@ -87,6 +88,7 @@ $id_dept = $_GET['dept'];
                                         s.d
                                         <span style="color:red;"><?php echo date("d M Y", strtotime($data['akhir'])); ?>
                                         </span>
+
                                 </div>
                                 <div class="col-lg-6 col-md-6 mb-2">
                                     <div class="row">
@@ -135,8 +137,14 @@ $id_dept = $_GET['dept'];
                                                         <tr>
                                                             <th class="judul align-middle text-center" colspan="6">
                                                                 INVESTMENT PLANNING CONTROL TABLE</th>
-                                                            <th class="judul align-middle text-center" colspan="14">
+
+                                                            <th class="judul align-middle text-center" colspan="13">
                                                                 IMPLEMENTATION CONTROL TABLE</th>
+                                                            <th class="judul align-middle text-center table-danger noexportar"
+                                                                rowspan="3">
+                                                                ACTION
+                                                            </th>
+
                                                         </tr>
                                                         <tr>
                                                             <th class="judul align-middle text-center" rowspan="2">NO
@@ -147,10 +155,10 @@ $id_dept = $_GET['dept'];
                                                                 CATEGORY</th>
                                                             <th class="judul align-middle text-center" rowspan="2">
                                                                 DESCRIPTION</th>
-                                                            <th class="judul align-middle text-center" rowspan="2">TOTAL
-                                                                MILL JPY</th>
-                                                            <th class="judul align-middle text-center" rowspan="2">TOTAL
-                                                                MILL IDR</th>
+                                                            <th class="judul align-middle text-center" rowspan="2">
+                                                                TOTAL MILL JPY</th>
+                                                            <th class="judul align-middle text-center" rowspan="2">
+                                                                TOTAL MILL IDR</th>
                                                             <th class="judul align-middle text-center" rowspan="2">No
                                                             </th>
                                                             <th class="judul align-middle text-center" colspan="2">IA
@@ -163,11 +171,10 @@ $id_dept = $_GET['dept'];
                                                                 Actual In</th>
                                                             <th class="judul align-middle text-center" colspan="2">
                                                                 Remaining</th>
-                                                            <th class="judul align-middle text-center" rowspan="2">Valid
-                                                                Until</th>
+                                                            <th class="judul align-middle text-center" rowspan="2">
+                                                                Valid Until</th>
                                                             <th class="judul align-middle text-center">Remark</th>
-                                                            <th class="judul align-middle text-center table-danger"
-                                                                rowspan="2">Action</th>
+
 
                                                         </tr>
                                                         <tr>
@@ -191,6 +198,8 @@ $id_dept = $_GET['dept'];
                                                                 Rp</th>
                                                             <th class="align-middle text-center">
                                                                 CT Updated</th>
+
+
                                                         </tr>
 
                                                     </thead>
@@ -237,39 +246,39 @@ $id_dept = $_GET['dept'];
 
                                                         <tr
                                                             class="<?php if ($no%2==0){ echo "bg-blue-100"; } else{ echo ""; } ?> text-uppercase">
-                                                            <td class="align-middle text-center"><?php echo $no; ?></td>
-                                                            <td class="align-middle text-center">
+                                                            <td><?php echo $no; ?></td>
+                                                            <td>
                                                                 <?php echo $data['depart']; ?></td>
-                                                            <td class="align-middle text-center">
+                                                            <td>
                                                                 <?php echo $data['kategori']; ?></td>
 
-                                                            <td class="align-middle text-center row-prop"><a
-                                                                    href="formnambah_ia.php">
+                                                            <td><a href="formnambah_ia.php">
                                                                     <?php echo $data['proposal']; ?></a>
 
                                                             </td>
 
-                                                            <td class="align-middle text-center">¥
-
-                                                                <?= number_format($data['cost']/$data['yen'], 1, '.', ','); ?>
+                                                            <td>
+                                                                <?php  $yen="¥"; ?>
+                                                                <?= $yen." ".number_format($data['cost']/$data['yen'], 1, '.', ','); ?>
                                                             </td>
-                                                            <td class="align-middle text-center">Rp
-                                                                <?php echo number_format ($data['cost'],0,',','.'); ?>
+                                                            <td>
+                                                                <?php  $Rp="Rp"; ?>
+                                                                <?= $Rp." ".number_format ($data['cost'],0,',','.'); ?>
                                                             </td>
-                                                            <td class="align-middle text-center"></td>
-                                                            <td class="align-middle text-center"></td>
-                                                            <td class="align-middle text-center"></td>
-                                                            <td class="align-middle text-center"></td>
-                                                            <td class="align-middle text-center"></td>
-                                                            <td class="align-middle text-center"></td>
-                                                            <td class="align-middle text-center"></td>
-                                                            <td class="align-middle text-center"></td>
-                                                            <td class="align-middle text-center"></td>
-                                                            <td class="align-middle text-center"></td>
-                                                            <td class="align-middle text-center"></td>
-                                                            <td class="align-middle text-center"></td>
-                                                            <td class="align-middle text-center"></td>
-                                                            <td class="align-middle text-center">
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td>
                                                                 <a href="Tracking.php?id_ia=1">
                                                                     <button type="button"
                                                                         class="btn btn-icon btn-info  ">
@@ -462,21 +471,79 @@ include '../elemen/footer.php';?>
 
                     var table = $('.tableproposal').DataTable({
                         dom: 'Bfrtip',
-                        buttons: [
-                            'excel',
+                        buttons: [{
+                                extend: 'excel',
+                                title: 'CONTROL TABLE <?= $judul[$id_dept] ?> (x Million) PERIODE <?php echo $_SESSION["periode"]; ?>-<?php echo $_SESSION["periode"]+1; ?> ',
+                                text: 'Excel',
+                                orientation: 'landscape',
+                                pageSize: 'LEGAL',
+                                download: 'open',
+                                exportOptions: {
+                                    columns: ':not(.noexportar)'
+                                },
+                                customize: function(xlsx) {
+
+                                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                                    $('row:first c', sheet).attr('s', '2');
+                                    $('*c', sheet).attr('s', '51');
+
+                                }
+                            },
                             {
-                                extend: 'print',
-                                text: 'Print',
+                                extend: "print",
+                                exportOptions: {
+                                    columns: ':not(.noexportar)'
+                                },
+                                title: 'CONTROL TABLE <?= $judul[$id_dept] ?> (x Million) PERIODE <?php echo $_SESSION["periode"]; ?>-<?php echo $_SESSION["periode"]+1; ?> ',
+                                customize: function(win) {
+
+                                    var last = null;
+                                    var current = null;
+                                    var bod = [];
+
+                                    var css = '@page { size: landscape; }',
+                                        head = win.document.head || win.document
+                                        .getElementsByTagName('head')[0],
+                                        style = win.document.createElement('style');
+
+                                    style.type = 'text/css';
+                                    style.media = 'print';
+
+                                    if (style.styleSheet) {
+                                        style.styleSheet.cssText = css;
+                                    } else {
+                                        style.appendChild(win.document.createTextNode(css));
+                                    }
+
+                                    head.appendChild(style);
+                                }
                             },
                             {
                                 extend: 'pdf',
-                                title: 'Control Table',
-                                text: 'PDF',
+                                title: 'CONTROL TABLE <?= $judul[$id_dept] ?> (x Million) PERIODE <?php echo $_SESSION["periode"]; ?>-<?php echo $_SESSION["periode"]+1; ?> ',
+                                text: 'Pdf',
                                 orientation: 'landscape',
-                                pageSize: 'LEGAL'
-                            }
+                                pageSize: 'LEGAL',
+                                download: 'open',
+                                alignment: "center",
+                                exportOptions: {
+                                    columns: ':not(.noexportar)',
+                                    orthogonal: "PDF",
+                                    modifier: {
+                                        order: 'index',
+                                        page: 'current'
+                                    }
+                                },
+                                customize: function(doc) {
 
+                                    doc.styles.tableBodyEven.alignment = "center";
+                                    doc.styles.tableBodyOdd.alignment = "center";
+                                    doc.styles.tableFooter.alignment = "center";
+                                    doc.styles.tableHeader.alignment = "center";
+                                }
+                            }
                         ],
+
                         scrollX: true
                     });
 
