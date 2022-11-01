@@ -125,8 +125,9 @@ include '../elemen/header.php';?>
 
 
 
-                                            <form method="POST" action="../proses/dashboard/tes2.php">
+                                            <form method="POST" action="../proses/ia/update_progress.php">
                                                 <input type="hidden" name="add">
+                                                <input type="hidden" name="id_ia" value="<?= $id_ia ?>">
                                                 <div class="form-group row">
                                                     <h4 class="col-md-12 modal-title text-left" style="color:black;">
                                                         SUBJECT</h4>
