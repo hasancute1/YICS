@@ -225,11 +225,16 @@ $id_dept = $_GET['dept'];
                                 approval.approval AS approval,
                                 proposal.cost AS cost,
                                 konversi_matauang.dollar AS dollar,
-                                konversi_matauang.yen AS yen
+                                konversi_matauang.yen AS yen,
+                                ia.id_ia,
+                                ia.ia AS no_ia,
+                                ia.deskripsi AS ia_deskripsi,
+                                ia.cost_ia AS cost_ia
                               
                                 
                                 FROM tracking_prop   
                                 LEFT JOIN proposal  ON tracking_prop.id_prop = proposal.id_prop
+                                LEFT JOIN ia ON proposal.id_prop = ia.id_prop
                                 LEFT JOIN depart ON proposal.id_dep = depart.id_dep
                                 LEFT JOIN kategori_proposal  ON proposal.id_kat = kategori_proposal.id_kat
                                 LEFT JOIN time_fiscal  ON proposal.id_fis = time_fiscal.id_fis
@@ -241,39 +246,58 @@ $id_dept = $_GET['dept'];
                                 WHERE tracking_prop.id_approval  = '1' AND progress.step = '5' AND depart.id_dep='$id_dept'"
                                 )
                                 or die (mysqli_error($link_yics));
-                                $no=1;
+                                $no=0;
+
+                                $no_prop=0;
+                                $id_before = '';
+
                                 // untuk memvalidasi apakah ada datanya
                                 if(mysqli_num_rows($proposal)>0){
-                                while($data = mysqli_fetch_assoc($proposal)){?>
+                                while($data = mysqli_fetch_assoc($proposal)){                                   
+                                    
+
+                                    if($id_before == $data['id_prop']){
+                                        $no_prop += 1;
+                                    }else{
+                                        $no_prop = 1;
+                                        $no++;
+                                        
+                                    }
+
+                                    $id_before = $data['id_prop'];
+                                    
+                                    ?>
 
                                                         <tr
                                                             class="<?php if ($no%2==0){ echo "bg-blue-100"; } else{ echo ""; } ?> text-uppercase">
-                                                            <td><?php echo $no; ?></td>
+                                                            <td><?= $no; ?></td>
                                                             <td>
-                                                                <?php echo $data['depart']; ?></td>
+                                                                <?= ($no_prop == 1)? $data['depart']:""; ?></td>
                                                             <td>
-                                                                <?php echo $data['kategori']; ?></td>
+                                                                <?= ($no_prop == 1)? $data['kategori']:""; ?></td>
 
                                                             <td><a
                                                                     href="formnambah_ia.php?add=<?php echo $data['id_prop']; ?>">
-                                                                    <?php echo $data['proposal']; ?></a>
+                                                                    <?= ($no_prop == 1)? $data['proposal']:""; ?></a>
 
                                                             </td>
 
                                                             <td>
                                                                 <?php  $yen="¥"; ?>
-                                                                <?= $yen." ".number_format($data['cost']/$data['yen'], 1, '.', ','); ?>
+                                                                <?= ($no_prop == 1)? $yen." ".number_format($data['cost']/$data['yen'], 1, '.', ','):""; ?>
                                                             </td>
                                                             <td>
-                                                                <?php  $Rp="Rp"; ?>
-                                                                <?= $Rp." ".number_format ($data['cost'],0,',','.'); ?>
+                                                                <?php
+                                                                  $Rp="Rp"; ?>
+
+                                                                <?=($no_prop == 1)? $Rp." ".number_format ($data['cost'],0,',','.'): ""; ?>
                                                             </td>
+                                                            <td><?= $no_prop ?></td>
+                                                            <td><?= $data['no_ia'] ?></td>
                                                             <td></td>
+                                                            <td><?= $data['ia_deskripsi'] ?></td>
                                                             <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
+                                                            <td><?= $data['cost_ia'] ?></td>
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
@@ -282,13 +306,13 @@ $id_dept = $_GET['dept'];
                                                             <td></td>
                                                             <td></td>
                                                             <td>
-                                                                <a href="Tracking.php?id_ia=1">
+                                                                <a href="Tracking.php?id_ia=<?= $data['id_ia'] ?>">
                                                                     <button type="button"
                                                                         class="btn btn-icon btn-info  ">
                                                                         <i class="icon wb-eye" aria-hidden="true"></i>
                                                                     </button>
                                                                 </a>
-                                                                <a href="formupdate_ia.php?id_ia=1">
+                                                                <a href="formupdate_ia.php?id_ia=<?= $data['id_ia'] ?>">
                                                                     <button type="button"
                                                                         class="btn btn-icon btn-success">
                                                                         <i class="icon wb-upload"
@@ -314,7 +338,8 @@ $id_dept = $_GET['dept'];
                                                                 </a>
                                                             </td>
                                                         </tr>
-                                                        <?php $no++;
+                                                        <?php 
+                                                        
                                                       }
                                                       }
                                                        ?>

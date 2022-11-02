@@ -180,7 +180,7 @@ include '../elemen/header.php';?>
                                                         style="color:black;">Description</label>
                                                     <div class="col-md-10">
                                                         <input type="text" class="form-control bg-grey-100" name="name"
-                                                            placeholder="Diisi Deskripsi" autocomplete="off">
+                                                            placeholder="Diisi Deskripsi" autocomplete="off" value="<?= $data_ia['deskripsi'] ?>">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row text-left">
