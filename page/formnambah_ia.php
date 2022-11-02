@@ -84,7 +84,15 @@ include '../elemen/header.php';?>
                     LEFT JOIN konversi_matauang ON proposal.id_matauang = konversi_matauang.id_matauang
                    
                     WHERE id_prop = '$id'")or die (mysqli_error($link_yics));
-                    $data = mysqli_fetch_assoc($proposal)
+                    $data = mysqli_fetch_assoc($proposal);
+
+                    $get_data_ia = single_query("SELECT sum(cost_ia) as cost_ia FROM ia where id_prop='$id'");
+                    $consumtion_budget =  $get_data_ia['cost_ia'];
+                   
+                    $sisa_budget = $data['cost'] - $consumtion_budget;
+                   
+
+
                       ?>
                     <!-- Page -->
                     <div class="page">
@@ -221,7 +229,7 @@ include '../elemen/header.php';?>
                                                             <div class="col-md-4">
                                                                 <span
                                                                     style="color:red;font-size: 13px;font-style: italic;">*(Sisa
-                                                                    budget Rp 300)</span>
+                                                                    budget Rp <?= number_format($sisa_budget,0,',','.')  ?>)</span>
                                                                 <div class="input-group">
                                                                     <div class="input-group-prepend">
                                                                         <span class="input-group-text">RP</span>
@@ -236,13 +244,13 @@ include '../elemen/header.php';?>
                                                             <div class="col-md-4">
                                                                 <span
                                                                     style="color:red;font-size: 13px;font-style: italic;">*(Sisa
-                                                                    budget YJP 300)</span>
+                                                                    budget YJP <?= number_format($sisa_budget / $data['yen'],1,'.',',')  ?>)</span>
                                                                 <div class="input-group">
                                                                     <div class="input-group-prepend">
                                                                         <span class="input-group-text">JPY</span>
                                                                     </div>
-                                                                    <input type="number" class="form-control"
-                                                                        placeholder="Nominal Yen">
+                                                                    <input type="text" class="form-control"
+                                                                        placeholder="Nominal Yen" id="yen">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -480,6 +488,23 @@ include '../elemen/header.php';?>
 
                 }
 
+
+                var yen = <?= $data['yen'] ?>;
+
+                $('#cost_ia').keyup(function(){
+                   
+                    var nominal = $(this).val();     
+                    
+                    var replaceNominal = nominal.replace(',' , '');
+
+                    var conversi = replaceNominal / yen;
+
+                    var number=  new Intl.NumberFormat().format(conversi);                  
+
+                    $('#yen').val(number);
+                });
+
+                
 
             });
             </script>
