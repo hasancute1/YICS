@@ -104,9 +104,9 @@ include '../elemen/header.php';?>
                                             </div>
                                         </div>
                                         <div class="card-body bg-white">
-                                            <form>
+                                            <form action="" method="POST" id="form_ia">
                                                 <input type="hidden" name="add">
-                                                <input type="hidden" class="form-control" name="id" autocomplete="off"
+                                                <input type="hidden" class="form-control" name="id_prop" id="id_prop" autocomplete="off"
                                                     value="<?php echo $data['id_prop']; ?>" required>
                                                 <div class="form-group row">
                                                     <h4 class="col-md-12 modal-title text-left" style="color:black;">
@@ -194,15 +194,15 @@ include '../elemen/header.php';?>
                                                             style="color:black;">IA
                                                             No.</label>
                                                         <div class="col-md-10">
-                                                            <input type="text" class="form-control" name="name"
-                                                                placeholder="Diisi No. IA" autocomplete="off">
+                                                            <input type="text" class="form-control" name="ia"
+                                                                placeholder="Diisi No. IA" autocomplete="off" id="ia" required>
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
                                                         <label class="col-md-2 col-form-label text-left"
                                                             style="color:black;">Description</label>
                                                         <div class="col-md-10">
-                                                            <input type="text" class="form-control" name="name"
+                                                            <input type="text" class="form-control" name="ia_desc" id="ia_desc"
                                                                 placeholder="Diisi Deskripsi" autocomplete="off">
                                                         </div>
                                                     </div>
@@ -224,7 +224,7 @@ include '../elemen/header.php';?>
                                                                     <span class="input-group-text">RP</span>
                                                                 </div>
                                                                 <input type="text" class="form-control uang"
-                                                                    placeholder="Nominal Rupiah">
+                                                                    placeholder="Nominal Rupiah" name="cost_ia" id="cost_ia" required>
                                                             </div>
                                                         </div>
                                                         <label class="col-md-2 col-form-label mt-4"
@@ -245,7 +245,7 @@ include '../elemen/header.php';?>
                                                     </div>
                                                 </div>
 
-                                                <div class="copy d-none control-group">
+                                                <!-- <div class="copy d-none control-group">
                                                     <div class="aa">
                                                         <hr>
                                                         <div class="form-group row ">
@@ -326,12 +326,13 @@ include '../elemen/header.php';?>
                                                         </div>
 
                                                     </div>
-                                                </div>
+                                                </div> -->
+
                                                 <div class="modal-footer">
                                                     <button type="button" style="color:white;"
                                                         class="btn bg-blue-grey-800 btn-round"
-                                                        data-dismiss="modal">RESET</button>
-                                                    <button type="submit"
+                                                        data-dismiss="modal" id="reset">RESET</button>
+                                                    <button type="submit" id="submit"
                                                         class="btn btn-primary btn-round">SUBMIT</button>
                                             </form>
                                         </div>
@@ -348,6 +349,7 @@ include '../elemen/header.php';?>
 
             <!-- Footer -->
             <?php include '../elemen/footer.php';?>
+
             <script type="text/javascript">
             $(document).ready(function() {
                 $(".add-more").click(function() {
@@ -359,5 +361,46 @@ include '../elemen/header.php';?>
                 $("body").on("click", ".remove", function() {
                     $(this).parents(".aa").remove();
                 });
+
+                // Tambah Ia
+
+                $("form").submit(function (event) {
+                    event.preventDefault();
+                    dataForm = $( "form" ).serialize();
+
+                    $.ajax({
+                        type: "POST",
+                        url: "../proses/ia/tambah_ia.php",
+                        data: dataForm,                    
+                        success:function(result){
+                            console.log(result);
+
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Saved!',
+                                text: "Data IA telah ditambah.",
+                                showConfirmButton: false,
+                                timer: 2000
+                            });
+
+                            resetForm();
+
+
+                        }
+                    
+                    });
+
+                    
+                });
+
+                function resetForm(){
+
+                    $('#ia').val('');
+                    $('#ia_desc').val('');
+                    $('#cost_ia').val('');
+
+                }
+
+
             });
             </script>
