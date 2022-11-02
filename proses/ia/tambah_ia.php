@@ -11,10 +11,20 @@ $ia_desc = $_POST['ia_desc'];
 $cost_ia = $_POST['cost_ia'];
 
 
-mysqli_query($link_yics,"INSERT INTO ia 
+$insert_query = mysqli_query($link_yics,"INSERT INTO ia 
                  (`id_prop`,`ia`,`deskripsi`,`cost_ia`) 
           VALUES ('$id_prop','$ia','$ia_desc','$cost_ia')");
 
 
-echo json_encode("Ia telah berhasil ditambahkan");
+if($insert_query){
+
+    $status = "sukses";
+}else{
+    $status = "Data Gagal Ditambahkan";
+}
+
+
+echo json_encode([
+    'status' => $status
+]);
 
