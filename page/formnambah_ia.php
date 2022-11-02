@@ -66,7 +66,26 @@ include '../elemen/header.php';?>
                     <!-- sidebar back -->
                     <?php include '../elemen/sidebarback.php';?>
                     <!-- end sidebar back -->
-
+                    <?php  
+                    $id=$_GET ["add"];
+                     //query data mahasiswa berdasarkan id menghasilkan array numeric
+                    $proposal = mysqli_query($link_yics ,"SELECT 
+                   
+                    proposal.id_prop AS id_prop,
+                    proposal.proposal AS proposal,
+                    depart.depart AS depart,
+                    kategori_proposal.kategori AS kategori,
+                    proposal.cost AS cost,
+                    konversi_matauang.yen AS yen
+                   
+                    FROM proposal 
+                    LEFT JOIN depart ON proposal.id_dep = depart.id_dep
+                    LEFT JOIN kategori_proposal  ON proposal.id_kat = kategori_proposal.id_kat
+                    LEFT JOIN konversi_matauang ON proposal.id_matauang = konversi_matauang.id_matauang
+                   
+                    WHERE id_prop = '$id'")or die (mysqli_error($link_yics));
+                    $data = mysqli_fetch_assoc($proposal)
+                      ?>
                     <!-- Page -->
                     <div class="page">
                         <div class="page-content container-fluid">
@@ -86,6 +105,9 @@ include '../elemen/header.php';?>
                                         </div>
                                         <div class="card-body bg-white">
                                             <form>
+                                                <input type="hidden" name="add">
+                                                <input type="hidden" class="form-control" name="id" autocomplete="off"
+                                                    value="<?php echo $data['id_prop']; ?>" required>
                                                 <div class="form-group row">
                                                     <h4 class="col-md-12 modal-title text-left" style="color:black;">
                                                         SUBJECT
@@ -96,18 +118,20 @@ include '../elemen/header.php';?>
                                                         style="color:black;">Department</label>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control  bg-grey-200"
+                                                            <input type="text" class="form-control bg-grey-200" readonly
                                                                 name="name" placeholder="Division Yourself"
-                                                                autocomplete="off" value="Body Plant 1">
+                                                                autocomplete="off"
+                                                                value="<?php echo $data['depart']; ?>">
                                                         </div>
                                                     </div>
                                                     <label class="col-md-2 col-form-label text-left"
                                                         style="color:black;">Category</label>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control  bg-grey-200"
+                                                            <input type="text" class="form-control bg-grey-200" readonly
                                                                 name="name" placeholder="Division Yourself"
-                                                                autocomplete="off" value="Improvement">
+                                                                autocomplete="off"
+                                                                value="<?php echo $data['kategori']; ?>">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -116,88 +140,199 @@ include '../elemen/header.php';?>
                                                         style="color:black;">Proposal</label>
                                                     <div class="col-md-10">
                                                         <input type="text" class="form-control  bg-grey-200" name="name"
-                                                            placeholder="Division Yourself" autocomplete="off"
-                                                            value="Additional Acces Door Office CPM QRE">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <h4 class="col-md-10 modal-title text-left" style="color:black;">IA
-                                                        NO.
-                                                    </h4>
-                                                    <div class="col-lg-2 col-md-2">
-                                                        <div class="text-right">
-                                                            <i data-toggle="tooltip"
-                                                                data-original-title="Tambah Kolom Ia">
-                                                                <button type="button"
-                                                                    class="btn btn-icon btn-outline btn-info btn-xs">
-                                                                    <i class="icon wb-plus" aria-hidden="true"></i>
-                                                                </button>
-                                                            </i>
-                                                            <i data-toggle="tooltip"
-                                                                data-original-title="Kurangi Kolom Ia">
-                                                                <button type="button"
-                                                                    class="btn btn-icon btn-outline btn-danger btn-xs">
-                                                                    <i class="icon wb-minus" aria-hidden="true"></i>
-                                                                </button>
-                                                            </i>
-                                                        </div>
+                                                            placeholder="Division Yourself" autocomplete="off" readonly
+                                                            value="<?php echo $data['proposal']; ?>">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
                                                     <label class="col-md-2 col-form-label text-left"
-                                                        style="color:black;">IA
-                                                        No.</label>
-                                                    <div class="col-md-10">
-                                                        <input type="text" class="form-control" name="name"
-                                                            placeholder="Diisi No. IA" autocomplete="off">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-md-2 col-form-label text-left"
-                                                        style="color:black;">Description</label>
-                                                    <div class="col-md-10">
-                                                        <input type="text" class="form-control" name="name"
-                                                            placeholder="Diisi Deskripsi" autocomplete="off">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row text-left">
-                                                    <h4 class="col-md-12 modal-title text-left" style="color:black;">
-                                                        Original Currency</h4>
-                                                </div>
-                                                <div class="form-group row text-left">
-                                                    <label class="col-md-2 col-form-label mt-4" style="color:black;">In
-                                                        RP</label>
-                                                    <div class="col-md-4">
-                                                        <span
-                                                            style="color:red;font-size: 13px;font-style: italic;">*(Sisa
-                                                            budget Rp 300)</span>
+                                                        style="color:black;">Cost</label>
+                                                    <div class="col-md-5">
                                                         <div class="input-group">
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text">RP</span>
                                                             </div>
-                                                            <input type="number" class="form-control"
-                                                                placeholder="Nominal Rupiah">
+                                                            <input type="text" class="form-control bg-grey-200" readonly
+                                                                placeholder="Nominal Rupiah"
+                                                                value="<?= number_format($data['cost']);?>">
                                                         </div>
                                                     </div>
-                                                    <label class="col-md-2 col-form-label mt-4" style="color:black;">In
-                                                        JPY</label>
-                                                    <div class="col-md-4">
-                                                        <span
-                                                            style="color:red;font-size: 13px;font-style: italic;">*(Sisa
-                                                            budget YJP 300)</span>
+                                                    <div class="col-md-5">
                                                         <div class="input-group">
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text">JPY</span>
                                                             </div>
-                                                            <input type="number" class="form-control"
-                                                                placeholder="Nominal Yen">
+                                                            <input type="text" class="form-control bg-grey-200" readonly
+                                                                placeholder="Nominal Rupiah"
+                                                                value="<?= number_format($data['cost']/$data['yen'], 1, '.', ','); ?>">
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="form-group row">
+                                                    <div class="col-lg-12 col-md-12">
+                                                        <div class="text-right">
+                                                            <i data-toggle="tooltip"
+                                                                data-original-title="Tambah Kolom Ia">
+                                                                <button type="button"
+                                                                    class="btn btn-icon btn-outline btn-info btn-xs add-more">
+                                                                    <i class="icon wb-plus" aria-hidden="true"></i>
+                                                                </button>
+                                                            </i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="control-group after-add-more">
+                                                    <div class="form-group row">
+                                                        <h4 class="col-md-12 modal-title text-left"
+                                                            style="color:black;">IA
+                                                            NO.
+                                                        </h4>
+                                                    </div>
+                                                    <div class="form-group row ">
+                                                        <label class="col-md-2 col-form-label text-left"
+                                                            style="color:black;">IA
+                                                            No.</label>
+                                                        <div class="col-md-10">
+                                                            <input type="text" class="form-control" name="name"
+                                                                placeholder="Diisi No. IA" autocomplete="off">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label class="col-md-2 col-form-label text-left"
+                                                            style="color:black;">Description</label>
+                                                        <div class="col-md-10">
+                                                            <input type="text" class="form-control" name="name"
+                                                                placeholder="Diisi Deskripsi" autocomplete="off">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row text-left">
+                                                        <h4 class="col-md-12 modal-title text-left"
+                                                            style="color:black;">
+                                                            Original Currency</h4>
+                                                    </div>
+                                                    <div class="form-group row text-left">
+                                                        <label class="col-md-2 col-form-label mt-4"
+                                                            style="color:black;">In
+                                                            RP</label>
+                                                        <div class="col-md-4">
+                                                            <span
+                                                                style="color:red;font-size: 13px;font-style: italic;">*(Sisa
+                                                                budget Rp 300)</span>
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">RP</span>
+                                                                </div>
+                                                                <input type="text" class="form-control uang"
+                                                                    placeholder="Nominal Rupiah">
+                                                            </div>
+                                                        </div>
+                                                        <label class="col-md-2 col-form-label mt-4"
+                                                            style="color:black;">In
+                                                            JPY</label>
+                                                        <div class="col-md-4">
+                                                            <span
+                                                                style="color:red;font-size: 13px;font-style: italic;">*(Sisa
+                                                                budget YJP 300)</span>
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">JPY</span>
+                                                                </div>
+                                                                <input type="number" class="form-control"
+                                                                    placeholder="Nominal Yen">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="copy d-none control-group">
+                                                    <div class="aa">
+                                                        <hr>
+                                                        <div class="form-group row ">
+                                                            <h4 class="col-md-10 modal-title text-left"
+                                                                style="color:black;">IA
+                                                                NO.
+                                                            </h4>
+                                                        </div>
+                                                        <div class="form-group row ">
+                                                            <label class="col-md-2 col-form-label text-left"
+                                                                style="color:black;">IA
+                                                                No.</label>
+                                                            <div class="col-md-10">
+                                                                <input type="text" class="form-control" name="name"
+                                                                    placeholder="Diisi No. IA" autocomplete="off">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label class="col-md-2 col-form-label text-left"
+                                                                style="color:black;">Description</label>
+                                                            <div class="col-md-10">
+                                                                <input type="text" class="form-control" name="name"
+                                                                    placeholder="Diisi Deskripsi" autocomplete="off">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row text-left">
+                                                            <h4 class="col-md-12 modal-title text-left"
+                                                                style="color:black;">
+                                                                Original Currency</h4>
+                                                        </div>
+                                                        <div class="form-group row text-left">
+                                                            <label class="col-md-2 col-form-label mt-4"
+                                                                style="color:black;">In
+                                                                RP</label>
+                                                            <div class="col-md-4">
+                                                                <span
+                                                                    style="color:red;font-size: 13px;font-style: italic;">*(Sisa
+                                                                    budget Rp 300)</span>
+                                                                <div class="input-group">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text">RP</span>
+                                                                    </div>
+                                                                    <input type="text" class="form-control uang"
+                                                                        placeholder="Nominal Rupiah">
+                                                                </div>
+                                                            </div>
+                                                            <label class="col-md-2 col-form-label mt-4"
+                                                                style="color:black;">In
+                                                                JPY</label>
+                                                            <div class="col-md-4">
+                                                                <span
+                                                                    style="color:red;font-size: 13px;font-style: italic;">*(Sisa
+                                                                    budget YJP 300)</span>
+                                                                <div class="input-group">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text">JPY</span>
+                                                                    </div>
+                                                                    <input type="number" class="form-control"
+                                                                        placeholder="Nominal Yen">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <div class="col-lg-12 col-md-12">
+                                                                <div class="text-left">
+                                                                    <i data-toggle="tooltip"
+                                                                        data-original-title="Kurangi Kolom Ia">
+                                                                        <button type="button"
+                                                                            class="btn btn-icon  btn-danger btn-sm remove">
+                                                                            <i class="icon oi-trashcan"
+                                                                                aria-hidden="true">
+                                                                            </i><span>HAPUS FORM</span>
+
+                                                                        </button>
+                                                                    </i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-danger"
-                                                        data-dismiss="modal">Reset</button>
-                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                    <button type="button" style="color:white;"
+                                                        class="btn bg-blue-grey-800 btn-round"
+                                                        data-dismiss="modal">RESET</button>
+                                                    <button type="submit"
+                                                        class="btn btn-primary btn-round">SUBMIT</button>
                                             </form>
                                         </div>
                                     </div>
@@ -213,76 +348,16 @@ include '../elemen/header.php';?>
 
             <!-- Footer -->
             <?php include '../elemen/footer.php';?>
-            <script>
-            // Dokumen sudah ready maka jalankan function
+            <script type="text/javascript">
             $(document).ready(function() {
-                // jika class approve di klik maka
-                $(".approve").click(function() {
-
-                    //attribut data-id ini masukkan ke variabel index
-                    var index = $(this).attr('data-id');
-                    var index2 = parseInt(index) + 1;
-
-                    // Buat tanggal index ini required
-                    $('#tgl-' + index).prop("required", true);
-
-                    // varibael index ditambah 1 lalu masukkan ke variabel next_index
-                    var next_index = Number(index) + 1;
-                    // jika di html ini ada  checked
-                    if ($(this).is(':checked')) {
-                        //maka  id data yang ditambah variabel next index hapus class d-none
-                        $('#data' + next_index).removeClass('d-none');
-                        //jika  id reject_step ditambah index ada checked
-                        if ($('#reject_step' + index).is(':checked')) {
-                            //maka id reject_step ditambah index ini diklik
-                            $('#reject_step' + index).click();
-                        }
-                        if ($('#reject_step' + next_index).is(':checked')) {
-                            //maka id reject_step ditambah index ini diklik
-                            $('#reject_step' + next_index).click();
-                        }
-                        //melainkan bila tidak ada check
-                    } else {
-                        if ($('#reject_step' + next_index).is(':checked')) {
-                            //maka id reject_step ditambah index ini diklik
-                            $('#reject_step' + next_index).click();
-                        }
-                        if ($('#approve_step' + next_index).is(':checked')) {
-                            //maka id reject_step ditambah index ini diklik
-                            $('#approve_step' + next_index).click();
-                        }
-                        // maka id data yang ditambah next_index ditambah class d_none
-                        $('#data' + next_index).addClass('d-none');
-                    }
+                $(".add-more").click(function() {
+                    var html = $(".copy").html();
+                    $(".after-add-more").after(html);
                 });
 
-                // class reject di klik maka jalankan function
-                $(".reject").click(function() {
-                    //  membuat var index yang hasilnya  dari attribut data ini
-                    var index = $(this).attr('data-id');
-                    var next_index = Number(index) + 1;
-
-                    // Buat tanggal index ini required
-                    $('#tgl-' + index).prop("required", true);
-
-                    // jika html ini ada checked 
-                    if ($(this).is(':checked')) {
-                        // maka cetak approve step variabel index
-                        console.log('approve_step' + index);
-                        // jika id approve step variable index ada checked
-                        if ($('#approve_step' + index).is(':checked')) {
-                            // maka id  apporove step  index di klik
-                            $('#approve_step' + index).click();
-                        }
-                        if ($('#approve_step' + next_index).is(':checked')) {
-                            // maka id  apporove step  index di klik
-                            $('#approve_step' + next_index).click();
-                        }
-                        if ($('#reject_step' + next_index).is(':checked')) {
-                            // maka id  apporove step  index di klik
-                            $('#reject_step' + next_index).click();
-                        }
-                    }
+                // saat tombol remove dklik control group akan dihapus 
+                $("body").on("click", ".remove", function() {
+                    $(this).parents(".aa").remove();
                 });
             });
             </script>
