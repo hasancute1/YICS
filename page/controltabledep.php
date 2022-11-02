@@ -135,10 +135,12 @@ $id_dept = $_GET['dept'];
                                                 <table class="table tableproposal table-hover">
                                                     <thead class="table-info">
                                                         <tr>
-                                                            <th class="judul align-middle text-center" colspan="6">
+                                                            <th class="judul align-middle text-center export-col"
+                                                                colspan="6">
                                                                 INVESTMENT PLANNING CONTROL TABLE</th>
 
-                                                            <th class="judul align-middle text-center" colspan="13">
+                                                            <th class="judul align-middle text-center export-col"
+                                                                colspan="13">
                                                                 IMPLEMENTATION CONTROL TABLE</th>
                                                             <th class="judul align-middle text-center table-danger noexportar"
                                                                 rowspan="3">
@@ -252,7 +254,8 @@ $id_dept = $_GET['dept'];
                                                             <td>
                                                                 <?php echo $data['kategori']; ?></td>
 
-                                                            <td><a href="formnambah_ia.php">
+                                                            <td><a
+                                                                    href="formnambah_ia.php?add=<?php echo $data['id_prop']; ?>">
                                                                     <?php echo $data['proposal']; ?></a>
 
                                                             </td>
@@ -485,14 +488,16 @@ include '../elemen/footer.php';?>
 
                                     var sheet = xlsx.xl.worksheets['sheet1.xml'];
                                     $('row:first c', sheet).attr('s', '2');
-                                    $('*c', sheet).attr('s', '51');
+                                    $('*c', sheet).attr('s', '25');
 
                                 }
                             },
                             {
                                 extend: "print",
                                 exportOptions: {
-                                    columns: ':not(.noexportar)'
+                                    columns: ':not(.noexportar)',
+
+
                                 },
                                 title: 'CONTROL TABLE <?= $judul[$id_dept] ?> (x Million) PERIODE <?php echo $_SESSION["periode"]; ?>-<?php echo $_SESSION["periode"]+1; ?> ',
                                 customize: function(win) {
