@@ -320,7 +320,7 @@ $id_dept = $_GET['dept'];
                                                                     </button>
                                                                 </a>
 
-                                                                <a href="formedit_ia.php?id_ia=1">
+                                                                <a href="formedit_ia.php?id_ia=<?= $data['id_ia'] ?>">
                                                                     <button type="button"
                                                                         class="btn btn-icon btn-warning">
                                                                         <i class="icon wb-edit" aria-hidden="true"></i>

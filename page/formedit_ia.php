@@ -67,6 +67,26 @@ include '../elemen/header.php';?>
                     <?php include '../elemen/sidebarback.php';?>
                     <!-- end sidebar back -->
 
+                    
+                    <?php                    
+
+                    $id = $_GET['id_ia'];
+
+                    // get data proposal & ia
+                    
+                    $data_ia = single_query("SELECT * FROM ia 
+                    JOIN proposal ON ia.id_prop = proposal.id_prop 
+                    JOIN depart ON proposal.id_dep = depart.id_dep
+                    JOIN kategori_proposal  ON proposal.id_kat = kategori_proposal.id_kat
+                    WHERE id_ia='$id'"); 
+
+
+                    $consumtion_budget =  $data_ia['cost_ia'];
+                                    
+                    $sisa_budget = $data_ia['cost'] - $consumtion_budget;
+
+                    ?>
+
                     <!-- Page -->
                     <div class="page">
                         <div class="page-content container-fluid">
@@ -88,7 +108,10 @@ include '../elemen/header.php';?>
 
 
 
-                                            <form>
+                                            <form method="post" action="../proses/ia/update_ia.php">
+                                                <input type="hidden" name="id_prop" value="<?= $data_ia['id_prop'] ?>">
+                                                <input type="hidden" name="id_ia" value="<?= $id ?>">
+
                                                 <div class="form-group row">
                                                     <h4 class="col-md-12 modal-title text-left" style="color:black;">
                                                         SUBJECT
@@ -101,7 +124,7 @@ include '../elemen/header.php';?>
                                                         <div class="form-group">
                                                             <input type="text" class="form-control  bg-grey-200"
                                                                 name="name" placeholder="Division Yourself"
-                                                                autocomplete="off" value="Body Plant 1">
+                                                                autocomplete="off" value="<?= $data_ia['depart'] ?>">
                                                         </div>
                                                     </div>
                                                     <label class="col-md-2 col-form-label text-left"
@@ -110,7 +133,7 @@ include '../elemen/header.php';?>
                                                         <div class="form-group">
                                                             <input type="text" class="form-control  bg-grey-200"
                                                                 name="name" placeholder="Division Yourself"
-                                                                autocomplete="off" value="Improvement">
+                                                                autocomplete="off" value="<?= $data_ia['kategori'] ?>">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -120,7 +143,7 @@ include '../elemen/header.php';?>
                                                     <div class="col-md-10">
                                                         <input type="text" class="form-control  bg-grey-200" name="name"
                                                             placeholder="Division Yourself" autocomplete="off"
-                                                            value="Additional Acces Door Office CPM QRE">
+                                                            value="<?= $data_ia['proposal'] ?>">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -133,16 +156,16 @@ include '../elemen/header.php';?>
                                                         style="color:black;">IA
                                                         No.</label>
                                                     <div class="col-md-10">
-                                                        <input type="text" class="form-control" name="name"
-                                                            placeholder="Diisi No. IA" autocomplete="off">
+                                                        <input type="text" class="form-control" name="ia"
+                                                            placeholder="Diisi No. IA" autocomplete="off" value="<?= $data_ia['ia'] ?>">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
                                                     <label class="col-md-2 col-form-label text-left"
                                                         style="color:black;">Description</label>
                                                     <div class="col-md-10">
-                                                        <input type="text" class="form-control" name="name"
-                                                            placeholder="Diisi Deskripsi" autocomplete="off">
+                                                        <input type="text" class="form-control" name="ia_deskripsi"
+                                                            placeholder="Diisi Deskripsi" autocomplete="off" value="<?= $data_ia['deskripsi'] ?>">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row text-left">
@@ -155,13 +178,13 @@ include '../elemen/header.php';?>
                                                     <div class="col-md-4">
                                                         <span
                                                             style="color:red;font-size: 13px;font-style: italic;">*(Sisa
-                                                            budget Rp 300)</span>
+                                                            budget Rp <?= $sisa_budget ?>)</span>
                                                         <div class="input-group">
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text">RP</span>
                                                             </div>
                                                             <input type="number" class="form-control"
-                                                                placeholder="Nominal Rupiah">
+                                                                placeholder="Nominal Rupiah" name="cost_ia" value="<?=$data_ia['cost_ia'] ?>">
                                                         </div>
                                                     </div>
                                                     <label class="col-md-2 col-form-label mt-4" style="color:black;">In
@@ -203,7 +226,7 @@ include '../elemen/header.php';?>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-danger"
                                                         data-dismiss="modal">Reset</button>
-                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                    <button type="submit" class="btn btn-primary" name="submit">Submit</button>
                                             </form>
                                         </div>
                                     </div>
