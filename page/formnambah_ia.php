@@ -402,11 +402,11 @@ include '../elemen/header.php';?>
                                                             <td><?= $row['cost_ia'] ?></td>
                                                             <td>
 
-                                                            <button type="button"
+                                                            <a href="formedit_ia.php?id_ia=<?= $row['id_ia']?>"
                                                                 class="btn btn-icon btn-warning  edit_ia"
-                                                                data-toggle="modal" data-target="#">
+                                                                >
                                                                 <i class="icon wb-edit" aria-hidden="true"></i>
-                                                            </button>
+                                                            </a>
 
                                                             </td>
                                                         </tr>

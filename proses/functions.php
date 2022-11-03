@@ -53,6 +53,18 @@ function get_notif_pending(){
     return $data;
 }
 
+
+// update query
+function update($query){
+    global $link_yics;  
+
+    $data_query = mysqli_query($link_yics, $query) or die(mysqli_error($link_yics)); 
+
+    return "Data berhasil di update";
+
+}
+
+
 // update notif
 function updateNotif($id){
     global $link_yics;
