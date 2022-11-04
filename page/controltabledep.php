@@ -284,7 +284,7 @@ $id_dept = $_GET['dept'];
 
                                                             <td>
                                                                 <?php  $yen="¥"; ?>
-                                                                <?= ($no_prop == 1)? $yen." ".number_format($data['cost']/$data['yen'], 1, '.', ','):""; ?>
+                                                                <?= ($no_prop == 1)? $yen." ".number_format($data['cost']/$data['yen'], 2, ',', '.'):""; ?>
                                                             </td>
                                                             <td>
                                                                 <?php
@@ -292,20 +292,26 @@ $id_dept = $_GET['dept'];
 
                                                                 <?=($no_prop == 1)? $Rp." ".number_format ($data['cost'],0,',','.'): ""; ?>
                                                             </td>
-                                                            <td><?= $no_prop ?></td>
+                                                            <td><?= (isset($data['no_ia']))? $no_prop: ""; ?></td>
                                                             <td><?= $data['no_ia'] ?></td>
                                                             <td></td>
                                                             <td><?= $data['ia_deskripsi'] ?></td>
                                                             <td></td>
-                                                            <td><?= $data['cost_ia'] ?></td>
+                                                            <td><?= (isset($data['no_ia']))?$Rp." ".number_format ($data['cost_ia'],0,',','.'): ""; ?>
+                                                            </td>
                                                             <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
+                                                            <td><?= (isset($data['no_ia']))? $yen." ".number_format($data['cost_ia']/$data['yen'], 2, ',', '.'): ""; ?>
+                                                            </td>
+                                                            <td><?= (isset($data['no_ia']))? $Rp." ".number_format ($data['cost_ia'],0,',','.'): ""; ?>
+                                                            </td>
+                                                            <td><?= (isset($data['no_ia']))? $yen." ".number_format(($data['cost']/$data['yen'])-($data['cost_ia']/$data['yen']), 2, ',', '.'): ""; ?>
+                                                            </td>
+                                                            <td><?= (isset($data['no_ia']))? $Rp." ".number_format (($data['cost']-$data['cost_ia']),0,',','.'): ""; ?>
+                                                            </td>
                                                             <td></td>
                                                             <td></td>
                                                             <td>
+
                                                                 <a href="Tracking.php?id_ia=<?= $data['id_ia'] ?>">
                                                                     <button type="button"
                                                                         class="btn btn-icon btn-info  ">
