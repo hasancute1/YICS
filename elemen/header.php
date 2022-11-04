@@ -52,14 +52,6 @@
 
         overflow-y: auto;
     }
-
-    td.myClassName {
-        text-align: center;
-    }
-
-    th.myClassName {
-        text-align: center;
-    }
     </style>
 
     <link rel="apple-touch-icon" href="../base/assets/images/apple-touch-icon.png">
@@ -146,5 +138,5 @@
     <script src="../global/vendor/jquery/jquery.js"></script>
     <script src="../global/vendor/morris/morris.min.js"></script>
     <script src="../global/vendor/raphael/raphael.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 </head>

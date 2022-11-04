@@ -212,34 +212,18 @@ $(document).on('click', 'ul li', function() {
 })
     </script>
     <script>
-$(function() {
-    $(".uang").keyup(function(e) {
-        $(this).val(format($(this).val()));
+$('.uang').keyup(function(event) {
+
+    // skip for arrow keys
+    if (event.which >= 37 && event.which <= 40) return;
+
+    // format number
+    $(this).val(function(index, value) {
+        return value
+            .replace(/\D/g, "")
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     });
 });
-var format = function(num) {
-    var str = num.toString().replace("", ""),
-        parts = false,
-        output = [],
-        i = 1,
-        formatted = null;
-    if (str.indexOf(".") > 0) {
-        parts = str.split(".");
-        str = parts[0];
-    }
-    str = str.split("").reverse();
-    for (var j = 0, len = str.length; j < len; j++) {
-        if (str[j] != ",") {
-            output.push(str[j]);
-            if (i % 3 == 0 && j < (len - 1)) {
-                output.push(",");
-            }
-            i++;
-        }
-    }
-    formatted = output.reverse().join("");
-    return ("" + formatted + ((parts) ? "." + parts[1].substr(0, 2) : ""));
-};
     </script>
 
 
