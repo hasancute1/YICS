@@ -158,16 +158,20 @@ if (!isset($_SESSION['yics_user'])) {
                             <div class="row">
                                 <div class="col-lg-6 col-md-6  mb-2">
                                     <?php 
-           $alokasi = mysqli_query($link_yics, "SELECT * FROM time_fiscal WHERE status='aktif'") or die(mysqli_error($link_yics));
-           $data = mysqli_fetch_assoc($alokasi);
-            ?>
+                                    $alokasi = mysqli_query($link_yics, "SELECT * FROM time_fiscal WHERE status='aktif'") or die(mysqli_error($link_yics));
+                                    $data = mysqli_fetch_assoc($alokasi);
+                                    $_SESSION['periode'] = $data['periode'];
+                                    $_SESSION['awal'] = date("d M Y", strtotime($data['awal']));
+                                    $_SESSION['akhir'] = date("d M Y", strtotime($data['akhir']));
+                                        ?>
+
                                     <h6 class="font-size-18 font-weight-400">Periode ( <span
-                                            style="color:red;"><?php echo $data['periode']; ?> </span> ) :
-                                        <span
-                                            style="color:red;"><?php echo date("d M Y", strtotime($data['awal'])); ?></span>
+                                            style="color:red;"><?php echo  $_SESSION['periode']; ?> </span> ) :
+                                        <span style="color:red;"><?php echo $_SESSION['awal']; ?></span>
                                         s.d
-                                        <span style="color:red;"><?php echo date("d M Y", strtotime($data['akhir'])); ?>
+                                        <span style="color:red;"><?php echo $_SESSION['akhir']; ?>
                                         </span>
+                                    </h6>
                                 </div>
                                 <div class="col-lg-6 col-md-6 mb-2">
                                     <div class="row">
@@ -292,7 +296,7 @@ if (!isset($_SESSION['yics_user'])) {
                                                         AS total FROM view_alokasi_budget WHERE status='aktif'")) or die (mysqli_error($link_yics));;
                                                     ?>
                                                 <p class="white font-weight-100 m-0 font-size-18"><u>"Budget Rp
-                                                        <?php echo number_format ($card['total'],0,'.','.'); ?>"</u></p>
+                                                        <?php echo number_format ($card['total'],0,',','.'); ?>"</u></p>
                                             </div>
                                         </div>
                                     </div>
@@ -316,7 +320,7 @@ if (!isset($_SESSION['yics_user'])) {
                                                     <span class="white font-size-40 font-weight-100 mt-50">Rp
                                                         1.628</span>
                                                     <p class="white font-weight-100 m-0 font-size-18">"Budget Rp
-                                                        <?php echo number_format ($row_card['budget']); ?>"
+                                                        <?php echo number_format ($row_card['budget'],0,',','.'); ?>"
                                                     </p>
                                                     <p class="white font-weight-100 m-0"> Lihat Detail >></p>
                                                 </div>
@@ -926,6 +930,7 @@ include '../elemen/footer.php';?>
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Rp</span>
                                     </div>
+
                                     <input required name="cost" type="text" class="form-control" id="rupiah"
                                         placeholder="Isi Cost Proposal...">
                                 </div>
