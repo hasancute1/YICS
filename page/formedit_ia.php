@@ -67,6 +67,27 @@ include '../elemen/header.php';?>
                     <?php include '../elemen/sidebarback.php';?>
                     <!-- end sidebar back -->
 
+                    
+                    <?php                    
+
+                    $id = $_GET['id_ia'];
+
+                    // get data proposal & ia
+                    
+                    $data_ia = single_query("SELECT * FROM ia 
+                    JOIN proposal ON ia.id_prop = proposal.id_prop 
+                    JOIN depart ON proposal.id_dep = depart.id_dep
+                    JOIN kategori_proposal  ON proposal.id_kat = kategori_proposal.id_kat
+                    LEFT JOIN konversi_matauang ON proposal.id_matauang = konversi_matauang.id_matauang
+                    WHERE id_ia='$id'"); 
+
+
+                    $consumtion_budget =  $data_ia['cost_ia'];
+                                    
+                    $sisa_budget = $data_ia['cost'] - $consumtion_budget;
+
+                    ?>
+
                     <!-- Page -->
                     <div class="page">
                         <div class="page-content container-fluid">
@@ -88,7 +109,12 @@ include '../elemen/header.php';?>
 
 
 
-                                            <form>
+                                            <form method="post" action="../proses/ia/update_ia.php">
+                                                <input type="hidden" name="id_prop" value="<?= $data_ia['id_prop'] ?>">
+                                                <input type="hidden" name="id_ia" value="<?= $id ?>">
+                                                <input type="hidden" name="redirect_url" value="<?= $_GET['redirect_url'] ?>">
+                                                <input type="hidden" name="id_dept" value="<?= $data_ia['id_dept'] ?>"> 
+
                                                 <div class="form-group row">
                                                     <h4 class="col-md-12 modal-title text-left" style="color:black;">
                                                         SUBJECT
@@ -101,7 +127,7 @@ include '../elemen/header.php';?>
                                                         <div class="form-group">
                                                             <input type="text" class="form-control  bg-grey-200"
                                                                 name="name" placeholder="Division Yourself"
-                                                                autocomplete="off" value="Body Plant 1">
+                                                                autocomplete="off" value="<?= $data_ia['depart'] ?>">
                                                         </div>
                                                     </div>
                                                     <label class="col-md-2 col-form-label text-left"
@@ -110,7 +136,7 @@ include '../elemen/header.php';?>
                                                         <div class="form-group">
                                                             <input type="text" class="form-control  bg-grey-200"
                                                                 name="name" placeholder="Division Yourself"
-                                                                autocomplete="off" value="Improvement">
+                                                                autocomplete="off" value="<?= $data_ia['kategori'] ?>">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -120,7 +146,7 @@ include '../elemen/header.php';?>
                                                     <div class="col-md-10">
                                                         <input type="text" class="form-control  bg-grey-200" name="name"
                                                             placeholder="Division Yourself" autocomplete="off"
-                                                            value="Additional Acces Door Office CPM QRE">
+                                                            value="<?= $data_ia['proposal'] ?>">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -133,16 +159,16 @@ include '../elemen/header.php';?>
                                                         style="color:black;">IA
                                                         No.</label>
                                                     <div class="col-md-10">
-                                                        <input type="text" class="form-control" name="name"
-                                                            placeholder="Diisi No. IA" autocomplete="off">
+                                                        <input type="text" class="form-control" name="ia"
+                                                            placeholder="Diisi No. IA" autocomplete="off" value="<?= $data_ia['ia'] ?>">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
                                                     <label class="col-md-2 col-form-label text-left"
                                                         style="color:black;">Description</label>
                                                     <div class="col-md-10">
-                                                        <input type="text" class="form-control" name="name"
-                                                            placeholder="Diisi Deskripsi" autocomplete="off">
+                                                        <input type="text" class="form-control" name="ia_deskripsi"
+                                                            placeholder="Diisi Deskripsi" autocomplete="off" value="<?= $data_ia['deskripsi'] ?>">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row text-left">
@@ -155,13 +181,13 @@ include '../elemen/header.php';?>
                                                     <div class="col-md-4">
                                                         <span
                                                             style="color:red;font-size: 13px;font-style: italic;">*(Sisa
-                                                            budget Rp 300)</span>
+                                                            budget Rp <?= $sisa_budget ?>)</span>
                                                         <div class="input-group">
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text">RP</span>
                                                             </div>
                                                             <input type="number" class="form-control"
-                                                                placeholder="Nominal Rupiah">
+                                                                placeholder="Nominal Rupiah" name="cost_ia" id="cost_ia" value="<?=$data_ia['cost_ia'] ?>">
                                                         </div>
                                                     </div>
                                                     <label class="col-md-2 col-form-label mt-4" style="color:black;">In
@@ -175,7 +201,7 @@ include '../elemen/header.php';?>
                                                                 <span class="input-group-text">JPY</span>
                                                             </div>
                                                             <input type="number" class="form-control"
-                                                                placeholder="Nominal Yen">
+                                                                placeholder="Nominal Yen" id="yen" value="<?= number_format($data_ia['cost_ia'] / $data_ia['yen'] ,2) ?>">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -203,7 +229,7 @@ include '../elemen/header.php';?>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-danger"
                                                         data-dismiss="modal">Reset</button>
-                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                    <button type="submit" class="btn btn-primary" name="submit">Submit</button>
                                             </form>
                                         </div>
                                     </div>
@@ -222,73 +248,91 @@ include '../elemen/header.php';?>
             <script>
             // Dokumen sudah ready maka jalankan function
             $(document).ready(function() {
-                // jika class approve di klik maka
-                $(".approve").click(function() {
 
-                    //attribut data-id ini masukkan ke variabel index
-                    var index = $(this).attr('data-id');
-                    var index2 = parseInt(index) + 1;
+                var yen = <?= $data_ia['yen'] ?>;
 
-                    // Buat tanggal index ini required
-                    $('#tgl-' + index).prop("required", true);
+                $('#cost_ia').keyup(function(){
+                
+                    var nominal = $(this).val();     
+                    
+                    var replaceNominal = nominal.replace(',' , '');
 
-                    // varibael index ditambah 1 lalu masukkan ke variabel next_index
-                    var next_index = Number(index) + 1;
-                    // jika di html ini ada  checked
-                    if ($(this).is(':checked')) {
-                        //maka  id data yang ditambah variabel next index hapus class d-none
-                        $('#data' + next_index).removeClass('d-none');
-                        //jika  id reject_step ditambah index ada checked
-                        if ($('#reject_step' + index).is(':checked')) {
-                            //maka id reject_step ditambah index ini diklik
-                            $('#reject_step' + index).click();
-                        }
-                        if ($('#reject_step' + next_index).is(':checked')) {
-                            //maka id reject_step ditambah index ini diklik
-                            $('#reject_step' + next_index).click();
-                        }
-                        //melainkan bila tidak ada check
-                    } else {
-                        if ($('#reject_step' + next_index).is(':checked')) {
-                            //maka id reject_step ditambah index ini diklik
-                            $('#reject_step' + next_index).click();
-                        }
-                        if ($('#approve_step' + next_index).is(':checked')) {
-                            //maka id reject_step ditambah index ini diklik
-                            $('#approve_step' + next_index).click();
-                        }
-                        // maka id data yang ditambah next_index ditambah class d_none
-                        $('#data' + next_index).addClass('d-none');
-                    }
+                    var conversi = replaceNominal / yen;
+
+                    var number=  new Intl.NumberFormat().format(conversi);                  
+
+                    $('#yen').val(number);
                 });
+
+
+
+                // // jika class approve di klik maka
+                // $(".approve").click(function() {
+
+                //     //attribut data-id ini masukkan ke variabel index
+                //     var index = $(this).attr('data-id');
+                //     var index2 = parseInt(index) + 1;
+
+                //     // Buat tanggal index ini required
+                //     $('#tgl-' + index).prop("required", true);
+
+                //     // varibael index ditambah 1 lalu masukkan ke variabel next_index
+                //     var next_index = Number(index) + 1;
+                //     // jika di html ini ada  checked
+                //     if ($(this).is(':checked')) {
+                //         //maka  id data yang ditambah variabel next index hapus class d-none
+                //         $('#data' + next_index).removeClass('d-none');
+                //         //jika  id reject_step ditambah index ada checked
+                //         if ($('#reject_step' + index).is(':checked')) {
+                //             //maka id reject_step ditambah index ini diklik
+                //             $('#reject_step' + index).click();
+                //         }
+                //         if ($('#reject_step' + next_index).is(':checked')) {
+                //             //maka id reject_step ditambah index ini diklik
+                //             $('#reject_step' + next_index).click();
+                //         }
+                //         //melainkan bila tidak ada check
+                //     } else {
+                //         if ($('#reject_step' + next_index).is(':checked')) {
+                //             //maka id reject_step ditambah index ini diklik
+                //             $('#reject_step' + next_index).click();
+                //         }
+                //         if ($('#approve_step' + next_index).is(':checked')) {
+                //             //maka id reject_step ditambah index ini diklik
+                //             $('#approve_step' + next_index).click();
+                //         }
+                //         // maka id data yang ditambah next_index ditambah class d_none
+                //         $('#data' + next_index).addClass('d-none');
+                //     }
+                // });
 
                 // class reject di klik maka jalankan function
-                $(".reject").click(function() {
-                    //  membuat var index yang hasilnya  dari attribut data ini
-                    var index = $(this).attr('data-id');
-                    var next_index = Number(index) + 1;
+                // $(".reject").click(function() {
+                //     //  membuat var index yang hasilnya  dari attribut data ini
+                //     var index = $(this).attr('data-id');
+                //     var next_index = Number(index) + 1;
 
-                    // Buat tanggal index ini required
-                    $('#tgl-' + index).prop("required", true);
+                //     // Buat tanggal index ini required
+                //     $('#tgl-' + index).prop("required", true);
 
-                    // jika html ini ada checked 
-                    if ($(this).is(':checked')) {
-                        // maka cetak approve step variabel index
-                        console.log('approve_step' + index);
-                        // jika id approve step variable index ada checked
-                        if ($('#approve_step' + index).is(':checked')) {
-                            // maka id  apporove step  index di klik
-                            $('#approve_step' + index).click();
-                        }
-                        if ($('#approve_step' + next_index).is(':checked')) {
-                            // maka id  apporove step  index di klik
-                            $('#approve_step' + next_index).click();
-                        }
-                        if ($('#reject_step' + next_index).is(':checked')) {
-                            // maka id  apporove step  index di klik
-                            $('#reject_step' + next_index).click();
-                        }
-                    }
-                });
+                //     // jika html ini ada checked 
+                //     if ($(this).is(':checked')) {
+                //         // maka cetak approve step variabel index
+                //         console.log('approve_step' + index);
+                //         // jika id approve step variable index ada checked
+                //         if ($('#approve_step' + index).is(':checked')) {
+                //             // maka id  apporove step  index di klik
+                //             $('#approve_step' + index).click();
+                //         }
+                //         if ($('#approve_step' + next_index).is(':checked')) {
+                //             // maka id  apporove step  index di klik
+                //             $('#approve_step' + next_index).click();
+                //         }
+                //         if ($('#reject_step' + next_index).is(':checked')) {
+                //             // maka id  apporove step  index di klik
+                //             $('#reject_step' + next_index).click();
+                //         }
+                //     }
+                // });
             });
             </script>

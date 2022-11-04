@@ -76,7 +76,9 @@ include '../elemen/header.php';?>
                     depart.depart AS depart,
                     kategori_proposal.kategori AS kategori,
                     proposal.cost AS cost,
-                    konversi_matauang.yen AS yen
+                    konversi_matauang.yen AS yen,
+                    proposal.id_fis,
+                    proposal.id_dep
                    
                     FROM proposal 
                     LEFT JOIN depart ON proposal.id_dep = depart.id_dep
@@ -85,13 +87,17 @@ include '../elemen/header.php';?>
                    
                     WHERE id_prop = '$id'")or die (mysqli_error($link_yics));
                     $data = mysqli_fetch_assoc($proposal);
+                    $id_fis = $data['id_fis'];
+                    $id_dep = $data['id_dep'];
 
-                    $get_data_ia = single_query("SELECT sum(cost_ia) as cost_ia FROM ia where id_prop='$id'");
+                    $get_data_ia = single_query("SELECT sum(cost_ia) as cost_ia FROM ia 
+                        JOIN proposal on ia.id_prop = proposal.id_prop
+                    where id_dep='$id_dep'");
                     $consumtion_budget =  $get_data_ia['cost_ia'];
-                   
-                    $sisa_budget = $data['cost'] - $consumtion_budget;
-                   
 
+                    $get_data_budget = single_query("SELECT * FROM budget where id_dep='$id_dep' and id_fis='$id_fis'");                   
+                   
+                    $sisa_budget = $get_data_budget['budget'] - $consumtion_budget;
 
                       ?>
                     <!-- Page -->
@@ -420,11 +426,15 @@ include '../elemen/header.php';?>
                                                             <td><?= $rp." ".number_format($row['cost_ia'], 0, ',', '.');?>
                                                             </td>
                                                             <td>
-                                                                <button type="button"
-                                                                    class="btn btn-icon btn-warning  edit_ia"
-                                                                    data-toggle="modal" data-target="#">
-                                                                    <i class="icon wb-edit" aria-hidden="true"></i>
-                                                                </button>
+
+
+                                                            <a href="formedit_ia.php?id_ia=<?= $row['id_ia']?>"
+                                                                class="btn btn-icon btn-warning  edit_ia"
+                                                                >
+                                                                <i class="icon wb-edit" aria-hidden="true"></i>
+                                                            </a>
+
+
                                                             </td>
                                                         </tr>
 

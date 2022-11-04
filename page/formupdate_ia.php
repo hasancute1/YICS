@@ -112,6 +112,9 @@ include '../elemen/header.php';?>
                                                     ");
                                             $max_step =  $query_max_step['max_step'];
 
+                                            if($max_step == NULL){
+                                                $max_step = 5;
+                                            }
 
                                             $query_reject_step = single_query("SELECT
                                             max(step) as step from tracking_ia
@@ -239,7 +242,7 @@ include '../elemen/header.php';?>
                                                         
                                                         
                                                         
-                                                        if( $rows_progress['step'] > $max_step){
+                                                        if( $rows_progress['step'] > $max_step + 1){
 
                                                             $text_muncul = "d-none";
 
@@ -284,7 +287,13 @@ include '../elemen/header.php';?>
                                                                                 data-plugin="switchery"
                                                                                 data-color="orange" value="0"
                                                                                 autocomplete="off"
-                                                                                <?= ($data_tracking['approval'] == 0)?"checked":"" ?>
+                                                                                <?php
+                                                                                if(isset($data_tracking['approval'])){
+                                                                                    if($data_tracking['approval'] == 0){
+                                                                                        echo 'checked';
+                                                                                    }                                                                                    
+                                                                                }
+                                                                                ?>
                                                                                 >
                                                                             <span
                                                                                 class="custom-switch-indicator"></span>
@@ -302,7 +311,13 @@ include '../elemen/header.php';?>
                                                                                 class="custom-switch-input approve"
                                                                                 autocomplete="off"
                                                                                 data-plugin="switchery"
-                                                                                <?= ($data_tracking['approval'] == 1)?"checked":"" ?>
+                                                                                <?php
+                                                                                if(isset($data_tracking['approval'])){
+                                                                                    if($data_tracking['approval'] == 1){
+                                                                                        echo 'checked';
+                                                                                    }                                                                                    
+                                                                                }
+                                                                                ?>
                                                                                 >
                                                                             <span
                                                                                 class="custom-switch-indicator"></span>
