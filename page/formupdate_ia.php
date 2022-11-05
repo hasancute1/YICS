@@ -266,7 +266,7 @@ include '../elemen/header.php';?>
                                                         ?>
 
                                                         <tbody>
-                                                            <tr class="<?=$text_muncul?>">
+                                                            <tr class="<?=$text_muncul?>" id="data<?=$rows_progress['id_prog']?>">
                                                                 <td hidden>
                                                                     <input hidden type="text"
                                                                         class="form-control bg-grey-200"
@@ -287,7 +287,7 @@ include '../elemen/header.php';?>
                                                                                 data-plugin="switchery"
                                                                                 data-color="orange" value="0"
                                                                                 autocomplete="off"
-                                                                                data-id="<?=$$rows_progress['id_prog']?>"
+                                                                                data-id="<?=$rows_progress['id_prog']?>"
                                                                                 <?php
                                                                                 if(isset($data_tracking['approval'])){
                                                                                     if($data_tracking['approval'] == 0){
@@ -312,7 +312,7 @@ include '../elemen/header.php';?>
                                                                                 class="custom-switch-input approve"
                                                                                 autocomplete="off"
                                                                                 data-plugin="switchery"
-                                                                                data-id="<?=$$rows_progress['id_prog']?>"
+                                                                                data-id="<?=$rows_progress['id_prog']?>"
                                                                                 <?php
                                                                                 if(isset($data_tracking['approval'])){
                                                                                     if($data_tracking['approval'] == 1){
@@ -331,7 +331,7 @@ include '../elemen/header.php';?>
                                                                 <td class="align-middle text-center">
                                                                     <div class="input-group-prepend">
                                                                         <input type="datetime-local" name="tgl[]"
-                                                                            class="form-control bg-grey-200" id="tgl-"
+                                                                            class="form-control bg-grey-200" id="tgl-<?=$rows_progress['id_prog']?>"
                                                                             value="<?php
                                                                                 if(isset($data_tracking['time'])){
                                                                                     echo $data_tracking['time'];                                                                                                                                                                     
@@ -394,7 +394,7 @@ include '../elemen/header.php';?>
                 $(".approve").click(function() {
 
                     //attribut data-id ini masukkan ke variabel index
-                    var index = $(this).attr('data-id');
+                    var index = $(this).attr('data-id');                  
                     var index2 = parseInt(index) + 1;
 
                     // Buat tanggal index ini required
