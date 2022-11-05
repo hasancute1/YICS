@@ -121,7 +121,8 @@ include '../elemen/header.php';?>
 
                                             <div class="row">
                                                 <div class="col-lg-12 col-md-12">
-                                                    <form action="" method="POST" id="form_ia">
+                                                    <form action="../proses/ia/tambah_ia.php" method="POST"
+                                                        id="form_ia">
                                                         <input type="hidden" name="add">
                                                         <input type="hidden" class="form-control" name="id_prop"
                                                             id="id_prop" autocomplete="off"
@@ -138,8 +139,7 @@ include '../elemen/header.php';?>
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
                                                                     <input type="text" class="form-control bg-grey-200"
-                                                                        readonly name="name"
-                                                                        placeholder="Division Yourself"
+                                                                        readonly placeholder="Division Yourself"
                                                                         autocomplete="off"
                                                                         value="<?php echo $data['depart']; ?>">
                                                                 </div>
@@ -149,8 +149,7 @@ include '../elemen/header.php';?>
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
                                                                     <input type="text" class="form-control bg-grey-200"
-                                                                        readonly name="name"
-                                                                        placeholder="Division Yourself"
+                                                                        readonly placeholder="Division Yourself"
                                                                         autocomplete="off"
                                                                         value="<?php echo $data['kategori']; ?>">
                                                                 </div>
@@ -161,9 +160,8 @@ include '../elemen/header.php';?>
                                                                 style="color:black;">Proposal</label>
                                                             <div class="col-md-10">
                                                                 <input type="text" class="form-control  bg-grey-200"
-                                                                    name="name" placeholder="Division Yourself"
-                                                                    autocomplete="off" readonly
-                                                                    value="<?php echo $data['proposal']; ?>">
+                                                                    placeholder="Division Yourself" autocomplete="off"
+                                                                    readonly value="<?php echo $data['proposal']; ?>">
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
@@ -251,6 +249,7 @@ include '../elemen/header.php';?>
                                                                             <span class="input-group-text">RP</span>
                                                                         </div>
                                                                         <input type="text" class="form-control uang"
+                                                                            autocomplete="off"
                                                                             placeholder="Nominal Rupiah" name="cost_ia"
                                                                             id="cost_ia" required>
                                                                     </div>
@@ -273,93 +272,36 @@ include '../elemen/header.php';?>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-
-                                                        <!-- <div class="copy d-none control-group">
-                                                        <div class="aa">
-                                                            <hr>
-                                                            <div class="form-group row ">
-                                                                <h4 class="col-md-10 modal-title text-left"
-                                                                    style="color:black;">IA
-                                                                    NO.
-                                                                </h4>
-                                                            </div>
-                                                            <div class="form-group row ">
-                                                                <label class="col-md-2 col-form-label text-left"
-                                                                    style="color:black;">IA
-                                                                    No.</label>
-                                                                <div class="col-md-10">
-                                                                    <input type="text" class="form-control" name="name"
-                                                                        placeholder="Diisi No. IA" autocomplete="off">
-                                                                </div>
-                                                            </div>
                                                             <div class="form-group row">
-                                                                <label class="col-md-2 col-form-label text-left"
-                                                                    style="color:black;">Description</label>
-                                                                <div class="col-md-10">
-                                                                    <input type="text" class="form-control" name="name"
-                                                                        placeholder="Diisi Deskripsi" autocomplete="off">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row text-left">
                                                                 <h4 class="col-md-12 modal-title text-left"
                                                                     style="color:black;">
-                                                                    Original Currency</h4>
-                                                            </div>
-                                                            <div class="form-group row text-left">
-                                                                <label class="col-md-2 col-form-label mt-4"
-                                                                    style="color:black;">In
-                                                                    RP</label>
-                                                                <div class="col-md-4">
-                                                                    <span
-                                                                        style="color:red;font-size: 13px;font-style: italic;">*(Sisa
-                                                                        budget Rp 300)</span>
-                                                                    <div class="input-group">
-                                                                        <div class="input-group-prepend">
-                                                                            <span class="input-group-text">RP</span>
-                                                                        </div>
-                                                                        <input type="text" class="form-control uang"
-                                                                            placeholder="Nominal Rupiah">
-                                                                    </div>
-                                                                </div>
-                                                                <label class="col-md-2 col-form-label mt-4"
-                                                                    style="color:black;">In
-                                                                    JPY</label>
-                                                                <div class="col-md-4">
-                                                                    <span
-                                                                        style="color:red;font-size: 13px;font-style: italic;">*(Sisa
-                                                                        budget YJP 300)</span>
-                                                                    <div class="input-group">
-                                                                        <div class="input-group-prepend">
-                                                                            <span class="input-group-text">JPY</span>
-                                                                        </div>
-                                                                        <input type="number" class="form-control"
-                                                                            placeholder="Nominal Yen">
-                                                                    </div>
-                                                                </div>
+                                                                    Valid
+                                                                    Update</h4>
                                                             </div>
                                                             <div class="form-group row">
-                                                                <div class="col-lg-12 col-md-12">
-                                                                    <div class="text-left">
-                                                                        <i data-toggle="tooltip"
-                                                                            data-original-title="Kurangi Kolom Ia">
-                                                                            <button type="button"
-                                                                                class="btn btn-icon  btn-danger btn-sm remove">
-                                                                                <i class="icon oi-trashcan"
-                                                                                    aria-hidden="true">
-                                                                                </i><span>HAPUS FORM</span>
-
-                                                                            </button>
-                                                                        </i>
-                                                                    </div>
+                                                                <label class="col-md-2 col-form-label text-left"
+                                                                    style="color:black;">Valid
+                                                                    Until </label>
+                                                                <div class="col-md-4">
+                                                                    <input type="date" class="form-control" id="time_ia"
+                                                                        placeholder="Diisi tanggal updaate"
+                                                                        name="time_ia" autocomplete="off">
+                                                                </div>
+                                                                <label class="col-md-2 col-form-label text-left"
+                                                                    style="color:black;">Remark
+                                                                    Ct Update</label>
+                                                                <div class="col-md-4">
+                                                                    <select id="pic_ia" class="form-control bg-grey-200"
+                                                                        autocomplete="off" name="pic_ia">
+                                                                        <option value="<?= $_SESSION['yics_user']; ?>">
+                                                                            <?= $_SESSION['yics_nama']; ?>
+                                                                        </option>
+                                                                    </select>
                                                                 </div>
                                                             </div>
-
                                                         </div>
-                                                    </div> -->
-
                                                         <div class="modal-footer">
-                                                            <button type="button" style="color:white;"
+                                                            <button type="reset" style="color:white;"
                                                                 class="btn bg-blue-grey-800 btn-round"
                                                                 data-dismiss="modal" id="reset">RESET</button>
                                                             <button type="submit" id="submit"
@@ -402,11 +344,13 @@ include '../elemen/header.php';?>
                                                     class="table table-striped table-hover table-bordered w-full display nowrap example0 text-uppercase"
                                                     id="list-ia">
                                                     <thead class="text-center">
-                                                        <tr class="bg-info align-" height="10px">
+                                                        <tr class="bg-info align-middle">
                                                             <th hidden>id ia</th>
                                                             <th class="align-middle text-center">NO</th>
                                                             <th class="align-middle text-center">NO IA</th>
                                                             <th class="align-middle text-center">DESKRIPSI</th>
+                                                            <th class="align-middle text-center">VALID UNTIL</th>
+                                                            <th class="align-middle text-center">CT UPDATE</th>
                                                             <th class="align-middle text-center">COST IA</th>
                                                             <th class=" align-middle text-center">ACTION</th>
                                                         </tr>
@@ -414,27 +358,38 @@ include '../elemen/header.php';?>
                                                     <tbody>
                                                         <?php 
                                                         $no = 1 ;
-                                                        $list_ia = mysqli_query($link_yics,"SELECT * from ia where id_prop = '$id'") or die(mysqli_error($link_yics));
+                                                        
+                                                        $list_ia = mysqli_query($link_yics,"SELECT id_ia,
+                                                        deskripsi,
+                                                        ia,
+                                                        deskripsi,
+                                                        cost_ia,
+                                                        data_user.nama AS pic_ia,
+                                                        time_ia
+                                                        FROM ia 
+                                                        LEFT JOIN data_user
+                                                        ON ia.pic_ia = data_user.username 
+                                                        WHERE id_prop = '$id'") or die(mysqli_error($link_yics));
                                                             if(mysqli_num_rows($list_ia)>0){
                                                             while($row = mysqli_fetch_assoc($list_ia)){?>
-                                                        <tr class="row-ia">
+                                                        <tr class="row-ia text-center">
                                                             <td hidden><?= $row['id_ia']; ?></td>
                                                             <td><?= $no; ?></td>
                                                             <td><?= $row['ia']; ?></td>
                                                             <td><?= $row['deskripsi']; ?></td>
                                                             <?php $rp="RP"; ?>
-                                                            <td><?= $rp." ".number_format($row['cost_ia'], 0, ',', '.');?>
+
                                                             </td>
+
+                                                            <td><?= date("d M Y", strtotime($row['time_ia'])); ?>
+                                                            </td>
+                                                            <td><?= $row['pic_ia']; ?></td>
+                                                            <td><?= $rp." ".number_format($row['cost_ia'], 0, ',', '.');?>
                                                             <td>
-
-
-                                                            <a href="formedit_ia.php?id_ia=<?= $row['id_ia']?>"
-                                                                class="btn btn-icon btn-warning  edit_ia"
-                                                                >
-                                                                <i class="icon wb-edit" aria-hidden="true"></i>
-                                                            </a>
-
-
+                                                                <a href="formedit_ia.php?id_ia=<?= $row['id_ia']?>"
+                                                                    class="btn btn-icon btn-warning  edit_ia">
+                                                                    <i class="icon wb-edit" aria-hidden="true"></i>
+                                                                </a>
                                                             </td>
                                                         </tr>
 
@@ -443,8 +398,8 @@ include '../elemen/header.php';?>
                                                             }
                                                             
                                                             ?>
-                                                        <tr>
-                                                            <td colspan="3" class="bg-yellow-100">TOTAL COST IA
+                                                        <tr class="text-center">
+                                                            <td colspan="5" class="bg-yellow-100">TOTAL COST IA
 
                                                             </td>
                                                             <?php 
@@ -458,7 +413,7 @@ include '../elemen/header.php';?>
                                                         <?php }else
                                                         { ?>
                                                         <tr>
-                                                            <td colspan="6" class="text-center">Tidak Ada Data
+                                                            <td colspan="8" class="text-center">Tidak Ada Data
                                                                 Ditemukan </td>
                                                         </tr>
                                                         <?php
@@ -470,6 +425,10 @@ include '../elemen/header.php';?>
 
                                                 </table>
 
+                                                <a href="controltabledep.php?dept=<?= $id_dep ?>"
+                                                    class="btn btn-icon btn-warning  edit_ia">
+                                                    <i " aria-hidden=" true"> <span>TUTUP FORM</span></i>
+                                                </a>
                                             </div>
 
                                         </div>
@@ -491,73 +450,63 @@ include '../elemen/header.php';?>
             <?php include '../elemen/footer.php';?>
 
             <script type="text/javascript">
-            $(document).ready(function() {
-                $(".add-more").click(function() {
-                    var html = $(".copy").html();
-                    $(".after-add-more").after(html);
-                });
+            // Tambah Ia
 
-                // saat tombol remove dklik control group akan dihapus 
-                $("body").on("click", ".remove", function() {
-                    $(this).parents(".aa").remove();
-                });
+            $("form").submit(function(event) {
+                event.preventDefault();
+                dataForm = $("form").serialize();
+                $.ajax({
+                    type: "POST",
+                    url: "../proses/ia/tambah_ia.php",
+                    data: dataForm,
+                    success: function(result) {
+                        console.log(result);
 
-                // Tambah Ia
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Saved!',
+                            text: "Data IA telah ditambah.",
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
 
-                $("form").submit(function(event) {
-                    event.preventDefault();
-                    dataForm = $("form").serialize();
-
-                    $.ajax({
-                        type: "POST",
-                        url: "../proses/ia/tambah_ia.php",
-                        data: dataForm,
-                        success: function(result) {
-                            console.log(result);
-
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Saved!',
-                                text: "Data IA telah ditambah.",
-                                showConfirmButton: false,
-                                timer: 2000
-                            });
-
-                            resetForm();
-                            location.reload();
+                        resetForm();
+                        location.reload();
 
 
 
-                        }
-
-                    });
-
+                    }
 
                 });
 
-                function resetForm() {
 
-                    $('#ia').val('');
-                    $('#ia_desc').val('');
-                    $('#cost_ia').val('');
+            });
 
-                }
+            function resetForm() {
+
+                $('#ia').val('');
+                $('#ia_desc').val('');
+                $('#cost_ia').val('');
+                $('#time_ia').val('');
+                $('#pic_ia').val('');
+
+            }
 
 
-                var yen = <?= $data['yen'] ?>;
+            var yen = <?= $data['yen'] ?>;
 
-                $('#cost_ia').keyup(function() {
+            $('#cost_ia').keyup(function() {
 
-                    var nominal = $(this).val();
+            var nominal = $(this).val();
 
-                    var replaceNominal = nominal.replace(',', '');
+            var replaceNominal = nominal.replace(',', '');
 
-                    var conversi = replaceNominal / yen;
+            var conversi = replaceNominal / yen;
 
-                    var number = new Intl.NumberFormat().format(conversi);
+            var number = new Intl.NumberFormat().format(conversi);
 
-                    $('#yen').val(number);
-                });
+            $('#yen').val(number);
+            });
 
 
 

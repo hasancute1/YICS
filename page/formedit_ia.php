@@ -67,7 +67,7 @@ include '../elemen/header.php';?>
                     <?php include '../elemen/sidebarback.php';?>
                     <!-- end sidebar back -->
 
-                    
+
                     <?php                    
 
                     $id = $_GET['id_ia'];
@@ -112,8 +112,9 @@ include '../elemen/header.php';?>
                                             <form method="post" action="../proses/ia/update_ia.php">
                                                 <input type="hidden" name="id_prop" value="<?= $data_ia['id_prop'] ?>">
                                                 <input type="hidden" name="id_ia" value="<?= $id ?>">
-                                                <input type="hidden" name="redirect_url" value="<?= $_GET['redirect_url'] ?>">
-                                                <input type="hidden" name="id_dept" value="<?= $data_ia['id_dept'] ?>"> 
+                                                <input type="hidden" name="redirect_url"
+                                                    value="<?= $_GET['redirect_url'] ?>">
+                                                <input type="hidden" name="id_dept" value="<?= $data_ia['id_dept'] ?>">
 
                                                 <div class="form-group row">
                                                     <h4 class="col-md-12 modal-title text-left" style="color:black;">
@@ -160,7 +161,8 @@ include '../elemen/header.php';?>
                                                         No.</label>
                                                     <div class="col-md-10">
                                                         <input type="text" class="form-control" name="ia"
-                                                            placeholder="Diisi No. IA" autocomplete="off" value="<?= $data_ia['ia'] ?>">
+                                                            placeholder="Diisi No. IA" autocomplete="off"
+                                                            value="<?= $data_ia['ia'] ?>">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -168,7 +170,8 @@ include '../elemen/header.php';?>
                                                         style="color:black;">Description</label>
                                                     <div class="col-md-10">
                                                         <input type="text" class="form-control" name="ia_deskripsi"
-                                                            placeholder="Diisi Deskripsi" autocomplete="off" value="<?= $data_ia['deskripsi'] ?>">
+                                                            placeholder="Diisi Deskripsi" autocomplete="off"
+                                                            value="<?= $data_ia['deskripsi'] ?>">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row text-left">
@@ -187,7 +190,8 @@ include '../elemen/header.php';?>
                                                                 <span class="input-group-text">RP</span>
                                                             </div>
                                                             <input type="number" class="form-control"
-                                                                placeholder="Nominal Rupiah" name="cost_ia" id="cost_ia" value="<?=$data_ia['cost_ia'] ?>">
+                                                                placeholder="Nominal Rupiah" name="cost_ia" id="cost_ia"
+                                                                value="<?=$data_ia['cost_ia'] ?>">
                                                         </div>
                                                     </div>
                                                     <label class="col-md-2 col-form-label mt-4" style="color:black;">In
@@ -201,10 +205,12 @@ include '../elemen/header.php';?>
                                                                 <span class="input-group-text">JPY</span>
                                                             </div>
                                                             <input type="number" class="form-control"
-                                                                placeholder="Nominal Yen" id="yen" value="<?= number_format($data_ia['cost_ia'] / $data_ia['yen'] ,2) ?>">
+                                                                placeholder="Nominal Yen" id="yen"
+                                                                value="<?= number_format($data_ia['cost_ia'] / $data_ia['yen'] ,2) ?>">
                                                         </div>
                                                     </div>
                                                 </div>
+
                                                 <div class="form-group row">
                                                     <h4 class="col-md-12 modal-title text-left" style="color:black;">
                                                         Valid
@@ -216,20 +222,26 @@ include '../elemen/header.php';?>
                                                         Until </label>
                                                     <div class="col-md-4">
                                                         <input type="date" class="form-control" name="name"
-                                                            placeholder="Diisi tanggal updaate" autocomplete="off">
+                                                            placeholder="Diisi tanggal updaate" autocomplete="off"
+                                                            value="<?=$data_ia['time_ia'] ?>">
                                                     </div>
                                                     <label class="col-md-2 col-form-label text-left"
                                                         style="color:black;">Remark
                                                         Ct Update</label>
                                                     <div class="col-md-4">
-                                                        <input type="text" class="form-control" name="name"
-                                                            placeholder="Diisi PIC Update" autocomplete="off">
+                                                        <select id="pic_ia" class="form-control bg-grey-200"
+                                                            autocomplete="off" name="pic_ia">
+                                                            <option value="<?= $_SESSION['yics_user']; ?>">
+                                                                <?= $_SESSION['yics_nama']; ?>
+                                                            </option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-danger"
                                                         data-dismiss="modal">Reset</button>
-                                                    <button type="submit" class="btn btn-primary" name="submit">Submit</button>
+                                                    <button type="submit" class="btn btn-primary"
+                                                        name="submit">Submit</button>
                                             </form>
                                         </div>
                                     </div>
@@ -251,15 +263,15 @@ include '../elemen/header.php';?>
 
                 var yen = <?= $data_ia['yen'] ?>;
 
-                $('#cost_ia').keyup(function(){
-                
-                    var nominal = $(this).val();     
-                    
-                    var replaceNominal = nominal.replace(',' , '');
+                $('#cost_ia').keyup(function() {
+
+                    var nominal = $(this).val();
+
+                    var replaceNominal = nominal.replace(',', '');
 
                     var conversi = replaceNominal / yen;
 
-                    var number=  new Intl.NumberFormat().format(conversi);                  
+                    var number = new Intl.NumberFormat().format(conversi);
 
                     $('#yen').val(number);
                 });

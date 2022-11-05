@@ -226,11 +226,12 @@ $id_dept = $_GET['dept'];
                                 proposal.cost AS cost,
                                 konversi_matauang.dollar AS dollar,
                                 konversi_matauang.yen AS yen,
-                                ia.id_ia,
+                                ia.id_ia AS id_ia,
                                 ia.ia AS no_ia,
                                 ia.deskripsi AS ia_deskripsi,
-                                ia.cost_ia AS cost_ia
-                              
+                                ia.cost_ia AS cost_ia,
+                                data_user.nama AS pic_ia,
+                                ia.time_ia AS time_ia
                                 
                                 FROM tracking_prop   
                                 LEFT JOIN proposal  ON tracking_prop.id_prop = proposal.id_prop
@@ -240,10 +241,11 @@ $id_dept = $_GET['dept'];
                                 LEFT JOIN time_fiscal  ON proposal.id_fis = time_fiscal.id_fis
                                 LEFT JOIN progress  ON tracking_prop.id_prog = progress.id_prog
                                 LEFT JOIN konversi_matauang ON proposal.id_matauang = konversi_matauang.id_matauang
+                                LEFT JOIN data_user ON ia.pic_ia = data_user.username 
                                 
                                
                                 LEFT JOIN approval ON tracking_prop.id_approval = approval.id_approval
-                                WHERE tracking_prop.id_approval  = '1' AND progress.step = '5' AND depart.id_dep='$id_dept'"
+                                WHERE tracking_prop.id_approval  = '1' AND progress.step = '5' AND depart.id_dep='$id_dept'AND time_fiscal.status= 'aktif' "
                                 )
                                 or die (mysqli_error($link_yics));
                                 $no=0;
@@ -308,8 +310,10 @@ $id_dept = $_GET['dept'];
                                                             </td>
                                                             <td><?= (isset($data['no_ia']))? $Rp." ".number_format (($data['cost']-$data['cost_ia']),0,',','.'): ""; ?>
                                                             </td>
-                                                            <td></td>
-                                                            <td></td>
+
+                                                            <td><?= (isset($data['no_ia']))?date("d M Y", strtotime($data['time_ia'])): "";  ?>
+                                                            </td>
+                                                            <td><?= (isset($data['no_ia']))?$data['pic_ia']: ""; ?></td>
                                                             <td>
 
                                                                 <a href="Tracking.php?id_ia=<?= $data['id_ia'] ?>">
@@ -332,8 +336,6 @@ $id_dept = $_GET['dept'];
                                                                         <i class="icon wb-edit" aria-hidden="true"></i>
                                                                     </button>
                                                                 </a>
-
-
                                                                 <a href="../proses/dashboard/tambahplanning.php?del="
                                                                     data-toggle="tooltip" data-original-title="Hapus">
                                                                     <button type="button"
@@ -352,143 +354,9 @@ $id_dept = $_GET['dept'];
                                                     </tbody>
                                                 </table>
                                             </div>
-
-
                                         </div>
                                     </div>
-
                                 </div>
-                            </div>
-                        </div>
-
-                        <!-- Modal Tammbah Data Control  Table Body 1 -->
-                        <div class="modal fade modal-info " id="EditControlTableBody1" aria-hidden="true"
-                            aria-labelledby="EditControlTableBody1" role="dialog" tabindex="-1">
-                            <div class="modal-dialog modal-simple modal-center modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span>
-                                        </button>
-                                        <h3 class="modal-title">Input
-                                            Implementation Control Table</h3>
-                                    </div>
-
-                                    <div class="modal-body">
-                                        <form>
-                                            <div class="form-group row">
-                                                <h4 class="col-md-12 modal-title text-left" style="color:black;">SUBJECT
-                                                </h4>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-md-2 col-form-label text-left"
-                                                    style="color:black;">Department</label>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <input type="text" class="form-control  bg-grey-200" name="name"
-                                                            placeholder="Division Yourself" autocomplete="off"
-                                                            value="Body Plant 1">
-                                                    </div>
-                                                </div>
-                                                <label class="col-md-2 col-form-label text-left"
-                                                    style="color:black;">Category</label>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <input type="text" class="form-control  bg-grey-200" name="name"
-                                                            placeholder="Division Yourself" autocomplete="off"
-                                                            value="Improvement">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-md-2 col-form-label text-left"
-                                                    style="color:black;">Proposal</label>
-                                                <div class="col-md-10">
-                                                    <input type="text" class="form-control  bg-grey-200" name="name"
-                                                        placeholder="Division Yourself" autocomplete="off"
-                                                        value="Additional Acces Door Office CPM QRE">
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <h4 class="col-md-12 modal-title text-left" style="color:black;">IA NO.
-                                                </h4>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-md-2 col-form-label text-left" style="color:black;">IA
-                                                    No.</label>
-                                                <div class="col-md-10">
-                                                    <input type="text" class="form-control" name="name"
-                                                        placeholder="Diisi No. IA" autocomplete="off">
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-md-2 col-form-label text-left"
-                                                    style="color:black;">Description</label>
-                                                <div class="col-md-10">
-                                                    <input type="text" class="form-control" name="name"
-                                                        placeholder="Diisi Deskripsi" autocomplete="off">
-                                                </div>
-                                            </div>
-                                            <div class="form-group row text-left">
-                                                <h4 class="col-md-12 modal-title text-left" style="color:black;">
-                                                    Original Currency</h4>
-                                            </div>
-                                            <div class="form-group row text-left">
-                                                <label class="col-md-2 col-form-label mt-4" style="color:black;">In
-                                                    RP</label>
-                                                <div class="col-md-4">
-                                                    <span style="color:red;font-size: 13px;font-style: italic;">*(Sisa
-                                                        budget Rp 300)</span>
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text">RP</span>
-                                                        </div>
-                                                        <input type="number" class="form-control"
-                                                            placeholder="Nominal Rupiah">
-                                                    </div>
-                                                </div>
-                                                <label class="col-md-2 col-form-label mt-4" style="color:black;">In
-                                                    JPY</label>
-                                                <div class="col-md-4">
-                                                    <span style="color:red;font-size: 13px;font-style: italic;">*(Sisa
-                                                        budget YJP 300)</span>
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text">JPY</span>
-                                                        </div>
-                                                        <input type="number" class="form-control"
-                                                            placeholder="Nominal Yen">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <h4 class="col-md-12 modal-title text-left" style="color:black;">Valid
-                                                    Update</h4>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-md-2 col-form-label text-left"
-                                                    style="color:black;">Valid
-                                                    Until </label>
-                                                <div class="col-md-4">
-                                                    <input type="date" class="form-control" name="name"
-                                                        placeholder="Diisi tanggal updaate" autocomplete="off">
-                                                </div>
-                                                <label class="col-md-2 col-form-label text-left"
-                                                    style="color:black;">Remark
-                                                    Ct Update</label>
-                                                <div class="col-md-4">
-                                                    <input type="text" class="form-control" name="name"
-                                                        placeholder="Diisi PIC Update" autocomplete="off">
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-danger"
-                                                    data-dismiss="modal">Reset</button>
-                                                <button type="submit" class="btn btn-primary">Submit</button>
-                                        </form>
-                                    </div>
-                                </div>
-
                             </div>
                         </div>
                     </div>
@@ -498,7 +366,7 @@ $id_dept = $_GET['dept'];
 
                 <!-- Footer -->
                 <?php
-include '../elemen/footer.php';?>
+                include '../elemen/footer.php';?>
 
                 <script>
                 $(document).ready(function() {
@@ -582,10 +450,6 @@ include '../elemen/footer.php';?>
 
                         scrollX: true
                     });
-
-                    table.buttons().container()
-                        .appendTo($('.col-sm-6:eq(0)', table.table().container()));
-
 
                 });
                 </script>
