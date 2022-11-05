@@ -9,18 +9,20 @@ if (isset ($_SESSION['yics_user'])){
     if(isset($_POST['add'])){
 
          //$totalData=$_POST['tgl'];        
-         $i = 1;
+         $i = 6;
          $index = 0;
          $id_ia = $_POST['id_ia'];
          //data proposal
          $data_ia = single_query("SELECT * FROM ia WHERE id_ia={$id_ia}");
 
-         var_dump($data_ia); die();
+     //     var_dump($_POST['id_prog']);
 
          $id_pic = $_POST['pic']; //array
          $id_tgl = $_POST['tgl']; //aray
          $max = max($_POST['id_prog']);
-         $insertTracking = "INSERT INTO tracking_ia (`id_ia`, `id_prog`, `approval`, `username`, `time`) VALUES "; 
+
+     //     $insertTracking = "INSERT INTO tracking_ia (`id_ia`, `id_prog`, `approval`, `username`, `time`) VALUES ('$id_ia', '$prog', '1', '$pic', '$time' )"; 
+
          $max = 0;
 
          $notif = FALSE;
@@ -28,41 +30,47 @@ if (isset ($_SESSION['yics_user'])){
          $pic = '';
 
          foreach($_POST['id_prog'] AS $prog){
-          $qry_cek = "SELECT id_ia FROM tracking_ia WHERE id_ia =  '$id_ia'  AND id_prog = '$prog'";
-          $sql_cek = mysqli_query($link_yics, $qry_cek)or die(mysqli_error($link_yics));
-          $jml_data = mysqli_num_rows($sql_cek);
+
+          $qry_cek = single_query("SELECT id_ia FROM tracking_ia WHERE id_ia =  '$id_ia'  AND id_prog = '$prog'");  
+          $jml_data = count($qry_cek); 
           
           // echo $jml_data;
           $pic = $_POST['pic'][$index];
           $time = $_POST['tgl'][$index];
+
+          // var_dump($_POST['approve_step'.$i]);die();
+
+
           if(isset($_POST['approve_step'.$i])){
               $max +=1;
                if($jml_data > 0){
                    
-                    $sql = mysqli_query($link_yics,"UPDATE tracking_ia SET id_approval = '1', username = '$pic',  `time` = '$time'  WHERE `id_ia` =  '$id_ia' AND id_prog = '$prog' ");
+                    $sql = mysqli_query($link_yics,"UPDATE tracking_ia SET approval = '1', `time` = '$time'  WHERE `id_ia` =  '$id_ia' AND id_prog = '$prog' ");
                     // $delete = "DELETE FROM tracking_ia WHERE id_ia =  '$id_ia' AND id_prog >  '$max'";
                     // ECHO $delete."<br>";
                     // $hasil_delete = mysqli_query($link_yics, $delete)or die(mysqli_error($link_yics));
                     if(!$sql){
                          $_SESSION['info'] = "Gagal Disimpan";
                          $_SESSION['pesan'] = "Data Gagal Diupdate";
-                         header('location: ../../page/dashboard.php');
+                         header('location: ../../page/formupdate_ia.php?id_ia='.$id_ia);
                     }else{
                          // kirim notifikasi ke pic
                          $notif = TRUE;
-                         $pesan_notif = "Proposal ada Perubahan Step";
+                         $pesan_notif = "IA ada Perubahan Step";
                     }
                }else{
-                    $insertTracking = " INSERT INTO tracking_ia (`id_ia`, `id_prog`, `id_approval`, `username`, `time`) VALUES  ('$id_ia', '$prog', '1', '$pic', '$time' )";
-                    $sql = mysqli_query($link_yics, $insertTracking)or die(mysqli_error($link_yics));
+                    $insertTracking = " INSERT INTO tracking_ia (`id_ia`, `id_prog`, `approval`, `time`) VALUES  ('$id_ia', '$prog', '1', '$time' )";
+                    $sql = mysqli_query($link_yics, $insertTracking)or die(mysqli_error($link_yics));                   
+
+
                     if(!$sql){
                          $_SESSION['info'] = "Gagal Disimpan";
                          $_SESSION['pesan'] = "Data Gagal Diupdate";
-                         header('location: ../../page/dashboard.php');
+                         header('location: ../../page/formupdate_ia.php?id_ia='.$id_ia);
                     }else{
                          // kirim notifikasi ke pic
                          $notif = TRUE;
-                         $pesan_notif = "Proposal Masuk Tahap " . $prog;
+                         $pesan_notif = "IA Masuk Tahap " . $prog;
                     }
                }
                // echo  $_POST['id_ia'].$_POST['pic'][$index]." : ".$_POST['tgl'][$index]." : ".$_POST['approve_step'.$i]."<br>";
@@ -74,12 +82,12 @@ if (isset ($_SESSION['yics_user'])){
                $max +=1;
                if($jml_data > 0){
                    
-                    $sql = mysqli_query($link_yics,"UPDATE tracking_ia SET id_approval = '0', username = '$pic',  `time` = '$time' WHERE `id_ia` =  '$id_ia' AND id_prog = '$prog'");
+                    $sql = mysqli_query($link_yics,"UPDATE tracking_ia SET approval = '0', `time` = '$time' WHERE `id_ia` =  '$id_ia' AND id_prog = '$prog'");
                    
                     if(!$sql){
                          $_SESSION['info'] = "Gagal Disimpan";
                          $_SESSION['pesan'] = "Data Gagal Diupdate";
-                         header('location: ../../page/dashboard.php');
+                         header('location: ../../page/formupdate_ia.php?id_ia='.$id_ia);
                     }else{
 
                          // kirim notifikasi ke pic
@@ -88,12 +96,12 @@ if (isset ($_SESSION['yics_user'])){
 
                     }
                }else{
-                    $insertTracking = " INSERT INTO tracking_ia (`id_ia`, `id_prog`, `id_approval`, `username`, `time`) VALUES  ('$id_ia', '$prog', '0', '$pic', '$time' )";
+                    $insertTracking = " INSERT INTO tracking_ia (`id_ia`, `id_prog`, `approval`,`time`) VALUES  ('$id_ia', '$prog', '0', '$time' )";
                     $sql = mysqli_query($link_yics, $insertTracking)or die(mysqli_error($link_yics));
                     if(!$sql){
                          $_SESSION['info'] = "Gagal Disimpan";
                          $_SESSION['pesan'] = "Data Gagal Diupdate";
-                         header('location: ../../page/dashboard.php');
+                         header('location: ../../page/formupdate_ia.php?id_ia='.$id_ia);
                     }else{
 
                           // kirim notifikasi ke pic
@@ -111,18 +119,18 @@ if (isset ($_SESSION['yics_user'])){
          
      }
 
-     $delete = "DELETE FROM tracking_ia WHERE id_ia =  '$id_ia' AND id_prog >  '$max'";
-     // ECHO $delete."<br>";
-     $hasil_delete = mysqli_query($link_yics, $delete)or die(mysqli_error($link_yics));
+     // $delete = "DELETE FROM tracking_ia WHERE id_ia =  '$id_ia' AND id_prog >  '$max'";
+     // // ECHO $delete."<br>";
+     // $hasil_delete = mysqli_query($link_yics, $delete)or die(mysqli_error($link_yics));
      //     echo $insertTracking;  
      if($sql){
           $_SESSION['info'] = "Disimpan";
           $_SESSION['pesan'] = "Data Berhasil Diupdate";
-          header('location: ../../page/dashboard.php');
+          header('location: ../../page/formupdate_ia.php?id_ia='.$id_ia);
      }else{
           $_SESSION['info'] = "Gagal Disimpan";
           $_SESSION['pesan'] = "Data Gagal Diupdate";
-          header('location: ../../page/dashboard.php');
+          header('location: ../../page/formupdate_ia.php?id_ia='.$id_ia);
      }   
      
      /**
@@ -135,7 +143,7 @@ if (isset ($_SESSION['yics_user'])){
           kirim_notif([         
                'dest' => $proposal['username'],
                'message' => $pesan_notif,
-               'type' => "proposal",
+               'type' => "ia",
                'id_type' => $id_ia 
           ]);
      }

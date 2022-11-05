@@ -266,11 +266,11 @@ include '../elemen/header.php';?>
                                                         ?>
 
                                                         <tbody>
-                                                            <tr class="<?=$text_muncul?>">
+                                                            <tr class="<?=$text_muncul?>" id="data<?=$rows_progress['id_prog']?>">
                                                                 <td hidden>
                                                                     <input hidden type="text"
                                                                         class="form-control bg-grey-200"
-                                                                        name="id_prog[]" value="">
+                                                                        name="id_prog[]" value="<?= $rows_progress['id_prog'] ?>">
                                                                 </td>
                                                                 <td class="align-middle text-center">
                                                                     <input type="text" class="form-control bg-grey-200"
@@ -281,12 +281,13 @@ include '../elemen/header.php';?>
                                                                 <td class="align-middle text-center">
                                                                     <div class="custom-switches-stacked mt-2">
                                                                         <label class="custom-switch">
-                                                                            <input id="reject_step" data-id=""
-                                                                                type="checkbox" name="reject_step"
+                                                                            <input id="reject_step<?= $rows_progress['id_prog']?>"
+                                                                                type="checkbox" name="reject_step<?= $rows_progress['id_prog']?>"
                                                                                 class="custom-switch-input reject"
                                                                                 data-plugin="switchery"
                                                                                 data-color="orange" value="0"
                                                                                 autocomplete="off"
+                                                                                data-id="<?=$rows_progress['id_prog']?>"
                                                                                 <?php
                                                                                 if(isset($data_tracking['approval'])){
                                                                                     if($data_tracking['approval'] == 0){
@@ -305,12 +306,13 @@ include '../elemen/header.php';?>
                                                                 <td class="align-middle text-center">
                                                                     <div class="custom-switches-stacked mt-2">
                                                                         <label class="custom-switch">
-                                                                            <input id="approve_step" data-id=""
-                                                                                type="checkbox" name="approve_step"
+                                                                            <input id="approve_step<?= $rows_progress['id_prog']?>"
+                                                                                type="checkbox" name="approve_step<?= $rows_progress['id_prog']  ?>"
                                                                                 value="1" data-color="#17b3a3"
                                                                                 class="custom-switch-input approve"
                                                                                 autocomplete="off"
                                                                                 data-plugin="switchery"
+                                                                                data-id="<?=$rows_progress['id_prog']?>"
                                                                                 <?php
                                                                                 if(isset($data_tracking['approval'])){
                                                                                     if($data_tracking['approval'] == 1){
@@ -329,8 +331,12 @@ include '../elemen/header.php';?>
                                                                 <td class="align-middle text-center">
                                                                     <div class="input-group-prepend">
                                                                         <input type="datetime-local" name="tgl[]"
-                                                                            class="form-control bg-grey-200" id="tgl-"
-                                                                            value="" autocomplete="off">
+                                                                            class="form-control bg-grey-200" id="tgl-<?=$rows_progress['id_prog']?>"
+                                                                            value="<?php
+                                                                                if(isset($data_tracking['time'])){
+                                                                                    echo $data_tracking['time'];                                                                                                                                                                     
+                                                                                }
+                                                                                ?>" autocomplete="off">
                                                                     </div>
                                                                 </td>
                                                                 <td class="align-middle text-center">
@@ -388,7 +394,7 @@ include '../elemen/header.php';?>
                 $(".approve").click(function() {
 
                     //attribut data-id ini masukkan ke variabel index
-                    var index = $(this).attr('data-id');
+                    var index = $(this).attr('data-id');                  
                     var index2 = parseInt(index) + 1;
 
                     // Buat tanggal index ini required
