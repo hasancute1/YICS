@@ -335,7 +335,8 @@ include '../elemen/header.php';?>
                                                                             autocomplete="off">
                                                                             <option
                                                                                 value="<?= $_SESSION['yics_user']; ?>">
-                                                                                <?= $_SESSION['yics_nama']; ?></option>
+                                                                                <?= $_SESSION['yics_nama']; ?>
+                                                                            </option>
                                                                         </select>
                                                                     </div>
                                                                 </td>

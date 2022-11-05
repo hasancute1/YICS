@@ -311,19 +311,18 @@ include '../elemen/header.php';?>
                                     <div class="form-group row">
                                         <label class="col-md-2 col-form-label" style="color:black;">Role</label>
                                         <div class="col-md-10">
-                                            <select class="form-control text-uppercase" id="dept_prop" name="role"
-                                                required="">
+                                            <select class="form-control text-uppercase" name="role" required="">
                                                 <option value="">Pilih role</option>
                                                 <?php
-                        $role = mysqli_query($link_yics, "SELECT * FROM user_role") or die(mysqli_error($link_yics));
-                        if (mysqli_num_rows($role) > 0) {
-                          while ($rows_role = mysqli_fetch_assoc($role)) { ?>
+                                                $role = mysqli_query($link_yics, "SELECT * FROM user_role") or die(mysqli_error($link_yics));
+                                                if (mysqli_num_rows($role) > 0) {
+                                                while ($rows_role = mysqli_fetch_assoc($role)) { ?>
                                                 <option value="<?php echo $rows_role['id_role']; ?>">
                                                     <?php echo $rows_role['role_name']; ?></option>
                                                 <?php
-                          }
-                        }
-                        ?>
+                                                        }
+                                                        }
+                                                        ?>
                                             </select>
                                         </div>
                                     </div>

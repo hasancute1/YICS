@@ -102,8 +102,9 @@ if (isset ($_SESSION['yics_user'])){
         $depart=$_POST['depart'];
         $kategori=$_POST['kategori'];
         $proposal=$_POST['proposal'];
+        $cost=$_POST['cost'];
         
-       $UbahProposal = "UPDATE  proposal SET id_kat='$kategori',id_dep='$depart',proposal='$proposal' WHERE id_prop = '$id'"; 
+       $UbahProposal = "UPDATE  proposal SET id_kat='$kategori',id_dep='$depart',proposal='$proposal',cost='$cost' WHERE id_prop = '$id'"; 
        echo $UbahProposal;
        $sql = mysqli_query($link_yics, $UbahProposal)or die(mysqli_error($link_yics));
     // logika pakai session
