@@ -44,25 +44,25 @@ $url_aktive = $uri[0];
             <span class="site-menu-title">TRACKING DOCUMENT</span>
             <span class="site-menu-tittle"></span>
         </a>
-    <li class="site-menu-item has-sub open <?= (in_array($url_aktive , ["budgetdep1", "budgetdep2","budgetdep3"]) )? "active": ""; ?>">
+    <li class="site-menu-item has-sub open <?= (in_array($url_aktive , ["budgetdep"]) )? "active": ""; ?>">
         <a href="javascript:void(0)">
             <i class="site-menu-icon fa-database" aria-hidden="true"></i>
             <span class="site-menu-title">BUDGET</span>
             <span class="site-menu-arrow"></span>
         </a>
         <ul class="site-menu-sub">
-            <li class="site-menu-item open <?= ($url_aktive == "budgetdep1")? "active": ""; ?>"">
-                <a class=" animsition-link" href="budgetdep1.php">
+            <li class="site-menu-item open <?= ($url_aktive == "budgetdep" && $_GET['dep']== 1)? "active": ""; ?>"">
+                <a class=" animsition-link" href="budgetdep.php?dep=1">
                 <span class="site-menu-title">Body Plant 1</span>
                 </a>
             </li>
-            <li class="site-menu-item <?= ($url_aktive == "budgetdep2")? "active": ""; ?>"">
-                <a class=" animsition-link" href="budgetdep2.php">
+            <li class="site-menu-item <?= ($url_aktive == "budgetdep" && $_GET['dep']== 2)? "active": ""; ?>"">
+                <a class=" animsition-link" href="budgetdep.php?dep=2">
                 <span class="site-menu-title">Body Plant 2</span>
                 </a>
             </li>
-            <li class="site-menu-item <?= ($url_aktive == "budgetdep3")? "active": ""; ?>">
-                <a class=" animsition-link" href="budgetdep3.php">
+            <li class="site-menu-item <?= ($url_aktive == "budgetdep" && $_GET['dep']== 3)? "active": ""; ?>">
+                <a class=" animsition-link" href="budgetdep.php?dep=3">
                 <span class="site-menu-title">BQC</span>
                 </a>
             </li>
