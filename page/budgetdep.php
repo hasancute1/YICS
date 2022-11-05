@@ -55,10 +55,44 @@ include '../elemen/header.php';?>
                     <?php include '../elemen/sidebarback.php';?>
                     <!-- end sidebar back -->
 
+                    <!-- get data -->
+
+                    <?php
+                    $id_dep = $_GET['dep'];
+                    $data_fiscal = single_query("SELECT id_fis from time_fiscal where status='aktif'");
+                    $id_fis = $data_fiscal['id_fis'];
+                   
+
+                    $get_data_budget = single_query("SELECT * FROM budget JOIN depart on budget.id_dep = depart.id_dep where budget.id_dep={$id_dep} and id_fis={$id_fis}");
+
+                    $consumtion_budget = single_query("SELECT sum(cost_ia) as cost , count(*) as qty FROM ia
+                        join proposal on ia.id_prop = proposal.id_prop
+                        join depart on proposal.id_dep = depart.id_dep
+                        where proposal.id_dep = {$id_dep} and proposal.id_fis={$id_fis}
+                    ");  
+                    
+                    // $consumtion_budget_data = single_query("SELECT MONTH(time_ia) AS bulan, sum(cost_ia) as cost , count(*) as qty FROM ia
+                    // join proposal on ia.id_prop = proposal.id_prop
+                    // join depart on proposal.id_dep = depart.id_dep
+                    // where proposal.id_dep = {$id_dep} and proposal.id_fis={$id_fis}
+                    // GROUP BY bulan
+                    // ");  
+
+                    $data_ia = query("SELECT * from ia
+                        join proposal on ia.id_prop = proposal.id_prop
+                        join depart on proposal.id_dep = depart.id_dep
+                        join kategori_proposal on proposal.id_kat = kategori_proposal.id_kat
+                        where proposal.id_dep = {$id_dep} and proposal.id_fis={$id_fis}
+                    ");
+
+                // var_dump($data_ia);
+                    
+                    ?>
+
                     <!-- Page -->
                     <div class="page">
                         <div class="page-header">
-                            <h1 class="page-title font-size-26 font-weight-600">Budget Body Plant 1 Overview (x Million)
+                            <h1 class="page-title font-size-26 font-weight-600">Budget <?= $get_data_budget['depart']?> Overview (x Million)
                             </h1>
                         </div>
 
@@ -117,13 +151,13 @@ include '../elemen/header.php';?>
                                                     <button type="button" class="btn btn-floating btn-sm btn-success">
                                                         <i class="icon fa-dollar"></i>
                                                     </button>
-                                                    <span class="white font-weight-400 font-size-20">BODY PLANT 1</span>
+                                                    <span class="white font-weight-400 font-size-20"><?= $get_data_budget['depart']?></span>
                                                     <div class="content-text text-center mb-0">
 
-                                                        <span class="white font-size-60 font-weight-100">Rp 1.628</span>
+                                                        <span class="white font-size-60 font-weight-100">Rp <?= number_format($consumtion_budget['cost'],0,',','.') ?></span>
                                                         <br>
                                                         <p class="white font-weight-100 m-0 font-size-20">"Budget Rp
-                                                            4.000"</p>
+                                                            <?= number_format($get_data_budget['budget'],0,',','.')  ?>"</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -134,7 +168,7 @@ include '../elemen/header.php';?>
                                                 <div class="ml-20 mr-20 py-15 " style="line-height: 20px;">
                                                     <h4>Transactions:</h4>
                                                     <p style="font-size: 20px;"> <span
-                                                            style="font-size: 25px; font-weight: bold;color:black;"> 4
+                                                            style="font-size: 25px; font-weight: bold;color:black;"> <?= number_format($consumtion_budget['qty'],0,',','.') ?>
                                                         </span> x orders</p>
                                                     <h4>Month / left:</h4>
                                                     <p style="font-size: 20px;"> <span
@@ -235,61 +269,23 @@ include '../elemen/header.php';?>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+
+                                                    <?php $i=1; ?>
+
+                                                    <?php foreach ($data_ia as $row) { ?>
                                                     <tr class="text-wrap">
-                                                        <td class="align-middle text-center">1</td>
-                                                        <td class="align-middle text-center">Improvement</td>
-                                                        <td class="align-middle text-center">P4/BDY/IP/07/21/I.4
-                                                            .04.C-00005</td>
-                                                        <td class="align-middle text-center">Digitalization fitting</td>
+                                                        <td class="align-middle text-center"><?= $i ?></td>
+                                                        <td class="align-middle text-center"><?= $row['kategori'] ?></td>
+                                                        <td class="align-middle text-center"><?= $row['ia'] ?></td>
+                                                        <td class="align-middle text-center"><?= $row['deskripsi'] ?></td>
                                                         <td class="align-middle text-center">Reduce 1 MP</td>
-                                                        <td class="align-middle text-center">28 Mei 2022</td>
-                                                        <td class="align-middle text-center">Rp 500</td>
+                                                        <td class="align-middle text-center"><?= date('d M Y' , strtotime($row['time_ia']))  ?></td>
+                                                        <td class="align-middle text-center">Rp <?= number_format($row['cost_ia'],0,',','.') ?></td>
                                                         <td class="align-middle text-center">Closed</td>
                                                     </tr>
-                                                    <tr class="text-wrap">
-                                                        <td class="align-middle text-center">2</td>
-                                                        <td class="align-middle text-center">Replacement</td>
-                                                        <td class="align-middle text-center">P4/BDY/IP/07/21/I.4
-                                                            .04.C-00005</td>
-                                                        <td class="align-middle text-center">Digitalization fitting</td>
-                                                        <td class="align-middle text-center">-</td>
-                                                        <td class="align-middle text-center">28 Mei 2022</td>
-                                                        <td class="align-middle text-center">Rp 500</td>
-                                                        <td class="align-middle text-center">Closed</td>
-                                                    </tr>
-                                                    <tr class="text-wrap">
-                                                        <td class="align-middle text-center">3</td>
-                                                        <td class="align-middle text-center">Other</td>
-                                                        <td class="align-middle text-center">P4/BDY/IP/07/21/I.4
-                                                            .04.C-00005</td>
-                                                        <td class="align-middle text-center">hp laptop</td>
-                                                        <td class="align-middle text-center">-</td>
-                                                        <td class="align-middle text-center">28 Mei 2022</td>
-                                                        <td class="align-middle text-center">Rp 500</td>
-                                                        <td class="align-middle text-center">Closed</td>
-                                                    </tr>
-                                                    <tr class="text-wrap">
-                                                        <td class="align-middle text-center">4</td>
-                                                        <td class="align-middle text-center">Improvement</td>
-                                                        <td class="align-middle text-center">P4/BDY/IP/07/21/I.4
-                                                            .04.C-00005</td>
-                                                        <td class="align-middle text-center">Digitalization fitting</td>
-                                                        <td class="align-middle text-center">Reduce 1 MP</td>
-                                                        <td class="align-middle text-center">28 Mei 2022</td>
-                                                        <td class="align-middle text-center">Rp 500</td>
-                                                        <td class="align-middle text-center">Closed</td>
-                                                    </tr>
-                                                    <tr class="text-wrap">
-                                                        <td class="align-middle text-center">5</td>
-                                                        <td class="align-middle text-center">Improvement</td>
-                                                        <td class="align-middle text-center">P4/BDY/IP/07/21/I.4
-                                                            .04.C-00005</td>
-                                                        <td class="align-middle text-center">Digitalization fitting</td>
-                                                        <td class="align-middle text-center">Reduce 1 MP</td>
-                                                        <td class="align-middle text-center">28 Mei 2022</td>
-                                                        <td class="align-middle text-center">Rp 500</td>
-                                                        <td class="align-middle text-center">Closed</td>
-                                                    </tr>
+
+                                                    <?php $i++; } ?>
+                                                    
 
                                                 </tbody>
                                             </table>
