@@ -248,6 +248,9 @@ $id_dept = $_GET['dept'];
                                 or die (mysqli_error($link_yics));
                                 $no=0;
 
+                                $nomor_urut=0;
+                                $nomor_urut_before =0;
+
                                 $no_prop=0;
                                 $id_before = '';
 
@@ -257,20 +260,23 @@ $id_dept = $_GET['dept'];
                                     
 
                                     if($id_before == $data['id_prop']){
-                                        $no_prop += 1;
+                                        $no_prop += 1;     
+                                        $sembunyikan_nomor = "d-none";                                   
                                     }else{
                                         $no_prop = 1;
                                         $no++;
+                                        $nomor_urut += 1;
+                                        $sembunyikan_nomor = ""; 
                                         
                                     }
 
-                                    $id_before = $data['id_prop'];
+                                    // $id_before = $data['id_prop'];
                                     
                                     ?>
 
                                                         <tr
                                                             class="<?php if ($no%2==0){ echo "bg-blue-100"; } else{ echo ""; } ?> text-uppercase">
-                                                            <td><?= $no; ?></td>
+                                                            <td> <span class="<?= $sembunyikan_nomor ?>"><?= $nomor_urut ?></span> </td>
                                                             <td>
                                                                 <?= ($no_prop == 1)? $data['depart']:""; ?></td>
                                                             <td>
@@ -345,6 +351,9 @@ $id_dept = $_GET['dept'];
                                                             </td>
                                                         </tr>
                                                         <?php 
+
+                                                        $id_before = $data['id_prop'];
+                                                        $nomor_urut_before = $nomor_urut;
                                                         
                                                       }
                                                       }

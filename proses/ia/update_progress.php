@@ -143,7 +143,7 @@ if (isset ($_SESSION['yics_user'])){
           kirim_notif([         
                'dest' => $proposal['username'],
                'message' => $pesan_notif,
-               'type' => "proposal",
+               'type' => "ia",
                'id_type' => $id_ia 
           ]);
      }
