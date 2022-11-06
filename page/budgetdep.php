@@ -61,6 +61,8 @@ include '../elemen/header.php';?>
                     $id_dep = $_GET['dep'];
                     $data_fiscal = single_query("SELECT id_fis from time_fiscal where status='aktif'");
                     $id_fis = $data_fiscal['id_fis'];
+
+                    $list_bulan = [4,5,6,7,8,9,10,11,12,1,2,3];
                    
 
                     $get_data_budget = single_query("SELECT * FROM budget JOIN depart on budget.id_dep = depart.id_dep where budget.id_dep={$id_dep} and id_fis={$id_fis}");
@@ -71,21 +73,51 @@ include '../elemen/header.php';?>
                         where proposal.id_dep = {$id_dep} and proposal.id_fis={$id_fis}
                     ");  
                     
-                    // $consumtion_budget_data = single_query("SELECT MONTH(time_ia) AS bulan, sum(cost_ia) as cost , count(*) as qty FROM ia
-                    // join proposal on ia.id_prop = proposal.id_prop
-                    // join depart on proposal.id_dep = depart.id_dep
-                    // where proposal.id_dep = {$id_dep} and proposal.id_fis={$id_fis}
-                    // GROUP BY bulan
-                    // ");  
+                    $consumtion_budget_data = query("SELECT MONTH(ia.time_ia) AS bulan, sum(ia.cost_ia) as cost FROM ia
+                    join proposal on ia.id_prop = proposal.id_prop
+                    join depart on proposal.id_dep = depart.id_dep
+                    where proposal.id_dep = {$id_dep} and proposal.id_fis={$id_fis}
+                    GROUP BY bulan
+                    ");  
+
+                    foreach ($list_bulan as $bulan) {
+
+                        foreach($consumtion_budget_data as $row){
+                            if($row['bulan'] == $bulan){
+                                $isi_budget_bulan[$bulan] = $row['cost'];
+                            }
+                        }
+
+
+                    }  
+                         
 
                     $data_ia = query("SELECT * from ia
                         join proposal on ia.id_prop = proposal.id_prop
                         join depart on proposal.id_dep = depart.id_dep
                         join kategori_proposal on proposal.id_kat = kategori_proposal.id_kat
                         where proposal.id_dep = {$id_dep} and proposal.id_fis={$id_fis}
-                    ");
+                    ");              
 
-                // var_dump($data_ia);
+                   
+
+                    // net budget departemen ============
+                    foreach ($list_bulan as $fow) {
+                        $net_budget[] = $get_data_budget['budget'];
+                    }
+                    $net_budget = json_encode($net_budget);   
+                    
+                    // comsumtion budget from ia
+                    foreach($list_bulan as $row){
+
+                        if(isset($isi_budget_bulan[$row])){
+                            $data_grafik_con_budget[] = $isi_budget_bulan[$row];
+                        }else{
+                            $data_grafik_con_budget[] = 0;
+                        }
+                       
+                    }
+                    $data_grafik_con_budget = json_encode($data_grafik_con_budget);
                     
                     ?>
 
@@ -172,13 +204,19 @@ include '../elemen/header.php';?>
                                                         </span> x orders</p>
                                                     <h4>Month / left:</h4>
                                                     <p style="font-size: 20px;"> <span
-                                                            style="font-size: 25px; font-weight: bold;color:black;"> 4
+                                                            style="font-size: 25px; font-weight: bold;color:black;"> <?= (isset($isi_budget_bulan))? $jumlah_bulan = count($isi_budget_bulan):0 ?>
                                                         </span> / 12 months</p>
                                                     <div class="progress">
+
+                                                        <?php 
+
+                                                        $persentase = number_format( $jumlah_bulan / 12 * 100 ,0 );
+
+                                                        ?>
                                                         <div class="progress-bar progress-bar-striped active"
                                                             aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"
-                                                            style="width: 40%" role="progressbar">
-                                                            <span>40% </span>
+                                                            style="width: <?= $persentase ?>%" role="progressbar">
+                                                            <span><?= $persentase ?>% </span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -315,20 +353,18 @@ include '../elemen/footer.php';?>
 
                             {
                                 type: 'line',
-                                label: "BUDGET  BODY PLANT 1",
+                                label: "BUDGET  <?= $get_data_budget['depart']?>",
                                 borderColor: Config.colors("grey", 800),
-                                data: [4000, 4000, 4000, 4000, 4000, 4000, 4000, 4000, 4000, 4000, 4000,
-                                    4000
-                                ],
+                                data: <?= $net_budget ?>,
                                 order: 1,
                             },
                             {
-                                label: "CONSUMTION BODY PLANT 1",
+                                label: "CONSUMTION <?= $get_data_budget['depart']?>",
                                 backgroundColor: "rgba(255, 206, 86, 0.2)",
                                 borderColor: Config.colors("yellow", 800),
                                 hoverBackgroundColor: "rgba(255, 206, 86, 0.2)",
                                 borderWidth: 2,
-                                data: [650, 450, 750, 500, 600, 450, 550]
+                                data: <?=$data_grafik_con_budget?>
                             },
 
 
