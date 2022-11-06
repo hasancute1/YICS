@@ -275,10 +275,10 @@ include '../elemen/header.php';?>
                 <div class="row py-20">
                   <div class="col-lg-12 col-md-12">
                       <div class="pearls row">
-                        <div class="pearl current col-3">
+                        <div class="pearl <?= (count($id_prog_rss) > 0)?'current':'' ?> col-3">
                           <div class="pearl-icon"><i class="icon wb-user" aria-hidden="true"></i>
                           </div>
-                            <h3 class="pearl-tittle">RSS/RFN</h3>
+                            <h3 class="pearl-tittle">RSS/RFN</h3>                          
                             <br>
                             <div class="list-group bg-blue-grey-100 bg-inherit text-left w-250 ml-5">
                               <?php foreach($progress_rss as $row){
@@ -303,7 +303,7 @@ include '../elemen/header.php';?>
                         </div>
                          
                           
-                          <div class="pearl col-3">
+                          <div class="pearl <?= (count($id_prog_bp) > 0)?'current':'' ?> col-3">
                             <div class="pearl-icon"><i class="icon wb-pencil" aria-hidden="true"></i></div>
                             <h3 class="pearl-tittle">BP/BPE APPROVAL</h3>
                             <br>
@@ -326,7 +326,7 @@ include '../elemen/header.php';?>
                             </div> 
                           </div>
 
-                          <div class="pearl col-3">
+                          <div class="pearl <?= (count($id_prog_pr) > 0)?'current':'' ?> col-3">
                             <div class="pearl-icon"><i class="icon wb-payment" aria-hidden="true"></i></div>
                             <h3 class="pearl-tittle" data-toggle="dropdown">PR</h3>
                             <br>
@@ -349,7 +349,7 @@ include '../elemen/header.php';?>
 
                           </div>
 
-                          <div class="pearl col-3">
+                          <div class="pearl <?= (count($id_prog_pr) > 0)?'current':'' ?> col-3">
                             <div class="pearl-icon"><i class="icon fa-shopping-cart" aria-hidden="true"></i></div>
                             <h3 class="pearl-tittle">GR</h3>
                             <br>
