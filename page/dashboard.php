@@ -238,10 +238,10 @@ if (!isset($_SESSION['yics_user'])) {
                                                             </button>
                                                         </a>
                                                         <a href="../proses/dashboard/alokasi.php?del=<?php echo $rows_editalokasi['id_fis']; ?>"" data-toggle="
-                                                            tooltip" data-original-title="Hapus">
+                                                            tooltip" data-original-title="Hapus" class="HapusData">
                                                             <?php } ?>
                                                             <button type="button"
-                                                                class="btn btn-icon btn-danger btn-icon btn-outline btn-xs HapusData">
+                                                                class="btn btn-icon btn-danger btn-icon btn-outline btn-xs">
                                                                 <i class="icon oi-trashcan" aria-hidden="true"></i>
                                                             </button>
                                                         </a>
@@ -355,9 +355,8 @@ if (!isset($_SESSION['yics_user'])) {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-body card-shadow table-responsive">
-                                            <table
-                                                class="table table-striped table-hover table-bordered w-full display nowrap example0">
+                                        <div class="card-body card-shadow table-responsive table-hover table-bordered">
+                                            <table class="table   w-full display  example0">
                                                 <thead class="text-center">
                                                     <tr class="bg-info align-" height="10px">
                                                         <th class="align-middle text-center" hidden>ID DEP
@@ -424,9 +423,10 @@ if (!isset($_SESSION['yics_user'])) {
                            while($data = mysqli_fetch_assoc($proposal)){?>
                                                     <tr
                                                         class="align-middle text-center <?php if ($no%2==0){ echo "bg-blue-100"; } else{ echo ""; } ?>">
-                                                        <td class="align-middle text-center"><?php echo $no; ?></td>
+
                                                         <td class="align-middle text-center" hidden>
                                                             <?php echo $data['id_dep']; ?></td>
+                                                        <td class="align-middle text-center"><?php echo $no; ?></td>
                                                         <td class="align-middle text-center">
                                                             <?php echo $data['depart']; ?>
                                                         </td>
@@ -535,9 +535,9 @@ if (!isset($_SESSION['yics_user'])) {
                                                             </a>
                                                             <?php if($_SESSION['yics_level'] != '1'){ ?>
                                                             <a href="../proses/dashboard/tambahplanning.php?del=<?php echo $data['id_prop']; ?>"
-                                                                data-toggle="tooltip" data-original-title="Hapus">
-                                                                <button type="button"
-                                                                    class="btn btn-icon btn-danger HapusData">
+                                                                data-toggle="tooltip" data-original-title="Hapus"
+                                                                class="HapusData1">
+                                                                <button type="button" class="btn btn-icon btn-danger">
                                                                     <i class="icon oi-trashcan" aria-hidden="true"></i>
                                                                 </button>
                                                             </a>
@@ -1023,5 +1023,47 @@ include '../elemen/footer.php';?>
 
 
 
+    })
+    </script>
+    <script>
+    $(document).ready(function() {
+        $('.HapusData1').click(function(a) {
+            a.preventDefault()
+            var getLink = $(this).attr('href');
+            console.log(getLink);
+            Swal.fire({
+                title: 'Apakah yakin?',
+                text: "Data ini akan dihapus selamanya!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = getLink;
+                }
+            })
+        })
+    })
+    $(document).ready(function() {
+        $('.HapusData').click(function(a) {
+            a.preventDefault()
+            var getLink = $(this).attr('href');
+            console.log(getLink);
+            Swal.fire({
+                title: 'Apakah yakin?',
+                text: "Data ini akan dihapus selamanya!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = getLink;
+                }
+            })
+        })
     })
     </script>

@@ -52,6 +52,19 @@
 
         overflow-y: auto;
     }
+
+    a.disabledlink {
+        pointer-events: none;
+        cursor: default;
+    }
+
+    .card {
+        border-radius: 10px;
+    }
+
+    .btn {
+        border-radius: 10px;
+    }
     </style>
 
     <link rel="apple-touch-icon" href="../base/assets/images/apple-touch-icon.png">
