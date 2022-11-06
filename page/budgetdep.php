@@ -71,21 +71,28 @@ include '../elemen/header.php';?>
                         where proposal.id_dep = {$id_dep} and proposal.id_fis={$id_fis}
                     ");  
                     
-                    // $consumtion_budget_data = single_query("SELECT MONTH(time_ia) AS bulan, sum(cost_ia) as cost , count(*) as qty FROM ia
-                    // join proposal on ia.id_prop = proposal.id_prop
-                    // join depart on proposal.id_dep = depart.id_dep
-                    // where proposal.id_dep = {$id_dep} and proposal.id_fis={$id_fis}
-                    // GROUP BY bulan
-                    // ");  
+                    $consumtion_budget_data = single_query("SELECT MONTH(time_ia) AS bulan, sum(cost_ia) as cost , count(*) as qty FROM ia
+                    join proposal on ia.id_prop = proposal.id_prop
+                    join depart on proposal.id_dep = depart.id_dep
+                    where proposal.id_dep = {$id_dep} and proposal.id_fis={$id_fis}
+                    GROUP BY bulan
+                    ");  
 
                     $data_ia = query("SELECT * from ia
                         join proposal on ia.id_prop = proposal.id_prop
                         join depart on proposal.id_dep = depart.id_dep
                         join kategori_proposal on proposal.id_kat = kategori_proposal.id_kat
                         where proposal.id_dep = {$id_dep} and proposal.id_fis={$id_fis}
-                    ");
+                    ");              
 
-                // var_dump($data_ia);
+                    $list_bulan = [4,5,6,7,8,9,10,11,12,1,2,3];
+
+                    // net budget departemen ============
+                    foreach ($list_bulan as $fow) {
+                        $net_budget[] = $get_data_budget['budget'];
+                    }
+                    $net_budget = json_encode($net_budget);                      
+
                     
                     ?>
 
@@ -317,9 +324,7 @@ include '../elemen/footer.php';?>
                                 type: 'line',
                                 label: "BUDGET  BODY PLANT 1",
                                 borderColor: Config.colors("grey", 800),
-                                data: [4000, 4000, 4000, 4000, 4000, 4000, 4000, 4000, 4000, 4000, 4000,
-                                    4000
-                                ],
+                                data: <?= $net_budget ?>,
                                 order: 1,
                             },
                             {
