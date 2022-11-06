@@ -122,8 +122,7 @@ include '../elemen/header.php';?>
                                         <div class="col-lg-12 col-md-12">
                                             <div class="card card-shadow bg-blue-100" style="border-radius:10px;">
                                                 <div class="card-body">
-                                                    <form action="../proses/ia/tambah_ia.php" method="POST"
-                                                        id="form_ia">
+                                                    <form action="../proses/ia/tambah_ia.php" method="POST">
                                                         <input type="hidden" name="add">
                                                         <input type="hidden" class="form-control" name="id_prop"
                                                             id="id_prop" autocomplete="off"
@@ -140,99 +139,100 @@ include '../elemen/header.php';?>
                                                                 </a>
 
                                                             </div>
-
-                                                        </div>
-
-                                                        <div class="form-group row ">
-                                                            <label class="col-md-2 col-form-label text-left"
-                                                                style="color:black;">IA
-                                                                No.</label>
-                                                            <div class="col-md-10">
-                                                                <input type="text" class="form-control" name="ia"
-                                                                    placeholder="Diisi No. IA" autocomplete="off"
-                                                                    id="ia" required>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="col-md-2 col-form-label text-left"
-                                                                style="color:black;">Description</label>
-                                                            <div class="col-md-10">
-                                                                <input type="text" class="form-control" name="ia_desc"
-                                                                    id="ia_desc" placeholder="Diisi Deskripsi"
-                                                                    autocomplete="off">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row text-left">
-                                                            <h4 class="col-md-12 modal-title text-left"
-                                                                style="color:black;">
-                                                                Original Currency</h4>
-                                                        </div>
-                                                        <div class="form-group row text-left">
-                                                            <label class="col-md-2 col-form-label mt-4"
-                                                                style="color:black;">In
-                                                                RP</label>
-                                                            <div class="col-md-4">
-                                                                <span
-                                                                    style="color:red;font-size: 13px;font-style: italic;">*(Sisa
-                                                                    budget Rp
-                                                                    <?= number_format($sisa_budget,0,',','.')  ?>)</span>
-                                                                <div class="input-group">
-                                                                    <div class="input-group-prepend">
-                                                                        <span class="input-group-text">RP</span>
-                                                                    </div>
-                                                                    <input type="text" class="form-control uang"
-                                                                        autocomplete="off" placeholder="Nominal Rupiah"
-                                                                        name="cost_ia" id="cost_ia" required>
+                                                            <div class="form-group row ">
+                                                                <label class="col-md-2 col-form-label text-left"
+                                                                    style="color:black;">IA
+                                                                    No.</label>
+                                                                <div class="col-md-10">
+                                                                    <input type="text" class="form-control" name="ia"
+                                                                        placeholder="Diisi No. IA" autocomplete="off"
+                                                                        id="ia" required>
                                                                 </div>
                                                             </div>
-                                                            <label class="col-md-2 col-form-label mt-4"
-                                                                style="color:black;">In
-                                                                JPY</label>
-                                                            <div class="col-md-4">
-                                                                <span
-                                                                    style="color:red;font-size: 13px;font-style: italic;">*(Sisa
-                                                                    budget YJP
-                                                                    <?= number_format($sisa_budget / $data['yen'],1,',','.')  ?>)</span>
-                                                                <div class="input-group">
-                                                                    <div class="input-group-prepend">
-                                                                        <span class="input-group-text">JPY</span>
+                                                            <div class="form-group row">
+                                                                <label class="col-md-2 col-form-label text-left"
+                                                                    style="color:black;">Description</label>
+                                                                <div class="col-md-10">
+                                                                    <input type="text" class="form-control"
+                                                                        name="ia_desc" id="ia_desc"
+                                                                        placeholder="Diisi Deskripsi"
+                                                                        autocomplete="off">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row text-left">
+                                                                <h4 class="col-md-12 modal-title text-left"
+                                                                    style="color:black;">
+                                                                    Original Currency</h4>
+                                                            </div>
+                                                            <div class="form-group row text-left">
+                                                                <label class="col-md-2 col-form-label mt-4"
+                                                                    style="color:black;">In
+                                                                    RP</label>
+                                                                <div class="col-md-4">
+                                                                    <span
+                                                                        style="color:red;font-size: 13px;font-style: italic;">*(Sisa
+                                                                        budget Rp
+                                                                        <?= number_format($sisa_budget,0,',','.')  ?>)</span>
+                                                                    <div class="input-group">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text">RP</span>
+                                                                        </div>
+                                                                        <input type="text" class="form-control uang"
+                                                                            autocomplete="off"
+                                                                            placeholder="Nominal Rupiah" name="cost_ia"
+                                                                            id="cost_ia" required>
                                                                     </div>
-                                                                    <input type="text" class="form-control bg-green-100"
-                                                                        placeholder="Nominal Yen" id="yen">
+                                                                </div>
+                                                                <label class="col-md-2 col-form-label mt-4"
+                                                                    style="color:black;">In
+                                                                    JPY</label>
+                                                                <div class="col-md-4">
+                                                                    <span
+                                                                        style="color:red;font-size: 13px;font-style: italic;">*(Sisa
+                                                                        budget YJP
+                                                                        <?= number_format($sisa_budget / $data['yen'],1,',','.')  ?>)</span>
+                                                                    <div class="input-group">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text">JPY</span>
+                                                                        </div>
+                                                                        <input type="text"
+                                                                            class="form-control bg-green-100"
+                                                                            placeholder="Nominal Yen" id="yen">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <h4 class="col-md-12 modal-title text-left"
+                                                                    style="color:black;">
+                                                                    Valid
+                                                                    Update</h4>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label class="col-md-2 col-form-label text-left"
+                                                                    style="color:black;">Valid
+                                                                    Until </label>
+                                                                <div class="col-md-4">
+                                                                    <input type="date" class="form-control" id="time_ia"
+                                                                        placeholder="Diisi tanggal updaate"
+                                                                        name="time_ia" autocomplete="off">
+                                                                </div>
+                                                                <label class="col-md-2 col-form-label text-left"
+                                                                    style="color:black;">Remark
+                                                                    Ct Update</label>
+                                                                <div class="col-md-4">
+                                                                    <select id="pic_ia" class="form-control bg-grey-200"
+                                                                        autocomplete="off" name="pic_ia">
+                                                                        <option value="<?= $_SESSION['yics_user']; ?>">
+                                                                            <?= $_SESSION['yics_nama']; ?>
+                                                                        </option>
+                                                                    </select>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="form-group row">
-                                                            <h4 class="col-md-12 modal-title text-left"
-                                                                style="color:black;">
-                                                                Valid
-                                                                Update</h4>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="col-md-2 col-form-label text-left"
-                                                                style="color:black;">Valid
-                                                                Until </label>
-                                                            <div class="col-md-4">
-                                                                <input type="date" class="form-control" id="time_ia"
-                                                                    placeholder="Diisi tanggal updaate" name="time_ia"
-                                                                    autocomplete="off">
-                                                            </div>
-                                                            <label class="col-md-2 col-form-label text-left"
-                                                                style="color:black;">Remark
-                                                                Ct Update</label>
-                                                            <div class="col-md-4">
-                                                                <select id="pic_ia" class="form-control bg-grey-200"
-                                                                    autocomplete="off" name="pic_ia">
-                                                                    <option value="<?= $_SESSION['yics_user']; ?>">
-                                                                        <?= $_SESSION['yics_nama']; ?>
-                                                                    </option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="card-footer card-footer-transparent text-right">
-                                                            <button type="reset" style="color:white;border-radius:10px;"
-                                                                class="btn  btn-warning color-red"
-                                                                id="reset">RESET</button>
+                                                        <div class="modal-footer">
+                                                            <button type="reset" style="color:white;"
+                                                                class="btn bg-blue-grey-800 btn-round"
+                                                                data-dismiss="modal" id="reset">RESET</button>
                                                             <button type="submit" id="submit"
                                                                 style="border-radius:10px;"
                                                                 class="btn btn-primary ">SUBMIT</button>
