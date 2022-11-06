@@ -13,8 +13,7 @@ $cost_ia = $_POST['cost_ia'];
 $cost_ia = str_replace(',' , '' , $cost_ia);
 $time_ia = $_POST['time_ia'];
 $pic_ia = $_POST['pic_ia'];
-
-
+$GLOBALS['id_prop'];
 // cek username sudah ada apa blm?
 $qry = mysqli_query($link_yics, "SELECT ia FROM ia WHERE ia = '$ia' ")or die(mysqli_error($link_yics));
       
@@ -33,16 +32,18 @@ $qry = mysqli_query($link_yics, "SELECT ia FROM ia WHERE ia = '$ia' ")or die(mys
           $sql = mysqli_query($link_yics, $inputproposal)or die(mysqli_error($link_yics));
 
     }
+}if(isset($_GET['del'])){
+    $id=$_GET['del'];
+    $id_page=$_GET['page'];
+    $query = "DELETE FROM ia WHERE id_ia='$id'";
+    $hasil_query = mysqli_query($link_yics, $query)or die(mysqli_error($link_yics));
+    if($hasil_query){
+        $_SESSION['info'] = "Dihapus";
+        $_SESSION['pesan'] = "Data Berhasil Dihapus";
+        header('location: ../../page/formnambah_ia.php?add='.$id_page);
+     }else{
+        $_SESSION['info'] = "Gagal Dihapus";
+        $_SESSION['pesan'] = "Data Gagal Dihapus";
+        header('location: ../../page/formnambah_ia.php?add='.$id_page);
+     }
 }
-
-// if($insert_query){
-
-// $status = "sukses";
-// }else{
-// $status = "Data Gagal Ditambahkan";
-// }
-
-
-// echo json_encode([
-// 'status' => $status
-// ]);

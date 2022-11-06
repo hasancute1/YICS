@@ -89,38 +89,39 @@ include '../elemen/header.php';?>
                     $data = mysqli_fetch_assoc($proposal);
                     $id_fis = $data['id_fis'];
                     $id_dep = $data['id_dep'];
+                    $dep = $data['depart'];
+                     $rp="RP";
 
-                    $get_data_ia = single_query("SELECT sum(cost_ia) as cost_ia FROM ia 
-                        JOIN proposal on ia.id_prop = proposal.id_prop
+                    $get_data_ia = single_query("SELECT sum(cost_ia) as cost_ia FROM ia
+                    JOIN proposal on ia.id_prop = proposal.id_prop
                     where id_dep='$id_dep'");
-                    $consumtion_budget =  $get_data_ia['cost_ia'];
+                    $consumtion_budget = $get_data_ia['cost_ia'];
 
-                    $get_data_budget = single_query("SELECT * FROM budget where id_dep='$id_dep' and id_fis='$id_fis'");                   
-                   
+                    $get_data_budget = single_query("SELECT * FROM budget where id_dep='$id_dep' and id_fis='$id_fis'");
+
                     $sisa_budget = $get_data_budget['budget'] - $consumtion_budget;
 
-                      ?>
+                    ?>
                     <!-- Page -->
                     <div class="page">
                         <div class="page-content container-fluid">
                             <div class="row">
                                 <!-- Second Row -->
                                 <div class="col-lg-12 col-md-12">
-                                    <div class="card card-shadow">
-                                        <div class="card-header card-header-transparent bg-dark">
-                                            <div class="row">
-                                                <div class="col-lg-12 col-md-12">
-                                                    <div class="float-left">
-                                                        <span class="font-size-20 bold text-uppercase">Form Add No
-                                                            IA</span>
-                                                    </div>
-                                                </div>
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="float-left">
+                                                <h1 class="bold text-uppercase page-title">FORM
+                                                    INPUT NO
+                                                    IA : <?= $dep ?></h1>
                                             </div>
                                         </div>
-                                        <div class="card-body bg-white">
-
-                                            <div class="row">
-                                                <div class="col-lg-12 col-md-12">
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="card card-shadow bg-blue-100" style="border-radius:10px;">
+                                                <div class="card-body">
                                                     <form action="../proses/ia/tambah_ia.php" method="POST"
                                                         id="form_ia">
                                                         <input type="hidden" name="add">
@@ -128,235 +129,179 @@ include '../elemen/header.php';?>
                                                             id="id_prop" autocomplete="off"
                                                             value="<?php echo $data['id_prop']; ?>" required>
                                                         <div class="form-group row">
+                                                            <h4 class="col-md-2 modal-title text-left"
+                                                                style="color:black;">IA
+                                                                NO.
+                                                            </h4>
+                                                            <div class="col-md-10 text-right">
+                                                                <a href="controltabledep.php?dept=<?= $id_dep ?>"
+                                                                    class=" btn btn-icon btn-warning">
+                                                                    <span>TUTUP FORM</span>
+                                                                </a>
+
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="form-group row ">
+                                                            <label class="col-md-2 col-form-label text-left"
+                                                                style="color:black;">IA
+                                                                No.</label>
+                                                            <div class="col-md-10">
+                                                                <input type="text" class="form-control" name="ia"
+                                                                    placeholder="Diisi No. IA" autocomplete="off"
+                                                                    id="ia" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label class="col-md-2 col-form-label text-left"
+                                                                style="color:black;">Description</label>
+                                                            <div class="col-md-10">
+                                                                <input type="text" class="form-control" name="ia_desc"
+                                                                    id="ia_desc" placeholder="Diisi Deskripsi"
+                                                                    autocomplete="off">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row text-left">
                                                             <h4 class="col-md-12 modal-title text-left"
                                                                 style="color:black;">
-                                                                SUBJECT
-                                                            </h4>
+                                                                Original Currency</h4>
                                                         </div>
-                                                        <div class="form-group row">
-                                                            <label class="col-md-2 col-form-label text-left"
-                                                                style="color:black;">Department</label>
+                                                        <div class="form-group row text-left">
+                                                            <label class="col-md-2 col-form-label mt-4"
+                                                                style="color:black;">In
+                                                                RP</label>
                                                             <div class="col-md-4">
-                                                                <div class="form-group">
-                                                                    <input type="text" class="form-control bg-grey-200"
-                                                                        readonly placeholder="Division Yourself"
-                                                                        autocomplete="off"
-                                                                        value="<?php echo $data['depart']; ?>">
-                                                                </div>
-                                                            </div>
-                                                            <label class="col-md-2 col-form-label text-left"
-                                                                style="color:black;">Category</label>
-                                                            <div class="col-md-4">
-                                                                <div class="form-group">
-                                                                    <input type="text" class="form-control bg-grey-200"
-                                                                        readonly placeholder="Division Yourself"
-                                                                        autocomplete="off"
-                                                                        value="<?php echo $data['kategori']; ?>">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="col-md-2 col-form-label text-left"
-                                                                style="color:black;">Proposal</label>
-                                                            <div class="col-md-10">
-                                                                <input type="text" class="form-control  bg-grey-200"
-                                                                    placeholder="Division Yourself" autocomplete="off"
-                                                                    readonly value="<?php echo $data['proposal']; ?>">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="col-md-2 col-form-label text-left"
-                                                                style="color:black;">Cost</label>
-                                                            <div class="col-md-5">
+                                                                <span
+                                                                    style="color:red;font-size: 13px;font-style: italic;">*(Sisa
+                                                                    budget Rp
+                                                                    <?= number_format($sisa_budget,0,',','.')  ?>)</span>
                                                                 <div class="input-group">
                                                                     <div class="input-group-prepend">
                                                                         <span class="input-group-text">RP</span>
                                                                     </div>
-                                                                    <input type="text" class="form-control bg-grey-200"
-                                                                        readonly placeholder="Nominal Rupiah"
-                                                                        value="<?= number_format($data['cost'], 0, ',', '.');?>">
+                                                                    <input type="text" class="form-control uang"
+                                                                        autocomplete="off" placeholder="Nominal Rupiah"
+                                                                        name="cost_ia" id="cost_ia" required>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-5">
+                                                            <label class="col-md-2 col-form-label mt-4"
+                                                                style="color:black;">In
+                                                                JPY</label>
+                                                            <div class="col-md-4">
+                                                                <span
+                                                                    style="color:red;font-size: 13px;font-style: italic;">*(Sisa
+                                                                    budget YJP
+                                                                    <?= number_format($sisa_budget / $data['yen'],1,',','.')  ?>)</span>
                                                                 <div class="input-group">
                                                                     <div class="input-group-prepend">
                                                                         <span class="input-group-text">JPY</span>
                                                                     </div>
                                                                     <input type="text" class="form-control bg-green-100"
-                                                                        readonly placeholder="Nominal Rupiah"
-                                                                        value="<?= number_format($data['cost']/$data['yen'], 1, ',', '.'); ?>">
+                                                                        placeholder="Nominal Yen" id="yen">
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
-                                                            <div class="col-lg-12 col-md-12">
-                                                                <div class="text-right">
-                                                                    <i data-toggle="tooltip"
-                                                                        data-original-title="Tambah Kolom Ia">
-                                                                        <button type="button"
-                                                                            class="btn btn-icon btn-outline btn-info btn-xs add-more">
-                                                                            <i class="icon wb-plus"
-                                                                                aria-hidden="true"></i>
-                                                                        </button>
-                                                                    </i>
-                                                                </div>
+                                                            <h4 class="col-md-12 modal-title text-left"
+                                                                style="color:black;">
+                                                                Valid
+                                                                Update</h4>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label class="col-md-2 col-form-label text-left"
+                                                                style="color:black;">Valid
+                                                                Until </label>
+                                                            <div class="col-md-4">
+                                                                <input type="date" class="form-control" id="time_ia"
+                                                                    placeholder="Diisi tanggal updaate" name="time_ia"
+                                                                    autocomplete="off">
+                                                            </div>
+                                                            <label class="col-md-2 col-form-label text-left"
+                                                                style="color:black;">Remark
+                                                                Ct Update</label>
+                                                            <div class="col-md-4">
+                                                                <select id="pic_ia" class="form-control bg-grey-200"
+                                                                    autocomplete="off" name="pic_ia">
+                                                                    <option value="<?= $_SESSION['yics_user']; ?>">
+                                                                        <?= $_SESSION['yics_nama']; ?>
+                                                                    </option>
+                                                                </select>
                                                             </div>
                                                         </div>
-                                                        <hr>
-                                                        <div class="control-group after-add-more">
-                                                            <div class="form-group row">
-                                                                <h4 class="col-md-12 modal-title text-left"
-                                                                    style="color:black;">IA
-                                                                    NO.
-                                                                </h4>
-                                                            </div>
-                                                            <div class="form-group row ">
-                                                                <label class="col-md-2 col-form-label text-left"
-                                                                    style="color:black;">IA
-                                                                    No.</label>
-                                                                <div class="col-md-10">
-                                                                    <input type="text" class="form-control" name="ia"
-                                                                        placeholder="Diisi No. IA" autocomplete="off"
-                                                                        id="ia" required>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <label class="col-md-2 col-form-label text-left"
-                                                                    style="color:black;">Description</label>
-                                                                <div class="col-md-10">
-                                                                    <input type="text" class="form-control"
-                                                                        name="ia_desc" id="ia_desc"
-                                                                        placeholder="Diisi Deskripsi"
-                                                                        autocomplete="off">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row text-left">
-                                                                <h4 class="col-md-12 modal-title text-left"
-                                                                    style="color:black;">
-                                                                    Original Currency</h4>
-                                                            </div>
-                                                            <div class="form-group row text-left">
-                                                                <label class="col-md-2 col-form-label mt-4"
-                                                                    style="color:black;">In
-                                                                    RP</label>
-                                                                <div class="col-md-4">
-                                                                    <span
-                                                                        style="color:red;font-size: 13px;font-style: italic;">*(Sisa
-                                                                        budget Rp
-                                                                        <?= number_format($sisa_budget,0,',','.')  ?>)</span>
-                                                                    <div class="input-group">
-                                                                        <div class="input-group-prepend">
-                                                                            <span class="input-group-text">RP</span>
-                                                                        </div>
-                                                                        <input type="text" class="form-control uang"
-                                                                            autocomplete="off"
-                                                                            placeholder="Nominal Rupiah" name="cost_ia"
-                                                                            id="cost_ia" required>
-                                                                    </div>
-                                                                </div>
-                                                                <label class="col-md-2 col-form-label mt-4"
-                                                                    style="color:black;">In
-                                                                    JPY</label>
-                                                                <div class="col-md-4">
-                                                                    <span
-                                                                        style="color:red;font-size: 13px;font-style: italic;">*(Sisa
-                                                                        budget YJP
-                                                                        <?= number_format($sisa_budget / $data['yen'],1,',','.')  ?>)</span>
-                                                                    <div class="input-group">
-                                                                        <div class="input-group-prepend">
-                                                                            <span class="input-group-text">JPY</span>
-                                                                        </div>
-                                                                        <input type="text"
-                                                                            class="form-control bg-green-100"
-                                                                            placeholder="Nominal Yen" id="yen">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <h4 class="col-md-12 modal-title text-left"
-                                                                    style="color:black;">
-                                                                    Valid
-                                                                    Update</h4>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <label class="col-md-2 col-form-label text-left"
-                                                                    style="color:black;">Valid
-                                                                    Until </label>
-                                                                <div class="col-md-4">
-                                                                    <input type="date" class="form-control" id="time_ia"
-                                                                        placeholder="Diisi tanggal updaate"
-                                                                        name="time_ia" autocomplete="off">
-                                                                </div>
-                                                                <label class="col-md-2 col-form-label text-left"
-                                                                    style="color:black;">Remark
-                                                                    Ct Update</label>
-                                                                <div class="col-md-4">
-                                                                    <select id="pic_ia" class="form-control bg-grey-200"
-                                                                        autocomplete="off" name="pic_ia">
-                                                                        <option value="<?= $_SESSION['yics_user']; ?>">
-                                                                            <?= $_SESSION['yics_nama']; ?>
-                                                                        </option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="reset" style="color:white;"
-                                                                class="btn bg-blue-grey-800 btn-round"
-                                                                data-dismiss="modal" id="reset">RESET</button>
+                                                        <div class="card-footer card-footer-transparent text-right">
+                                                            <button type="reset" style="color:white;border-radius:10px;"
+                                                                class="btn  btn-warning color-red"
+                                                                id="reset">RESET</button>
                                                             <button type="submit" id="submit"
-                                                                class="btn btn-primary btn-round">SUBMIT</button>
+                                                                style="border-radius:10px;"
+                                                                class="btn btn-primary ">SUBMIT</button>
+                                                        </div>
                                                     </form>
                                                 </div>
                                             </div>
-
-
-
-
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-
-                        <div class="">
                             <div class="row">
                                 <!-- Second Row -->
                                 <div class="col-lg-12 col-md-12">
-                                    <div class="card card-shadow">
-                                        <div class="card-header card-header-transparent bg-dark">
+                                    <div class="card card-shadow " style="border-radius:10px;">
+                                        <div class="card-header card-header-transparent">
                                             <div class="row">
                                                 <div class="col-lg-12 col-md-12">
-                                                    <div class="float-left">
-                                                        <span class="font-size-20 bold text-uppercase">List IA</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-body bg-white">
+                                                    <table class=" table " width="100%">
 
-
-
-                                            <div class="table-responsive p-3">
-
-                                                <table
-                                                    class="table table-striped table-hover table-bordered w-full display nowrap example0 text-uppercase"
-                                                    id="list-ia">
-                                                    <thead class="text-center">
-                                                        <tr class="bg-info align-middle">
-                                                            <th hidden>id ia</th>
-                                                            <th class="align-middle text-center">NO</th>
-                                                            <th class="align-middle text-center">NO IA</th>
-                                                            <th class="align-middle text-center">DESKRIPSI</th>
-                                                            <th class="align-middle text-center">VALID UNTIL</th>
-                                                            <th class="align-middle text-center">CT UPDATE</th>
-                                                            <th class="align-middle text-center">COST IA</th>
-                                                            <th class=" align-middle text-center">ACTION</th>
+                                                        <tr>
+                                                            <td class="judul align-middle text-center " rowspan="3"
+                                                                width="200px">
+                                                                <img src="../base/assets/images/adm3.png"
+                                                                    style="width:200px;">
+                                                            </td>
+                                                            <td class="judul align-middle text-center" width="700px"
+                                                                rowspan="3">
+                                                                <h4>LIST NO IA DARI PROPOSAL :</h4>
+                                                                <h3> "<?= $data['proposal']; ?>"</h3>
+                                                            </td>
+                                                            <td class="text-left">Departement</td>
+                                                            <td> &nbsp;:&nbsp;</td>
+                                                            <td><?= $data['depart']; ?></td>
                                                         </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <?php 
+
+                                                        <tr>
+
+                                                            <td class="text-left">Category</td>
+                                                            <td> &nbsp;:&nbsp;</td>
+                                                            <td><?php echo $data['kategori']; ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-left">Cost Proposal</td>
+                                                            <td> &nbsp;:&nbsp;</td>
+                                                            <td><?= $rp." ". number_format($data['cost'], 0, ',', '.');?>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <div class="table-responsive p-3">
+
+                                                        <table
+                                                            class="table table-striped table-hover table-bordered w-full display nowrap example0 text-uppercase"
+                                                            id="list-ia">
+                                                            <thead class="text-center">
+                                                                <tr class="bg-info align-middle">
+                                                                    <th hidden>id ia</th>
+                                                                    <th class="align-middle text-center">NO</th>
+                                                                    <th class="align-middle text-center">NO IA</th>
+                                                                    <th class="align-middle text-center">DESKRIPSI</th>
+                                                                    <th class="align-middle text-center">VALID UNTIL
+                                                                    </th>
+                                                                    <th class="align-middle text-center">CT UPDATE</th>
+                                                                    <th class="align-middle text-center">COST IA</th>
+                                                                    <th class=" align-middle text-center">ACTION</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <?php 
                                                         $no = 1 ;
                                                         
                                                         $list_ia = mysqli_query($link_yics,"SELECT id_ia,
@@ -372,143 +317,190 @@ include '../elemen/header.php';?>
                                                         WHERE id_prop = '$id'") or die(mysqli_error($link_yics));
                                                             if(mysqli_num_rows($list_ia)>0){
                                                             while($row = mysqli_fetch_assoc($list_ia)){?>
-                                                        <tr class="row-ia text-center">
-                                                            <td hidden><?= $row['id_ia']; ?></td>
-                                                            <td><?= $no; ?></td>
-                                                            <td><?= $row['ia']; ?></td>
-                                                            <td><?= $row['deskripsi']; ?></td>
-                                                            <?php $rp="RP"; ?>
+                                                                <tr class="row-ia text-center">
+                                                                    <td hidden><?= $row['id_ia']; ?></td>
+                                                                    <td><?= $no; ?></td>
+                                                                    <td><?= $row['ia']; ?></td>
+                                                                    <td><?= $row['deskripsi']; ?></td>
+                                                                    <?php $rp="RP"; ?>
 
-                                                            </td>
+                                                                    </td>
 
-                                                            <td><?= date("d M Y", strtotime($row['time_ia'])); ?>
-                                                            </td>
-                                                            <td><?= $row['pic_ia']; ?></td>
-                                                            <td><?= $rp." ".number_format($row['cost_ia'], 0, ',', '.');?>
-                                                            <td>
-                                                                <a href="formedit_ia.php?id_ia=<?= $row['id_ia']?>"
-                                                                    class="btn btn-icon btn-warning  edit_ia">
-                                                                    <i class="icon wb-edit" aria-hidden="true"></i>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
+                                                                    <td><?= date("d M Y", strtotime($row['time_ia'])); ?>
+                                                                    </td>
+                                                                    <td><?= $row['pic_ia']; ?></td>
+                                                                    <td><?= $rp." ".number_format($row['cost_ia'], 0, ',', '.');?>
+                                                                    <td>
+                                                                        <a href="formedit_ia.php?id_ia=<?= $row['id_ia']?>"
+                                                                            class="btn btn-icon btn-warning  edit_ia">
+                                                                            <i class="icon wb-edit"
+                                                                                aria-hidden="true"></i>
+                                                                        </a>
+                                                                        <a href="../proses/ia/tambah_ia.php?del=<?= $row['id_ia']?>&page=<?= $id?>"
+                                                                            class="HapusData">
+                                                                            <button type="button"
+                                                                                class="btn btn-icon btn-danger">
+                                                                                <i class="icon oi-trashcan"
+                                                                                    aria-hidden="true"></i>
+                                                                            </button>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
 
-                                                        <?php 
+                                                                <?php 
                                                         $no++;
                                                             }
-                                                            
+                                                        } 
                                                             ?>
-                                                        <tr class="text-center">
-                                                            <td colspan="5" class="bg-yellow-100">TOTAL COST IA
+                                                            </tbody>
 
-                                                            </td>
-                                                            <?php 
+                                                        </table>
+                                                        <table class=" table " width="100%">
+
+                                                            <tr>
+                                                                <td class="judul align-middle text-center " rowspan="3"
+                                                                    width="200px">
+
+                                                                </td>
+                                                                <td class="judul align-middle text-center" width="700px"
+                                                                    rowspan="3">
+
+                                                                </td>
+                                                                <td class="text-left">Total Cost IA</td>
+                                                                <td> &nbsp;:&nbsp;</td>
+                                                                <?php 
                                                                 $total_costia=mysqli_fetch_array(mysqli_query($link_yics,"SELECT sum(cost_ia) 
                                                                 AS total FROM ia WHERE id_prop='$id'")) or die (mysqli_error($link_yics));;
                                                             ?>
-                                                            <td colspan="2" class="bg-red-100">
-                                                                <?= $rp." ".number_format($total_costia['total'], 0, ',', '.');?>
-                                                            </td>
-                                                        </tr>
-                                                        <?php }else
-                                                        { ?>
-                                                        <tr>
-                                                            <td colspan="8" class="text-center">Tidak Ada Data
-                                                                Ditemukan </td>
-                                                        </tr>
-                                                        <?php
-                                      }
-                                      
-                                                        
-                                                        ?>
-                                                    </tbody>
+                                                                <td colspan="2" class="bg-red-100">
+                                                                    <?= $rp." ".number_format($total_costia['total'], 0, ',', '.');?>
+                                                                </td>
+                                                                </td>
+                                                            </tr>
 
-                                                </table>
-
-                                                <a href="controltabledep.php?dept=<?= $id_dep ?>"
-                                                    class="btn btn-icon btn-warning  edit_ia">
-                                                    <i " aria-hidden=" true"> <span>TUTUP FORM</span></i>
-                                                </a>
+                                                            <tr>
+                                                                <td class="text-left">Available Saldo Proposal</td>
+                                                                <td> &nbsp;:&nbsp;</td>
+                                                                <td><?= $rp." ". number_format($data['cost'], 0, ',', '.');?>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="text-left">Available Saldo
+                                                                    <?= $data['depart']; ?></td>
+                                                                <td> &nbsp;:&nbsp;</td>
+                                                                <td><?= $rp." ". number_format($data['cost'], 0, ',', '.');?>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
                                             </div>
 
+
                                         </div>
+
+
                                     </div>
                                 </div>
+
                             </div>
                         </div>
-
-
-
-                        <!-- End Third Right -->
-                        <!-- End Third Row -->
                     </div>
                 </div>
             </div>
-            <!-- End Page -->
+        </div>
+        <!-- End Third Right -->
+        <!-- End Third Row -->
+    </div>
+    </div>
+    </div>
+    <!-- End Page -->
 
-            <!-- Footer -->
-            <?php include '../elemen/footer.php';?>
+    <!-- Footer -->
+    <?php include '../elemen/footer.php';?>
 
-            <script type="text/javascript">
-            // Tambah Ia
+    <script type="text/javascript">
+    // Tambah Ia
 
-            $("form").submit(function(event) {
-                event.preventDefault();
-                dataForm = $("form").serialize();
-                $.ajax({
-                    type: "POST",
-                    url: "../proses/ia/tambah_ia.php",
-                    data: dataForm,
-                    success: function(result) {
-                        console.log(result);
+    $("form").submit(function(event) {
+        event.preventDefault();
+        dataForm = $("form").serialize();
+        $.ajax({
+            type: "POST",
+            url: "../proses/ia/tambah_ia.php",
+            data: dataForm,
+            success: function(result) {
+                console.log(result);
 
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Saved!',
-                            text: "Data IA telah ditambah.",
-                            showConfirmButton: false,
-                            timer: 2000
-                        });
-
-                        resetForm();
-                        location.reload();
-
-
-
-                    }
-
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Saved!',
+                    text: "Data IA telah ditambah.",
+                    showConfirmButton: false,
+                    timer: 2000
                 });
 
+                resetForm();
+                location.reload();
 
-            });
 
-            function resetForm() {
-
-                $('#ia').val('');
-                $('#ia_desc').val('');
-                $('#cost_ia').val('');
-                $('#time_ia').val('');
-                $('#pic_ia').val('');
 
             }
 
-
-            var yen = <?= $data['yen'] ?>;
-
-            $('#cost_ia').keyup(function() {
-
-            var nominal = $(this).val();
-
-            var replaceNominal = nominal.replace(',', '');
-
-            var conversi = replaceNominal / yen;
-
-            var number = new Intl.NumberFormat().format(conversi);
-
-            $('#yen').val(number);
-            });
+        });
 
 
+    });
 
-            });
-            </script>
+    function resetForm() {
+
+        $('#ia').val('');
+        $('#ia_desc').val('');
+        $('#cost_ia').val('');
+        $('#time_ia').val('');
+        $('#pic_ia').val('');
+
+    }
+
+
+    var yen = <?= $data['yen'] ?>;
+
+    $('#cost_ia').keyup(function() {
+
+    var nominal = $(this).val();
+
+    var replaceNominal = nominal.replace(',', '');
+
+    var conversi = replaceNominal / yen;
+
+    var number = new Intl.NumberFormat().format(conversi);
+
+    $('#yen').val(number);
+    });
+
+
+
+    });
+    </script>
+    <script>
+    $(document).ready(function() {
+        $('.HapusData').click(function(a) {
+            a.preventDefault()
+            var getLink = $(this).attr('href');
+            console.log(getLink);
+            Swal.fire({
+                title: 'Apakah yakin?',
+                text: "Data ini akan dihapus selamanya!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = getLink;
+                }
+            })
+        })
+    })
+    </script>

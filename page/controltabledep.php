@@ -132,7 +132,7 @@ $id_dept = $_GET['dept'];
                                             </div>
                                             <div
                                                 class=" card-body card-shadow table table-responsive table-bordered text-center 10px table-striped text-nowrap">
-                                                <table class="table tableproposal table-hover">
+                                                <table class=" table tableproposal table-hover">
                                                     <thead class="table-info">
                                                         <tr>
                                                             <th class="judul align-middle text-center export-col"
@@ -142,6 +142,15 @@ $id_dept = $_GET['dept'];
                                                             <th class="judul align-middle text-center export-col"
                                                                 colspan="13">
                                                                 IMPLEMENTATION CONTROL TABLE</th>
+
+                                                            <th class="judul align-middle text-center table-info noexportar"
+                                                                rowspan="3">
+                                                                STATUS
+                                                            </th>
+                                                            <th class="judul align-middle text-center able-info noexportar"
+                                                                rowspan="3">
+                                                                PROGRESS
+                                                            </th>
                                                             <th class="judul align-middle text-center table-danger noexportar"
                                                                 rowspan="3">
                                                                 ACTION
@@ -271,6 +280,11 @@ $id_dept = $_GET['dept'];
                                         $sembunyikan_nomor = ""; 
                                         
                                     }
+                                    if ($data['id_ia']>0){
+                                        $tombol_hidup="";
+                                    }else{
+                                        $tombol_hidup="disabledlink"; 
+                                    }
 
                                     // $id_before = $data['id_prop'];
                                     
@@ -278,7 +292,9 @@ $id_dept = $_GET['dept'];
 
                                                         <tr
                                                             class="<?php if ($no%2==0){ echo "bg-blue-100"; } else{ echo ""; } ?> text-uppercase">
-                                                            <td> <span class="<?= $sembunyikan_nomor ?>"><?= $nomor_urut ?></span> </td>
+                                                            <td> <span
+                                                                    class="<?= $sembunyikan_nomor ?>"><?= $nomor_urut ?></span>
+                                                            </td>
                                                             <td>
                                                                 <?= ($no_prop == 1)? $data['depart']:""; ?></td>
                                                             <td>
@@ -321,14 +337,28 @@ $id_dept = $_GET['dept'];
                                                             </td>
                                                             <td><?= (isset($data['no_ia']))?$data['pic_ia']: ""; ?></td>
                                                             <td>
+                                                                <span
+                                                                    class=" badge badge-round badge-success badge-lg">PUD</span>
+                                                            </td>
+                                                            <td>
+                                                                <div class="progress mt-20 text-center ">
+                                                                    <div class="progress-bar progress-bar-striped  progress-bar-info active"
+                                                                        aria-valuenow="" aria-valuemin="0"
+                                                                        aria-valuemax="100" style="width: 50%;"
+                                                                        aria-valuemax="100" role="progressbar">
+                                                                        50%
+                                                                    </div>
+                                                            </td>
+                                                            <td>
 
-                                                                <a href="Tracking.php?id_ia=<?= $data['id_ia'] ?>">
-                                                                    <button type="button"
-                                                                        class="btn btn-icon btn-info  ">
+                                                                <a href="Tracking.php?id_ia=<?= $data['id_ia'] ?>"
+                                                                    class="<?= $tombol_hidup ?>">
+                                                                    <button type="button" class="btn btn-icon btn-info">
                                                                         <i class="icon wb-eye" aria-hidden="true"></i>
                                                                     </button>
                                                                 </a>
-                                                                <a href="formupdate_ia.php?id_ia=<?= $data['id_ia'] ?>">
+                                                                <a href="formupdate_ia.php?id_ia=<?= $data['id_ia'] ?>"
+                                                                    class="<?= $tombol_hidup ?>">
                                                                     <button type="button"
                                                                         class="btn btn-icon btn-success">
                                                                         <i class="icon wb-upload"
@@ -336,14 +366,15 @@ $id_dept = $_GET['dept'];
                                                                     </button>
                                                                 </a>
 
-                                                                <a href="formedit_ia.php?id_ia=<?= $data['id_ia']?>">
+                                                                <a href="formedit_ia.php?id_ia=<?= $data['id_ia']?>"
+                                                                    class="<?= $tombol_hidup ?>">
                                                                     <button type="button"
                                                                         class="btn btn-icon btn-warning">
                                                                         <i class="icon wb-edit" aria-hidden="true"></i>
                                                                     </button>
                                                                 </a>
-                                                                <a href="../proses/dashboard/tambahplanning.php?del="
-                                                                    data-toggle="tooltip" data-original-title="Hapus">
+                                                                <a href="../proses/ia/hapus_ia.php?del=<?= $data['id_ia']?>&page=<?= $data['id_dep']?>"
+                                                                    class="<?= $tombol_hidup ?> HapusData">
                                                                     <button type="button"
                                                                         class="btn btn-icon btn-danger">
                                                                         <i class="icon oi-trashcan"
@@ -461,4 +492,27 @@ $id_dept = $_GET['dept'];
                     });
 
                 });
+                </script>
+                <!-- query java script hapus data -->
+                <script>
+                $(document).ready(function() {
+                    $('.HapusData').click(function(a) {
+                        a.preventDefault()
+                        var getLink = $(this).attr('href');
+                        console.log(getLink);
+                        Swal.fire({
+                            title: 'Apakah yakin?',
+                            text: "Data ini akan dihapus selamanya!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Yes, delete it!'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = getLink;
+                            }
+                        })
+                    })
+                })
                 </script>
