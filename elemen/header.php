@@ -65,6 +65,10 @@
     .btn {
         border-radius: 10px;
     }
+
+    td {
+        color: black;
+    }
     </style>
 
     <link rel="apple-touch-icon" href="../base/assets/images/apple-touch-icon.png">
