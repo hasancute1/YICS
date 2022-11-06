@@ -122,7 +122,7 @@ include '../elemen/header.php';?>
                                             <div class="row">
                                                 <div class="col-lg-12 col-md-12">
                                                     <form action="../proses/ia/tambah_ia.php" method="POST"
-                                                        id="form_ia">
+                                                        >
                                                         <input type="hidden" name="add">
                                                         <input type="hidden" class="form-control" name="id_prop"
                                                             id="id_prop" autocomplete="off"
@@ -285,7 +285,7 @@ include '../elemen/header.php';?>
                                                                 <div class="col-md-4">
                                                                     <input type="date" class="form-control" id="time_ia"
                                                                         placeholder="Diisi tanggal updaate"
-                                                                        name="time_ia" autocomplete="off">
+                                                                        name="time_ia" autocomplete="off" required>
                                                                 </div>
                                                                 <label class="col-md-2 col-form-label text-left"
                                                                     style="color:black;">Remark
@@ -452,35 +452,35 @@ include '../elemen/header.php';?>
             <script type="text/javascript">
             // Tambah Ia
 
-            $("form").submit(function(event) {
-                event.preventDefault();
-                dataForm = $("form").serialize();
-                $.ajax({
-                    type: "POST",
-                    url: "../proses/ia/tambah_ia.php",
-                    data: dataForm,
-                    success: function(result) {
-                        console.log(result);
+            // $("form").submit(function(event) {
+            //     event.preventDefault();
+            //     dataForm = $("form").serialize();
+            //     $.ajax({
+            //         type: "POST",
+            //         url: "../proses/ia/tambah_ia.php",
+            //         data: dataForm,
+            //         success: function(result) {
+            //             console.log(result);
 
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Saved!',
-                            text: "Data IA telah ditambah.",
-                            showConfirmButton: false,
-                            timer: 2000
-                        });
+            //             Swal.fire({
+            //                 icon: 'success',
+            //                 title: 'Saved!',
+            //                 text: "Data IA telah ditambah.",
+            //                 showConfirmButton: false,
+            //                 timer: 2000
+            //             });
 
-                        resetForm();
-                        location.reload();
-
-
-
-                    }
-
-                });
+            //             resetForm();
+            //             location.reload();
 
 
-            });
+
+            //         }
+
+            //     });
+
+
+            // });
 
             function resetForm() {
 
