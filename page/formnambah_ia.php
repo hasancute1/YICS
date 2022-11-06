@@ -101,7 +101,7 @@ include '../elemen/header.php';?>
                     $consumtion_budget = $get_data_ia['cost_ia'];
                     $get_data_budget1 = mysqli_query($link_yics ,"SELECT * FROM budget where id_dep='$id_dep' and id_fis='$id_fis'");
                     $get_data_budget = mysqli_fetch_assoc($get_data_budget1);
-                    $sisa_budget = $get_data_budget['budget']; - $consumtion_budget;
+                    $sisa_budget = $get_data_budget['budget'] - $consumtion_budget;
 
                     ?>
                     <!-- Page -->
