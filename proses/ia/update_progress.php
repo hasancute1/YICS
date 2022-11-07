@@ -57,7 +57,7 @@ if (isset ($_SESSION['yics_user'])){
                     }else{
                          // kirim notifikasi ke pic
                          $notif = TRUE;
-                         $pesan_notif = "IA ada Perubahan Step";
+                         $pesan_notif = "Telah diupdate ke proses " . $data_prog['nama_progress'];
                     }
                }else{
                     $insertTracking = " INSERT INTO tracking_ia (`id_ia`, `id_prog`, `approval`, `time`) VALUES  ('$id_ia', '$prog', '1', '$time' )";
@@ -71,7 +71,7 @@ if (isset ($_SESSION['yics_user'])){
                     }else{
                          // kirim notifikasi ke pic
                          $notif = TRUE;
-                         $pesan_notif = "IA Masuk Tahap " . $data_prog['nama_progress'];
+                         $pesan_notif = "Telah diupdate ke proses " . $data_prog['nama_progress'];
                     }
                }
                // echo  $_POST['id_ia'].$_POST['pic'][$index]." : ".$_POST['tgl'][$index]." : ".$_POST['approve_step'.$i]."<br>";

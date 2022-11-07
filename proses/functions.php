@@ -40,15 +40,17 @@ function single_query($query){
 // get notif
 function getNotif(){
 
-    $notif_proposal = query("SELECT notif.*, proposal.proposal as judul_prop  FROM notifications as notif 
+    $notif_proposal = query("SELECT notif.*, proposal.proposal as judul_prop, data_user.nama  FROM notifications as notif 
     join proposal on id_type = proposal.id_prop 
+    join data_user on notif.sender = data_user.username
     WHERE dest='".$_SESSION['yics_user']."' and notif.type = 'proposal'    
     ORDER BY id_notif DESC limit 10");
 
 
-    $notif_ia = query("SELECT notif.*, proposal.proposal as judul_prop  FROM notifications as notif 
+    $notif_ia = query("SELECT notif.*, proposal.proposal as judul_prop , data_user.nama FROM notifications as notif 
     join ia on id_type = ia.id_ia
     join proposal on ia.id_prop = proposal.id_prop 
+    join data_user on notif.sender = data_user.username
     WHERE dest='".$_SESSION['yics_user']."' and notif.type = 'ia'    
     ORDER BY id_notif DESC limit 10");
 
