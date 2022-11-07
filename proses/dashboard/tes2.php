@@ -29,6 +29,8 @@ if (isset ($_SESSION['yics_user'])){
          $pic = '';
 
          foreach($_POST['id_prog'] AS $prog){
+          $data_prog = single_query("SELECT * from progress where id_prog = {$prog}");
+
           $qry_cek = "SELECT id_prop FROM tracking_prop WHERE id_prop =  '$id_prop'  AND id_prog = '$prog'";
           $sql_cek = mysqli_query($link_yics, $qry_cek)or die(mysqli_error($link_yics));
           $jml_data = mysqli_num_rows($sql_cek);
@@ -63,7 +65,7 @@ if (isset ($_SESSION['yics_user'])){
                     }else{
                          // kirim notifikasi ke pic
                          $notif = TRUE;
-                         $pesan_notif = "Proposal Masuk Tahap " . $prog;
+                         $pesan_notif = "Proposal Memasuki Tahap " .$data_prog['nama_progress'];
                     }
                }
                // echo  $_POST['id_prop'].$_POST['pic'][$index]." : ".$_POST['tgl'][$index]." : ".$_POST['approve_step'.$i]."<br>";

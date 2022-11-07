@@ -53,13 +53,32 @@ $notif_pending = get_notif_pending();
                                 $color_notif = "";
                             }
 
+
+                            if($row['type'] == 'proposal'){
+                                
+                                if($_SESSION['yics_level'] == "1"){
+                                    $redirect_notif = "../page/viewplan.php?ubah=";
+                                }else{
+                                    $redirect_notif = "../page/formupdate.php?ubah=";
+                                }
+
+                            }else{
+
+                                if($_SESSION['yics_level'] == "1"){
+                                    $redirect_notif = "../page/Tracking.php?id_ia=";
+                                }else{
+                                    $redirect_notif = "../page/formupdate_ia.php?id_ia=";
+                                }
+
+                            }
+
                         ?>
 
                         <a class="list-group-item dropdown-item <?= $bg_notif ?>"
                             <?php if ($_SESSION['yics_level'] == "1") { ?>
-                            href="../page/viewplan.php?ubah=<?= $row['id_type'] ?>&notif=<?=$row['id_notif']?>"
+                            href="<?= $redirect_notif .  $row['id_type'] ?>&notif=<?=$row['id_notif']?>"
                             <?php }else{ ?>
-                            href="../page/formupdate.php?ubah=<?= $row['id_type'] ?>&notif=<?=$row['id_notif']?>"
+                            href="<?= $redirect_notif . $row['id_type'] ?>&notif=<?=$row['id_notif']?>"
                             <?php } ?> role="menuitem">
                             <div class="media">
                                 <div class="pr-10">
