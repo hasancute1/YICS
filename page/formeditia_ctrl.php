@@ -133,7 +133,7 @@ include '../elemen/header.php';?>
                                         <div class="col-lg-12 col-md-12">
                                             <div class="card card-shadow bg-blue-100" style="border-radius:10px;">
                                                 <div class="card-body">
-                                                    <form action="../proses/ia/tambah_ia.php" method="POST">
+                                                    <form action="../proses/ia/update_ia.php" method="POST">
                                                         <input type="hidden" name="ubah">
                                                         <input type="hidden" name="id_prop"
                                                             value="<?= $data_ia['id_prop'] ?>">

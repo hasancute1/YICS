@@ -101,8 +101,11 @@
     <link rel="stylesheet" href="../base/assets/examples/css/structure/pagination.css">
 
     <!-- data table for export -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="../base/assets/datatable/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="../base/assets/datatable/buttons.dataTables.min.css">
+    <!-- data table for export -->
+    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css"> -->
 
 
 
@@ -136,7 +139,8 @@
     <link rel="stylesheet" href="../global/fonts/octicons/octicons.css">
     <link rel="stylesheet" href="../global/fonts/web-icons/web-icons.min.css">
     <link rel="stylesheet" href="../global/fonts/brand-icons/brand-icons.min.css">
-    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>
+    <link rel='stylesheet' href='../base/assets/datatable/css.css'>
+    <!-- <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'> -->
 
     <!--[if lt IE 9]>
     <script src="../global/vendor/html5shiv/html5shiv.min.js"></script>
@@ -155,5 +159,5 @@
     <script src="../global/vendor/jquery/jquery.js"></script>
     <script src="../global/vendor/morris/morris.min.js"></script>
     <script src="../global/vendor/raphael/raphael.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="../base/assets/datatable/jquery.min.js"></script>
 </head>

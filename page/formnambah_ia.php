@@ -115,7 +115,7 @@ include '../elemen/header.php';?>
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12">
                                             <div class="float-left">
-                                                <h1 class="bold text-uppercase page-title">FORM <?= $id_dep ?>
+                                                <h1 class="bold text-uppercase page-title">FORM
                                                     INPUT NO IA : <?= $dep ?></h1>
                                             </div>
                                         </div>
@@ -173,7 +173,7 @@ include '../elemen/header.php';?>
                                                             <div class="col-md-4">
                                                                 <span
                                                                     style="color:red;font-size: 13px;font-style: italic;">*(Sisa
-                                                                    budget Rp
+                                                                    budget <?= $dep ?> : Rp
                                                                     <?= number_format($sisa_budget,0,',','.')  ?>)</span>
                                                                 <div class="input-group">
                                                                     <div class="input-group-prepend">
@@ -190,14 +190,14 @@ include '../elemen/header.php';?>
                                                             <div class="col-md-4">
                                                                 <span
                                                                     style="color:red;font-size: 13px;font-style: italic;">*(Sisa
-                                                                    budget YJP
+                                                                    budget <?= $dep ?> : YJP
                                                                     <?= number_format($sisa_budget / $data['yen'],1,',','.')  ?>)</span>
                                                                 <div class="input-group">
                                                                     <div class="input-group-prepend">
                                                                         <span class="input-group-text">JPY</span>
                                                                     </div>
                                                                     <input type="text" class="form-control bg-green-100"
-                                                                        placeholder="Nominal Yen" id="yen">
+                                                                        readonly placeholder="Nominal Yen" id="yen">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -248,40 +248,42 @@ include '../elemen/header.php';?>
 
                                                     <div class="row">
                                                         <div class="col-lg-12 col-md-12">
-                                                            <table class=" table " width="100%">
+                                                            <div class="table  ">
+                                                                <table class=" table ">
 
-                                                                <tr>
-                                                                    <td class="judul align-middle text-center "
-                                                                        rowspan="3" width="200px">
-                                                                        <img src="../base/assets/images/adm3.png"
-                                                                            style="width:200px;">
-                                                                    </td>
-                                                                    <td class="judul align-middle text-center"
-                                                                        width="700px" rowspan="3">
-                                                                        <h4>LIST NO IA DARI PROPOSAL :</h4>
-                                                                        <h3> "<?= $data['proposal']; ?>"</h3>
-                                                                    </td>
-                                                                    <td class="text-left" style="color:black;">
-                                                                        Departement</td>
-                                                                    <td> &nbsp;:&nbsp;</td>
-                                                                    <td><?= $data['depart']; ?></td>
-                                                                </tr>
+                                                                    <tr>
+                                                                        <td class="judul align-middle text-center "
+                                                                            rowspan="3" width="200px">
+                                                                            <img src="../base/assets/images/adm3.png"
+                                                                                style="width:200px;">
+                                                                        </td>
+                                                                        <td class="judul align-middle text-center text-uppercase"
+                                                                            width="700px" rowspan="3">
+                                                                            <h4>LIST NO IA DARI PROPOSAL :</h4>
+                                                                            <h3> "<?= $data['proposal']; ?>"</h3>
+                                                                        </td>
+                                                                        <td class="text-left" style="color:black;">
+                                                                            Departement</td>
+                                                                        <td> &nbsp;:&nbsp;</td>
+                                                                        <td><?= $data['depart']; ?></td>
+                                                                    </tr>
 
-                                                                <tr>
+                                                                    <tr>
 
-                                                                    <td class="text-left" style="color:black;">Category
-                                                                    </td>
-                                                                    <td> &nbsp;:&nbsp;</td>
-                                                                    <td><?php echo $data['kategori']; ?></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td class="text-left" style="color:black;">Cost
-                                                                        Proposal</td>
-                                                                    <td> &nbsp;:&nbsp;</td>
-                                                                    <td><?= $rp." ". number_format($data['cost'], 0, ',', '.');?>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
+                                                                        <td class="text-left" style="color:black;"
+                                                                            width="200px">Category
+                                                                        <td width="30px"> &nbsp;:&nbsp;</td>
+                                                                        <td><?php echo $data['kategori']; ?></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-left" style="color:black;">Cost
+                                                                            Proposal</td>
+                                                                        <td> &nbsp;:&nbsp;</td>
+                                                                        <td><?= $rp." ". number_format($data['cost'], 0, ',', '.');?>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
 
                                                             <div class="table-responsive">
                                                                 <table
