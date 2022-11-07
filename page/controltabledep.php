@@ -272,7 +272,7 @@ $id_dept = $_GET['dept'];
 
                                     if($id_before == $data['id_prop']){
                                         $no_prop += 1;     
-                                        $sembunyikan_nomor = "d-none";                                   
+                                        $sembunyikan_nomor = "hidden";                                   
                                     }else{
                                         $no_prop = 1;
                                         $no++;
@@ -366,7 +366,7 @@ $id_dept = $_GET['dept'];
                                                                     </button>
                                                                 </a>
 
-                                                                <a href="formedit_ia.php?id_ia=<?= $data['id_ia']?>"
+                                                                <a href="formeditia_ctrl.php?id_ia=<?= $data['id_ia']?>"
                                                                     class="<?= $tombol_hidup ?>">
                                                                     <button type="button"
                                                                         class="btn btn-icon btn-warning">

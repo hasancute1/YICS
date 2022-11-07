@@ -355,7 +355,8 @@ if (!isset($_SESSION['yics_user'])) {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-body card-shadow table-responsive table-hover table-bordered">
+                                        <div
+                                            class="card-body card-shadow table-responsive table-hover table-bordered text-nowrap">
                                             <table class="table   w-full display  example0">
                                                 <thead class="text-center">
                                                     <tr class="bg-info align-" height="10px">
