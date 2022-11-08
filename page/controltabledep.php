@@ -218,6 +218,7 @@ $id_dept = $_GET['dept'];
 
                                                         <!-- query proposal control table -->
                                                         <?php 
+                                                        $Rp = "RP";
 
                               $proposal = mysqli_query($link_yics ,"SELECT
                                 proposal.id_prop AS id_prop,
@@ -261,13 +262,14 @@ $id_dept = $_GET['dept'];
 
                                 $nomor_urut=0;
                                 $nomor_urut_before =0;
-
+                                
                                 $no_prop=0;
                                 $id_before = '';
 
                                 // untuk memvalidasi apakah ada datanya
                                 if(mysqli_num_rows($proposal)>0){
                                 while($data = mysqli_fetch_assoc($proposal)){                                   
+                                    $id= $data['id_prop'];
                                     
 
                                     if($id_before == $data['id_prop']){
@@ -285,9 +287,23 @@ $id_dept = $_GET['dept'];
                                     }else{
                                         $tombol_hidup="disabledlink"; 
                                     }
-
+                                    if((isset($data['no_ia']) && $no_prop == 1)){
+                                        $remainrp = number_format (($data['cost']-$data['cost_ia']),0,',','.'); 
+                                       }else if((isset($data['no_ia']) && $no_prop != 1)) {
+                                        $remainrp = number_format ((0-$data['cost_ia']),0,',','.'); 
+                                       }else{ $remainrp ="";}
                                     // $id_before = $data['id_prop'];
-                                    
+
+                                    if((isset($data['no_ia']) && $no_prop == 1)){
+                                        $remainyen = number_format ((($data['cost']-$data['cost_ia'])/$data['yen']),2,',','.'); 
+                                       }else if((isset($data['no_ia']) && $no_prop != 1)) {
+                                        $remainyen = number_format (((0-$data['cost_ia'])/$data['yen']),2,',','.'); 
+                                       }else{ $remainyen ="";}
+                                    if ($remainrp<0){
+                                        $warnaremain="bg-red-100";
+                                    }else{
+                                        $warnaremain="";
+                                    }
                                     ?>
 
                                                         <tr
@@ -328,11 +344,17 @@ $id_dept = $_GET['dept'];
                                                             </td>
                                                             <td><?= (isset($data['no_ia']))? $Rp." ".number_format ($data['cost_ia'],0,',','.'): ""; ?>
                                                             </td>
-                                                            <td><?= (isset($data['no_ia']))? $yen." ".number_format(($data['cost']/$data['yen'])-($data['cost_ia']/$data['yen']), 2, ',', '.'): ""; ?>
-                                                            </td>
-                                                            <td><?= (isset($data['no_ia']))? $Rp." ".number_format (($data['cost']-$data['cost_ia']),0,',','.'): ""; ?>
+
+
+                                                            <td
+                                                                class="<?=  (isset($data['no_ia']))?$warnaremain: ""; ?>">
+                                                                <?= (isset($data['no_ia']))? $yen." ".$remainyen: ""; ?>
                                                             </td>
 
+                                                            <td
+                                                                class="<?=  (isset($data['no_ia']))?$warnaremain: ""; ?>">
+                                                                <?= (isset($data['no_ia']))? $Rp." ".$remainrp: ""; ?>
+                                                            </td>
                                                             <td><?= (isset($data['no_ia']))?date("d M Y", strtotime($data['time_ia'])): "";  ?>
                                                             </td>
                                                             <td><?= (isset($data['no_ia']))?$data['pic_ia']: ""; ?></td>
