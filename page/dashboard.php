@@ -392,7 +392,8 @@ if (!isset($_SESSION['yics_user'])) {
                             depart.depart AS depart,
                             kategori_proposal.kategori AS kategori,
                             time_fiscal.status,
-                            proposal.proposal AS proposal
+                            proposal.proposal AS proposal,
+                            proposal.lampiran
                             FROM proposal 
                             LEFT JOIN depart ON proposal.id_dep = depart.id_dep
                             LEFT JOIN kategori_proposal  ON proposal.id_kat = kategori_proposal.id_kat

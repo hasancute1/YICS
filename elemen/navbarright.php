@@ -41,9 +41,11 @@ $notif_pending = get_notif_pending();
 
                         <?php 
                         
-                        if($data_notif){
+                        if($data_notif){                          
                         
                         foreach($data_notif as $row) { 
+
+                            
                             
                             if($row['status'] == 'Pending'){
                                 $bg_notif = "bg-blue-400";
@@ -53,24 +55,44 @@ $notif_pending = get_notif_pending();
                                 $color_notif = "";
                             }
 
+
+                            if($row['type'] == 'proposal'){
+                                
+                                if($_SESSION['yics_level'] == "1"){
+                                    $redirect_notif = "../page/viewplan.php?ubah=";
+                                }else{
+                                    $redirect_notif = "../page/formupdate.php?ubah=";
+                                }
+
+                            }else{
+
+                                if($_SESSION['yics_level'] == "1"){
+                                    $redirect_notif = "../page/Tracking.php?id_ia=";
+                                }else{
+                                    $redirect_notif = "../page/formupdate_ia.php?id_ia=";
+                                }
+
+                            }
+
                         ?>
 
                         <a class="list-group-item dropdown-item <?= $bg_notif ?>"
                             <?php if ($_SESSION['yics_level'] == "1") { ?>
-                            href="../page/viewplan.php?ubah=<?= $row['id_type'] ?>&notif=<?=$row['id_notif']?>"
+                            href="<?= $redirect_notif .  $row['id_type'] ?>&notif=<?=$row['id_notif']?>"
                             <?php }else{ ?>
-                            href="../page/formupdate.php?ubah=<?= $row['id_type'] ?>&notif=<?=$row['id_notif']?>"
+                            href="<?= $redirect_notif . $row['id_type'] ?>&notif=<?=$row['id_notif']?>"
                             <?php } ?> role="menuitem">
                             <div class="media">
                                 <div class="pr-10">
                                     <i class="icon wb-order bg-red-600 white icon-circle" aria-hidden="true"></i>
                                 </div>
                                 <div class="media-body">
-                                    <h6 class="media-heading <?=$color_notif ?>"> <strong><?= ucwords($row['sender']) ?>
-                                        </strong> <?= $row['message'] ?></h6>
-                                    <h4 class="media-heading <?=$color_notif ?>"><?= strtoupper($row['judul_prop'])  ?>
+                                    <p class="media-heading <?=$color_notif ?>"> <strong><?= strtoupper($row['judul_prop'])  ?>
+                                        </strong> <?= $row['message'] ?></p>
+                                    <h4 class="media-heading <?=$color_notif ?>">
+                                    Oleh <?= ucwords($row['nama']) ?>
                                     </h4>
-                                    <time class="media-meta <?=$color_notif ?>" datetime="2018-06-12T20:50:48+08:00">5
+                                    <time class="media-meta <?=$color_notif ?>" datetime="2018-06-12T20:50:48+08:00">
                                         <?= $row['date'] ?></time>
                                 </div>
                             </div>

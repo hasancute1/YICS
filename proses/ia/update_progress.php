@@ -13,7 +13,7 @@ if (isset ($_SESSION['yics_user'])){
          $index = 0;
          $id_ia = $_POST['id_ia'];
          //data proposal
-         $data_ia = single_query("SELECT * FROM ia WHERE id_ia={$id_ia}");
+         $data_ia = single_query("SELECT * FROM ia JOIN proposal on ia.id_prop=proposal.id_prop WHERE id_ia={$id_ia}");
 
      //     var_dump($_POST['id_prog']);
 
@@ -30,6 +30,7 @@ if (isset ($_SESSION['yics_user'])){
          $pic = '';
 
          foreach($_POST['id_prog'] AS $prog){
+          $data_prog = single_query("SELECT * from progress where id_prog = {$prog}");
 
           $qry_cek = single_query("SELECT id_ia FROM tracking_ia WHERE id_ia =  '$id_ia'  AND id_prog = '$prog'");  
           $jml_data = count($qry_cek); 
@@ -56,7 +57,7 @@ if (isset ($_SESSION['yics_user'])){
                     }else{
                          // kirim notifikasi ke pic
                          $notif = TRUE;
-                         $pesan_notif = "IA ada Perubahan Step";
+                         $pesan_notif = "Telah diupdate ke proses " . $data_prog['nama_progress'];
                     }
                }else{
                     $insertTracking = " INSERT INTO tracking_ia (`id_ia`, `id_prog`, `approval`, `time`) VALUES  ('$id_ia', '$prog', '1', '$time' )";
@@ -70,7 +71,7 @@ if (isset ($_SESSION['yics_user'])){
                     }else{
                          // kirim notifikasi ke pic
                          $notif = TRUE;
-                         $pesan_notif = "IA Masuk Tahap " . $prog;
+                         $pesan_notif = "Telah diupdate ke proses " . $data_prog['nama_progress'];
                     }
                }
                // echo  $_POST['id_ia'].$_POST['pic'][$index]." : ".$_POST['tgl'][$index]." : ".$_POST['approve_step'.$i]."<br>";
@@ -141,7 +142,7 @@ if (isset ($_SESSION['yics_user'])){
      if($notif){
 
           kirim_notif([         
-               'dest' => $proposal['username'],
+               'dest' => $data_ia['username'],
                'message' => $pesan_notif,
                'type' => "ia",
                'id_type' => $id_ia 
