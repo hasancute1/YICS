@@ -26,7 +26,7 @@ $notif_pending = get_notif_pending();
             <span class="badge badge-pill badge-danger up"><?=count($notif_pending); ?></span>
             <?php }?>
         </a>
-        <div class="dropdown-menu dropdown-menu-right dropdown-menu-media" role="menu">
+        <div class="dropdown-menu dropdown-menu-right dropdown-menu-media" style="width:800px;" role="menu">
             <div class="dropdown-menu-header">
                 <h5>NOTIFICATIONS</h5>
                 <?php if(count($notif_pending) > 0){ ?>
@@ -78,22 +78,26 @@ $notif_pending = get_notif_pending();
 
                         <a class="list-group-item dropdown-item <?= $bg_notif ?>"
                             <?php if ($_SESSION['yics_level'] == "1") { ?>
-                            href="<?= $redirect_notif .  $row['id_type'] ?>&notif=<?=$row['id_notif']?>"
-                            <?php }else{ ?>
-                            href="<?= $redirect_notif . $row['id_type'] ?>&notif=<?=$row['id_notif']?>"
-                            <?php } ?> role="menuitem">
+                            href="<?= $redirect_notif .  $row['id_type'] ?>&notif=<?=$row['id_notif']?>" <?php }else{ ?>
+                            href="<?= $redirect_notif . $row['id_type'] ?>&notif=<?=$row['id_notif']?>" <?php } ?>
+                            role="menuitem">
                             <div class="media">
                                 <div class="pr-10">
                                     <i class="icon wb-order bg-red-600 white icon-circle" aria-hidden="true"></i>
                                 </div>
-                                <div class="media-body">
-                                    <p class="media-heading <?=$color_notif ?>"> <strong><?= strtoupper($row['judul_prop'])  ?>
-                                        </strong> <?= $row['message'] ?></p>
+                                <div class="media-body ">
+                                    <p class="media-heading <?=$color_notif ?>">
+                                        <strong>Proposal "<?= strtoupper($row['judul_prop'])  ?>"
+                                        </strong>
+                                    </p>
+                                    <p class="media-heading <?=$color_notif ?>"> <?= $row['message'] ?></p>
                                     <h4 class="media-heading <?=$color_notif ?>">
-                                    Oleh <?= ucwords($row['nama']) ?>
+                                        <i class="icon wb-user" aria-hidden="true"></i> <?= ucwords($row['nama']) ?>
                                     </h4>
                                     <time class="media-meta <?=$color_notif ?>" datetime="2018-06-12T20:50:48+08:00">
-                                        <?= $row['date'] ?></time>
+                                        <i class="icon oi-calendar"
+                                            aria-hidden="true"></i><?= date("d M Y | H:i", strtotime($row['date'])); ?></time>
+
                                 </div>
                             </div>
                         </a>

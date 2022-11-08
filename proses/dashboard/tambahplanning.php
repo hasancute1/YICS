@@ -68,7 +68,7 @@ if (isset ($_SESSION['yics_user'])){
       // kirim notifikasi
       kirim_notif([         
          'dest' => '37932',
-         'message' => "Menambahkan proposal baru",
+         'message' => "Ditambahkan Proposal Baru",
          'type' => "proposal",
          'id_type' => $last_id          
       ]);

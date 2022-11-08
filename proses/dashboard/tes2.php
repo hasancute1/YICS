@@ -53,7 +53,7 @@ if (isset ($_SESSION['yics_user'])){
                     }else{
                          // kirim notifikasi ke pic
                          $notif = TRUE;
-                         $pesan_notif = "Telah diupdate ke proses " . $data_prog['nama_progress'];
+                         $pesan_notif = "Update Proses " . $data_prog['nama_progress'];
                     }
                }else{
                     $insertTracking = " INSERT INTO tracking_prop (`id_prop`, `id_prog`, `id_approval`, `username`, `time`) VALUES  ('$id_prop', '$prog', '1', '$pic', '$time' )";
@@ -65,7 +65,7 @@ if (isset ($_SESSION['yics_user'])){
                     }else{
                          // kirim notifikasi ke pic
                          $notif = TRUE;
-                         $pesan_notif = "Telah diupdate ke proses " . $data_prog['nama_progress'];
+                         $pesan_notif = "Update Proses " . $data_prog['nama_progress'];
                     }
                }
                // echo  $_POST['id_prop'].$_POST['pic'][$index]." : ".$_POST['tgl'][$index]." : ".$_POST['approve_step'.$i]."<br>";
