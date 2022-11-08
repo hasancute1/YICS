@@ -335,9 +335,9 @@ if (!isset($_SESSION['yics_user'])) {
                                                     <span class="white font-size-40 font-weight-100 mt-50">Rp
                                                     <?php 
 
-                                                    $cons_budget = get_cons_budget($consumtion_budget , $row_card['id_dep']);
+                                                    $sisa_budget = $row_card['budget'] - get_cons_budget($consumtion_budget , $row_card['id_dep']);
 
-                                                    echo number_format($cons_budget,0,',','.');
+                                                    echo number_format($sisa_budget,0,',','.');
                                                     
                                                     ?></span>
                                                     <p class="white font-weight-100 m-0 font-size-18">"Budget Rp
