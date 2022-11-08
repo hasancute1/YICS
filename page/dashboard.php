@@ -290,7 +290,7 @@ if (!isset($_SESSION['yics_user'])) {
                                             <span
                                                 class="white font-weight-400"><?php echo $row_card1 ['divisi']; ?></span>
                                             <div class=" white content-text text-center mb-0">
-                                                <span class="font-size-40 font-weight-100">Rp 3.900</span>
+                                                <span class="font-size-40 font-weight-100">Rp 3.500</span>
                                                 <?php 
                                                         $card=mysqli_fetch_array(mysqli_query($link_yics,"SELECT sum(budget) 
                                                         AS total FROM view_alokasi_budget WHERE status='aktif'")) or die (mysqli_error($link_yics));;
@@ -301,13 +301,28 @@ if (!isset($_SESSION['yics_user'])) {
                                         </div>
                                     </div>
                                 </div>
-                                <?php 
-            $card = mysqli_query($link_yics, "SELECT * FROM view_alokasi_budget WHERE status= 'aktif'") or die (mysqli_error($link_yics));
-            if(mysqli_num_rows( $card)>0){
-              $i = 1;
-              while( $row_card = mysqli_fetch_assoc($card)){?>
+                <?php 
+
+                    $data_fiscal = single_query("SELECT id_fis from time_fiscal where status='aktif'");
+                    $id_fis = $data_fiscal['id_fis'];
+
+                    // $depart = query("SELECT * FROM view_alokasi_budget WHERE status= 'aktif'");
+                    $depart = query("SELECT * FROM budget JOIN depart on budget.id_dep = depart.id_dep where id_fis={$id_fis}");        
+                    
+                    $consumtion_budget = query("SELECT depart.id_dep , sum(cost_ia) as cost FROM ia
+                        join proposal on ia.id_prop = proposal.id_prop
+                        join depart on proposal.id_dep = depart.id_dep
+                        where proposal.id_fis={$id_fis}
+                        group by depart
+                    ");                    
+                      
+                    
+                    if(count( $depart)>0){
+                        $i = 1;
+                        foreach( $depart as $row_card){?>
+
                                 <div class="col-lg-3 col-md-6 info-panel">
-                                    <a href="budgetdep<?=$i?>.php">
+                                    <a href="budgetdep.php?dep=<?= $row_card['id_dep'] ?>">
                                         <div class="card card-shadow">
                                             <div class="card-block warnadep<?=$i?>"
                                                 style="border-radius: 15px;height:180px;">
@@ -318,7 +333,13 @@ if (!isset($_SESSION['yics_user'])) {
                                                     class="white font-weight-400 "><?php echo $row_card['depart']; ?></span>
                                                 <div class="content-text text-center mb-0">
                                                     <span class="white font-size-40 font-weight-100 mt-50">Rp
-                                                        1.628</span>
+                                                    <?php 
+
+                                                    $cons_budget = get_cons_budget($consumtion_budget , $row_card['id_dep']);
+
+                                                    echo number_format($cons_budget,0,',','.');
+                                                    
+                                                    ?></span>
                                                     <p class="white font-weight-100 m-0 font-size-18">"Budget Rp
                                                         <?php echo number_format ($row_card['budget'],0,',','.'); ?>"
                                                     </p>
@@ -328,7 +349,11 @@ if (!isset($_SESSION['yics_user'])) {
                                         </div>
                                     </a>
                                 </div>
-                                <?php  $i++;}} ?>
+                            <?php  
+                            $i++;
+                        }
+                    } 
+                ?>
                                 <!-- End Second Row -->
                                 <!-- Third Row -->
                                 <!-- Third Left -->

@@ -211,6 +211,22 @@ function get_progress_bp($array , $nominal){
     return $data;
 }
 
+function get_cons_budget($array , $id){
+
+    foreach($array as $row){
+
+       if($row['id_dep'] == $id){
+
+        $data = $row['cost'];
+
+       }else{
+        $data = 0;
+       }
+    }
+
+    return $data;
+}
+
 
 
 ?>
