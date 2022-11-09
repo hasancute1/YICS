@@ -633,16 +633,17 @@ include '../elemen/footer.php';?>
     // Grafik Akumulasi Budget
     // ambil dari table tracking_prop
     $query_akumulasi = query("SELECT 
-        MONTH(tracking_prop.time) AS bulan, 
-        SUM(proposal.cost) AS cost
-        FROM tracking_prop 
-        JOIN proposal on tracking_prop.id_prop = proposal.id_prop
-        JOIN progress  ON tracking_prop.id_prog = progress.id_prog
-        WHERE tracking_prop.id_approval  = '1' AND progress.step = '5'
+        MONTH(ia.time_ia) AS bulan, 
+        SUM(ia.cost_ia) AS cost,
+        MAX(ia.time_ia) AS max_date
+        FROM ia 
+        JOIN proposal on ia.id_prop = proposal.id_prop 
         AND proposal.id_fis = '".$fis_aktif['id_fis']."'
         GROUP BY  bulan
         ");
 
+    $max_month = date('m' , strtotime($query_akumulasi[0]['max_date']) );
+ 
     foreach($query_akumulasi as $row){
         $query_akum_array[$row['bulan']] = $row['cost']; 
         // $list_bulan_aktif[] = $row['bulan']; 
@@ -666,6 +667,11 @@ include '../elemen/footer.php';?>
             }
             
             $data_comsumtion_budget[] = $total; 
+
+            if($bulan == $max_month ){
+                break;
+            }
+            
         }
     
         $comsumtion_budget = json_encode($data_comsumtion_budget);
