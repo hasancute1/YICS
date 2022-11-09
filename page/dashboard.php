@@ -174,6 +174,7 @@ if (!isset($_SESSION['yics_user'])) {
                                     </h6>
                                 </div>
                                 <div class="col-lg-6 col-md-6 mb-2">
+                                    <form action="">
                                     <div class="row">
                                         <div class="col-lg-5 col-md-5">
                                             <div class="input-group">
@@ -183,7 +184,7 @@ if (!isset($_SESSION['yics_user'])) {
                                                     </span>
                                                 </div>
                                                 <input type="date" name="start" id="start_date"
-                                                    class="form-control bg-transparent datepicker" value="">
+                                                    class="form-control bg-transparent datepicker" value="<?= (isset($_GET['start']))? $_GET['start']:date('Y-m-d'); ?>">
 
                                             </div>
                                         </div>
@@ -192,8 +193,8 @@ if (!isset($_SESSION['yics_user'])) {
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">to</span>
                                                 </div>
-                                                <input type="date" name="start" id="start_date"
-                                                    class="form-control bg-transparent datepicker" value="">
+                                                <input type="date" name="end" id="end_date"
+                                                    class="form-control bg-transparent datepicker" value="<?= (isset($_GET['end']))? $_GET['end']:date('Y-m-d'); ?>">
                                             </div>
                                         </div>
                                         <div class="col-md-2 text-right">
@@ -201,6 +202,8 @@ if (!isset($_SESSION['yics_user'])) {
                                                     aria-hidden="true"></i>GO</button>
                                         </div>
                                     </div>
+
+                                    </form>
                                 </div>
 
                                 <!-- First Row -->
@@ -277,6 +280,30 @@ if (!isset($_SESSION['yics_user'])) {
                                 <!-- End First Row -->
                                 <!-- Second Row -->
 
+                                <?php 
+
+                                    $data_fiscal = single_query("SELECT id_fis from time_fiscal where status='aktif'");
+                                    $id_fis = $data_fiscal['id_fis'];
+
+                                    // $depart = query("SELECT * FROM view_alokasi_budget WHERE status= 'aktif'");
+                                    $depart = query("SELECT * FROM budget JOIN depart on budget.id_dep = depart.id_dep where id_fis={$id_fis}");        
+
+                                    $consumtion_budget = query("SELECT depart.id_dep , sum(cost_ia) as cost FROM ia
+                                        join proposal on ia.id_prop = proposal.id_prop
+                                        join depart on proposal.id_dep = depart.id_dep
+                                        where proposal.id_fis={$id_fis}
+                                        group by depart
+                                    ");  
+
+                                    $total_consumtion_budget = 0;
+
+                                    foreach($consumtion_budget as $row){
+
+                                        $total_consumtion_budget += $row['cost'];
+                                    }                                    
+
+                                ?>
+
                                 <div class="col-lg-3 col-md-6 info-panel">
                                     <div class="card card-shadow">
                                         <div class="card-block bg-blue-800 p-20"
@@ -286,35 +313,24 @@ if (!isset($_SESSION['yics_user'])) {
                                             </button>
                                             <?php 
                                                 $card1 = mysqli_query($link_yics, "SELECT * FROM division") or die (mysqli_error($link_yics));
-                                                $row_card1 = mysqli_fetch_assoc($card1); ?>
+                                                $row_card1 = mysqli_fetch_assoc($card1);
+
+                                                $card=mysqli_fetch_array(mysqli_query($link_yics,"SELECT sum(budget) 
+                                                        AS total FROM view_alokasi_budget WHERE status='aktif'")) or die (mysqli_error($link_yics));
+                                                
+                                                ?>
                                             <span
                                                 class="white font-weight-400"><?php echo $row_card1 ['divisi']; ?></span>
                                             <div class=" white content-text text-center mb-0">
-                                                <span class="font-size-40 font-weight-100">Rp 3.500</span>
-                                                <?php 
-                                                        $card=mysqli_fetch_array(mysqli_query($link_yics,"SELECT sum(budget) 
-                                                        AS total FROM view_alokasi_budget WHERE status='aktif'")) or die (mysqli_error($link_yics));;
-                                                    ?>
+                                                <span class="font-size-40 font-weight-100">Rp <?= number_format($card['total'] -  $total_consumtion_budget,0,',','.')  ?></span>
+                                               
                                                 <p class="white font-weight-100 m-0 font-size-18"><u>"Budget Rp
                                                         <?php echo number_format ($card['total'],0,',','.'); ?>"</u></p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                <?php 
-
-                    $data_fiscal = single_query("SELECT id_fis from time_fiscal where status='aktif'");
-                    $id_fis = $data_fiscal['id_fis'];
-
-                    // $depart = query("SELECT * FROM view_alokasi_budget WHERE status= 'aktif'");
-                    $depart = query("SELECT * FROM budget JOIN depart on budget.id_dep = depart.id_dep where id_fis={$id_fis}");        
-                    
-                    $consumtion_budget = query("SELECT depart.id_dep , sum(cost_ia) as cost FROM ia
-                        join proposal on ia.id_prop = proposal.id_prop
-                        join depart on proposal.id_dep = depart.id_dep
-                        where proposal.id_fis={$id_fis}
-                        group by depart
-                    ");                    
+                <?php                
                       
                     
                     if(count( $depart)>0){

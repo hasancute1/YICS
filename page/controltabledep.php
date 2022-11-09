@@ -244,6 +244,13 @@ $id_dept = $_GET['dept'];
                              }
 
 
+                             if( $_SESSION['yics_level'] == "1"){
+                                $query_level = "AND proposal.username={$_SESSION['yics_user']}";
+                             }else{
+                                $query_level = "";
+                             }
+
+
                               $proposal = mysqli_query($link_yics ,"SELECT
                                 proposal.id_prop AS id_prop,
                                 depart.id_dep AS id_dep,
@@ -279,7 +286,8 @@ $id_dept = $_GET['dept'];
                                 
                                
                                 LEFT JOIN approval ON tracking_prop.id_approval = approval.id_approval
-                                WHERE tracking_prop.id_approval  = '1' AND progress.step = '5' AND depart.id_dep='$id_dept'AND time_fiscal.status= 'aktif' {$query_start} {$query_end}"
+                                WHERE tracking_prop.id_approval  = '1' AND progress.step = '5' 
+                                AND depart.id_dep='$id_dept'AND time_fiscal.status= 'aktif' {$query_start} {$query_end} {$query_level}"
                                 )
                                 or die (mysqli_error($link_yics));
                                 $no=0;
@@ -430,6 +438,9 @@ $id_dept = $_GET['dept'];
                                                                         <i class="icon wb-eye" aria-hidden="true"></i>
                                                                     </button>
                                                                 </a>
+
+                                                                <?php if( $_SESSION['yics_level'] != "1"){ ?>
+
                                                                 <a href="formupdate_ia.php?id_ia=<?= $data['id_ia'] ?>"
                                                                     class="<?= $tombol_hidup ?>">
                                                                     <button type="button"
@@ -454,6 +465,9 @@ $id_dept = $_GET['dept'];
                                                                             aria-hidden="true"></i>
                                                                     </button>
                                                                 </a>
+                                                                
+                                                                <?php } ?>
+
                                                             </td>
                                                         </tr>
                                                         <?php 
