@@ -109,12 +109,10 @@ function get_comsumtion_budget($id){
 
         // ambil dari table tracking_prop
         $query_akumulasi = query("SELECT 
-        MONTH(tracking_prop.time) AS bulan, 
-        SUM(proposal.cost) AS cost
-        FROM tracking_prop 
-        JOIN proposal on tracking_prop.id_prop = proposal.id_prop
-        JOIN progress  ON tracking_prop.id_prog = progress.id_prog
-        WHERE tracking_prop.id_approval  = '1' AND progress.step = '5'
+        MONTH(ia.time_ia) AS bulan, 
+        SUM(ia.cost_ia) AS cost
+        FROM ia 
+        JOIN proposal on ia.id_prop = proposal.id_prop       
         AND proposal.id_dep = ".$id."
         AND proposal.id_fis = '".$fis_aktif['id_fis']."'
         GROUP BY  bulan
