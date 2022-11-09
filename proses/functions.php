@@ -181,9 +181,9 @@ function get_item_trac_ia($array , $id_prog){
 
 function get_progress_bp($array , $nominal){
     
-    $scope1 = [10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28]; // >500jt
-    $scope2 = [10,11,12,13,14,15,16,17,18,19,22,23,24,25,26,27,28]; // 49jt > 500jt hilangkan 20,21
-    $scope3 = [10,11,12,13,14,15,22,23,24,25,26,27,28]; //  < 49 jt
+    $scope1 = [10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28]; // >500jt : 19 step
+    $scope2 = [10,11,12,13,14,15,16,17,18,19,22,23,24,25,26,27,28]; // 49jt > 500jt hilangkan 20,21 : 17 step
+    $scope3 = [10,11,12,13,14,15,22,23,24,25,26,27,28]; //  < 49 jt : 13 step
 
     if($nominal < 49){
         $progress = $scope3;
@@ -225,6 +225,37 @@ function get_cons_budget($array , $id){
     return $data;
 }
 
+
+function get_last_progress_ia($id = NULL){
+    if($id != NULL){
+
+        $data = query("SELECT * FROM tracking_ia
+        JOIN progress on tracking_ia.id_prog = progress.id_prog
+         where id_ia = {$id} ORDER BY step DESC");
+        if(isset($data[0])){
+
+            return [
+                "step" => count($data),
+                "nama_progress" => $data[0]['nama_progress']
+            ];
+
+        }else{
+            return [
+                "step" => 5,
+                "nama_progress" => "-"
+            ];
+        }
+        
+
+    }else{
+
+        return "-";
+
+    }
+
+
+    
+}
 
 
 ?>

@@ -383,16 +383,43 @@ $id_dept = $_GET['dept'];
                                                             </td>
                                                             <td><?= (isset($data['no_ia']))?$data['pic_ia']: ""; ?></td>
                                                             <td>
+                                                                <?php 
+
+                                                                $cost = $data['cost'];
+
+                                                                if($cost < 49){
+                                                                    $total_step = 13;
+                                                            
+                                                                }elseif( $cost >= 49 && $cost <= 500){
+                                                            
+                                                                    $total_step = 17;
+                                                            
+                                                                }else{      
+                                                            
+                                                                    $total_step = 19;
+                                                            
+                                                                }
+
+                                                                if(isset($data['no_ia'])){
+                                                                    $last_progress = get_last_progress_ia($data['id_ia']);
+                                                                    $nama_progress = $last_progress['nama_progress'];
+
+                                                                    $presentase = $last_progress['step'] /  $total_step * 100;
+                                                                }
+
+                                                                ?>
                                                                 <span
-                                                                    class=" badge badge-round badge-success badge-lg">PUD</span>
+                                                                    class=" badge badge-round badge-success badge-lg">
+                                                                    <?= $nama_progress ?>
+                                                                </span>
                                                             </td>
                                                             <td>
                                                                 <div class="progress mt-20 text-center ">
                                                                     <div class="progress-bar progress-bar-striped  progress-bar-info active"
                                                                         aria-valuenow="" aria-valuemin="0"
-                                                                        aria-valuemax="100" style="width: 50%;"
+                                                                        aria-valuemax="100" style="width: <?= number_format($presentase) ?>%;"
                                                                         aria-valuemax="100" role="progressbar">
-                                                                        50%
+                                                                        <?= number_format($presentase) ?>%
                                                                     </div>
                                                             </td>
                                                             <td>
