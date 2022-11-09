@@ -91,35 +91,39 @@ $id_dept = $_GET['dept'];
 
                                 </div>
                                 <div class="col-lg-6 col-md-6 mb-2">
-                                    <div class="row">
-                                        <div class="col-lg-5 col-md-5">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">
-                                                        <i class="icon wb-calendar" aria-hidden="true"></i>
-                                                    </span>
-                                                </div>
-                                                <input type="date" name="start" id="start_date"
-                                                    class="form-control bg-transparent datepicker" value="">
+                                    <form action="">
+                                        <div class="row">
+                                            <input type="hidden" name="dept" value="<?= $_GET['dept'] ?>">
+                                            <div class="col-lg-5 col-md-5">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="icon wb-calendar" aria-hidden="true"></i>
+                                                        </span>
+                                                    </div>
+                                                    <input type="date" name="start" id="start_date"
+                                                        class="form-control bg-transparent datepicker" value="<?= (isset($_GET['start']))? $_GET['start']:date('Y-m-d'); ?>">
 
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-5 col-md-5">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">to</span>
                                                 </div>
-                                                <input type="date" name="start" id="start_date"
-                                                    class="form-control bg-transparent datepicker" value="">
+                                            </div>
+                                            <div class="col-lg-5 col-md-5">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">to</span>
+                                                    </div>
+                                                    <input type="date" name="end" id="end_date"
+                                                        class="form-control bg-transparent datepicker" value="<?= (isset($_GET['end']))? $_GET['end']:date('Y-m-d'); ?>">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2 text-right">
+                                                <a href="">
+                                                    <button type="submit" class="btn btn-primary btn-floating btn-sm "><i
+                                                            aria-hidden="true"></i>GO</button>
+                                                </a>
                                             </div>
                                         </div>
-                                        <div class="col-md-2 text-right">
-                                            <a href="">
-                                                <button type="submit" class="btn btn-primary btn-floating btn-sm "><i
-                                                        aria-hidden="true"></i>GO</button>
-                                            </a>
-                                        </div>
-                                    </div>
+                                    </form>
+
                                 </div>
                                 <div class="col-lg-12 col-md-12">
                                     <div class="card card-shadow">
@@ -220,6 +224,26 @@ $id_dept = $_GET['dept'];
                                                         <?php 
                                                         $Rp = "RP";
 
+                             // where from request 
+
+                             if(isset($_GET['start'])){
+
+                                $query_start = "AND ia.time_ia >= '{$_GET['start']}'";
+
+                             }else{
+                                $query_start = "";
+                             }
+
+
+                             if(isset($_GET['end'])){
+
+                                $query_end = "AND ia.time_ia <= '{$_GET['end']}'";
+
+                             }else{
+                                $query_end = "";
+                             }
+
+
                               $proposal = mysqli_query($link_yics ,"SELECT
                                 proposal.id_prop AS id_prop,
                                 depart.id_dep AS id_dep,
@@ -255,7 +279,7 @@ $id_dept = $_GET['dept'];
                                 
                                
                                 LEFT JOIN approval ON tracking_prop.id_approval = approval.id_approval
-                                WHERE tracking_prop.id_approval  = '1' AND progress.step = '5' AND depart.id_dep='$id_dept'AND time_fiscal.status= 'aktif' "
+                                WHERE tracking_prop.id_approval  = '1' AND progress.step = '5' AND depart.id_dep='$id_dept'AND time_fiscal.status= 'aktif' {$query_start} {$query_end}"
                                 )
                                 or die (mysqli_error($link_yics));
                                 $no=0;
