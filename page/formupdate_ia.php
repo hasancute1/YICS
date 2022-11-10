@@ -95,7 +95,7 @@ include '../elemen/header.php';?>
                                             JOIN depart on proposal.id_dep = depart.id_dep
                                             JOIN kategori_proposal on proposal.id_kat = kategori_proposal.id_kat
                                             where id_ia='".$id_ia."'");    
-                                            
+                                             $cost_ia  = $data_ia['cost_ia'];
                                             
                                             $progress_ia = query("SELECT * FROM progress where id_ket != 1");
 
@@ -236,7 +236,16 @@ include '../elemen/header.php';?>
                                                             </tr>
                                                         </thead>
                                                         <?php  
-                                                        $progress = mysqli_query($link_yics,"SELECT nama_progress, id_prog , step FROM progress WHERE id_ket>='2'")or die(mysqli_error($link_yics));
+                                                          
+                                                        $qProg = "SELECT nama_progress, id_prog , step FROM progress WHERE id_ket>='2'";
+                                                        if($cost_ia < 50 ){
+                                                            $exception = " AND (step <> '16' AND step <> '17' AND step <> '18'  AND step <> '19') ";
+                                                        }else if($cost_ia > 50 AND $cost_ia < 500){
+                                                            $exception = " AND ( step <> '18'  AND step <> '19') ";
+                                                        }else{
+                                                            $exception = "";
+                                                        }
+                                                        $progress = mysqli_query($link_yics,$qProg.$exception)or die(mysqli_error($link_yics));
 													if(mysqli_num_rows($progress)>0){
 													$no=1;
 													while($rows_progress = mysqli_fetch_assoc($progress))
@@ -249,6 +258,8 @@ include '../elemen/header.php';?>
 
                                                             $text_muncul = "d-none";
 
+                                                        }else{
+                                                            $text_muncul = "";
                                                         }
 
                                                         if($reject_step){
@@ -256,6 +267,8 @@ include '../elemen/header.php';?>
                                                             if($rows_progress['step'] > $reject_step){
                                                                 
                                                                 $text_muncul = "d-none";
+                                                            }else{
+                                                                $text_muncul = "";
                                                             }
                                                         } 
                                                         
@@ -269,8 +282,7 @@ include '../elemen/header.php';?>
                                                         ?>
 
                                                         <tbody>
-                                                            <tr class="<?=$text_muncul?>"
-                                                                id="data<?=$rows_progress['id_prog']?>">
+                                                            <tr class="<?=$text_muncul?>" id="data<?=$no?>">
                                                                 <td hidden>
                                                                     <input hidden type="text"
                                                                         class="form-control bg-grey-200"
@@ -286,15 +298,13 @@ include '../elemen/header.php';?>
                                                                 <td class="align-middle text-center">
                                                                     <div class="custom-switches-stacked mt-2">
                                                                         <label class="custom-switch">
-                                                                            <input
-                                                                                id="reject_step<?= $rows_progress['id_prog']?>"
+                                                                            <input id="reject_step<?= $no ?>"
                                                                                 type="checkbox"
-                                                                                name="reject_step<?= $rows_progress['id_prog']?>"
+                                                                                name="reject_step<?= $no ?>"
                                                                                 class="custom-switch-input reject"
                                                                                 data-plugin="switchery"
                                                                                 data-color="orange" value="0"
-                                                                                autocomplete="off"
-                                                                                data-id="<?=$rows_progress['id_prog']?>" <?php
+                                                                                autocomplete="off" data-id="<?= $no ?>" <?php
                                                                                 if(isset($data_tracking['approval'])){
                                                                                     if($data_tracking['approval'] == 0){
                                                                                         echo 'checked';
@@ -311,15 +321,14 @@ include '../elemen/header.php';?>
                                                                 <td class="align-middle text-center">
                                                                     <div class="custom-switches-stacked mt-2">
                                                                         <label class="custom-switch">
-                                                                            <input
-                                                                                id="approve_step<?= $rows_progress['id_prog']?>"
+                                                                            <input id="approve_step<?= $no ?>"
                                                                                 type="checkbox"
-                                                                                name="approve_step<?= $rows_progress['id_prog']  ?>"
-                                                                                value="1" data-color="#17b3a3"
+                                                                                name="approve_step<?= $no ?>" value="1"
+                                                                                data-color="#17b3a3"
                                                                                 class="custom-switch-input approve"
                                                                                 autocomplete="off"
                                                                                 data-plugin="switchery"
-                                                                                data-id="<?=$rows_progress['id_prog']?>" <?php
+                                                                                data-id="<?= $no ?>" <?php
                                                                                 if(isset($data_tracking['approval'])){
                                                                                     if($data_tracking['approval'] == 1){
                                                                                         echo 'checked';
@@ -337,8 +346,7 @@ include '../elemen/header.php';?>
                                                                     <div class="input-group-prepend">
                                                                         <input type="datetime-local" name="tgl[]"
                                                                             class="form-control bg-grey-200"
-                                                                            id="tgl-<?=$rows_progress['id_prog']?>"
-                                                                            value="<?php
+                                                                            id="tgl-<?= $no ?>" value="<?php
                                                                                 if(isset($data_tracking['time'])){
                                                                                     echo $data_tracking['time'];                                                                                                                                                                     
                                                                                 }

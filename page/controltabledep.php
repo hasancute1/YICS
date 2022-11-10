@@ -435,7 +435,7 @@ $id_dept = $_GET['dept'];
                                                             </td>
                                                             <td>
 
-                                                                <a href="Tracking.php?id_ia=<?= $data['id_ia'] ?>"
+                                                                <a href="Tracking2.php?id_ia=<?= $data['id_ia'] ?>"
                                                                     class="<?= $tombol_hidup ?>">
                                                                     <button type="button" class="btn btn-icon btn-info">
                                                                         <i class="icon wb-eye" aria-hidden="true"></i>
