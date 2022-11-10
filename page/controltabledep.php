@@ -91,35 +91,42 @@ $id_dept = $_GET['dept'];
 
                                 </div>
                                 <div class="col-lg-6 col-md-6 mb-2">
-                                    <div class="row">
-                                        <div class="col-lg-5 col-md-5">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">
-                                                        <i class="icon wb-calendar" aria-hidden="true"></i>
-                                                    </span>
-                                                </div>
-                                                <input type="date" name="start" id="start_date"
-                                                    class="form-control bg-transparent datepicker" value="">
+                                    <form action="">
+                                        <div class="row">
+                                            <input type="hidden" name="dept" value="<?= $_GET['dept'] ?>">
+                                            <div class="col-lg-5 col-md-5">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="icon wb-calendar" aria-hidden="true"></i>
+                                                        </span>
+                                                    </div>
+                                                    <input type="date" name="start" id="start_date"
+                                                        class="form-control bg-transparent datepicker"
+                                                        value="<?= (isset($_GET['start']))? $_GET['start']:date('Y-m-d'); ?>">
 
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-5 col-md-5">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">to</span>
                                                 </div>
-                                                <input type="date" name="start" id="start_date"
-                                                    class="form-control bg-transparent datepicker" value="">
+                                            </div>
+                                            <div class="col-lg-5 col-md-5">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">to</span>
+                                                    </div>
+                                                    <input type="date" name="end" id="end_date"
+                                                        class="form-control bg-transparent datepicker"
+                                                        value="<?= (isset($_GET['end']))? $_GET['end']:date('Y-m-d'); ?>">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2 text-right">
+                                                <a href="">
+                                                    <button type="submit"
+                                                        class="btn btn-primary btn-floating btn-sm "><i
+                                                            aria-hidden="true"></i>GO</button>
+                                                </a>
                                             </div>
                                         </div>
-                                        <div class="col-md-2 text-right">
-                                            <a href="">
-                                                <button type="submit" class="btn btn-primary btn-floating btn-sm "><i
-                                                        aria-hidden="true"></i>GO</button>
-                                            </a>
-                                        </div>
-                                    </div>
+                                    </form>
+
                                 </div>
                                 <div class="col-lg-12 col-md-12">
                                     <div class="card card-shadow">
@@ -220,6 +227,33 @@ $id_dept = $_GET['dept'];
                                                         <?php 
                                                         $Rp = "RP";
 
+                             // where from request 
+
+                             if(isset($_GET['start'])){
+
+                                $query_start = "AND ia.time_ia >= '{$_GET['start']}'";
+
+                             }else{
+                                $query_start = "";
+                             }
+
+
+                             if(isset($_GET['end'])){
+
+                                $query_end = "AND ia.time_ia <= '{$_GET['end']}'";
+
+                             }else{
+                                $query_end = "";
+                             }
+
+
+                             if( $_SESSION['yics_level'] == "1"){
+                                $query_level = "AND proposal.username={$_SESSION['yics_user']}";
+                             }else{
+                                $query_level = "";
+                             }
+
+
                               $proposal = mysqli_query($link_yics ,"SELECT
                                 proposal.id_prop AS id_prop,
                                 depart.id_dep AS id_dep,
@@ -253,8 +287,8 @@ $id_dept = $_GET['dept'];
                                 LEFT JOIN konversi_matauang ON proposal.id_matauang = konversi_matauang.id_matauang
                                 LEFT JOIN data_user ON ia.pic_ia = data_user.username 
                                 LEFT JOIN approval ON tracking_prop.id_approval = approval.id_approval
-                                
-                                WHERE tracking_prop.id_approval  = '1' AND progress.step = '5' AND depart.id_dep='$id_dept'AND time_fiscal.status= 'aktif' "
+                                WHERE tracking_prop.id_approval  = '1' AND progress.step = '5' 
+                                AND depart.id_dep='$id_dept'AND time_fiscal.status= 'aktif' {$query_start} {$query_end} {$query_level}"
                                 )
                                 or die (mysqli_error($link_yics));
                                 $no=0;
@@ -358,16 +392,43 @@ $id_dept = $_GET['dept'];
                                                             </td>
                                                             <td><?= (isset($data['no_ia']))?$data['pic_ia']: ""; ?></td>
                                                             <td>
-                                                                <span
-                                                                    class=" badge badge-round badge-success badge-lg">PUD</span>
+                                                                <?php 
+
+                                                                $cost = $data['cost'];
+
+                                                                if($cost < 49){
+                                                                    $total_step = 13;
+                                                            
+                                                                }elseif( $cost >= 49 && $cost <= 500){
+                                                            
+                                                                    $total_step = 17;
+                                                            
+                                                                }else{      
+                                                            
+                                                                    $total_step = 19;
+                                                            
+                                                                }
+
+                                                                if(isset($data['no_ia'])){
+                                                                    $last_progress = get_last_progress_ia($data['id_ia']);
+                                                                    $nama_progress = $last_progress['nama_progress'];
+
+                                                                    $presentase = $last_progress['step'] /  $total_step * 100;
+                                                                }
+
+                                                                ?>
+                                                                <span class=" badge badge-round badge-success badge-lg">
+                                                                    <?= $nama_progress ?>
+                                                                </span>
                                                             </td>
                                                             <td>
                                                                 <div class="progress mt-20 text-center ">
                                                                     <div class="progress-bar progress-bar-striped  progress-bar-info active"
                                                                         aria-valuenow="" aria-valuemin="0"
-                                                                        aria-valuemax="100" style="width: 50%;"
+                                                                        aria-valuemax="100"
+                                                                        style="width: <?= number_format($presentase) ?>%;"
                                                                         aria-valuemax="100" role="progressbar">
-                                                                        50%
+                                                                        <?= number_format($presentase) ?>%
                                                                     </div>
                                                             </td>
                                                             <td>
@@ -378,6 +439,9 @@ $id_dept = $_GET['dept'];
                                                                         <i class="icon wb-eye" aria-hidden="true"></i>
                                                                     </button>
                                                                 </a>
+
+                                                                <?php if( $_SESSION['yics_level'] != "1"){ ?>
+
                                                                 <a href="formupdate_ia.php?id_ia=<?= $data['id_ia'] ?>"
                                                                     class="<?= $tombol_hidup ?>">
                                                                     <button type="button"
@@ -402,6 +466,9 @@ $id_dept = $_GET['dept'];
                                                                             aria-hidden="true"></i>
                                                                     </button>
                                                                 </a>
+
+                                                                <?php } ?>
+
                                                             </td>
                                                         </tr>
                                                         <?php 

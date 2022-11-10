@@ -109,12 +109,10 @@ function get_comsumtion_budget($id){
 
         // ambil dari table tracking_prop
         $query_akumulasi = query("SELECT 
-        MONTH(tracking_prop.time) AS bulan, 
-        SUM(proposal.cost) AS cost
-        FROM tracking_prop 
-        JOIN proposal on tracking_prop.id_prop = proposal.id_prop
-        JOIN progress  ON tracking_prop.id_prog = progress.id_prog
-        WHERE tracking_prop.id_approval  = '1' AND progress.step = '5'
+        MONTH(ia.time_ia) AS bulan, 
+        SUM(ia.cost_ia) AS cost
+        FROM ia 
+        JOIN proposal on ia.id_prop = proposal.id_prop       
         AND proposal.id_dep = ".$id."
         AND proposal.id_fis = '".$fis_aktif['id_fis']."'
         GROUP BY  bulan
@@ -183,9 +181,9 @@ function get_item_trac_ia($array , $id_prog){
 
 function get_progress_bp($array , $nominal){
     
-    $scope1 = [10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28]; // >500jt
-    $scope2 = [10,11,12,13,14,15,16,17,18,19,22,23,24,25,26,27,28]; // 49jt > 500jt hilangkan 20,21
-    $scope3 = [10,11,12,13,14,15,22,23,24,25,26,27,28]; //  < 49 jt
+    $scope1 = [10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28]; // >500jt : 19 step
+    $scope2 = [10,11,12,13,14,15,16,17,18,19,22,23,24,25,26,27,28]; // 49jt > 500jt hilangkan 20,21 : 17 step
+    $scope3 = [10,11,12,13,14,15,22,23,24,25,26,27,28]; //  < 49 jt : 13 step
 
     if($nominal < 49){
         $progress = $scope3;
@@ -227,6 +225,37 @@ function get_cons_budget($array , $id){
     return $data;
 }
 
+
+function get_last_progress_ia($id = NULL){
+    if($id != NULL){
+
+        $data = query("SELECT * FROM tracking_ia
+        JOIN progress on tracking_ia.id_prog = progress.id_prog
+         where id_ia = {$id} ORDER BY step DESC");
+        if(isset($data[0])){
+
+            return [
+                "step" => count($data),
+                "nama_progress" => $data[0]['nama_progress']
+            ];
+
+        }else{
+            return [
+                "step" => 5,
+                "nama_progress" => "-"
+            ];
+        }
+        
+
+    }else{
+
+        return "-";
+
+    }
+
+
+    
+}
 
 
 ?>

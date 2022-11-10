@@ -92,11 +92,13 @@ include '../elemen/header.php';?>
                     }  
                          
 
-                    $data_ia = query("SELECT * from ia
+                    $data_ia = query("SELECT * from tracking_ia
+                        join ia on tracking_ia.id_ia = ia.id_ia
                         join proposal on ia.id_prop = proposal.id_prop
                         join depart on proposal.id_dep = depart.id_dep
-                        join kategori_proposal on proposal.id_kat = kategori_proposal.id_kat
+                        join kategori_proposal on proposal.id_kat = kategori_proposal.id_kat                      
                         where proposal.id_dep = {$id_dep} and proposal.id_fis={$id_fis}
+                        and id_prog = 30
                     ");              
 
                    
@@ -316,7 +318,7 @@ include '../elemen/header.php';?>
                                                         <td class="align-middle text-center"><?= $row['kategori'] ?></td>
                                                         <td class="align-middle text-center"><?= $row['ia'] ?></td>
                                                         <td class="align-middle text-center"><?= $row['deskripsi'] ?></td>
-                                                        <td class="align-middle text-center">Reduce 1 MP</td>
+                                                        <td class="align-middle text-center"></td>
                                                         <td class="align-middle text-center"><?= date('d M Y' , strtotime($row['time_ia']))  ?></td>
                                                         <td class="align-middle text-center">Rp <?= number_format($row['cost_ia'],0,',','.') ?></td>
                                                         <td class="align-middle text-center">Closed</td>
