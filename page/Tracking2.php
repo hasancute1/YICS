@@ -298,26 +298,23 @@ include '../elemen/header.php';?>
                                                         <div
                                                             class="list-group bg-blue-grey-100 bg-inherit text-left w-250 ml-3">
 
-                                                            <?php 
-                                                           $bp = mysqli_query ($link_yics,"SELECT * FROM progress WHERE id_ket='3'");
+                                                            <?php  
+                                                          
+                                                                $qProg = "SELECT nama_progress, id_prog , step FROM progress WHERE id_ket='3'";
+                                                                if($data_ia['cost_ia'] < 50 ){
+                                                                    $exception = " AND (step <> '16' AND step <> '17' AND step <> '18'  AND step <> '19') ";
+                                                                }else if($data_ia['cost_ia'] > 50 AND $data_ia['cost_ia'] < 500){
+                                                                    $exception = " AND ( step <> '18'  AND step <> '19') ";
+                                                                }else{
+                                                                    $exception = "";
+                                                                }
+                                                                $bp = mysqli_query($link_yics,$qProg.$exception)or die(mysqli_error($link_yics));
+                                                            
+                                                          
                                                            if(mysqli_num_rows($bp)>0){
                                                             while ($rows_bp = mysqli_fetch_assoc($bp)){
                                                                 // echo $data_ia['cost_ia'];
-                                                                if ($data_ia['cost_ia']<=49){
-                                                                    if( $rows_bp['nama_progress']=="DIR (I)" or $rows_bp['nama_progress']=="DIR (J)" or $rows_bp['nama_progress']=="FIN (I)" or $rows_bp['nama_progress']=="FIN (J)" ){
-                                                                        // echo "bn";
-                                                                        $hilang='d-none';
-                                                                    }else{
-                                                                        // echo "sl";
-                                                                        $hilang="";
-                                                                    }
-                                                                 }else if($data_ia['cost_ia']>= 50 && $data_ia['cost_ia'] <= 500){
-                                                                    if( $rows_bp['nama_progress']=="FIN (I)" or $rows_bp['nama_progress']=="FIN (J)" ){
-                                                                        $hilang='d-none';
-                                                                        }else{
-                                                                            $hilang="";
-                                                                        }                
-                                                                 }else {$hilang="";}
+                                                                
 
                                                                 //  QUERY TRACKING_PROPOSAL................................
                                                                                 $qry = "SELECT

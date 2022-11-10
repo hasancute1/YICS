@@ -39,7 +39,7 @@ $url_aktive = $uri[0];
         </ul>
     </li>
     <li class="site-menu-item has-sub <?= ($url_aktive == "Tracking")? "active": ""; ?>">
-        <a href="Tracking.php">
+        <a href="searchdoc.php">
             <i class="site-menu-icon wb-shopping-cart" aria-hidden="true"></i>
             <span class="site-menu-title">TRACKING DOCUMENT</span>
             <span class="site-menu-tittle"></span>
@@ -63,13 +63,14 @@ $url_aktive = $uri[0];
             </li>
             <li class="site-menu-item <?= ($url_aktive == "budgetdep" && $_GET['dep']== 3)? "active": ""; ?>">
                 <a class=" animsition-link" href="budgetdep.php?dep=3">
-                <span class="site-menu-title">BQC</span>
+                    <span class="site-menu-title">BQC</span>
                 </a>
             </li>
         </ul>
     </li>
     </li>
-    <li class="site-menu-item has-sub open <?= (in_array($url_aktive, ["usersetting","categorysetting","fiscalsetting","kurs_matauang"] ))? "active": ""; ?>">
+    <li
+        class="site-menu-item has-sub open <?= (in_array($url_aktive, ["usersetting","categorysetting","fiscalsetting","kurs_matauang"] ))? "active": ""; ?>">
         <a href="javascript:void(0)">
             <i class="site-menu-icon wb-user" aria-hidden="true"></i>
             <span class="site-menu-title">ADMINISTRATOR</span>
