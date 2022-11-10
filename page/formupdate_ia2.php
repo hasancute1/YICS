@@ -89,18 +89,23 @@ include '../elemen/header.php';?>
                                             <?php 
                                             
                                             $id_ia = $_GET['id_ia'];
+
+                                            $data= mysqli_query($link_yics ,"SELECT* FROM ia 
+                                                JOIN proposal on ia.id_prop = proposal.id_prop
+                                                JOIN depart on proposal.id_dep = depart.id_dep
+                                                JOIN kategori_proposal on proposal.id_kat = kategori_proposal.id_kat
+                                                
+                                                WHERE id_ia = '$id_ia'")or die (mysqli_error($link_yics));
+                                                $data_ia = mysqli_fetch_assoc($data);
                                             
-                                            $data_ia = single_query("SELECT * FROM ia 
-                                            JOIN proposal on ia.id_prop = proposal.id_prop
-                                            JOIN depart on proposal.id_dep = depart.id_dep
-                                            JOIN kategori_proposal on proposal.id_kat = kategori_proposal.id_kat
-                                            where id_ia='".$id_ia."'");    
+                                                $cost_ia=$data_ia['cost_ia'];
                                             
-                                            
-                                            $progress_ia = query("SELECT * FROM progress where id_ket != 1");
+    
+                                                // var_dump($limit_progress_bp);
+                                          
 
                                             // filter bp sesuai scope
-                                            $limit_progress_bp =  get_progress_bp($progress_ia , $data_ia['cost_ia']); 
+                                         
 
                                             // var_dump($limit_progress_bp);
 
@@ -123,7 +128,31 @@ include '../elemen/header.php';?>
                                             ");
 
                                             $reject_step = $query_reject_step['step'];
-
+                                            $cost_i=48;
+                                            if ($cost_i<=49){
+                                                $step=[6,7,8,9,10,11,12,13,14,15,20,21,22,23,24,25,26,27,28,29,30];
+                                            }else if($cost_i>=49 && $cost_i<=500){
+                                                $step=[6,7,8,9,10,11,12,13,14,15,16,17,20,21,22,23,24,25,26,27,28,29,30];
+                                            }else{
+                                                $step=[6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30];
+                                            }
+                                            $si =count($step);
+//////////////////////////////
+                                            echo"ini memakai foreach =" ;
+                                            foreach($step as $s)
+                                            {
+                                                echo "$s ";
+                                            }
+                                           //////////
+                                           print("<br>");
+                                           echo"ini memakai while ="; 
+                                            $i = 0;
+                                            while ($i < $si)
+                                            {
+                                                echo $step[$i] ."&nbsp";
+                                                $i++;
+                                            } 
+                                            
                                         ?>
 
 
@@ -221,6 +250,7 @@ include '../elemen/header.php';?>
                                                     <h4 class="col-md-12 modal-title text-left" style="color:black;">
                                                         STEP ASSIGMENT IA</h4>
                                                 </div>
+
                                                 <div class="table table-responsive">
                                                     <table class="table display nowrap" style="width:100%">
                                                         <thead>
@@ -239,13 +269,77 @@ include '../elemen/header.php';?>
                                                         $progress = mysqli_query($link_yics,"SELECT nama_progress, id_prog , step FROM progress WHERE id_ket>='2'")or die(mysqli_error($link_yics));
 													if(mysqli_num_rows($progress)>0){
 													$no=1;
-													while($rows_progress = mysqli_fetch_assoc($progress))
-													{
+													while($rows_bp = mysqli_fetch_assoc($progress)){
+                                                        // ................logika sesuai cost ia
+                                                        if ($data_ia['cost_ia']<=49){
+                                                            if( $rows_bp['nama_progress']=="DIR (I)" or $rows_bp['nama_progress']=="DIR (J)" or $rows_bp['nama_progress']=="FIN (I)" or $rows_bp['nama_progress']=="FIN (J)" ){
+                                                                // echo "bn";
+                                                                $hilang='d-none';
+                                                            }else{
+                                                                // echo "sl";
+                                                                $hilang="";
+                                                            }
+                                                         }else if($data_ia['cost_ia']>= 50 && $data_ia['cost_ia'] <= 500){
+                                                            if( $rows_bp['nama_progress']=="FIN (I)" or $rows_bp['nama_progress']=="FIN (J)" ){
+                                                                $hilang='d-none';
+                                                                }else{
+                                                                    $hilang="";
+                                                                }                
+                                                         }else {$hilang="";}
                                                         
-                                                        
-                                                        
-                                                        
-                                                        if( $rows_progress['step'] > $max_step + 1){
+                                                         // ................ end logika sesuai cost ia
+                                                         $qry = "SELECT
+                                                         tracking_ia.id_prog AS id_prog, 
+                                                         tracking_ia.approval AS id_approval,
+                                                         tracking_ia.time AS `time_ia`                                                      
+                                                         FROM tracking_ia                                                        
+                                                         WHERE id_ia = '$id_ia' AND id_prog = '$rows_bp[id_prog]' ";
+                                                         $sql = mysqli_query($link_yics, $qry)or die (mysqli_error($link_yics));
+                                                         if(mysqli_num_rows($sql)>0){
+                                                        // jumlah baris data yang base on id_prop dan id prog
+                                                        $total = mysqli_num_rows($sql);
+                                                        //isi dari query $sql dinamakan $data_tracking
+                                                        $data_tracking = mysqli_fetch_assoc($sql);
+                                                        $approve = $data_tracking['id_approval'];
+                                                        $time= $data_tracking['time_ia']; 
+                                                       
+                                                        $chekapprove = ($approve == '1')?"checked":"";
+                                                        $chekreject = ($approve == '0')?"checked":"";
+                                                        //  jika ada datanya maka $id_prog_next sesuai $no dari 1
+                                                        $id_prog_next = $no;
+                                                        }else {
+                                                        $total = 0 ;
+                                                        $approve = "";
+                                                        $time= "";
+                                                        $id_pic= "";
+                                                        $username= "PILIH PIC";
+                                                        $chekapprove = "";
+                                                        $chekreject ="";
+                                                        //  jika ada datanya maka $id_prog_next maka nilainya 0
+                                                        $id_prog_next = 0;
+                                                        }if($id_prog_next > 0 && $total > 0 ){
+                                                            if($approve == 1){
+                                                                $max_muncul = $no+1;
+                                                                
+                                                            }else if($approve ==0){
+                                                                $max_muncul = $no;
+                                                                
+                                                            }else{
+                                                                $max_muncul = 1;
+                                                            }
+														}else{
+                                                            
+                                                                $max_muncul = 1;
+                                                            }
+														
+														// if( $max_muncul>= $no){
+														//     $text_muncul = "";
+                                                        //     // JIKA NO NYA LEBIH DARI MAX MUNCUL MAKA YANG MUNCUL d-none 
+														// }else{
+														//     $text_muncul = "d-none";
+														// }
+
+                                                        if( $rows_bp['step'] > $max_step){
 
                                                             $text_muncul = "d-none";
 
@@ -253,33 +347,28 @@ include '../elemen/header.php';?>
 
                                                         if($reject_step){
 
-                                                            if($rows_progress['step'] > $reject_step){
+                                                            if($rows_bp['step'] > $reject_step){
                                                                 
                                                                 $text_muncul = "d-none";
                                                             }
-                                                        } 
-                                                        
+                                                        }
 
-                                                        // query ke tracking ia
-                                                        $data_tracking = single_query("SELECT * from tracking_ia                                                      
-                                                        where id_ia = ".$id_ia." and id_prog = ".$rows_progress['id_prog']."
-                                                        ");                                                       
-                                                        
-                                                        
-                                                        ?>
+
+														?>
+
+
 
                                                         <tbody>
-                                                            <tr class="<?=$text_muncul?>"
-                                                                id="data<?=$rows_progress['id_prog']?>">
+                                                            <tr class="<?=$hilang?>" id="data<?=$rows_bp['id_prog']?>">
                                                                 <td hidden>
                                                                     <input hidden type="text"
                                                                         class="form-control bg-grey-200"
                                                                         name="id_prog[]"
-                                                                        value="<?= $rows_progress['id_prog'] ?>">
+                                                                        value="<?= $rows_bp['id_prog'] ?>">
                                                                 </td>
                                                                 <td class="align-middle text-center">
                                                                     <input type="text" class="form-control bg-grey-200"
-                                                                        value="<?=$no?>.<?= $rows_progress['nama_progress']; ?>"
+                                                                        value="<?=$no?>.<?= $rows_bp['nama_progress']; ?>"
                                                                         disabled>
                                                                 </td>
 
@@ -287,16 +376,16 @@ include '../elemen/header.php';?>
                                                                     <div class="custom-switches-stacked mt-2">
                                                                         <label class="custom-switch">
                                                                             <input
-                                                                                id="reject_step<?= $rows_progress['id_prog']?>"
+                                                                                id="reject_step<?= $rows_bp['id_prog']?>"
                                                                                 type="checkbox"
-                                                                                name="reject_step<?= $rows_progress['id_prog']?>"
+                                                                                name="reject_step<?= $rows_bp['id_prog']?>"
                                                                                 class="custom-switch-input reject"
                                                                                 data-plugin="switchery"
                                                                                 data-color="orange" value="0"
                                                                                 autocomplete="off"
-                                                                                data-id="<?=$rows_progress['id_prog']?>" <?php
-                                                                                if(isset($data_tracking['approval'])){
-                                                                                    if($data_tracking['approval'] == 0){
+                                                                                data-id="<?=$rows_bp['id_prog']?>" <?php
+                                                                                if(isset($data_tracking['id_approval'])){
+                                                                                    if($data_tracking['id_approval'] == 0){
                                                                                         echo 'checked';
                                                                                     }                                                                                    
                                                                                 }
@@ -312,16 +401,16 @@ include '../elemen/header.php';?>
                                                                     <div class="custom-switches-stacked mt-2">
                                                                         <label class="custom-switch">
                                                                             <input
-                                                                                id="approve_step<?= $rows_progress['id_prog']?>"
+                                                                                id="approve_step<?= $rows_bp['id_prog']?>"
                                                                                 type="checkbox"
-                                                                                name="approve_step<?= $rows_progress['id_prog']  ?>"
+                                                                                name="approve_step<?= $rows_bp['id_prog']  ?>"
                                                                                 value="1" data-color="#17b3a3"
                                                                                 class="custom-switch-input approve"
                                                                                 autocomplete="off"
                                                                                 data-plugin="switchery"
-                                                                                data-id="<?=$rows_progress['id_prog']?>" <?php
-                                                                                if(isset($data_tracking['approval'])){
-                                                                                    if($data_tracking['approval'] == 1){
+                                                                                data-id="<?=$rows_bp['id_prog']?>" <?php
+                                                                                if(isset($data_tracking['id_approval'])){
+                                                                                    if($data_tracking['id_approval'] == 1){
                                                                                         echo 'checked';
                                                                                     }                                                                                    
                                                                                 }
@@ -337,10 +426,9 @@ include '../elemen/header.php';?>
                                                                     <div class="input-group-prepend">
                                                                         <input type="datetime-local" name="tgl[]"
                                                                             class="form-control bg-grey-200"
-                                                                            id="tgl-<?=$rows_progress['id_prog']?>"
-                                                                            value="<?php
-                                                                                if(isset($data_tracking['time'])){
-                                                                                    echo $data_tracking['time'];                                                                                                                                                                     
+                                                                            id="tgl-<?=$rows_bp['id_prog']?>" value="<?php
+                                                                                if(isset($time)){
+                                                                                    echo $time;                                                                                                                                                                     
                                                                                 }
                                                                                 ?>" autocomplete="off">
                                                                     </div>
@@ -393,76 +481,3 @@ include '../elemen/header.php';?>
 
             <!-- Footer -->
             <?php include '../elemen/footer.php';?>
-            <script>
-            // Dokumen sudah ready maka jalankan function
-            $(document).ready(function() {
-                // jika class approve di klik maka
-                $(".approve").click(function() {
-
-                    //attribut data-id ini masukkan ke variabel index
-                    var index = $(this).attr('data-id');
-                    var index2 = parseInt(index) + 1;
-
-                    // Buat tanggal index ini required
-                    $('#tgl-' + index).prop("required", true);
-
-                    // varibael index ditambah 1 lalu masukkan ke variabel next_index
-                    var next_index = Number(index) + 1;
-                    // jika di html ini ada  checked
-                    if ($(this).is(':checked')) {
-                        //maka  id data yang ditambah variabel next index hapus class d-none
-                        $('#data' + next_index).removeClass('d-none');
-                        //jika  id reject_step ditambah index ada checked
-                        if ($('#reject_step' + index).is(':checked')) {
-                            //maka id reject_step ditambah index ini diklik
-                            $('#reject_step' + index).click();
-                        }
-                        if ($('#reject_step' + next_index).is(':checked')) {
-                            //maka id reject_step ditambah index ini diklik
-                            $('#reject_step' + next_index).click();
-                        }
-                        //melainkan bila tidak ada check
-                    } else {
-                        if ($('#reject_step' + next_index).is(':checked')) {
-                            //maka id reject_step ditambah index ini diklik
-                            $('#reject_step' + next_index).click();
-                        }
-                        if ($('#approve_step' + next_index).is(':checked')) {
-                            //maka id reject_step ditambah index ini diklik
-                            $('#approve_step' + next_index).click();
-                        }
-                        // maka id data yang ditambah next_index ditambah class d_none
-                        $('#data' + next_index).addClass('d-none');
-                    }
-                });
-
-                // class reject di klik maka jalankan function
-                $(".reject").click(function() {
-                    //  membuat var index yang hasilnya  dari attribut data ini
-                    var index = $(this).attr('data-id');
-                    var next_index = Number(index) + 1;
-
-                    // Buat tanggal index ini required
-                    $('#tgl-' + index).prop("required", true);
-
-                    // jika html ini ada checked 
-                    if ($(this).is(':checked')) {
-                        // maka cetak approve step variabel index
-                        console.log('approve_step' + index);
-                        // jika id approve step variable index ada checked
-                        if ($('#approve_step' + index).is(':checked')) {
-                            // maka id  apporove step  index di klik
-                            $('#approve_step' + index).click();
-                        }
-                        if ($('#approve_step' + next_index).is(':checked')) {
-                            // maka id  apporove step  index di klik
-                            $('#approve_step' + next_index).click();
-                        }
-                        if ($('#reject_step' + next_index).is(':checked')) {
-                            // maka id  apporove step  index di klik
-                            $('#reject_step' + next_index).click();
-                        }
-                    }
-                });
-            });
-            </script>

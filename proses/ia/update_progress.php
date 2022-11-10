@@ -60,7 +60,7 @@ if (isset ($_SESSION['yics_user'])){
                          $pesan_notif = "Update Proses " . $data_prog['nama_progress'];
                     }
                }else{
-                    $insertTracking = " INSERT INTO tracking_ia (`id_ia`, `id_prog`, `approval`, `time`) VALUES  ('$id_ia', '$prog', '1', '$time' )";
+                    $insertTracking = " INSERT INTO tracking_ia (`id_ia`, `id_prog`, `approval`,`username`,`time`) VALUES  ('$id_ia', '$prog', '1', '$pic', '$time' )";
                     $sql = mysqli_query($link_yics, $insertTracking)or die(mysqli_error($link_yics));                   
 
 

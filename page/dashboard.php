@@ -301,7 +301,7 @@ if (!isset($_SESSION['yics_user'])) {
                                         </div>
                                     </div>
                                 </div>
-                <?php 
+                                <?php 
 
                     $data_fiscal = single_query("SELECT id_fis from time_fiscal where status='aktif'");
                     $id_fis = $data_fiscal['id_fis'];
@@ -333,7 +333,7 @@ if (!isset($_SESSION['yics_user'])) {
                                                     class="white font-weight-400 "><?php echo $row_card['depart']; ?></span>
                                                 <div class="content-text text-center mb-0">
                                                     <span class="white font-size-40 font-weight-100 mt-50">Rp
-                                                    <?php 
+                                                        <?php 
 
                                                     $sisa_budget = $row_card['budget'] - get_cons_budget($consumtion_budget , $row_card['id_dep']);
 
@@ -349,7 +349,7 @@ if (!isset($_SESSION['yics_user'])) {
                                         </div>
                                     </a>
                                 </div>
-                            <?php  
+                                <?php  
                             $i++;
                         }
                     } 

@@ -252,9 +252,8 @@ $id_dept = $_GET['dept'];
                                 LEFT JOIN progress  ON tracking_prop.id_prog = progress.id_prog
                                 LEFT JOIN konversi_matauang ON proposal.id_matauang = konversi_matauang.id_matauang
                                 LEFT JOIN data_user ON ia.pic_ia = data_user.username 
-                                
-                               
                                 LEFT JOIN approval ON tracking_prop.id_approval = approval.id_approval
+                                
                                 WHERE tracking_prop.id_approval  = '1' AND progress.step = '5' AND depart.id_dep='$id_dept'AND time_fiscal.status= 'aktif' "
                                 )
                                 or die (mysqli_error($link_yics));

@@ -92,12 +92,12 @@ include '../elemen/header.php';?>
                   $proposal = mysqli_query($link_yics ,"SELECT 
                   proposal.id_prop AS id_prop,
                   depart.depart AS depart,
-                  kategori_proposal.kategori AS kategori,
-                  time_fiscal.status,proposal.proposal AS proposal
+                  kategori_proposal.kategori AS kategori,                 
+                  proposal.proposal AS proposal
                   FROM proposal 
                   LEFT JOIN depart ON proposal.id_dep = depart.id_dep
                   LEFT JOIN kategori_proposal  ON proposal.id_kat = kategori_proposal.id_kat
-                  LEFT JOIN time_fiscal  ON proposal.id_fis = time_fiscal.id_fis  
+                  
                   WHERE id_prop = '$id'")or die (mysqli_error($link_yics));
                   $data = mysqli_fetch_assoc($proposal)
                 ?>
