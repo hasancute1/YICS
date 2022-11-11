@@ -354,7 +354,13 @@ if (!isset($_SESSION['yics_user'])) {
                                                     <span class="white font-size-40 font-weight-100 mt-50">Rp
                                                         <?php 
 
-                                                    $sisa_budget = $row_card['budget'] - get_cons_budget($consumtion_budget , $row_card['id_dep']);
+                                                    $consumtion_budget = single_query("SELECT sum(cost_ia) as cost , count(*) as qty FROM ia
+                                                    join proposal on ia.id_prop = proposal.id_prop
+                                                    join depart on proposal.id_dep = depart.id_dep
+                                                    where proposal.id_dep = {$row_card['id_dep']} and proposal.id_fis={$id_fis}
+                                                    ");
+
+                                                    $sisa_budget = $row_card['budget'] - $consumtion_budget['cost'];
 
                                                     echo number_format($sisa_budget,0,',','.');
                                                     
