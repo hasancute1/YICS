@@ -393,48 +393,82 @@ $id_dept = $_GET['dept'];
                                                             <td><?= (isset($data['no_ia']))?date("d M Y", strtotime($data['time_ia'])): "";  ?>
                                                             </td>
                                                             <td><?= (isset($data['no_ia']))?$data['pic_ia']: ""; ?></td>
-                                                            <td>
+                                                            <td class="align-middle text-center">
+                                                                <!-- query update progress -->
+                                                                <?php  
+                                                                
+                                                                ///menghitung baris pada progress
+                                                            $kol=mysqli_query($link_yics ,"SELECT id_prog FROM progress")or die (mysqli_error($link_yics));
+                                                            $kolom=mysqli_num_rows($kol);                         
+
+                                                                $track_ia = mysqli_query($link_yics ,"SELECT
+                                                                tracking_ia.id_prog AS id_prog, 
+                                                                tracking_ia.approval AS id_approval,
+                                                                
+                                                                progress.step AS step,
+                                                                progress.nama_progress AS progress,
+                                                                approval.approval AS approval
+                                                                FROM tracking_ia   
+                                                                LEFT JOIN 
+                                                                
+                                                                    ( SELECT  progress.step, progress.id_prog, progress.nama_progress AS nama_progress 
+                                                                    FROM progress JOIN tracking_ia ON tracking_ia.id_prog = progress.id_prog 
+                                                                    WHERE tracking_ia.id_ia = '$data[id_ia]'
+                                                                    ORDER BY progress.step DESC) progress 
+                                                                ON tracking_ia.id_prog = progress.id_prog  
+                                                                LEFT JOIN approval ON tracking_ia.approval = approval.id_approval
+                                                                WHERE tracking_ia.id_ia = '$data[id_ia]' ORDER BY progress.step DESC LIMIT 6") or die (mysqli_error($link_yics));
+                                                                
+                                                                if(mysqli_num_rows($track_ia)>0){
+                                                                    $data_track = mysqli_fetch_assoc($track_ia); 
+                                                                    // mencatak angka persenan
+                                                                    
+                                                                    $persen = ($data_track['id_approval'] == 1 )?(ceil(($data_track['step']/$kolom)*100)):100;
+                                                                    if($data_track['id_approval'] == 1 ){
+                                                                        $text_progress = $persen."%";
+                                                                        $color_progress = "progress-bar-info";
+                                                                    }else{
+                                                                        $text_progress = "STOP";
+                                                                        $color_progress = "progress-bar-danger";
+                                                                    }
+                                                                    ?>
+                                                                <span
+                                                                    class=" badge badge-round badge-success badge-lg"><?=$data_track['progress']?></span>
                                                                 <?php 
+                                                                    }else{
+                                                                        $persen = 0;
+                                                                        $color_progress = "";
+                                                                        $text_progress = "0%";
+                                                                    }
+                                                                    ?>
 
-                                                                $cost = $data['cost'];
-
-                                                                if($cost < 49){
-                                                                    $total_step = 13;
-                                                            
-                                                                }elseif( $cost >= 49 && $cost <= 500){
-                                                            
-                                                                    $total_step = 17;
-                                                            
-                                                                }else{      
-                                                            
-                                                                    $total_step = 19;
-                                                            
-                                                                }
-
-                                                                if(isset($data['no_ia'])){
-                                                                    $last_progress = get_last_progress_ia($data['id_ia']);
-                                                                    $nama_progress = $last_progress['nama_progress'];
-
-                                                                    $presentase = $last_progress['step'] /  $total_step * 100;
-                                                                }
-
-                                                                ?>
-                                                                <span class=" badge badge-round badge-success badge-lg">
-                                                                    <?= $nama_progress ?>
-                                                                </span>
                                                             </td>
-                                                            <td>
+
+                                                            <td class="align-middle text-center">
+
                                                                 <div class="progress mt-20 text-center ">
-                                                                    <div class="progress-bar progress-bar-striped  progress-bar-info active"
+                                                                    <div class="progress-bar progress-bar-striped  <?=$color_progress?> active"
                                                                         aria-valuenow="" aria-valuemin="0"
                                                                         aria-valuemax="100"
-                                                                        style="width: <?= number_format($presentase) ?>%;"
+                                                                        style="width: <?=$persen?>%;"
                                                                         aria-valuemax="100" role="progressbar">
-                                                                        <?= number_format($presentase) ?>%
+                                                                        <?=$text_progress?>
                                                                     </div>
+                                                                </div>
+                                                                <?php
+							
+							?>
                                                             </td>
-                                                            <td>
 
+
+
+
+
+
+
+
+
+                                                            <td>
                                                                 <a href="Tracking2.php?id_ia=<?= $data['id_ia'] ?>"
                                                                     class="<?= $tombol_hidup ?>">
                                                                     <button type="button" class="btn btn-icon btn-info">

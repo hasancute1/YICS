@@ -151,8 +151,7 @@ if (isset ($_SESSION['yics_user'])){
           ]);
      }
 
-         print_r($totalData);
-
+         
     } else {
       echo "data belum terkirim";
       }
