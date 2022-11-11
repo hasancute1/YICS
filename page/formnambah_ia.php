@@ -214,7 +214,7 @@ include '../elemen/header.php';?>
                                                             <div class="col-md-4">
                                                                 <input type="date" class="form-control" id="time_ia"
                                                                     placeholder="Diisi tanggal updaate" name="time_ia"
-                                                                    autocomplete="off">
+                                                                    autocomplete="off" required>
                                                             </div>
                                                             <label class="col-md-2 col-form-label text-left"
                                                                 style="color:black;">Remark

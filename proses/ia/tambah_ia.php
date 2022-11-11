@@ -24,14 +24,15 @@ $qry = mysqli_query($link_yics, "SELECT ia FROM ia WHERE ia = '$ia' ")or die(mys
         $_SESSION['pesan'] = "Data User Sudah Ada di Database";
         header('location: ../../page/formnambah_ia.php?add='.$id_prop);
     }else{
+
+        $inputproposal = "INSERT INTO ia (`id_prop`,`ia`,`deskripsi`,`cost_ia`,`time_ia`,`pic_ia`) VALUES ('$id_prop','$ia','$ia_desc','$cost_ia','$time_ia','$pic_ia')"; 
+        $sql = mysqli_query($link_yics, $inputproposal)or die(mysqli_error($link_yics));
+
         $_SESSION['info'] = "Disimpan";
         $_SESSION['pesan'] = "Data Berhasil Disimpan";
         header('location: ../../page/formnambah_ia.php?add='.$id_prop);
     }
 
-
-        $inputproposal = "INSERT INTO ia (`id_prop`,`ia`,`deskripsi`,`cost_ia`,`time_ia`,`pic_ia`) VALUES ('$id_prop','$ia','$ia_desc','$cost_ia','$time_ia','$pic_ia')"; 
-        $sql = mysqli_query($link_yics, $inputproposal)or die(mysqli_error($link_yics));
 
     }else if(isset($_GET['del'])){
     $id=$_GET['del'];
