@@ -135,7 +135,7 @@ include '../elemen/header.php';?>
                     <!-- Page -->
                     <div class="page">
                         <div class="page-header">
-                            <h1 class="page-title font-size-26 font-weight-600">Tracking Document</h1>
+                            <h1 class="page-title font-size-26 font-weight-600">TRACKING DOCUMENT IA</h1>
                         </div>
 
 
