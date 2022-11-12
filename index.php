@@ -114,8 +114,10 @@ if (isset($_POST['submit'])) {
                     <input type="password" class="form-control empty" id="password" name="password" autocomplete="off"
                         required>
                     <label class="floating-label font" for="password">Password</label>
-                </div>
 
+                </div>
+                <input type="checkbox" onclick="myFunction()">&nbsp; Tampilkan Password
+                <br><br>
                 <button type="submit" class="btn btn-primary btn-block" name="submit">Sign in</button>
             </form>
 
@@ -127,7 +129,16 @@ if (isset($_POST['submit'])) {
         </div>
     </div>
     <!-- End Page -->
-
+    <script>
+    function myFunction() {
+        var x = document.getElementById("password");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+    </script>
 
     <!-- Core  -->
     <script src="global/vendor/babel-external-helpers/babel-external-helpers.js"></script>
