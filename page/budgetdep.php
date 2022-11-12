@@ -188,7 +188,15 @@ include '../elemen/header.php';?>
                                                     <span class="white font-weight-400 font-size-20"><?= $get_data_budget['depart']?></span>
                                                     <div class="content-text text-center mb-0">
 
-                                                        <span class="white font-size-60 font-weight-100">Rp <?= number_format($consumtion_budget['cost'],0,',','.') ?></span>
+                                                        <?php                                                          
+                                                            $total_budget = $get_data_budget['budget'];
+                                                            $consumtion_budget_cost = $consumtion_budget['cost'];
+
+                                                            $sisa_budget = $total_budget - $consumtion_budget_cost;
+
+                                                        ?>
+
+                                                        <span class="white font-size-60 font-weight-100">Rp <?= number_format($sisa_budget,0,',','.') ?></span>
                                                         <br>
                                                         <p class="white font-weight-100 m-0 font-size-20">"Budget Rp
                                                             <?= number_format($get_data_budget['budget'],0,',','.')  ?>"</p>
@@ -231,11 +239,16 @@ include '../elemen/header.php';?>
                                                     <div class="col-lg-6 col-md-7 py-20 ">
                                                         <div class="text-left">
 
+                                                            <?php 
+                                                                $persentase_budget = $sisa_budget / $total_budget * 100;
+
+                                                            ?>
+
                                                             <div class="pie-progress " data-plugin="pieProgress"
                                                                 data-barcolor="#FFE54F" data-size="100" data-barsize="8"
                                                                 data-goal="40" aria-valuenow="40" role="progressbar">
                                                                 <div class="pie-progress-content">
-                                                                    <div class="pie-progress-number">40%</div>
+                                                                    <div class="pie-progress-number"><?= $persentase_budget ?>%</div>
                                                                     <div class="pie-progress-label">Available</div>
                                                                 </div>
                                                             </div>
@@ -244,10 +257,10 @@ include '../elemen/header.php';?>
                                                     <div class="col-lg-6 col-md-5 mt-30" style="line-height: 15px;">
                                                         <h4>e-Wallet:</h4>
                                                         <p style="font-size: 20px; color:green;font-weight: bold;">Rp
-                                                            4.000</p>
+                                                            <?= number_format($get_data_budget['budget'],0,',','.') ?></p>
                                                         <h4>Consummed:</h4>
                                                         <p style="font-size: 20px; color:blue;font-weight: bold;">Rp
-                                                            2.372</p>
+                                                            <?= number_format($consumtion_budget['cost'] ,0, ',','.') ?></p>
                                                     </div>
                                                 </div>
                                             </div>
