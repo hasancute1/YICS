@@ -41,6 +41,39 @@ include '../elemen/header.php';?>
             <!-- End Site Navbar Search -->
         </div>
     </nav>
+    <style>
+    #message {
+        display: none;
+
+        color: #000;
+
+    }
+
+    #message p {
+        padding: 0px 35px;
+        font-size: 18px;
+    }
+
+    .valid {
+        color: green;
+    }
+
+    .valid:before {
+        position: relative;
+        left: -35px;
+        content: "√";
+    }
+
+    .invalid {
+        color: red;
+    }
+
+    .invalid:before {
+        position: relative;
+        left: -35px;
+        content: "X";
+    }
+    </style>
     <div class="site-menubar">
         <!-- sidebar -->
         <div class="site-menubar-body">
@@ -200,6 +233,7 @@ include '../elemen/header.php';?>
                                                             autocomplete="off" value="<?= $data['area']; ?>" required>
                                                     </div>
                                                 </div>
+
                                                 <div class="form-group row">
                                                     <label class="col-md-2 col-form-label"
                                                         style="color:black;">Role</label>
@@ -229,28 +263,51 @@ include '../elemen/header.php';?>
                                                 <div class="form-group row">
                                                     <label class="col-md-2 col-form-label" style="color:black;">Password
                                                         lama</label>
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-10">
                                                         <input type="password" class="form-control" autocomplete="off"
                                                             value="<?= $data["pass"]; ?>" readonly required>
                                                     </div>
+
+                                                </div>
+                                                <div class="form-group row">
                                                     <label class="col-md-2 col-form-label" style="color:black;">Password
-                                                        baru</label>
-                                                    <div class="col-md-4">
-                                                        <input required type="text" required class="form-control"
-                                                            required name="password"
+                                                        Baru</label>
+                                                    <div class="col-md-10">
+                                                        <input required type="password" required class="form-control"
+                                                            name="password" id="psw" minlength="8" maxlength="8"
                                                             placeholder="Silahkan isi password baru" autocomplete="off"
-                                                            required>
+                                                            pattern="(?=.*d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                                                            title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
+                                                        <input type="checkbox" onclick="myFunction()">&nbsp; Tampilkan
+                                                        Password
+                                                        <br>
+
+                                                        <div id="message">
+                                                            <span>Must contain at least one
+                                                                number and one
+                                                                uppercase and lowercase letter, and at least 8 or more
+                                                                characters</span>
+                                                            <h3>Password harus terdiri dari: </h3>
+                                                            <p id="letter" class="invalid">Memiliki <b>huruf kecil</b>
+                                                            </p>
+                                                            <p id="capital" class="invalid">Memiliki <b>huruf besar</b>
+                                                            </p>
+                                                            <p id="number" class="invalid">Memiliki <b>nomor</b></p>
+                                                            <p id="length" class="invalid">Minimal <b>8 karakter</b></p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                         </div>
                                         <div class="modal-footer">
                                             <a href="../page/usersetting.php" type="reset"
                                                 class="btn btn-danger">Kembali</a>
-                                            <button type="submit" class="btn btn-primary">Save</button>
+                                            <button type="submit" class="btn btn-primary" id="cek"
+                                                disabled>Save</button>
                                         </div>
                                         </form><!-- end form-content--------- -->
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -260,6 +317,85 @@ include '../elemen/header.php';?>
             </div>
         </div>
         <!-- End Page -->
+        <script>
+        function myFunction() {
+            var x = document.getElementById("psw");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+        </script>
+        <script>
+        var myInput = document.getElementById("psw");
+        var letter = document.getElementById("letter");
+        var capital = document.getElementById("capital");
+        var number = document.getElementById("number");
+        var length = document.getElementById("length");
+        myInput.onfocus = function() {
+            document.getElementById("message").style.display = "block";
+        }
+        myInput.onblur = function() {
+            document.getElementById("message").style.display = "none";
+        }
+        myInput.onkeyup = function() {
+            // Validate lowercase letters
+            var lowerCaseLetters = /[a-z]/g;
+            if (myInput.value.match(lowerCaseLetters)) {
+                var a = 1;
+                letter.classList.remove("invalid");
+                letter.classList.add("valid");
+            } else {
+                var a = 0;
+                letter.classList.remove("valid");
+                letter.classList.add("invalid");
+            }
+
+            // Validate capital letters
+            var upperCaseLetters = /[A-Z]/g;
+            if (myInput.value.match(upperCaseLetters)) {
+                var b = 1;
+                capital.classList.remove("invalid");
+                capital.classList.add("valid");
+            } else {
+                var b = 0;
+                capital.classList.remove("valid");
+                capital.classList.add("invalid");
+            }
+            // Validate numbers
+            var numbers = /[0-9]/g;
+            if (myInput.value.match(numbers)) {
+                var c = 1;
+                number.classList.remove("invalid");
+                number.classList.add("valid");
+            } else {
+                var c = 0;
+                number.classList.remove("valid");
+                number.classList.add("invalid");
+            }
+            // Validate length
+            if (myInput.value.length == 8) {
+                var d = 1;
+                length.classList.remove("invalid");
+                length.classList.add("valid");
+            } else {
+                var d = 0;
+                length.classList.remove("valid");
+                length.classList.add("invalid");
+            }
+            if (a == 1 && b == 1 && c == 1 && d == 1) {
+                $("#cek").prop("disabled", false);
+            } else {
+                $("#cek").prop("disabled", true);
+            }
+        }
+        $(document).ready(function() {
+            $("#psw").click(function() {
+                $("#aturan").removeClass("d-none");
+            });
+        });
+        </script>
 
         <!-- Footer -->
         <?php
