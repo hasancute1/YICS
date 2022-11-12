@@ -282,6 +282,9 @@ include '../elemen/header.php';?>
                                                                         <td><?= $rp." ". number_format($data['cost'], 0, ',', '.');?>
                                                                         </td>
                                                                     </tr>
+                                                                    <tr>
+                                                                        <td colspan='5'></td>
+                                                                    </tr>
                                                                 </table>
                                                             </div>
 
