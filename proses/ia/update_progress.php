@@ -122,7 +122,9 @@ if (isset ($_SESSION['yics_user'])){
      }
    
 
-   //
+     // $delete = "DELETE FROM tracking_ia WHERE id_ia =  '$id_ia' AND id_prog >  '$max'";
+     // // // ECHO $delete."<br>";
+     // $hasil_delete = mysqli_query($link_yics, $delete)or die(mysqli_error($link_yics));
      //     echo $insertTracking;  
      if($sql){
           $_SESSION['info'] = "Disimpan";
