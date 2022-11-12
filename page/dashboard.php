@@ -861,7 +861,8 @@ include '../elemen/footer.php';?>
 
                         <?php
               $i = 1;
-              while( $rows_depart = mysqli_fetch_assoc($depart)){?>
+              while( $rows_depart = mysqli_fetch_assoc($depart))
+              {?>
                         <div class="form-group row">
                             <label class="col-md-2 col-form-label"
                                 style="color:black;"><?php echo $rows_depart['depart'] ?></label>
@@ -875,16 +876,15 @@ include '../elemen/footer.php';?>
                                         placeholder="Isi Budget Dept...">
 
                                     <input required name="id_dept<?=$i?>" value="<?php echo $rows_depart['id_dep']?>"
-                                        type="text" "
-                        class=" form-control" hidden>
+                                        type="text" class=" form-control" hidden>
                                 </div>
                             </div>
                         </div>
-                        <?php 
-                  $i++;
-                          }
-                        }                                                
-                      ?>
+                        <?php
+            $i++;
+                }
+            }                                                
+     ?>
                         <hr>
                         <div class="form-group row">
                             <label class="col-md-2 col-form-label" style="color:black;">Total Budget</label>
@@ -931,6 +931,18 @@ include '../elemen/footer.php';?>
                             <h4 class="col-md-12 modal-title text-left" style="color:black;">SUBJECT</h4>
                         </div>
                         <div class="form-group row">
+                            <label class="col-md-2 col-form-label" style="color:black;">Periode tahun</label>
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <input type="text" value="<?php echo $data['periode']; ?>" class="form-control"
+                                        readonly>
+                                    <input name="id_fis" type="text" value="<?php echo $data['id_fis']; ?>"
+                                        class="form-control" readonly hidden>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group row">
                             <label class="col-md-2 col-form-label text-left" style="color:black;">Department</label>
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -971,8 +983,8 @@ include '../elemen/footer.php';?>
                         <div class="form-group row">
                             <label class="col-md-2 col-form-label text-left" style="color:black;">Proposal</label>
                             <div class="col-md-10">
-                                <input type="text" class="form-control text-uppercase" name="proposal"
-                                    placeholder=" Judul Proposal" autocomplete="off" required>
+                                <input type="text" class="form-control " name="proposal"
+                                    placeholder=" Judul Proposal..." autocomplete="off" required>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -987,22 +999,19 @@ include '../elemen/footer.php';?>
                                         placeholder="Isi Cost Proposal...">
                                 </div>
                             </div>
-                            <label class="col-md-2 col-form-label" style="color:black;">Periode tahun</label>
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <input type="text" value="<?php echo $data['periode']; ?>" class="form-control"
-                                        readonly>
-                                    <input name="id_fis" type="text" value="<?php echo $data['id_fis']; ?>"
-                                        class="form-control" readonly hidden>
-                                </div>
+
+                            <label class="col-md-2 col-form-label" style="color:black;">Lampiran</label>
+                            <div class="col-md-4 input-group">
+                                <input class="form-control-file" type="file" name="lampiran">
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-md-2 col-form-label" style="color:black;">Lampiran</label>
+                            <label class="col-md-2 col-form-label" style="color:black;">Benefit</label>
 
-                            <div class="col-md-4 input-group">
-                                <input class="form-control-file" type="file" name="lampiran" id="">
+                            <div class="col-md-10 input-group">
+                                <input type="text" class="form-control" name="proposal"
+                                    placeholder=" Benefit Proposal.." autocomplete="off" required>
                             </div>
 
                         </div>
