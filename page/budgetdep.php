@@ -126,7 +126,8 @@ include '../elemen/header.php';?>
                     <!-- Page -->
                     <div class="page">
                         <div class="page-header">
-                            <h1 class="page-title font-size-26 font-weight-600">Budget <?= $get_data_budget['depart']?> Overview (x Million)
+                            <h1 class="page-title font-size-26 font-weight-600">Budget <?= $get_data_budget['depart']?>
+                                Overview (x Million)
                             </h1>
                         </div>
 
@@ -180,12 +181,13 @@ include '../elemen/header.php';?>
                                     <div class="row">
                                         <div class="col-lg-4 col-md-6 info-panel">
                                             <div class="card card-shadow" style="border-radius: 15px;height:200px;">
-                                                <div class="card-block bg-yellow-800 p-20"
+                                                <div class="card-block warnadep<?=$id_dep?>"
                                                     style="border-radius: 15px;height:200px;">
                                                     <button type="button" class="btn btn-floating btn-sm btn-success">
                                                         <i class="icon fa-dollar"></i>
                                                     </button>
-                                                    <span class="white font-weight-400 font-size-20"><?= $get_data_budget['depart']?></span>
+                                                    <span
+                                                        class="white font-weight-400 font-size-20"><?= $get_data_budget['depart']?></span>
                                                     <div class="content-text text-center mb-0">
 
                                                         <?php                                                          
@@ -196,10 +198,12 @@ include '../elemen/header.php';?>
 
                                                         ?>
 
-                                                        <span class="white font-size-60 font-weight-100">Rp <?= number_format($sisa_budget,0,',','.') ?></span>
+                                                        <span class="white font-size-60 font-weight-100">Rp
+                                                            <?= number_format($sisa_budget,0,',','.') ?></span>
                                                         <br>
                                                         <p class="white font-weight-100 m-0 font-size-20">"Budget Rp
-                                                            <?= number_format($get_data_budget['budget'],0,',','.')  ?>"</p>
+                                                            <?= number_format($get_data_budget['budget'],0,',','.')  ?>"
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -210,11 +214,13 @@ include '../elemen/header.php';?>
                                                 <div class="ml-20 mr-20 py-15 " style="line-height: 20px;">
                                                     <h4>Transactions:</h4>
                                                     <p style="font-size: 20px;"> <span
-                                                            style="font-size: 25px; font-weight: bold;color:black;"> <?= number_format($consumtion_budget['qty'],0,',','.') ?>
+                                                            style="font-size: 25px; font-weight: bold;color:black;">
+                                                            <?= number_format($consumtion_budget['qty'],0,',','.') ?>
                                                         </span> x orders</p>
                                                     <h4>Month / left:</h4>
                                                     <p style="font-size: 20px;"> <span
-                                                            style="font-size: 25px; font-weight: bold;color:black;"> <?= (isset($isi_budget_bulan))? $jumlah_bulan = count($isi_budget_bulan):0 ?>
+                                                            style="font-size: 25px; font-weight: bold;color:black;">
+                                                            <?= (isset($isi_budget_bulan))? $jumlah_bulan = count($isi_budget_bulan):0 ?>
                                                         </span> / 12 months</p>
                                                     <div class="progress">
 
@@ -241,14 +247,27 @@ include '../elemen/header.php';?>
 
                                                             <?php 
                                                                 $persentase_budget = $sisa_budget / $total_budget * 100;
-
+if ( $id_dep ==1){
+    $warna = 'yellow';
+}
+else if ( $id_dep ==2){
+    $warna = 'red';
+}
+else if ( $id_dep ==3){
+    $warna = 'purple';
+}else {
+    $warna = '';
+}
                                                             ?>
 
                                                             <div class="pie-progress " data-plugin="pieProgress"
-                                                                data-barcolor="#FFE54F" data-size="100" data-barsize="8"
-                                                                data-goal="40" aria-valuenow="40" role="progressbar">
+                                                                data-barcolor="<?= $warna ?>" data-size="100"
+                                                                data-barsize="8" data-goal="40"
+                                                                aria-valuenow=" <?= $persentase_budget ?>"
+                                                                role="progressbar">
                                                                 <div class="pie-progress-content">
-                                                                    <div class="pie-progress-number"><?= $persentase_budget ?>%</div>
+                                                                    <div class="pie-progress-number">
+                                                                        <?= $persentase_budget ?>%</div>
                                                                     <div class="pie-progress-label">Available</div>
                                                                 </div>
                                                             </div>
@@ -257,10 +276,12 @@ include '../elemen/header.php';?>
                                                     <div class="col-lg-6 col-md-5 mt-30" style="line-height: 15px;">
                                                         <h4>e-Wallet:</h4>
                                                         <p style="font-size: 20px; color:green;font-weight: bold;">Rp
-                                                            <?= number_format($get_data_budget['budget'],0,',','.') ?></p>
+                                                            <?= number_format($get_data_budget['budget'],0,',','.') ?>
+                                                        </p>
                                                         <h4>Consummed:</h4>
                                                         <p style="font-size: 20px; color:blue;font-weight: bold;">Rp
-                                                            <?= number_format($consumtion_budget['cost'] ,0, ',','.') ?></p>
+                                                            <?= number_format($consumtion_budget['cost'] ,0, ',','.') ?>
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -328,17 +349,21 @@ include '../elemen/header.php';?>
                                                     <?php foreach ($data_ia as $row) { ?>
                                                     <tr class="text-wrap">
                                                         <td class="align-middle text-center"><?= $i ?></td>
-                                                        <td class="align-middle text-center"><?= $row['kategori'] ?></td>
+                                                        <td class="align-middle text-center"><?= $row['kategori'] ?>
+                                                        </td>
                                                         <td class="align-middle text-center"><?= $row['ia'] ?></td>
-                                                        <td class="align-middle text-center"><?= $row['deskripsi'] ?></td>
+                                                        <td class="align-middle text-center"><?= $row['deskripsi'] ?>
+                                                        </td>
                                                         <td class="align-middle text-center"></td>
-                                                        <td class="align-middle text-center"><?= date('d M Y' , strtotime($row['time_ia']))  ?></td>
-                                                        <td class="align-middle text-center">Rp <?= number_format($row['cost_ia'],0,',','.') ?></td>
+                                                        <td class="align-middle text-center">
+                                                            <?= date('d M Y' , strtotime($row['time_ia']))  ?></td>
+                                                        <td class="align-middle text-center">Rp
+                                                            <?= number_format($row['cost_ia'],0,',','.') ?></td>
                                                         <td class="align-middle text-center">Closed</td>
                                                     </tr>
 
                                                     <?php $i++; } ?>
-                                                    
+
 
                                                 </tbody>
                                             </table>
@@ -375,9 +400,9 @@ include '../elemen/footer.php';?>
                             },
                             {
                                 label: "CONSUMTION <?= $get_data_budget['depart']?>",
-                                backgroundColor: "rgba(255, 206, 86, 0.2)",
-                                borderColor: Config.colors("yellow", 800),
-                                hoverBackgroundColor: "rgba(255, 206, 86, 0.2)",
+                                backgroundColor: Config.colors("<?= $warna ?>", 100),
+                                borderColor: Config.colors("<?= $warna ?>", 800),
+                                hoverBackgroundColor: Config.colors("<?= $warna ?>", 100),
                                 borderWidth: 2,
                                 data: <?=$data_grafik_con_budget?>
                             },
