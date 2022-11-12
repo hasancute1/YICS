@@ -92,6 +92,12 @@ if (isset ($_SESSION['yics_user'])){
                          header('location: ../../page/formupdate_ia.php?id_ia='.$id_ia);
                     }else{
 
+                         // lakukan pengecekan apakah ada id_prog yang lebih besar dari id_prog ini,
+                         // jika ada hapus
+
+                         $delete = "DELETE FROM tracking_ia WHERE id_ia = '$id_ia' AND id_prog >  '$prog'";                        
+                         $hasil_delete = mysqli_query($link_yics, $delete)or die(mysqli_error($link_yics));
+
                          // kirim notifikasi ke pic
                          $notif = TRUE;
                          $pesan_notif = "Proposal Ditolak";
