@@ -695,7 +695,12 @@ include '../elemen/footer.php';?>
         GROUP BY  bulan
         ");
 
-    $max_month = date('m' , strtotime($query_akumulasi[0]['max_date']) );
+    if(isset($query_akumulasi[0])){        
+        $max_month = date('m' , strtotime($query_akumulasi[0]['max_date']) );
+    }else{
+        $max_month = 4;
+    }
+
  
     foreach($query_akumulasi as $row){
         $query_akum_array[$row['bulan']] = $row['cost']; 
