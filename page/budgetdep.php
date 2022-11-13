@@ -91,14 +91,19 @@ include '../elemen/header.php';?>
 
                     }  
                          
-
+                    
+                                                                
+                    ///menghitung baris pada tabel progress
+                    $kol=mysqli_query($link_yics ,"SELECT id_prog FROM progress")or die (mysqli_error($link_yics));
+                    $kolom=mysqli_num_rows($kol);   
+                    //query tabel closed
                     $data_ia = query("SELECT * from tracking_ia
                         join ia on tracking_ia.id_ia = ia.id_ia
                         join proposal on ia.id_prop = proposal.id_prop
                         join depart on proposal.id_dep = depart.id_dep
                         join kategori_proposal on proposal.id_kat = kategori_proposal.id_kat                      
                         where proposal.id_dep = {$id_dep} and proposal.id_fis={$id_fis}
-                        and id_prog = 30
+                        and id_prog =  '$kolom' and approval = '1'
                     ");              
 
                    
