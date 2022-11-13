@@ -269,7 +269,7 @@ include '../elemen/header.php';?>
                                                         <div class="text-left">
 
                                                             <?php 
-                                                                $persentase_budget = $sisa_budget / $total_budget * 100;
+                                                                $persentase_budget =ceil( $sisa_budget / $total_budget * 100);
 if ( $id_dep ==1){
     $warna = 'yellow';
 }
