@@ -1,5 +1,6 @@
 <?php
 include("../config/config.php");
+
 if (!isset($_SESSION['yics_user'])) {
   header('location: ../index.php');
 }
@@ -67,151 +68,190 @@ include '../elemen/header.php';?>
                                 <!-- First Row -->
                                 <div class="col-lg-12 col-md-12">
                                     <div class="card card-shadow bg-blue-100" style="border-radius: 10px;">
-                                        <div class="card-header card-header-transparent">
-                                            <div class="panel-heading">
-                                                <h3 class=" text-left">SUBJECT</h3>
-                                                <hr style="border-color:grey;">
-                                            </div>
-                                        </div>
-
                                         <form autocomplete="off" method="get" action="">
-                                            <input type="hidden" name="id_ia" value="<?= $_GET['id_ia'] ?>">
                                             <div class="row card-body">
                                                 <div class="col-lg-2 col-md-2">
-                                                    <h4>Department</h4>
-
-                                                    <?php $departement = query("SELECT * from depart"); ?>
-
                                                     <div class="form-group">
-                                                        <select class="form-control" name="departement"
-                                                            id="departement">
+                                                        <label for="depart">
+                                                            <h4>DEPARTMENT</h4>
+                                                        </label>
+                                                        <select class="form-control" name="depart" id="depart">
                                                             <option>Pilih Department</option>
-                                                            <?php foreach($departement as $row){ ?>
-                                                            <option value="<?= $row['id_dep'] ?>" <?php 
-                                  if(isset($_GET['departement'])){ ?>
-                                                                <?= ($_GET['departement'] == $row['id_dep'])?"selected":"" ?>
-                                                                <?php } ?> class="terpilih"><?= $row['depart'] ?>
-                                                            </option>
-                                                            <?php } ?>
                                                         </select>
                                                     </div>
-
                                                 </div>
-                                                <div class="col-lg-3 col-md-3">
-                                                    <h4>Cost Type</h4>
+                                                <div class="col-lg-2 col-md-2">
 
-                                                    <?php $jenis_cost = query("SELECT * from kategori_proposal"); ?>
                                                     <div class="form-group">
+                                                        <label for="cost_type">
+                                                            <h4>COST TYPE</h4>
+                                                        </label>
                                                         <select class="form-control" name="cost_type" id="cost_type">
                                                             <option>Pilih Cost Type</option>
-
-                                                            <?php foreach($jenis_cost as $row){ ?>
-                                                            <option value="<?= $row['id_kat'] ?>"
-                                                                <?= (isset($_GET['cost_type']) &&  $_GET['cost_type'] == $row['id_kat'])?"selected":"" ?>
-                                                                class="terpilih"><?= $row['kategori'] ?></option>
-
-                                                            <?php } ?>
-
                                                         </select>
                                                     </div>
 
                                                 </div>
-
-                                                <div class="col-lg-6 col-md-6">
-                                                    <h4>NO. IA</h4>
-                                                    <div class="row">
-                                                        <div class="col-lg-8 col-md-8">
-
-                                                            <?php $list_ia = query("SELECT * from ia"); ?>
-
-                                                            <div class="form-group">
-                                                                <select class="form-control" name="ia_selected"
-                                                                    id="ia_selected">
-                                                                    <option>Kode Depart.</option>
-                                                                    <?php foreach($list_ia as $row){ ?>
-
-                                                                    <option value="<?= $row['id_ia'] ?>"
-                                                                        <?= (isset($_GET['cost_type']) && $_GET['ia_selected'] == $row['id_ia'])?"selected":"" ?>
-                                                                        class="terpilih"><?= $row['ia'] ?></option>
-
-                                                                    <?php } ?>
-
-                                                                </select>
-                                                            </div>
-
-                                                        </div>
-                                                        <div class="col-lg-1/2 col-md-1/2">
-                                                            <span class="font-size-20">-</span>
-                                                        </div>
-                                                        <div class="col">
-
-                                                            <div class="form-group " data-plugin="formMaterial">
-                                                                <input type="text" class="form-control "
-                                                                    name="angka_belakang"
-                                                                    placeholder="5 Angka Belakang">
-                                                            </div>
-
-                                                        </div>
+                                                <div class="col-lg-5 col-md-5">
+                                                    <div class="form-group">
+                                                        <label for="cost_type">
+                                                            <h4>PROPOSAL</h4>
+                                                        </label>
+                                                        <select class="form-control" name="proposal" id="proposal">
+                                                            <option>Pilih Proposal</option>
+                                                        </select>
                                                     </div>
                                                 </div>
-                                                <div class="card-footer col-lg-12 col-md-12 text-md-right bg-blue-100">
-                                                    <a href="" data-toggle="tooltip" data-original-title="Reset">
-                                                        <button type="button" id="reset_form" class="btn btn-danger">
-                                                            RESET
-                                                        </button>
-                                                    </a>
-                                                    <a href="" data-toggle="tooltip" data-original-title="Search">
-                                                        <button type="submit" class="btn btn-success btn-icon ">
-                                                            <i class="icon wb-search" aria-hidden="true"></i>SEARCH
-                                                        </button>
-                                                    </a>
-                                                </div>
 
+                                                <div class="col-lg-3 col-md-3">
+                                                    <div class="col-lg-12 col-md-12">
+                                                        <div class="form-group">
+                                                            <label for="cost_type">
+                                                                <h4>NO. IA</h4>
+                                                            </label>
+                                                            <select class="form-control" name="ia_selected"
+                                                                id="ia_selected">
+                                                                <option>Pilih NO IA.</option>
+                                                            </select>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-footer col-lg-12 col-md-12 text-md-right bg-blue-100">
+                                                <a href="" data-toggle="tooltip" data-original-title="Reset">
+                                                    <button type="button" id="reset_form" class="btn btn-danger">
+                                                        RESET
+                                                    </button>
+                                                </a>
+                                                <a href="" data-toggle="tooltip" data-original-title="Search">
+                                                    <button type="submit" class="btn btn-success btn-icon ">
+                                                        <i class="icon wb-search" aria-hidden="true"></i>SEARCH
+                                                    </button>
+                                                </a>
                                             </div>
 
-                                        </form>
 
+
+                                            <?
+                                            $data_i = query("SELECT * from tracking_ia
+                                            join ia on tracking_ia.id_ia = ia.id_ia
+                                            join proposal on ia.id_prop = proposal.id_prop
+                                            join depart on proposal.id_dep = depart.id_dep
+                                            join kategori_proposal on proposal.id_kat = kategori_proposal.id_kat
+                                            where proposal.id_dep = '1' and proposal.id_fis='17'
+                                                    and id_prog =  '30' and approval = '1'
+                                            ");
+                                            ?>
+                                            <?php $i=1; ?>
+
+                                            <?php foreach ($data_i as $row) { ?>
+                                            <tr class="text-wrap">
+                                                <td class="align-middle text-center"><?= $i ?></td>
+                                                <td class="align-middle text-center"><?= $row['kategori'] ?>
+                                                </td>
+                                                <td class="align-middle text-center"><?= $row['ia'] ?></td>
+                                                <td class="align-middle text-center"><?= $row['deskripsi'] ?>
+                                                </td>
+                                                <td class="align-middle text-center"></td>
+                                                <td class="align-middle text-center">
+                                                    <?= date('d M Y' , strtotime($row['time_ia']))  ?></td>
+                                                <td class="align-middle text-center">Rp
+                                                    <?= number_format($row['cost_ia'],0,',','.') ?></td>
+                                                <td class="align-middle text-center">Closed</td>
+                                            </tr>
+
+                                            <?php $i++; } ?>
                                     </div>
+
+                                    </form>
+
                                 </div>
-                                <!-- End first -->
-
-                                <?php 
-            $_GET['ia_selected']=8;
-            // data ia
-
-            if( isset($_GET['ia_selected']) && $_GET['ia_selected'] != 0){
-              $id_ia = $_GET['ia_selected'];
-              
-            }else{
-              $id_ia = $_GET['id_ia'];
-            }
-            
-
-
-
-            $data_ia = single_query("SELECT * FROM ia where id_ia='".$id_ia."'");           
-
-            ?>
-
-                                <!-- Second Row -->
-
                             </div>
+                            <!-- End first -->
+                            <script type="text/javascript">
+                            $(document).ready(function() {
+                                $.ajax({
+                                    type: 'POST',
+                                    url: "../proses/Search/depart.php",
+                                    cache: false,
+                                    success: function(msg) {
+                                        $("#depart").html(msg);
+                                    }
+                                });
+
+                                $("#depart").change(function() {
+                                    var depart = $("#depart").val();
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: "../proses/Search/cost_type.php",
+                                        data: {
+                                            depart: depart
+                                        },
+                                        cache: false,
+                                        success: function(msg) {
+                                            $("#cost_type").html(msg);
+                                        }
+                                    });
+                                });
+
+                                $("#kabupaten").change(function() {
+                                    var kabupaten = $("#kabupaten").val();
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: "get_kecamatan.php",
+                                        data: {
+                                            kabupaten: kabupaten
+                                        },
+                                        cache: false,
+                                        success: function(msg) {
+                                            $("#kecamatan").html(msg);
+                                        }
+                                    });
+                                });
+
+                                $("#kecamatan").change(function() {
+                                    var kecamatan = $("#kecamatan").val();
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: "get_kelurahan.php",
+                                        data: {
+                                            kecamatan: kecamatan
+                                        },
+                                        cache: false,
+                                        success: function(msg) {
+                                            $("#kelurahan").html(msg);
+                                        }
+                                    });
+                                });
+                            });
+                            </script>
+
+
+
+
+
+                            <!-- Second Row -->
+
 
                         </div>
+
                     </div>
+                </div>
 
 
-                    <script>
-                    $('#reset_form').click(function(event) {
-                        event.preventDefault();
+                <script>
+                $('#reset_form').click(function(event) {
+                    event.preventDefault();
 
-                        $(".terpilih").prop("selected", false);
+                    $(".terpilih").prop("selected", false);
 
-                    });
-                    </script>
+                });
+                </script>
 
-                    <!-- End Page -->
 
-                    <!-- Footer -->
-                    <?php
+                <!-- End Page -->
+
+                <!-- Footer -->
+                <?php
 include '../elemen/footer.php';?>
