@@ -192,7 +192,8 @@ if (!isset($_SESSION['yics_user'])) {
                                                     </div>
                                                     <input type="date" name="start" id="start_date"
                                                         class="form-control bg-transparent datepicker"
-                                                        value="<?= (isset($_GET['start']))? $_GET['start']:date('Y-m-d' , strtotime($awal_fiscal)); ?>" min="<?= date('Y-m-d' , strtotime($awal_fiscal)) ?>">
+                                                        value="<?= (isset($_GET['start']))? $_GET['start']:date('Y-m-d' , strtotime($awal_fiscal)); ?>"
+                                                        min="<?= date('Y-m-d' , strtotime($awal_fiscal)) ?>">
 
                                                 </div>
                                             </div>
@@ -1041,7 +1042,7 @@ include '../elemen/footer.php';?>
 
                             <label class="col-md-2 col-form-label" style="color:black;">Lampiran</label>
                             <div class="col-md-4 input-group">
-                                <input class="form-control-file" type="file" name="lampiran">
+                                <input class="form-control-file" type="file" name="lampiran" required>
                             </div>
                         </div>
 
@@ -1049,8 +1050,9 @@ include '../elemen/footer.php';?>
                             <label class="col-md-2 col-form-label" style="color:black;">Benefit</label>
 
                             <div class="col-md-10 input-group">
-                                <input type="text" class="form-control" name="benefit"
-                                    placeholder=" Benefit Proposal.." autocomplete="off" required>
+                                <textarea type="text" class="form-control" name="benefit" style=”height:100px;”
+                                    placeholder="Jelaskan secara singkat benefit proposal.." autocomplete="off"
+                                    required></textarea>
                             </div>
 
                         </div>
