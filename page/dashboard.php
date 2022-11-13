@@ -1044,7 +1044,7 @@ include '../elemen/footer.php';?>
                             <label class="col-md-2 col-form-label" style="color:black;">Benefit</label>
 
                             <div class="col-md-10 input-group">
-                                <input type="text" class="form-control" name="proposal"
+                                <input type="text" class="form-control" name="benefit"
                                     placeholder=" Benefit Proposal.." autocomplete="off" required>
                             </div>
 

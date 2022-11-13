@@ -92,7 +92,9 @@ $notif_pending = get_notif_pending();
                                     </p>
                                     <p class="media-heading <?=$color_notif ?>"> <?= $row['message'] ?></p>
                                     <h4 class="media-heading <?=$color_notif ?>">
-                                        <i class="icon wb-user" aria-hidden="true"></i> <?= ucwords($row['nama']) ?>
+                                       Oleh 
+                                       <!-- <i class="icon wb-user" aria-hidden="true"></i>  -->
+                                       <?= ucwords($row['nama']) ?>
                                     </h4>
                                     <time class="media-meta <?=$color_notif ?>" datetime="2018-06-12T20:50:48+08:00">
                                         <i class="icon oi-calendar"
