@@ -352,8 +352,7 @@ $id_dept = $_GET['dept'];
 
                                                         <tr
                                                             class="<?php if ($no%2==0){ echo "bg-blue-100"; } else{ echo ""; } ?> text-uppercase">
-                                                            <td> <span
-                                                                    class=""><?= $nomor_table ?></span>
+                                                            <td> <span class=""><?= $nomor_table ?></span>
                                                             </td>
                                                             <td>
                                                                 <?= ($no_prop == 1)? $data['depart']:""; ?></td>
@@ -376,7 +375,8 @@ $id_dept = $_GET['dept'];
 
                                                                 <?=($no_prop == 1)? $Rp." ".number_format ($data['cost'],0,',','.'): ""; ?>
                                                             </td>
-                                                            <td> <?= $nomor_urut ?>.<?= (isset($data['no_ia']))? $no_prop: ""; ?></td>
+                                                            <td> <?= (isset($data['no_ia']))? $no_prop: ""; ?>
+                                                            </td>
                                                             <td><?= $data['no_ia'] ?></td>
                                                             <td></td>
                                                             <td><?= $data['ia_deskripsi'] ?></td>
@@ -544,86 +544,90 @@ $id_dept = $_GET['dept'];
                 <script>
                 $(document).ready(function() {
 
-                    var table = $('.tableproposal').DataTable({
-                        dom: 'Bfrtip',
-                        buttons: [{
-                                extend: 'excel',
-                                title: 'CONTROL TABLE <?= $judul[$id_dept] ?> (x Million) PERIODE <?php echo $_SESSION["periode"]; ?>-<?php echo $_SESSION["periode"]+1; ?> ',
-                                text: 'Excel',
-                                orientation: 'landscape',
-                                pageSize: 'LEGAL',
-                                download: 'open',
-                                exportOptions: {
-                                    columns: ':not(.noexportar)'
-                                },
-                                customize: function(xlsx) {
+                    var table = $('.tableproposal').DataTable(
 
-                                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
-                                    $('row:first c', sheet).attr('s', '2');
-                                    $('*c', sheet).attr('s', '25');
+                        {
+                            dom: 'Bfrtip',
+                            buttons: [{
+                                    extend: 'excel',
+                                    title: 'CONTROL TABLE <?= $judul[$id_dept] ?> (x Million) PERIODE <?php echo $_SESSION["periode"]; ?>-<?php echo $_SESSION["periode"]+1; ?> ',
+                                    text: 'Excel',
+                                    orientation: 'landscape',
+                                    pageSize: 'LEGAL',
+                                    download: 'open',
+                                    exportOptions: {
+                                        columns: ':not(.noexportar)'
+                                    },
+                                    customize: function(xlsx) {
 
-                                }
-                            },
-                            {
-                                extend: "print",
-                                exportOptions: {
-                                    columns: ':not(.noexportar)',
+                                        var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                                        $('row:first c', sheet).attr('s', '2');
+                                        $('*c', sheet).attr('s', '25');
 
-
-                                },
-                                title: 'CONTROL TABLE <?= $judul[$id_dept] ?> (x Million) PERIODE <?php echo $_SESSION["periode"]; ?>-<?php echo $_SESSION["periode"]+1; ?> ',
-                                customize: function(win) {
-
-                                    var last = null;
-                                    var current = null;
-                                    var bod = [];
-
-                                    var css = '@page { size: landscape; }',
-                                        head = win.document.head || win.document
-                                        .getElementsByTagName('head')[0],
-                                        style = win.document.createElement('style');
-
-                                    style.type = 'text/css';
-                                    style.media = 'print';
-
-                                    if (style.styleSheet) {
-                                        style.styleSheet.cssText = css;
-                                    } else {
-                                        style.appendChild(win.document.createTextNode(css));
-                                    }
-
-                                    head.appendChild(style);
-                                }
-                            },
-                            {
-                                extend: 'pdf',
-                                title: 'CONTROL TABLE <?= $judul[$id_dept] ?> (x Million) PERIODE <?php echo $_SESSION["periode"]; ?>-<?php echo $_SESSION["periode"]+1; ?> ',
-                                text: 'Pdf',
-                                orientation: 'landscape',
-                                pageSize: 'LEGAL',
-                                download: 'open',
-                                alignment: "center",
-                                exportOptions: {
-                                    columns: ':not(.noexportar)',
-                                    orthogonal: "PDF",
-                                    modifier: {
-                                        order: 'index',
-                                        page: 'current'
                                     }
                                 },
-                                customize: function(doc) {
+                                {
+                                    extend: "print",
+                                    exportOptions: {
+                                        columns: ':not(.noexportar)',
 
-                                    doc.styles.tableBodyEven.alignment = "center";
-                                    doc.styles.tableBodyOdd.alignment = "center";
-                                    doc.styles.tableFooter.alignment = "center";
-                                    doc.styles.tableHeader.alignment = "center";
+
+                                    },
+                                    title: 'CONTROL TABLE <?= $judul[$id_dept] ?> (x Million) PERIODE <?php echo $_SESSION["periode"]; ?>-<?php echo $_SESSION["periode"]+1; ?> ',
+                                    customize: function(win) {
+
+                                        var last = null;
+                                        var current = null;
+                                        var bod = [];
+
+                                        var css = '@page { size: landscape; }',
+                                            head = win.document.head || win.document
+                                            .getElementsByTagName('head')[0],
+                                            style = win.document.createElement('style');
+
+                                        style.type = 'text/css';
+                                        style.media = 'print';
+
+                                        if (style.styleSheet) {
+                                            style.styleSheet.cssText = css;
+                                        } else {
+                                            style.appendChild(win.document.createTextNode(css));
+                                        }
+
+                                        head.appendChild(style);
+                                    }
+                                },
+                                {
+                                    extend: 'pdf',
+                                    title: 'CONTROL TABLE <?= $judul[$id_dept] ?> (x Million) PERIODE <?php echo $_SESSION["periode"]; ?>-<?php echo $_SESSION["periode"]+1; ?> ',
+                                    text: 'Pdf',
+                                    orientation: 'landscape',
+                                    pageSize: 'LEGAL',
+                                    download: 'open',
+                                    alignment: "center",
+                                    exportOptions: {
+                                        columns: ':not(.noexportar)',
+                                        orthogonal: "PDF",
+                                        modifier: {
+                                            order: 'index',
+                                            page: 'current'
+                                        }
+                                    },
+                                    customize: function(doc) {
+
+                                        doc.styles.tableBodyEven.alignment = "center";
+                                        doc.styles.tableBodyOdd.alignment = "center";
+                                        doc.styles.tableFooter.alignment = "center";
+                                        doc.styles.tableHeader.alignment = "center";
+                                    }
                                 }
-                            }
-                        ],
-                        "order": [7 , 'desc'],
-
-                        scrollX: true
-                    });
+                            ],
+                            "order": [7, 'desc'],
+                            scrollX: true,
+                            paging: false,
+                            ordering: false,
+                            info: false,
+                        });
 
                 });
                 </script>
