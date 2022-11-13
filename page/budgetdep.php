@@ -63,7 +63,21 @@ include '../elemen/header.php';?>
                     $id_fis = $data_fiscal['id_fis'];
                     $awal_fiscal = $data_fiscal['awal'];
 
-                    $list_bulan = [4,5,6,7,8,9,10,11,12,1,2,3];
+                    $list_bulan = [
+                        4 => 1,
+                        5 => 2,
+                        6 => 3,
+                        7 => 4,
+                        8 => 5,
+                        9 => 6,
+                        10 => 7,
+                        11 => 8,
+                        12 => 9,
+                        1 => 10,
+                        2 => 11,
+                        3 => 12
+                    ];
+
 
                     if(isset($_GET['start']) || isset($_GET['end']) ){
 
@@ -78,11 +92,15 @@ include '../elemen/header.php';?>
 
                     $get_data_budget = single_query("SELECT * FROM budget JOIN depart on budget.id_dep = depart.id_dep where budget.id_dep={$id_dep} and id_fis={$id_fis}");
 
-                    $consumtion_budget = single_query("SELECT sum(cost_ia) as cost , count(*) as qty FROM ia
+                    $consumtion_budget = single_query("SELECT sum(cost_ia) as cost , count(*) as qty , max(ia.time_ia) as last_month FROM ia
                         join proposal on ia.id_prop = proposal.id_prop
                         join depart on proposal.id_dep = depart.id_dep
                         where proposal.id_dep = {$id_dep} and proposal.id_fis={$id_fis} {$where_time}
                     ");  
+
+                    // bulan terakhir consumtion budget
+                    $last_month = $consumtion_budget['last_month'];
+                    $last_month = date('m' , strtotime($last_month));
                     
                     $consumtion_budget_data = query("SELECT MONTH(ia.time_ia) AS bulan, sum(ia.cost_ia) as cost FROM ia
                     join proposal on ia.id_prop = proposal.id_prop
@@ -91,7 +109,7 @@ include '../elemen/header.php';?>
                     GROUP BY bulan
                     ");  
 
-                    foreach ($list_bulan as $bulan) {
+                    foreach ($list_bulan as $bulan => $key) {
 
                         foreach($consumtion_budget_data as $row){
                             if($row['bulan'] == $bulan){
@@ -100,7 +118,7 @@ include '../elemen/header.php';?>
                         }
 
 
-                    }  
+                    }                    
                          
                     
                                                                 
@@ -120,13 +138,13 @@ include '../elemen/header.php';?>
                    
 
                     // net budget departemen ============
-                    foreach ($list_bulan as $fow) {
+                    foreach ($list_bulan as $fow => $key) {
                         $net_budget[] = $get_data_budget['budget'];
                     }
                     $net_budget = json_encode($net_budget);   
                     
                     // comsumtion budget from ia
-                    foreach($list_bulan as $row){
+                    foreach($list_bulan as $row => $key){
 
                         if(isset($isi_budget_bulan[$row])){
                             $data_grafik_con_budget[] = $isi_budget_bulan[$row];
@@ -240,10 +258,13 @@ include '../elemen/header.php';?>
                                                             style="font-size: 25px; font-weight: bold;color:black;">
                                                             <?= number_format($consumtion_budget['qty'],0,',','.') ?>
                                                         </span> x orders</p>
+                                                    <?php 
+                                                        $index_bulan_terakhir = $list_bulan[$last_month];
+                                                    ?>
                                                     <h4>Month / left:</h4>
                                                     <p style="font-size: 20px;"> <span
                                                             style="font-size: 25px; font-weight: bold;color:black;">
-                                                            <?= (isset($isi_budget_bulan))? $jumlah_bulan = count($isi_budget_bulan):0 ?>
+                                                            <?= (isset($isi_budget_bulan))? $jumlah_bulan = $index_bulan_terakhir:0 ?>
                                                         </span> / 12 months</p>
                                                     <div class="progress">
 
