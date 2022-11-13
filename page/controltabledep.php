@@ -624,9 +624,9 @@ $id_dept = $_GET['dept'];
                             ],
                             "order": [7, 'desc'],
                             scrollX: true,
-                            paging: false,
+                            paging: true,
                             ordering: false,
-                            info: false,
+                            info: true,
                         });
 
                 });
