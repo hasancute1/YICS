@@ -59,10 +59,21 @@ include '../elemen/header.php';?>
 
                     <?php
                     $id_dep = $_GET['dep'];
-                    $data_fiscal = single_query("SELECT id_fis from time_fiscal where status='aktif'");
+                    $data_fiscal = single_query("SELECT id_fis , awal from time_fiscal where status='aktif'");
                     $id_fis = $data_fiscal['id_fis'];
+                    $awal_fiscal = $data_fiscal['awal'];
 
                     $list_bulan = [4,5,6,7,8,9,10,11,12,1,2,3];
+
+                    if(isset($_GET['start']) || isset($_GET['end']) ){
+
+                        $where_time = "AND time_ia > '{$_GET['start']}' AND time_ia <= '{$_GET['end']}' ";
+
+                     }else{
+
+                        $where_time = "";
+                     }
+
                    
 
                     $get_data_budget = single_query("SELECT * FROM budget JOIN depart on budget.id_dep = depart.id_dep where budget.id_dep={$id_dep} and id_fis={$id_fis}");
@@ -70,13 +81,13 @@ include '../elemen/header.php';?>
                     $consumtion_budget = single_query("SELECT sum(cost_ia) as cost , count(*) as qty FROM ia
                         join proposal on ia.id_prop = proposal.id_prop
                         join depart on proposal.id_dep = depart.id_dep
-                        where proposal.id_dep = {$id_dep} and proposal.id_fis={$id_fis}
+                        where proposal.id_dep = {$id_dep} and proposal.id_fis={$id_fis} {$where_time}
                     ");  
                     
                     $consumtion_budget_data = query("SELECT MONTH(ia.time_ia) AS bulan, sum(ia.cost_ia) as cost FROM ia
                     join proposal on ia.id_prop = proposal.id_prop
                     join depart on proposal.id_dep = depart.id_dep
-                    where proposal.id_dep = {$id_dep} and proposal.id_fis={$id_fis}
+                    where proposal.id_dep = {$id_dep} and proposal.id_fis={$id_fis} {$where_time}
                     GROUP BY bulan
                     ");  
 
@@ -98,7 +109,7 @@ include '../elemen/header.php';?>
                         join depart on proposal.id_dep = depart.id_dep
                         join kategori_proposal on proposal.id_kat = kategori_proposal.id_kat                      
                         where proposal.id_dep = {$id_dep} and proposal.id_fis={$id_fis}
-                        and id_prog = 30
+                        and id_prog = 30 {$where_time}
                     ");              
 
                    
@@ -143,6 +154,8 @@ include '../elemen/header.php';?>
                                     </h6>
                                 </div>
                                 <div class="col-lg-6 col-md-6 mb-2">
+                                    <form action="" method="GET">
+                                    <input type="hidden" name="dep" value="<?= $id_dep ?>">
                                     <div class="row">
                                         <div class="col-lg-5 col-md-5">
                                             <div class="input-group">
@@ -152,7 +165,9 @@ include '../elemen/header.php';?>
                                                     </span>
                                                 </div>
                                                 <input type="date" name="start" id="start_date"
-                                                    class="form-control bg-transparent datepicker" value="">
+                                                    class="form-control bg-transparent datepicker" value="<?= (isset($_GET['start']))? $_GET['start']:date('Y-m-d' , strtotime($awal_fiscal)); ?>"
+                                                    min="<?= date('Y-m-d' , strtotime($awal_fiscal)) ?>"
+                                                    >
 
                                             </div>
                                         </div>
@@ -161,8 +176,10 @@ include '../elemen/header.php';?>
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">to</span>
                                                 </div>
-                                                <input type="date" name="start" id="start_date"
-                                                    class="form-control bg-transparent datepicker" value="">
+                                                <input type="date" name="end" id="end_date"
+                                                    class="form-control bg-transparent datepicker" value="<?= (isset($_GET['end']))? $_GET['end']:date('Y-m-d'); ?>"
+                                                    min="<?= date('Y-m-d' , strtotime($awal_fiscal)) ?>"
+                                                    >
                                             </div>
                                         </div>
                                         <div class="col-md-2 text-right">
@@ -170,6 +187,7 @@ include '../elemen/header.php';?>
                                                     aria-hidden="true"></i>GO</button>
                                         </div>
                                     </div>
+                                    </form>
                                 </div>
                                 <!-- First Row -->
 
