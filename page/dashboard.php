@@ -147,6 +147,13 @@ if (!isset($_SESSION['yics_user'])) {
                     <?php include '../elemen/sidebarback.php';?>
                     <!-- end sidebar back -->
 
+
+                    <?php 
+                        $data_fiscal = single_query("SELECT id_fis,awal from time_fiscal where status='aktif'");
+                        $id_fis = $data_fiscal['id_fis'];
+                        $awal_fiscal = $data_fiscal['awal'];
+                    ?>
+
                     <!-- Page -->
                     <div class="page">
                         <div class="page-header">
@@ -185,7 +192,7 @@ if (!isset($_SESSION['yics_user'])) {
                                                     </div>
                                                     <input type="date" name="start" id="start_date"
                                                         class="form-control bg-transparent datepicker"
-                                                        value="<?= (isset($_GET['start']))? $_GET['start']:date('Y-m-d'); ?>">
+                                                        value="<?= (isset($_GET['start']))? $_GET['start']:date('Y-m-d' , strtotime($awal_fiscal)); ?>" min="<?= date('Y-m-d' , strtotime($awal_fiscal)) ?>">
 
                                                 </div>
                                             </div>
@@ -284,8 +291,16 @@ if (!isset($_SESSION['yics_user'])) {
 
                                 <?php 
 
-                                    $data_fiscal = single_query("SELECT id_fis from time_fiscal where status='aktif'");
-                                    $id_fis = $data_fiscal['id_fis'];
+                                     if(isset($_GET['start']) || isset($_GET['end']) ){
+
+                                        $where_time = "AND time_ia > '{$_GET['start']}' AND time_ia <= '{$_GET['end']}' ";
+
+                                     }else{
+
+                                        $where_time = "";
+                                     }
+
+                                   
 
                                     // $depart = query("SELECT * FROM view_alokasi_budget WHERE status= 'aktif'");
                                     $depart = query("SELECT * FROM budget JOIN depart on budget.id_dep = depart.id_dep where id_fis={$id_fis}");        
@@ -293,7 +308,7 @@ if (!isset($_SESSION['yics_user'])) {
                                     $consumtion_budget = query("SELECT depart.id_dep , sum(cost_ia) as cost FROM ia
                                         join proposal on ia.id_prop = proposal.id_prop
                                         join depart on proposal.id_dep = depart.id_dep
-                                        where proposal.id_fis={$id_fis}
+                                        where proposal.id_fis={$id_fis} {$where_time}
                                         group by depart
                                     ");  
 
@@ -357,7 +372,7 @@ if (!isset($_SESSION['yics_user'])) {
                                                     $consumtion_budget = single_query("SELECT sum(cost_ia) as cost , count(*) as qty FROM ia
                                                     join proposal on ia.id_prop = proposal.id_prop
                                                     join depart on proposal.id_dep = depart.id_dep
-                                                    where proposal.id_dep = {$row_card['id_dep']} and proposal.id_fis={$id_fis}
+                                                    where proposal.id_dep = {$row_card['id_dep']} and proposal.id_fis={$id_fis} {$where_time}
                                                     ");
 
                                                     $sisa_budget = $row_card['budget'] - $consumtion_budget['cost'];
@@ -433,6 +448,19 @@ if (!isset($_SESSION['yics_user'])) {
                                                 <tbody>
                                                     <!-- query untuk memunculkan kolom proposal -->
                                                     <?php 
+
+
+                            // jika data di filter tanggal
+
+                            // if(isset($_GET['start']) || isset($_GET['end']) ){
+
+                            //     $where_time_prop = "AND time_ia > '{$_GET['start']}' AND time_ia <= '{$_GET['end']}' ";
+
+                            //  }else{
+
+                            //     $where_time_prop = "";
+                            //  }
+
 
                           // jika yang login general user
                           if( $_SESSION['yics_level'] == "1"){
@@ -663,7 +691,7 @@ include '../elemen/footer.php';?>
         MAX(ia.time_ia) AS max_date
         FROM ia 
         JOIN proposal on ia.id_prop = proposal.id_prop 
-        AND proposal.id_fis = '".$fis_aktif['id_fis']."'
+        AND proposal.id_fis = '".$fis_aktif['id_fis']."' 
         GROUP BY  bulan
         ");
 
