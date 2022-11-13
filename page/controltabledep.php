@@ -317,6 +317,15 @@ $id_dept = $_GET['dept'];
                                         $sembunyikan_nomor = ""; 
                                         
                                     }
+
+                                    if($id_before == $data['id_prop']){
+                                        $nomor_table = "";
+                                    }else{
+                                       
+                                        $nomor_table = $nomor_urut;
+                                    }
+
+
                                     if ($data['id_ia']>0){
                                         $tombol_hidup="";
                                     }else{
@@ -344,7 +353,7 @@ $id_dept = $_GET['dept'];
                                                         <tr
                                                             class="<?php if ($no%2==0){ echo "bg-blue-100"; } else{ echo ""; } ?> text-uppercase">
                                                             <td> <span
-                                                                    class="<?= $sembunyikan_nomor ?>"><?= $nomor_urut ?></span>
+                                                                    class=""><?= $nomor_table ?></span>
                                                             </td>
                                                             <td>
                                                                 <?= ($no_prop == 1)? $data['depart']:""; ?></td>
@@ -367,7 +376,7 @@ $id_dept = $_GET['dept'];
 
                                                                 <?=($no_prop == 1)? $Rp." ".number_format ($data['cost'],0,',','.'): ""; ?>
                                                             </td>
-                                                            <td><?= (isset($data['no_ia']))? $no_prop: ""; ?></td>
+                                                            <td> <?= $nomor_urut ?>.<?= (isset($data['no_ia']))? $no_prop: ""; ?></td>
                                                             <td><?= $data['no_ia'] ?></td>
                                                             <td></td>
                                                             <td><?= $data['ia_deskripsi'] ?></td>
@@ -611,6 +620,7 @@ $id_dept = $_GET['dept'];
                                 }
                             }
                         ],
+                        "order": [7 , 'desc'],
 
                         scrollX: true
                     });
