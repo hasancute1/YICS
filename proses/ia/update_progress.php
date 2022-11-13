@@ -13,7 +13,9 @@ if (isset ($_SESSION['yics_user'])){
          $index = 0;
          $id_ia = $_POST['id_ia'];
          //data proposal
-         $data_ia = single_query("SELECT * FROM ia WHERE id_ia={$id_ia}");
+         $data_ia = single_query("SELECT ia.* , proposal.username FROM ia 
+         join proposal on ia.id_prop = proposal.id_prop
+         WHERE id_ia={$id_ia}");
 
      //     var_dump($_POST['id_prog']);
 
@@ -58,7 +60,7 @@ if (isset ($_SESSION['yics_user'])){
                     }else{
                          // kirim notifikasi ke pic
                          $notif = TRUE;
-                         $pesan_notif = "Update Proses " . $data_prog['nama_progress'];
+                         $pesan_notif = "Dengan No IA : " .$data_ia['ia']. " Telah Diupdate Ke Proses " . $data_prog['nama_progress'];
                     }
                }else{
                     $insertTracking = " INSERT INTO tracking_ia (`id_ia`, `id_prog`, `approval`,`username`,`time`) VALUES  ('$id_ia', '$prog', '1', '$pic', '$time' )";
@@ -72,7 +74,7 @@ if (isset ($_SESSION['yics_user'])){
                     }else{
                          // kirim notifikasi ke pic
                          $notif = TRUE;
-                         $pesan_notif = "Update Proses " . $data_prog['nama_progress'];
+                         $pesan_notif = "Dengan No IA : " .$data_ia['ia']. " Telah Diupdate Ke Proses " . $data_prog['nama_progress'];
                     }
                }
                // echo  $_POST['id_ia'].$_POST['pic'][$index]." : ".$_POST['tgl'][$index]." : ".$_POST['approve_step'.$i]."<br>";
