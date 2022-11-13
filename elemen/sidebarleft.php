@@ -69,6 +69,7 @@ $url_aktive = $uri[0];
         </ul>
     </li>
     </li>
+    <?php if( $_SESSION['yics_level'] != "1"){ ?>
     <li
         class="site-menu-item has-sub open <?= (in_array($url_aktive, ["usersetting","categorysetting","fiscalsetting","kurs_matauang"] ))? "active": ""; ?>">
         <a href="javascript:void(0)">
@@ -101,4 +102,5 @@ $url_aktive = $uri[0];
 
         </ul>
     </li>
+    <?php } ?>
 </ul>

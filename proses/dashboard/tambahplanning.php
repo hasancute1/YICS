@@ -8,8 +8,8 @@ if (isset ($_SESSION['yics_user'])){
          // masukan data post ke variabel 
         $depart=$_POST['depart']; 
         $kategori=$_POST['kategori'];
-        $proposal=$_POST ['proposal'];
-        $cost=$_POST ['cost'];             
+        $proposal=$_POST ['proposal'];                 
+        $benefit=$_POST ['benefit'];             
         $id_matauang=$_POST ['mata_uang'];              
 
         $cost_request=$_POST ['cost'];
@@ -54,7 +54,7 @@ if (isset ($_SESSION['yics_user'])){
             $_SESSION['pesan'] = "Data Berhasil Disimpan";
             header('location: ../../page/dashboard.php');
          }
-         $inputproposal = "INSERT INTO proposal (`id_dep`,`username`,`id_kat`,`proposal`,`cost`,`id_fis`,`lampiran`,`id_matauang`) VALUES ('$depart',$username,'$kategori','$proposal','$cost','$id_fis','$file_name','$id_matauang')"; 
+         $inputproposal = "INSERT INTO proposal (`id_dep`,`username`,`id_kat`,`proposal`,`cost`,`id_fis`,`lampiran`,`id_matauang`,`benefit`) VALUES ('$depart',$username,'$kategori','$proposal','$cost','$id_fis','$file_name','$id_matauang','$benefit')"; 
          $sql = mysqli_query($link_yics, $inputproposal)or die(mysqli_error($link_yics));
 
          $last_id = mysqli_insert_id($link_yics);
@@ -102,7 +102,9 @@ if (isset ($_SESSION['yics_user'])){
         $depart=$_POST['depart'];
         $kategori=$_POST['kategori'];
         $proposal=$_POST['proposal'];
-        $cost=$_POST['cost'];
+        $benefit=$_POST ['benefit'];   
+        $cost_request=$_POST ['cost'];
+        $cost = str_replace('.','' ,$cost_request); 
         
        $UbahProposal = "UPDATE  proposal SET id_kat='$kategori',id_dep='$depart',proposal='$proposal',cost='$cost' WHERE id_prop = '$id'"; 
        echo $UbahProposal;
