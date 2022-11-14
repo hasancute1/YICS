@@ -68,15 +68,22 @@ include '../elemen/header.php';?>
                                 <!-- First Row -->
                                 <div class="col-lg-12 col-md-12">
                                     <div class="card card-shadow bg-blue-100" style="border-radius: 10px;">
-                                        <form autocomplete="off" method="get" action="">
+                                        <form autocomplete="off" method="get" action="" id="formulir">
                                             <div class="row card-body">
                                                 <div class="col-lg-2 col-md-2">
+                                                    <?php 
+                                                    $periode = query("SELECT * from time_fiscal");
+
+                                                    ?>
                                                     <div class="form-group">
                                                         <label for="depart">
                                                             <h4>PERIODE</h4>
                                                         </label>
                                                         <select class="form-control" name="periode" id="periode">
                                                             <option>Pilih Periode</option>
+                                                            <?php foreach ($periode as $key => $row) { ?>
+                                                                <option value="<?= $row['id_fis'] ?>"><?= $row['periode'] ?></option>
+                                                            <?php } ?>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -160,6 +167,7 @@ include '../elemen/header.php';?>
 
                                 $("#depart").change(function() {
                                     var depart = $("#depart").val();
+                                    console.log(depart);
                                     $.ajax({
                                         type: 'POST',
                                         url: "../proses/Search/cost_type.php",
@@ -173,35 +181,24 @@ include '../elemen/header.php';?>
                                     });
                                 });
 
-                                $("#kabupaten").change(function() {
-                                    var kabupaten = $("#kabupaten").val();
+                                $("#cost_type").change(function() {                                   
+                                    var data_formulir =  $('#formulir').serialize(); 
+
                                     $.ajax({
-                                        type: 'POST',
-                                        url: "get_kecamatan.php",
-                                        data: {
-                                            kabupaten: kabupaten
-                                        },
+                                        type: 'GET',
+                                        url: "../proses/Search/get_proposal.php",
+                                        data: data_formulir,
                                         cache: false,
                                         success: function(msg) {
-                                            $("#kecamatan").html(msg);
+                                            $("#proposal").html(msg);
                                         }
                                     });
+
+
+
                                 });
 
-                                $("#kecamatan").change(function() {
-                                    var kecamatan = $("#kecamatan").val();
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: "get_kelurahan.php",
-                                        data: {
-                                            kecamatan: kecamatan
-                                        },
-                                        cache: false,
-                                        success: function(msg) {
-                                            $("#kelurahan").html(msg);
-                                        }
-                                    });
-                                });
+                              
                             });
                             </script>
 
