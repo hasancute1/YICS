@@ -73,6 +73,16 @@ include '../elemen/header.php';?>
                                                 <div class="col-lg-2 col-md-2">
                                                     <div class="form-group">
                                                         <label for="depart">
+                                                            <h4>PERIODE</h4>
+                                                        </label>
+                                                        <select class="form-control" name="periode" id="periode">
+                                                            <option>Pilih Periode</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2 col-md-2">
+                                                    <div class="form-group">
+                                                        <label for="depart">
                                                             <h4>DEPARTMENT</h4>
                                                         </label>
                                                         <select class="form-control" name="depart" id="depart">
@@ -92,7 +102,7 @@ include '../elemen/header.php';?>
                                                     </div>
 
                                                 </div>
-                                                <div class="col-lg-5 col-md-5">
+                                                <div class="col-lg-3 col-md-3">
                                                     <div class="form-group">
                                                         <label for="cost_type">
                                                             <h4>PROPOSAL</h4>
@@ -130,38 +140,6 @@ include '../elemen/header.php';?>
                                                     </button>
                                                 </a>
                                             </div>
-
-
-
-                                            <?
-                                            $data_i = query("SELECT * from tracking_ia
-                                            join ia on tracking_ia.id_ia = ia.id_ia
-                                            join proposal on ia.id_prop = proposal.id_prop
-                                            join depart on proposal.id_dep = depart.id_dep
-                                            join kategori_proposal on proposal.id_kat = kategori_proposal.id_kat
-                                            where proposal.id_dep = '1' and proposal.id_fis='17'
-                                                    and id_prog =  '30' and approval = '1'
-                                            ");
-                                            ?>
-                                            <?php $i=1; ?>
-
-                                            <?php foreach ($data_i as $row) { ?>
-                                            <tr class="text-wrap">
-                                                <td class="align-middle text-center"><?= $i ?></td>
-                                                <td class="align-middle text-center"><?= $row['kategori'] ?>
-                                                </td>
-                                                <td class="align-middle text-center"><?= $row['ia'] ?></td>
-                                                <td class="align-middle text-center"><?= $row['deskripsi'] ?>
-                                                </td>
-                                                <td class="align-middle text-center"></td>
-                                                <td class="align-middle text-center">
-                                                    <?= date('d M Y' , strtotime($row['time_ia']))  ?></td>
-                                                <td class="align-middle text-center">Rp
-                                                    <?= number_format($row['cost_ia'],0,',','.') ?></td>
-                                                <td class="align-middle text-center">Closed</td>
-                                            </tr>
-
-                                            <?php $i++; } ?>
                                     </div>
 
                                     </form>
