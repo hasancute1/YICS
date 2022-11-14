@@ -115,7 +115,7 @@ include '../elemen/header.php';?>
                                                             <h4>PROPOSAL</h4>
                                                         </label>
                                                         <select class="form-control" name="proposal" id="proposal">
-                                                            <option>Pilih Proposal</option>
+                                                            <option value="0">Pilih Proposal</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -191,6 +191,35 @@ include '../elemen/header.php';?>
                                         cache: false,
                                         success: function(msg) {
                                             $("#proposal").html(msg);
+                                        }
+                                    });
+
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: "../proses/Search/get_ia.php",
+                                        data: data_formulir,
+                                        cache: false,
+                                        success: function(msg) {
+                                            $("#ia_selected").html(msg);
+                                        }
+                                    });
+
+
+
+                                });
+
+
+                                $("#proposal").change(function() {        
+                                                           
+                                    var data_formulir =  $('#formulir').serialize();                               
+
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: "../proses/Search/get_ia.php",
+                                        data: data_formulir,
+                                        cache: false,
+                                        success: function(msg) {
+                                            $("#ia_selected").html(msg);
                                         }
                                     });
 
