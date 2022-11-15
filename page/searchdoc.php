@@ -128,7 +128,7 @@ include '../elemen/header.php';?>
                                                             </label>
                                                             <select class="form-control" name="ia_selected"
                                                                 id="ia_selected">
-                                                                <option>Pilih NO IA.</option>
+                                                                <option value="0">Pilih NO IA.</option>
                                                             </select>
                                                         </div>
 
