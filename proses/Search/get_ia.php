@@ -30,7 +30,7 @@ $list_ia = query("SELECT * FROM ia
 
 
 
-echo "<option value=''>Pilih IA</option>";
+echo "<option value=''>Pilih NO IA.</option>";
 
 foreach($list_ia as $row){
     echo "<option value='" . $row['id_ia'] . "'>" . $row['ia'] . "</option>";

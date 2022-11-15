@@ -82,7 +82,8 @@ include '../elemen/header.php';?>
                                                         <select class="form-control" name="periode" id="periode">
                                                             <option>Pilih Periode</option>
                                                             <?php foreach ($periode as $key => $row) { ?>
-                                                                <option value="<?= $row['id_fis'] ?>"><?= $row['periode'] ?></option>
+                                                            <option value="<?= $row['id_fis'] ?>"><?= $row['periode'] ?>
+                                                            </option>
                                                             <?php } ?>
                                                         </select>
                                                     </div>
@@ -147,19 +148,21 @@ include '../elemen/header.php';?>
                                                     </button>
                                                 </a>
                                             </div>
+                                        </form>
+
                                     </div>
-
-                                    </form>
-
-
-                                    <!-- data tracking ia -->
-
                                     <div id="tracking-ia">
+
+
+
+                                        <!-- data tracking ia -->
+
+
 
                                         <!-- content ia di sini dari ajax -->
 
                                     </div>
-                                    
+
 
                                 </div>
                             </div>
@@ -192,8 +195,8 @@ include '../elemen/header.php';?>
                                     });
                                 });
 
-                                $("#cost_type").change(function() {                                   
-                                    var data_formulir =  $('#formulir').serialize(); 
+                                $("#cost_type").change(function() {
+                                    var data_formulir = $('#formulir').serialize();
 
                                     $.ajax({
                                         type: 'GET',
@@ -220,9 +223,9 @@ include '../elemen/header.php';?>
                                 });
 
 
-                                $("#proposal").change(function() {        
-                                                           
-                                    var data_formulir =  $('#formulir').serialize();                               
+                                $("#proposal").change(function() {
+
+                                    var data_formulir = $('#formulir').serialize();
 
                                     $.ajax({
                                         type: 'GET',
@@ -239,7 +242,7 @@ include '../elemen/header.php';?>
                                 });
 
 
-                                $('#search').click(function(event){
+                                $('#search').click(function(event) {
                                     event.preventDefault();
                                     var ia_selected = $('#ia_selected').val();
 
@@ -247,7 +250,7 @@ include '../elemen/header.php';?>
                                         type: 'GET',
                                         url: "../proses/Search/tracking_ia.php",
                                         data: {
-                                            id_ia : ia_selected
+                                            id_ia: ia_selected
                                         },
                                         cache: false,
                                         success: function(msg) {
@@ -258,7 +261,7 @@ include '../elemen/header.php';?>
 
                                 });
 
-                              
+
                             });
                             </script>
 

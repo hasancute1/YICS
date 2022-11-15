@@ -252,8 +252,7 @@ include '../elemen/header.php';?>
 
 
 
-                                                            <div
-                                                                class="list-group-item bg-<?= "$approve_clr" ?>-300 <?= "$hilang" ?>">
+                                                            <div class="list-group-item bg-<?= "$approve_clr" ?>-300 ">
                                                                 <ul>
                                                                     <li style="list-style-type: none;">
                                                                         <i class="icon wb-<?= "$icon" ?>"
@@ -295,10 +294,12 @@ include '../elemen/header.php';?>
                                                         <h3 class="pearl-tittle"><?php echo $data_333['keterangan'] ; ?>
                                                         </h3>
                                                         <br>
-                                                        <div
-                                                            class="list-group bg-blue-grey-100 bg-inherit text-left w-250 ml-3">
+                                                        <div class="card  card-transparent  align-items-center "
+                                                            style="overflow-y: auto; max-height: 585px;">
+                                                            <div
+                                                                class="list-group bg-blue-grey-100 bg-inherit text-left w-250 ml-3">
 
-                                                            <?php  
+                                                                <?php  
                                                           
                                                                 $qProg = "SELECT nama_progress, id_prog , step FROM progress WHERE id_ket='3'";
                                                                 if($data_ia['cost_ia'] < 50 ){
@@ -351,38 +352,40 @@ include '../elemen/header.php';?>
 
 
 
-                                                            <div
-                                                                class="list-group-item bg-<?= "$approve_clr" ?>-300 <?= "$hilang" ?>">
-                                                                <ul>
-                                                                    <li style="list-style-type: none;">
-                                                                        <i class="icon wb-<?= "$icon" ?>"
-                                                                            aria-hidden="true"></i>
-                                                                        <?= $rows_bp['nama_progress'] ?>
+                                                                <div
+                                                                    class="list-group-item bg-<?= "$approve_clr" ?>-300 ">
+                                                                    <ul>
+                                                                        <li style="list-style-type: none;">
+                                                                            <i class="icon wb-<?= "$icon" ?>"
+                                                                                aria-hidden="true"></i>
+                                                                            <?= $rows_bp['nama_progress'] ?>
 
-                                                                    </li>
+                                                                        </li>
 
 
-                                                                    <li style="list-style-type: none;">
-                                                                        <i class="icon oi-calendar" aria-hidden="true">
-                                                                            &nbsp;&nbsp; <?= "$time" ?></i>
-                                                                    </li>
+                                                                        <li style="list-style-type: none;">
+                                                                            <i class="icon oi-calendar"
+                                                                                aria-hidden="true">
+                                                                                &nbsp;&nbsp; <?= "$time" ?></i>
+                                                                        </li>
 
-                                                                    <li style="list-style-type: none;">
-                                                                        <i class="icon wb-user"
-                                                                            aria-hidden="true"></i>&nbsp;<?= "$id_pic" ?>
-                                                                    </li>
+                                                                        <li style="list-style-type: none;">
+                                                                            <i class="icon wb-user"
+                                                                                aria-hidden="true"></i>&nbsp;<?= "$id_pic" ?>
+                                                                        </li>
 
-                                                                </ul>
-                                                                <hr>
-                                                            </div>
+                                                                    </ul>
+                                                                    <hr>
+                                                                </div>
 
-                                                            <?php
+                                                                <?php
                                                         
                                                         }
                                                         } 
                                                         
                                                         ?>
 
+                                                            </div>
                                                         </div>
                                                         <div
                                                             class="list-group bg-blue-grey-100 bg-inherit text-left w-250 ml-3">
@@ -443,8 +446,7 @@ include '../elemen/header.php';?>
 
 
 
-                                                            <div
-                                                                class="list-group-item bg-<?= "$approve_clr" ?>-300 <?= "$hilang" ?>">
+                                                            <div class="list-group-item bg-<?= "$approve_clr" ?>-300 ">
                                                                 <ul>
                                                                     <li style="list-style-type: none;">
                                                                         <i class="icon wb-<?= "$icon" ?>"
@@ -476,11 +478,7 @@ include '../elemen/header.php';?>
                                                         ?>
 
                                                         </div>
-                                                        <div
-                                                            class="list-group bg-blue-grey-100 bg-inherit text-left w-250 ml-3">
 
-
-                                                        </div>
                                                     </div>
 
                                                     <div
@@ -534,8 +532,7 @@ include '../elemen/header.php';?>
 
 
 
-                                                            <div
-                                                                class="list-group-item bg-<?= "$approve_clr" ?>-300 <?= "$hilang" ?>">
+                                                            <div class="list-group-item bg-<?= "$approve_clr" ?>-300">
                                                                 <ul>
                                                                     <li style="list-style-type: none;">
                                                                         <i class="icon wb-<?= "$icon" ?>"
@@ -567,12 +564,70 @@ include '../elemen/header.php';?>
                                                         ?>
 
                                                         </div>
-
-
-
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <!-- //  QUERY TRACKING_PROPOSAL................................ -->
+                                        <?php
+                                                                                $qry = "SELECT
+                                                                                tracking_ia.id_prog AS id_prog, 
+                                                                                tracking_ia.approval AS id_approval,
+                                                                                `time`,                                                                                                                                                         
+                                                                                progress.nama_progress AS nama_progress,                                                                             
+                                                                                data_user.nama AS pic
+                                                                                FROM tracking_ia
+                                                                                JOIN data_user ON tracking_ia.username = data_user.username                                                                                
+                                                                                JOIN progress ON  progress.id_prog = tracking_ia.id_prog 
+                                                                                WHERE id_ia = '$id_ia' AND tracking_ia.id_prog='30' ";
+                                                                                $sql = mysqli_query($link_yics, $qry)or die (mysqli_error($link_yics));                                                                            
+                                                                            if(mysqli_num_rows($sql)>0){
+                                                                                $data_tracking = mysqli_fetch_assoc($sql);                
+                                                                                $approve = $data_tracking['id_approval'];
+                                                                                $id_prog_bp = $data_tracking['id_prog'];
+                                                                                $nama= $data_tracking['nama_progress'];
+                                                                                $time= date("d M Y | H:i", strtotime($data_tracking['time'])); 
+                                                                                $id_pic= $data_tracking ['pic'];
+                                                                                $clr_atas = ($id_prog_bp > '0')?"tail":("grey") ;
+                                                                                $approve_clr = ($approve == '1')?"primary":(($approve == '0')?"danger":"grey-400") ;
+                                                                                $status = ($approve == '1')?"SUKSES":(($approve == '0')?"BERHENTI":"..") ;
+                                                                                $icon = ($approve == '1')?"fa-flag-checkered":(($approve == '0')?"wb-close":"..") ;
+                                                                                $nongol="";
+                                                                            }else {
+                                                                                $nongol="d-none";
+                                                                                $nama= "...";
+                                                                                $approve = "...";
+                                                                                $time= "...";
+                                                                                $id_pic= "...";
+                                                                                $approve_clr = ($approve == '1')?"primary":(($approve == '0')?"denger":"grey-400") ;
+                                                                                $status = ($approve == '1')?"SUKSES":(($approve == '0')?"BERHENTI":"..") ;
+                                                                                $icon = ($approve == '1')?"check":(($approve == '0')?"close":"..") ;
+                                                                            }	
+                                                                            ?>
+
+
+
+
+                                        <div class="row <?= $nongol ?> ">
+                                            <div class="col-md-1"></div>
+                                            <div class="col-md-10">
+                                                <div class="card-body bg-<?= $approve_clr ?> h-250  text-center d "
+                                                    style="border-radius:10px" style="animation: mymove 5s infinite;"
+                                                    id="d">
+                                                    <span class="mb-200">
+                                                        <h1 style="color:white;"><i
+                                                                class="icon <?=  $icon ?>  font-size-80"
+                                                                aria-hidden="true"> </i><?= $nama ?> </h1>
+                                                    </span>
+                                                    <hr style="width:35%; margin: auto;">
+                                                    <h4 style="color:white;"><i class="icon wb-calendar font-size-20"
+                                                            aria-hidden="true"> </i><?= $time; ?> </h4>
+                                                    <h4 style="color:white;"><i class="icon wb-user font-size-20"
+                                                            aria-hidden="true"> </i><?= $id_pic; ?></h4>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1"></div>
                                         </div>
                                     </div>
                                 </div>
