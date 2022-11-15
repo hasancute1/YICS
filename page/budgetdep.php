@@ -56,6 +56,29 @@ include '../elemen/header.php';?>
                     <!-- end sidebar back -->
 
                     <!-- get data -->
+                    <?php
+                                                            
+                                                            $alokasi = mysqli_query($link_yics, "SELECT * FROM time_fiscal WHERE status='aktif'") or die(mysqli_error($link_yics));
+                                                            $data = mysqli_fetch_assoc($alokasi);
+                                                           
+                                                            $awal = date_create($data['awal']);
+                                                            $now=date_create();
+                                                            $akhir =  date_create($data['akhir']);
+                                                            $diffawal=date_diff($awal,$now);
+                                                            $diffakhir=date_diff($akhir,$now);
+                                                            echo $diffawal->m +1;
+                                                            echo $diffawal->y;
+                                                          $awalfis= $diffawal->m +1;
+                                                          $thfis =$diffawal->y;
+                                                          $bulanfis="";
+                                                          if ($thfis == 0){
+                                                            $bulanfis = $awalfis;
+                                                          }else if($thfis !==0) {
+                                                            $bulanfis = 12;
+                                                          }
+
+                                                            
+                                                            ?>
 
                     <?php
                     $id_dep = $_GET['dep'];
@@ -161,18 +184,32 @@ include '../elemen/header.php';?>
                     <div class="page">
                         <div class="page-header">
                             <h1 class="page-title font-size-26 font-weight-600">Budget <?= $get_data_budget['depart']?>
-                                Overview (x Million)
+                                Overview (x Million)<?php echo  $bulanfis; echo  $thfis;?>
                             </h1>
                         </div>
 
                         <div class="page-content container-fluid">
                             <div class="row">
                                 <div class="col-lg-6 col-md-6  mb-2">
+                                    <?php 
+                                    $alokasi = mysqli_query($link_yics, "SELECT * FROM time_fiscal WHERE status='aktif'") or die(mysqli_error($link_yics));
+                                    if(mysqli_num_rows($alokasi)>0){                                    
+                                    $data = mysqli_fetch_assoc($alokasi);
+                                    $periode = $data['periode'];
+                                    $awalf = date("d M Y", strtotime($data['awal']));
+                                    $akhirf = date("d M Y", strtotime($data['akhir']));
+                                    }else{
+                                        $periode="Pilih periode aktif";
+                                        $awalf="Pilih tahun aktif";
+                                        $akhirf="Pilih tahun aktif";
+                                    }
+                                        ?>
+
                                     <h6 class="font-size-18 font-weight-400">Periode ( <span
-                                            style="color:red;"><?php echo  $_SESSION['periode']; ?> </span> ) :
-                                        <span style="color:red;"><?php echo $_SESSION['awal']; ?></span>
+                                            style="color:red;"><?= $periode; ?> </span> ) :
+                                        <span style="color:red;"><?= $awalf; ?></span>
                                         s.d
-                                        <span style="color:red;"><?php echo $_SESSION['akhir']; ?>
+                                        <span style="color:red;"><?= $akhirf; ?>
                                         </span>
                                     </h6>
                                 </div>
@@ -239,12 +276,17 @@ include '../elemen/header.php';?>
 
                                                         ?>
 
-                                                        <span class="white font-size-60 font-weight-100">Rp
-                                                            <?= number_format($sisa_budget,0,',','.') ?></span>
-                                                        <br>
-                                                        <p class="white font-weight-100 m-0 font-size-20">"Budget Rp
-                                                            <?= number_format($get_data_budget['budget'],0,',','.')  ?>"
-                                                        </p>
+                                                        <span>
+                                                            <P class="white font-size-30 font-weight-100 mt-20">
+                                                                Rp
+                                                                <?= number_format($sisa_budget,0,',','.')." "."MILLION" ?>
+                                                            </P>
+
+                                                            <p class="white font-weight-100 font-size-20 mt-10">
+                                                                "Budget Rp
+                                                                <?= number_format($get_data_budget['budget'],0,',','.')." "."MILLION"  ?>"
+                                                            </p>
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -259,18 +301,18 @@ include '../elemen/header.php';?>
                                                             <?= number_format($consumtion_budget['qty'],0,',','.') ?>
                                                         </span> x orders</p>
                                                     <?php 
-                                                        $index_bulan_terakhir = $list_bulan[$last_month];
+                                                        // $index_bulan_terakhir = $list_bulan[$last_month];
                                                     ?>
                                                     <h4>Month / left:</h4>
                                                     <p style="font-size: 20px;"> <span
                                                             style="font-size: 25px; font-weight: bold;color:black;">
-                                                            <?= (isset($isi_budget_bulan))? $jumlah_bulan = $index_bulan_terakhir:0 ?>
+                                                            <?= $bulanfis ?>
                                                         </span> / 12 months</p>
                                                     <div class="progress">
 
                                                         <?php 
 
-                                                        $persentase = number_format( $jumlah_bulan / 12 * 100 ,0 );
+                                                        $persentase = number_format( $bulanfis / 12 * 100 ,0 );
 
                                                         ?>
                                                         <div class="progress-bar progress-bar-striped active"
@@ -290,18 +332,26 @@ include '../elemen/header.php';?>
                                                         <div class="text-left">
 
                                                             <?php 
-                                                                $persentase_budget =ceil( $sisa_budget / $total_budget * 100);
-if ( $id_dep ==1){
-    $warna = 'yellow';
+if( $sisa_budget>0){
+    $sisa=$sisa_budget;
+}else{
+    $sisa=0;
 }
-else if ( $id_dep ==2){
-    $warna = 'red';
-}
-else if ( $id_dep ==3){
-    $warna = 'purple';
-}else {
-    $warna = '';
-}
+
+
+
+                                                                $persentase_budget =ceil( $sisa / $total_budget * 100);
+                                                                if ( $id_dep ==1){
+                                                                    $warna = 'yellow';
+                                                                }
+                                                                else if ( $id_dep ==2){
+                                                                    $warna = 'red';
+                                                                }
+                                                                else if ( $id_dep ==3){
+                                                                    $warna = 'purple';
+                                                                }else {
+                                                                    $warna = '';
+                                                                }
                                                             ?>
 
                                                             <div class="pie-progress " data-plugin="pieProgress"
@@ -320,11 +370,11 @@ else if ( $id_dep ==3){
                                                     <div class="col-lg-6 col-md-5 mt-30" style="line-height: 15px;">
                                                         <h4>e-Wallet:</h4>
                                                         <p style="font-size: 20px; color:green;font-weight: bold;">Rp
-                                                            <?= number_format($get_data_budget['budget'],0,',','.') ?>
+                                                            <?= number_format($get_data_budget['budget'],0,',','.')." "."MILLION" ?>
                                                         </p>
                                                         <h4>Consummed:</h4>
                                                         <p style="font-size: 20px; color:blue;font-weight: bold;">Rp
-                                                            <?= number_format($consumtion_budget['cost'] ,0, ',','.') ?>
+                                                            <?= number_format($consumtion_budget['cost'] ,0, ',','.')." "."MILLION"  ?>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -383,7 +433,7 @@ else if ( $id_dep ==3){
                                                         <th class="align-middle text-center" height="10px" rowspan="2">
                                                             TOTAL TRANSC</th>
                                                         <th class="align-middle text-center" height="10px" rowspan="2">
-                                                            STATUS</th>
+                                                            STATUS ></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -457,12 +507,20 @@ include '../elemen/footer.php';?>
                     options: {
                         scales: {
                             yAxes: [{
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Million'
+                                },
                                 ticks: {
                                     beginAtZero: true
                                 },
                                 stacked: false
                             }],
                             xAxes: [{
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Bulan'
+                                },
                                 stacked: false
                             }]
                         }
