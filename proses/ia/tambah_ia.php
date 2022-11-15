@@ -13,6 +13,10 @@ $cost_ia = $_POST['cost_ia'];
 $cost_ia = str_replace('.' , '' , $cost_ia);
 $time_ia = $_POST['time_ia'];
 
+$data_prop = single_query("SELECT * from proposal where id_prop={$id_prop}");
+
+$notif = FALSE;
+
 $pic_ia = $_POST['pic_ia'];
 $GLOBALS['id_prop'];
 // cek username sudah ada apa blm?
@@ -26,6 +30,12 @@ $qry = mysqli_query($link_yics, "SELECT ia FROM ia WHERE ia = '$ia' ")or die(mys
     }else{
         $_SESSION['info'] = "Disimpan";
         $_SESSION['pesan'] = "Data Berhasil Disimpan";
+
+
+        // Notifikasi 
+        $notif = TRUE;
+        $pesan_notif = "IA dengan nomor : " .$ia. " Telah Ditambahkan";
+
         header('location: ../../page/formnambah_ia.php?add='.$id_prop);
     }
 
@@ -33,14 +43,44 @@ $qry = mysqli_query($link_yics, "SELECT ia FROM ia WHERE ia = '$ia' ")or die(mys
         $inputproposal = "INSERT INTO ia (`id_prop`,`ia`,`deskripsi`,`cost_ia`,`time_ia`,`pic_ia`) VALUES ('$id_prop','$ia','$ia_desc','$cost_ia','$time_ia','$pic_ia')"; 
         $sql = mysqli_query($link_yics, $inputproposal)or die(mysqli_error($link_yics));
 
+        if($notif){
+
+            kirim_notif([         
+                 'dest' => $data_prop['username'],
+                 'message' => $pesan_notif,
+                 'type' => "proposal",
+                 'id_type' => $id_prop
+            ]);
+       }
+
+
     }else if(isset($_GET['del'])){
     $id=$_GET['del'];
     $id_page=$_GET['page'];
+
+    $get_data_ia = single_query("SELECT * from ia join proposal on ia.id_prop = proposal.id_prop where ia.id_ia = {$id}");
+
+
     $query = "DELETE FROM ia WHERE id_ia='$id'";
     $hasil_query = mysqli_query($link_yics, $query)or die(mysqli_error($link_yics));
     if($hasil_query){
         $_SESSION['info'] = "Dihapus";
         $_SESSION['pesan'] = "Data Berhasil Dihapus";
+
+        $notif = TRUE;
+        $pesan_notif = "IA dengan nomor : " .$get_data_ia['ia']. " Telah Dihapus";
+
+        if($notif){
+
+            kirim_notif([         
+                 'dest' => $get_data_ia['username'],
+                 'message' => $pesan_notif,
+                 'type' => "proposal",
+                 'id_type' => $get_data_ia['id_prop']
+            ]);
+       }
+
+
         header('location: ../../page/formnambah_ia.php?add='.$id_page);
      }else{
         $_SESSION['info'] = "Gagal Dihapus";
@@ -59,6 +99,8 @@ $qry = mysqli_query($link_yics, "SELECT ia FROM ia WHERE ia = '$ia' ")or die(mys
         $cost_ia = $_POST['cost_ia'];
         $cost_ia = str_replace('.' , '' , $cost_ia);
 
+    $data_ia = single_query("SELECT * from ia join proposal on ia.id_prop = proposal.id_prop where id_ia={$id_ia}");
+
     $UbahIa = "UPDATE ia SET id_prop='$id_prop',ia ='$ia',id_ia ='$id_ia',deskripsi ='$ia_desc',pic_ia ='$pic_ia',time_ia ='$time_ia',cost_ia ='$cost_ia' WHERE id_ia = '$id_ia'"; 
        $sql = mysqli_query($link_yics, $UbahIa)or die(mysqli_error($link_yics));
  // logika pakai session
@@ -71,6 +113,22 @@ $qry = mysqli_query($link_yics, "SELECT ia FROM ia WHERE ia = '$ia' ")or die(mys
    }else{
      $_SESSION['info'] = "Diubah";
      $_SESSION['pesan'] = "Data Berhasil Diubah";
+
+
+     $notif = TRUE;
+     $pesan_notif = "IA dengan nomor : " .$data_ia['ia']. " Telah Diupdate";
+
+     if($notif){
+
+         kirim_notif([         
+              'dest' => $data_ia['username'],
+              'message' => $pesan_notif,
+              'type' => "ia",
+              'id_type' => $id_ia
+         ]);
+    }
+
+
      header('location: ../../page/formnambah_ia.php?add='.$id_prop);
     }
 }
