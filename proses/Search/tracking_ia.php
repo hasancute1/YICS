@@ -91,23 +91,20 @@ if($id_ia == 0){
             $id_prog_gr = mysqli_fetch_assoc($data_gr);         
         }            
         ?>
-        <!--end  query buat ngambil data id-pog di titik dimasing-masing  di tracking IA....................................... -->
+<!--end  query buat ngambil data id-pog di titik dimasing-masing  di tracking IA....................................... -->
 
-        <div class="row py-20">
-            <div class="col-lg-12 col-md-12">
-                <div class="pearls row">
-                    <div
-                        class="pearl <?= (count($id_prog_rss) > 0)?'current':'' ?> col-3">
-                        <div class="pearl-icon"><i class="icon wb-user"
-                                aria-hidden="true"></i>
-                        </div>
-                        <h3 class="pearl-tittle"><?php echo $data_222['keterangan'] ; ?>
-                        </h3>
-                        <br>
-                        <div
-                            class="list-group bg-blue-grey-100 bg-inherit text-left w-250 ml-3">
+<div class="row py-20">
+    <div class="col-lg-12 col-md-12">
+        <div class="pearls row">
+            <div class="pearl <?= (count($id_prog_rss) > 0)?'current':'' ?> col-3">
+                <div class="pearl-icon"><i class="icon wb-user" aria-hidden="true"></i>
+                </div>
+                <h3 class="pearl-tittle"><?php echo $data_222['keterangan'] ; ?>
+                </h3>
+                <br>
+                <div class="list-group bg-blue-grey-100 bg-inherit text-left w-250 ml-3">
 
-                            <?php 
+                    <?php 
                             $bp = mysqli_query ($link_yics,"SELECT * FROM progress WHERE id_ket='2'");
                             if(mysqli_num_rows($bp)>0){
                             while ($rows_bp = mysqli_fetch_assoc($bp)){
@@ -147,53 +144,47 @@ if($id_ia == 0){
 
 
 
-                            <div
-                                class="list-group-item bg-<?= "$approve_clr" ?>-300 <?= "$hilang" ?>">
-                                <ul>
-                                    <li style="list-style-type: none;">
-                                        <i class="icon wb-<?= "$icon" ?>"
-                                            aria-hidden="true"></i>
-                                        <?= $rows_bp['nama_progress'] ?>
+                    <div class="list-group-item bg-<?= "$approve_clr" ?>-300 <?= "$hilang" ?>">
+                        <ul>
+                            <li style="list-style-type: none;">
+                                <i class="icon wb-<?= "$icon" ?>" aria-hidden="true"></i>
+                                <?= $rows_bp['nama_progress'] ?>
 
-                                    </li>
+                            </li>
 
 
-                                    <li style="list-style-type: none;">
-                                        <i class="icon oi-calendar" aria-hidden="true">
-                                            &nbsp;&nbsp; <?= "$time" ?></i>
-                                    </li>
+                            <li style="list-style-type: none;">
+                                <i class="icon oi-calendar" aria-hidden="true">
+                                    &nbsp;&nbsp; <?= "$time" ?></i>
+                            </li>
 
-                                    <li style="list-style-type: none;">
-                                        <i class="icon wb-user"
-                                            aria-hidden="true">&nbsp;</i><?= "$id_pic" ?>
-                                    </li>
+                            <li style="list-style-type: none;">
+                                <i class="icon wb-user" aria-hidden="true">&nbsp;</i><?= "$id_pic" ?>
+                            </li>
 
-                                </ul>
-                                <hr>
-                            </div>
+                        </ul>
+                        <hr>
+                    </div>
 
-                            <?php
+                    <?php
                         
                         }
                         } 
                         
                         ?>
 
-                        </div>
-                    </div>
+                </div>
+            </div>
 
 
-                    <div
-                        class="pearl <?= (count($id_prog_bp) > 0)?'current':'' ?> col-3">
-                        <div class="pearl-icon"><i class="icon wb-pencil"
-                                aria-hidden="true"></i></div>
-                        <h3 class="pearl-tittle"><?php echo $data_333['keterangan'] ; ?>
-                        </h3>
-                        <br>
-                        <div
-                            class="list-group bg-blue-grey-100 bg-inherit text-left w-250 ml-3">
+            <div class="pearl <?= (count($id_prog_bp) > 0)?'current':'' ?> col-3">
+                <div class="pearl-icon"><i class="icon wb-pencil" aria-hidden="true"></i></div>
+                <h3 class="pearl-tittle"><?php echo $data_333['keterangan'] ; ?>
+                </h3>
+                <br>
+                <div class="list-group bg-blue-grey-100 bg-inherit text-left w-250 ml-3">
 
-                            <?php  
+                    <?php  
                             
                                 $qProg = "SELECT nama_progress, id_prog , step FROM progress WHERE id_ket='3'";
                                 if($data_ia['cost_ia'] < 50 ){
@@ -246,57 +237,50 @@ if($id_ia == 0){
 
 
 
-                            <div
-                                class="list-group-item bg-<?= "$approve_clr" ?>-300 <?= "$hilang" ?>">
-                                <ul>
-                                    <li style="list-style-type: none;">
-                                        <i class="icon wb-<?= "$icon" ?>"
-                                            aria-hidden="true"></i>
-                                        <?= $rows_bp['nama_progress'] ?>
+                    <div class="list-group-item bg-<?= "$approve_clr" ?>-300 <?= "$hilang" ?>">
+                        <ul>
+                            <li style="list-style-type: none;">
+                                <i class="icon wb-<?= "$icon" ?>" aria-hidden="true"></i>
+                                <?= $rows_bp['nama_progress'] ?>
 
-                                    </li>
+                            </li>
 
 
-                                    <li style="list-style-type: none;">
-                                        <i class="icon oi-calendar" aria-hidden="true">
-                                            &nbsp;&nbsp; <?= "$time" ?></i>
-                                    </li>
+                            <li style="list-style-type: none;">
+                                <i class="icon oi-calendar" aria-hidden="true">
+                                    &nbsp;&nbsp; <?= "$time" ?></i>
+                            </li>
 
-                                    <li style="list-style-type: none;">
-                                        <i class="icon wb-user"
-                                            aria-hidden="true"></i>&nbsp;<?= "$id_pic" ?>
-                                    </li>
+                            <li style="list-style-type: none;">
+                                <i class="icon wb-user" aria-hidden="true"></i>&nbsp;<?= "$id_pic" ?>
+                            </li>
 
-                                </ul>
-                                <hr>
-                            </div>
+                        </ul>
+                        <hr>
+                    </div>
 
-                            <?php
+                    <?php
                         
                         }
                         } 
                         
                         ?>
 
-                        </div>
-                        <div
-                            class="list-group bg-blue-grey-100 bg-inherit text-left w-250 ml-3">
+                </div>
+                <div class="list-group bg-blue-grey-100 bg-inherit text-left w-250 ml-3">
 
 
-                        </div>
-                    </div>
+                </div>
+            </div>
 
-                    <div
-                        class="pearl <?= (count($id_prog_gr) > 0)?'current':'' ?> col-3">
-                        <div class="pearl-icon"><i class="icon wb-payment"
-                                aria-hidden="true"></i></div>
-                        <h3 class="pearl-tittle" data-toggle="dropdown">
-                            <?php echo $data_444['keterangan'] ; ?></h3>
-                        <br>
-                        <div
-                            class="list-group bg-blue-grey-100 bg-inherit text-left w-250 ml-10">
+            <div class="pearl <?= (count($id_prog_gr) > 0)?'current':'' ?> col-3">
+                <div class="pearl-icon"><i class="icon wb-payment" aria-hidden="true"></i></div>
+                <h3 class="pearl-tittle" data-toggle="dropdown">
+                    <?php echo $data_444['keterangan'] ; ?></h3>
+                <br>
+                <div class="list-group bg-blue-grey-100 bg-inherit text-left w-250 ml-10">
 
-                            <?php 
+                    <?php 
                             $bp = mysqli_query ($link_yics,"SELECT * FROM progress WHERE id_ket='4'");
                             if(mysqli_num_rows($bp)>0){
                             while ($rows_bp = mysqli_fetch_assoc($bp)){                                                              
@@ -338,57 +322,50 @@ if($id_ia == 0){
 
 
 
-                            <div
-                                class="list-group-item bg-<?= "$approve_clr" ?>-300 <?= "$hilang" ?>">
-                                <ul>
-                                    <li style="list-style-type: none;">
-                                        <i class="icon wb-<?= "$icon" ?>"
-                                            aria-hidden="true"></i>
-                                        <?= $rows_bp['nama_progress'] ?>
+                    <div class="list-group-item bg-<?= "$approve_clr" ?>-300 <?= "$hilang" ?>">
+                        <ul>
+                            <li style="list-style-type: none;">
+                                <i class="icon wb-<?= "$icon" ?>" aria-hidden="true"></i>
+                                <?= $rows_bp['nama_progress'] ?>
 
-                                    </li>
+                            </li>
 
 
-                                    <li style="list-style-type: none;">
-                                        <i class="icon oi-calendar" aria-hidden="true">
-                                            &nbsp;&nbsp; <?= "$time" ?></i>
-                                    </li>
+                            <li style="list-style-type: none;">
+                                <i class="icon oi-calendar" aria-hidden="true">
+                                    &nbsp;&nbsp; <?= "$time" ?></i>
+                            </li>
 
-                                    <li style="list-style-type: none;">
-                                        <i class="icon wb-user"
-                                            aria-hidden="true"></i>&nbsp;<?= "$id_pic" ?>
-                                    </li>
+                            <li style="list-style-type: none;">
+                                <i class="icon wb-user" aria-hidden="true"></i>&nbsp;<?= "$id_pic" ?>
+                            </li>
 
-                                </ul>
-                                <hr>
-                            </div>
+                        </ul>
+                        <hr>
+                    </div>
 
-                            <?php
+                    <?php
                         
                         }
                         } 
                         
                         ?>
 
-                        </div>
-                        <div
-                            class="list-group bg-blue-grey-100 bg-inherit text-left w-250 ml-3">
+                </div>
+                <div class="list-group bg-blue-grey-100 bg-inherit text-left w-250 ml-3">
 
 
-                        </div>
-                    </div>
+                </div>
+            </div>
 
-                    <div
-                        class="pearl <?= (count($id_prog_pr) > 0)?'current':'' ?> col-3">
-                        <div class="pearl-icon"><i class="icon fa-shopping-cart"
-                                aria-hidden="true"></i></div>
-                        <h3 class="pearl-tittle" data-toggle="dropdown">
-                            <?php echo $data_555['keterangan'] ; ?></h3>
-                        <br>
-                        <div
-                            class="list-group bg-blue-grey-100 bg-inherit text-left w-250 ml-10">
+            <div class="pearl <?= (count($id_prog_pr) > 0)?'current':'' ?> col-3">
+                <div class="pearl-icon"><i class="icon fa-shopping-cart" aria-hidden="true"></i></div>
+                <h3 class="pearl-tittle" data-toggle="dropdown">
+                    <?php echo $data_555['keterangan'] ; ?></h3>
+                <br>
+                <div class="list-group bg-blue-grey-100 bg-inherit text-left w-250 ml-10">
 
-                            <?php 
+                    <?php 
                             $bp = mysqli_query ($link_yics,"SELECT * FROM progress WHERE id_ket='5'");
                             if(mysqli_num_rows($bp)>0){
                             while ($rows_bp = mysqli_fetch_assoc($bp)){                                                              
@@ -429,59 +406,56 @@ if($id_ia == 0){
 
 
 
-                            <div
-                                class="list-group-item bg-<?= "$approve_clr" ?>-300 <?= "$hilang" ?>">
-                                <ul>
-                                    <li style="list-style-type: none;">
-                                        <i class="icon wb-<?= "$icon" ?>"
-                                            aria-hidden="true"></i>
-                                        <?= $rows_bp['nama_progress'] ?>
+                    <div class="list-group-item bg-<?= "$approve_clr" ?>-300 <?= "$hilang" ?>">
+                        <ul>
+                            <li style="list-style-type: none;">
+                                <i class="icon wb-<?= "$icon" ?>" aria-hidden="true"></i>
+                                <?= $rows_bp['nama_progress'] ?>
 
-                                    </li>
+                            </li>
 
 
-                                    <li style="list-style-type: none;">
-                                        <i class="icon oi-calendar" aria-hidden="true">
-                                            &nbsp;&nbsp; <?= "$time" ?></i>
-                                    </li>
+                            <li style="list-style-type: none;">
+                                <i class="icon oi-calendar" aria-hidden="true">
+                                    &nbsp;&nbsp; <?= "$time" ?></i>
+                            </li>
 
-                                    <li style="list-style-type: none;">
-                                        <i class="icon wb-user"
-                                            aria-hidden="true"></i>&nbsp;<?= "$id_pic" ?>
-                                    </li>
+                            <li style="list-style-type: none;">
+                                <i class="icon wb-user" aria-hidden="true"></i>&nbsp;<?= "$id_pic" ?>
+                            </li>
 
-                                </ul>
-                                <hr>
-                            </div>
+                        </ul>
+                        <hr>
+                    </div>
 
-                            <?php
+                    <?php
                         
                         }
                         } 
                         
                         ?>
 
-                        </div>
-
-
-
-                    </div>
                 </div>
+
+
+
             </div>
         </div>
+    </div>
+</div>
 
 
 
 
 
-        <script>
-        $('#reset_form').click(function(event) {
-            event.preventDefault();
+<script>
+$('#reset_form').click(function(event) {
+    event.preventDefault();
 
-            $(".terpilih").prop("selected", false);
+    $(".terpilih").prop("selected", false);
 
-        });
-        </script>
+});
+</script>
 
 <?php 
 
