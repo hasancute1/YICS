@@ -93,13 +93,16 @@ include '../elemen/header.php';?>
                   $id=$_GET ["edit"];
                   //query data mahasiswa berdasarkan id menghasilkan array numeric
                   $proposal = mysqli_query($link_yics ,"SELECT 
-				          proposal.id_kat AS id_kat,
+				  proposal.id_kat AS id_kat,
                   depart.id_dep AS id_dep,
-				          proposal.id_prop AS id_prop,
+				  proposal.id_prop AS id_prop,
                   depart.depart AS depart,
                   kategori_proposal.kategori AS kategori,
-                  proposal.cost AS cost,
-                  time_fiscal.status,proposal.proposal AS proposal
+                  proposal.cost AS cost,                  
+                  proposal.lampiran AS lampiran,                  
+                  proposal.benefit AS benefit,                  
+                  time_fiscal.periode AS periode,
+                  proposal.proposal AS proposal
                   FROM proposal 
                   LEFT JOIN depart ON proposal.id_dep = depart.id_dep
                   LEFT JOIN kategori_proposal  ON proposal.id_kat = kategori_proposal.id_kat
@@ -115,6 +118,16 @@ include '../elemen/header.php';?>
                                                 <div class="form-group row">
                                                     <h4 class="col-md-12 modal-title text-left" style="color:black;">
                                                         SUBJECT</h4>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-md-2 col-form-label text-left"
+                                                        style="color:black;">Cost</label>
+                                                    <div class="col-md-4">
+                                                        <input type="number"
+                                                            class="form-control bg-green-100 text-uppercase"
+                                                            name="periode" autocomplete="off" readonly
+                                                            value="<?php echo $data['periode']; ?>">
+                                                    </div>
                                                 </div>
                                                 <div class="form-group row">
                                                     <label class="col-md-2 col-form-label text-left"
@@ -176,13 +189,33 @@ include '../elemen/header.php';?>
                                                             autocomplete="off" value="<?php echo $data['cost']; ?>">
                                                     </div>
                                                     <label class="col-md-2 col-form-label text-left"
-                                                        style="color:black;">Benefit</label>
+                                                        style="color:black;" for="file">Lampiran</label>
                                                     <div class="col-md-4">
+                                                        <div class="input-group input-group-file"
+                                                            data-plugin="inputGroupFile">
+                                                            <input type="text" class="form-control" readonly=""
+                                                                value="<?= $data['lampiran']?>">
+                                                            <div class="input-group-append">
+                                                                <span class="btn btn-success btn-file">
+                                                                    <i class="icon wb-upload" aria-hidden="true"></i>
+                                                                    <input type="file" name="lampiran" multiple=""
+                                                                        required>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label class="col-md-2 col-form-label text-left"
+                                                        style="color:black;">Benefit</label>
+                                                    <div class="col-md-10">
                                                         <input type="text"
                                                             class="form-control bg-grey-200 text-uppercase"
-                                                            name="benefit" placeholder=" Benefit proposal"
-                                                            autocomplete="off" value="">
+                                                            name="benefit" autocomplete="off"
+                                                            value="<?php echo $data['benefit']; ?>">
                                                     </div>
+
                                                 </div>
                                                 <hr>
 
