@@ -72,7 +72,14 @@ include '../elemen/header.php';?>
                                             <div class="row card-body">
                                                 <div class="col-lg-2 col-md-2">
                                                     <?php 
-                                                    $periode = query("SELECT * from time_fiscal");
+                                                    $fiscal_aktif = single_query("SELECT * from time_fiscal WHERE status = 'AKTIF'");
+                                                    
+                                                    $list_periode = query("SELECT time_fiscal.id_fis , periode FROM tracking_ia
+                                                    JOIN  ia on tracking_ia.id_ia = ia.id_ia
+                                                    JOIN proposal on ia.id_prop = proposal.id_prop
+                                                    JOIN time_fiscal on proposal.id_fis  = time_fiscal.id_fis
+                                                    GROUP BY proposal.id_fis 
+                                                    ");
 
                                                     ?>
                                                     <div class="form-group">
@@ -81,8 +88,8 @@ include '../elemen/header.php';?>
                                                         </label>
                                                         <select class="form-control" name="periode" id="periode">
                                                             <option>Pilih Periode</option>
-                                                            <?php foreach ($periode as $key => $row) { ?>
-                                                            <option value="<?= $row['id_fis'] ?>"><?= $row['periode'] ?>
+                                                            <?php foreach ($list_periode as $key => $row) { ?>
+                                                            <option value="<?= $row['id_fis'] ?>" <?= ($row['id_fis'] == $fiscal_aktif['id_fis'])?'selected':'' ?>><?= $row['periode'] ?>
                                                             </option>
                                                             <?php } ?>
                                                         </select>
