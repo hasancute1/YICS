@@ -142,7 +142,7 @@ include '../elemen/header.php';?>
                                                     </button>
                                                 </a>
                                                 <a href="" data-toggle="tooltip" data-original-title="Search">
-                                                    <button type="submit" class="btn btn-success btn-icon ">
+                                                    <button type="submit" class="btn btn-success btn-icon " id="search">
                                                         <i class="icon wb-search" aria-hidden="true"></i>SEARCH
                                                     </button>
                                                 </a>
@@ -150,6 +150,16 @@ include '../elemen/header.php';?>
                                     </div>
 
                                     </form>
+
+
+                                    <!-- data tracking ia -->
+
+                                    <div id="tracking-ia">
+
+                                        <!-- content ia di sini dari ajax -->
+
+                                    </div>
+                                    
 
                                 </div>
                             </div>
@@ -164,6 +174,7 @@ include '../elemen/header.php';?>
                                         $("#depart").html(msg);
                                     }
                                 });
+
 
                                 $("#depart").change(function() {
                                     var depart = $("#depart").val();
@@ -223,6 +234,26 @@ include '../elemen/header.php';?>
                                         }
                                     });
 
+
+
+                                });
+
+
+                                $('#search').click(function(event){
+                                    event.preventDefault();
+                                    var ia_selected = $('#ia_selected').val();
+
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: "../proses/Search/tracking_ia.php",
+                                        data: {
+                                            id_ia : ia_selected
+                                        },
+                                        cache: false,
+                                        success: function(msg) {
+                                            $("#tracking-ia").html(msg);
+                                        }
+                                    });
 
 
                                 });
