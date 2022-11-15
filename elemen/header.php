@@ -69,6 +69,25 @@
     td {
         color: black;
     }
+
+    @keyframes mymove {
+        from {
+            left: 200px;
+            transform: translate(100%, 0%);
+        }
+
+        to {
+            left: 0px;
+
+        }
+    }
+
+    .d {
+
+        position: relative;
+        animation: mymove 3s infinite;
+        animation-iteration-count: 2;
+    }
     </style>
 
     <link rel="apple-touch-icon" href="../base/assets/images/apple-touch-icon.png">
@@ -140,6 +159,8 @@
     <link rel="stylesheet" href="../global/fonts/web-icons/web-icons.min.css">
     <link rel="stylesheet" href="../global/fonts/brand-icons/brand-icons.min.css">
     <link rel='stylesheet' href='../base/assets/datatable/css.css'>
+    <link rel="stylesheet" href="../global/vendor/nprogress/nprogress.css">
+    <link rel="stylesheet" href="../base/assets/examples/css/advanced/animation.css">
     <!-- <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'> -->
 
     <!--[if lt IE 9]>
