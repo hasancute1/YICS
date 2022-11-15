@@ -6,24 +6,31 @@ include("../services/notifications.php");
 	
      echo "<option value=''>Pilih Periode</option>";
  
-	 $query = "SELECT 	 			
-	 			time_fiscal.periode AS periode
-	 			FROM tracking_ia 			
-				JOIN proposal ON proposal.id_prop = ia.id_prop
+
+	 $query = "SELECT 
+	 			kategori_proposal.kategori AS kategori,
+	 			kategori_proposal.id_kat AS id_ket,
+	 			proposal.id_dep AS id_dep
+	 			FROM tracking_ia 
 				JOIN ia ON ia.id_ia = tracking_ia.id_ia
-				JOIN depart ON depart.id_dep = proposal.id_dep
-				JOIN time_fiscal ON proposal.id_fis = time_fiscal.id_fis"						
-	 $dewan1 = $link_yics->prepare($query);	
-	 $dewan1->execute();
-	 $res1 = $dewan1->get_result();
-	 while ($row = $res1->fetch_assoc()) {
-		 echo "<option value='" . $row[' id_fis'] . "'>" . $row['periode'] . "</option>";
+				JOIN proposal ON proposal.id_prop = ia.id_prop
+				JOIN kategori_proposal ON kategori_proposal.id_kat = proposal.id_kat				
+						
+	 			WHERE proposal.id_dep={$depart}
+				GROUP BY id_ket
+				ORDER BY kategori ASC";
+
+	//  $dewan1 = $link_yics->prepare($query);
+	//  $dewan1->bind_param("i", $depart);
+	//  $dewan1->execute();
+
+	 $kategori = query($query);
+	 foreach($kategori as $row){
+		echo "<option value='" . $row['id_ket'] . "'>" . $row['kategori'] . "</option>";
+
 	 }
+
+	
  ?>
 
 
-
-
-
-
-?>

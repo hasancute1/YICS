@@ -68,15 +68,22 @@ include '../elemen/header.php';?>
                                 <!-- First Row -->
                                 <div class="col-lg-12 col-md-12">
                                     <div class="card card-shadow bg-blue-100" style="border-radius: 10px;">
-                                        <form autocomplete="off" method="get" action="">
+                                        <form autocomplete="off" method="get" action="" id="formulir">
                                             <div class="row card-body">
                                                 <div class="col-lg-2 col-md-2">
+                                                    <?php 
+                                                    $periode = query("SELECT * from time_fiscal");
+
+                                                    ?>
                                                     <div class="form-group">
                                                         <label for="depart">
                                                             <h4>PERIODE</h4>
                                                         </label>
                                                         <select class="form-control" name="periode" id="periode">
                                                             <option>Pilih Periode</option>
+                                                            <?php foreach ($periode as $key => $row) { ?>
+                                                                <option value="<?= $row['id_fis'] ?>"><?= $row['periode'] ?></option>
+                                                            <?php } ?>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -108,7 +115,7 @@ include '../elemen/header.php';?>
                                                             <h4>PROPOSAL</h4>
                                                         </label>
                                                         <select class="form-control" name="proposal" id="proposal">
-                                                            <option>Pilih Proposal</option>
+                                                            <option value="0">Pilih Proposal</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -121,7 +128,7 @@ include '../elemen/header.php';?>
                                                             </label>
                                                             <select class="form-control" name="ia_selected"
                                                                 id="ia_selected">
-                                                                <option>Pilih NO IA.</option>
+                                                                <option value="0">Pilih NO IA.</option>
                                                             </select>
                                                         </div>
 
@@ -135,7 +142,7 @@ include '../elemen/header.php';?>
                                                     </button>
                                                 </a>
                                                 <a href="" data-toggle="tooltip" data-original-title="Search">
-                                                    <button type="submit" class="btn btn-success btn-icon ">
+                                                    <button type="submit" class="btn btn-success btn-icon " id="search">
                                                         <i class="icon wb-search" aria-hidden="true"></i>SEARCH
                                                     </button>
                                                 </a>
@@ -143,6 +150,16 @@ include '../elemen/header.php';?>
                                     </div>
 
                                     </form>
+
+
+                                    <!-- data tracking ia -->
+
+                                    <div id="tracking-ia">
+
+                                        <!-- content ia di sini dari ajax -->
+
+                                    </div>
+                                    
 
                                 </div>
                             </div>
@@ -158,8 +175,10 @@ include '../elemen/header.php';?>
                                     }
                                 });
 
+
                                 $("#depart").change(function() {
                                     var depart = $("#depart").val();
+                                    console.log(depart);
                                     $.ajax({
                                         type: 'POST',
                                         url: "../proses/Search/cost_type.php",
@@ -173,35 +192,73 @@ include '../elemen/header.php';?>
                                     });
                                 });
 
-                                $("#kabupaten").change(function() {
-                                    var kabupaten = $("#kabupaten").val();
+                                $("#cost_type").change(function() {                                   
+                                    var data_formulir =  $('#formulir').serialize(); 
+
                                     $.ajax({
-                                        type: 'POST',
-                                        url: "get_kecamatan.php",
-                                        data: {
-                                            kabupaten: kabupaten
-                                        },
+                                        type: 'GET',
+                                        url: "../proses/Search/get_proposal.php",
+                                        data: data_formulir,
                                         cache: false,
                                         success: function(msg) {
-                                            $("#kecamatan").html(msg);
+                                            $("#proposal").html(msg);
                                         }
                                     });
+
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: "../proses/Search/get_ia.php",
+                                        data: data_formulir,
+                                        cache: false,
+                                        success: function(msg) {
+                                            $("#ia_selected").html(msg);
+                                        }
+                                    });
+
+
+
                                 });
 
-                                $("#kecamatan").change(function() {
-                                    var kecamatan = $("#kecamatan").val();
+
+                                $("#proposal").change(function() {        
+                                                           
+                                    var data_formulir =  $('#formulir').serialize();                               
+
                                     $.ajax({
-                                        type: 'POST',
-                                        url: "get_kelurahan.php",
+                                        type: 'GET',
+                                        url: "../proses/Search/get_ia.php",
+                                        data: data_formulir,
+                                        cache: false,
+                                        success: function(msg) {
+                                            $("#ia_selected").html(msg);
+                                        }
+                                    });
+
+
+
+                                });
+
+
+                                $('#search').click(function(event){
+                                    event.preventDefault();
+                                    var ia_selected = $('#ia_selected').val();
+
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: "../proses/Search/tracking_ia.php",
                                         data: {
-                                            kecamatan: kecamatan
+                                            id_ia : ia_selected
                                         },
                                         cache: false,
                                         success: function(msg) {
-                                            $("#kelurahan").html(msg);
+                                            $("#tracking-ia").html(msg);
                                         }
                                     });
+
+
                                 });
+
+                              
                             });
                             </script>
 
