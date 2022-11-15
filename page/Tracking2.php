@@ -646,14 +646,7 @@ include '../elemen/header.php';?>
 
                     });
                     </script>
-                    <script>
-                    
-                    $(document).ready(function() {
-                        $("#dd").scroll(function() {
-                            $("span").text(x += 1);
-                        });
-                    });
-                    </script>
+
                     <!-- End Page -->
 
                     <!-- Footer -->
