@@ -103,10 +103,31 @@ if (isset ($_SESSION['yics_user'])){
         $kategori=$_POST['kategori'];
         $proposal=$_POST['proposal'];
         $benefit=$_POST ['benefit'];   
+       
         $cost_request=$_POST ['cost'];
-        $cost = str_replace('.','' ,$cost_request); 
+        $cost = str_replace('.','' ,$cost_request);
         
-       $UbahProposal = "UPDATE  proposal SET id_kat='$kategori',id_dep='$depart',proposal='$proposal',cost='$cost' WHERE id_prop = '$id'"; 
+        $target_dir = "../../image/uploads/";   
+      $file_name =  basename($_FILES["lampiran"]["name"]);
+
+      $target_file = $target_dir . $file_name;       
+      $uploadOk = 1;
+      $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+      // Check if $uploadOk is set to 0 by an error
+      if ($uploadOk == 0) {       
+
+         $_SESSION['info'] = "Gagal Disimpan";
+         $_SESSION['pesan'] = "Lampiran tidak Sesuai";
+
+      // if everything is ok, try to upload file
+      } else { 
+
+         move_uploaded_file($_FILES["lampiran"]["tmp_name"], $target_file);
+      
+      } 
+        
+       $UbahProposal = "UPDATE  proposal SET id_kat='$kategori',id_dep='$depart',proposal='$proposal',cost='$cost',lampiran='$lampiran',benefit='$benefit' WHERE id_prop = '$id'"; 
        echo $UbahProposal;
        $sql = mysqli_query($link_yics, $UbahProposal)or die(mysqli_error($link_yics));
     // logika pakai session

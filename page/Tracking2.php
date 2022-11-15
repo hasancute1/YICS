@@ -647,9 +647,9 @@ include '../elemen/header.php';?>
                     });
                     </script>
                     <script>
-                    var x = 0;
+                    
                     $(document).ready(function() {
-                        $("div").scroll(function() {
+                        $("#dd").scroll(function() {
                             $("span").text(x += 1);
                         });
                     });

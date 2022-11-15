@@ -4,10 +4,11 @@ include("../functions.php");
 include("../services/notifications.php");
 
 	
-     echo "<option value=''>Pilih Periode</option>";
+echo "<option value=''>Pilih Periode</option>";
  
 	 $query = "SELECT 	 			
 	 			time_fiscal.periode AS periode
+	 			time_fiscal.id_fis AS id_fis
 	 			FROM tracking_ia 			
 				JOIN proposal ON proposal.id_prop = ia.id_prop
 				JOIN ia ON ia.id_ia = tracking_ia.id_ia
