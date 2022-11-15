@@ -77,17 +77,26 @@ $id_dept = $_GET['dept'];
                             <div class="row">
                                 <div class="col-lg-6 col-md-6  mb-2">
                                     <?php 
-           $alokasi = mysqli_query($link_yics, "SELECT * FROM time_fiscal WHERE status='aktif'") or die(mysqli_error($link_yics));
-           $data = mysqli_fetch_assoc($alokasi);
-           $_SESSION["periode"] =  $data["periode"];
-            ?>
+                                    $alokasi = mysqli_query($link_yics, "SELECT * FROM time_fiscal WHERE status='aktif'") or die(mysqli_error($link_yics));
+                                    if(mysqli_num_rows($alokasi)>0){                                    
+                                    $data = mysqli_fetch_assoc($alokasi);
+                                    $periode = $data['periode'];
+                                    $awalf = date("d M Y", strtotime($data['awal']));
+                                    $akhirf = date("d M Y", strtotime($data['akhir']));
+                                    }else{
+                                        $periode="Pilih periode aktif";
+                                        $awalf="Pilih tahun aktif";
+                                        $akhirf="Pilih tahun aktif";
+                                    }
+                                        ?>
+
                                     <h6 class="font-size-18 font-weight-400">Periode ( <span
-                                            style="color:red;"><?php echo $data['periode']; ?> </span> ) :
-                                        <span style="color:red;"><?php echo date("d M Y", strtotime($data['awal'])); ?>
-                                        </span>
+                                            style="color:red;"><?= $periode; ?> </span> ) :
+                                        <span style="color:red;"><?= $awalf; ?></span>
                                         s.d
-                                        <span style="color:red;"><?php echo date("d M Y", strtotime($data['akhir'])); ?>
+                                        <span style="color:red;"><?= $akhirf; ?>
                                         </span>
+                                    </h6>
 
                                 </div>
                                 <div class="col-lg-6 col-md-6 mb-2">
@@ -294,7 +303,6 @@ $id_dept = $_GET['dept'];
                                 )
                                 or die (mysqli_error($link_yics));
                                 $no=0;
-
                                 $nomor_urut=0;
                                 $nomor_urut_before =0;
                                 
@@ -367,13 +375,13 @@ $id_dept = $_GET['dept'];
 
                                                             <td>
                                                                 <?php  $yen="¥"; ?>
-                                                                <?= ($no_prop == 1)? $yen." ".number_format($data['cost']/$data['yen'], 2, ',', '.'):""; ?>
+                                                                <?= ($no_prop == 1)? $yen." ".number_format($data['cost']/$data['yen'], 2, ',', '.')." "."Million":""; ?>
                                                             </td>
                                                             <td>
                                                                 <?php
                                                                   $Rp="Rp"; ?>
 
-                                                                <?=($no_prop == 1)? $Rp." ".number_format ($data['cost'],0,',','.'): ""; ?>
+                                                                <?=($no_prop == 1)? $Rp." ".number_format ($data['cost'],0,',','.')." "."Million": ""; ?>
                                                             </td>
                                                             <td> <?= (isset($data['no_ia']))? $no_prop: ""; ?>
                                                             </td>
@@ -381,23 +389,23 @@ $id_dept = $_GET['dept'];
                                                             <td></td>
                                                             <td><?= $data['ia_deskripsi'] ?></td>
                                                             <td></td>
-                                                            <td><?= (isset($data['no_ia']))?$Rp." ".number_format ($data['cost_ia'],0,',','.'): ""; ?>
+                                                            <td><?= (isset($data['no_ia']))?$Rp." ".number_format ($data['cost_ia'],0,',','.')." "."Million": ""; ?>
                                                             </td>
                                                             <td></td>
-                                                            <td><?= (isset($data['no_ia']))? $yen." ".number_format($data['cost_ia']/$data['yen'], 2, ',', '.'): ""; ?>
+                                                            <td><?= (isset($data['no_ia']))? $yen." ".number_format($data['cost_ia']/$data['yen'], 2, ',', '.')." "."Million": ""; ?>
                                                             </td>
-                                                            <td><?= (isset($data['no_ia']))? $Rp." ".number_format ($data['cost_ia'],0,',','.'): ""; ?>
+                                                            <td><?= (isset($data['no_ia']))? $Rp." ".number_format ($data['cost_ia'],0,',','.')." "."Million": ""; ?>
                                                             </td>
 
-
-                                                            <td
-                                                                class="<?=  (isset($data['no_ia']))?$warnaremain: ""; ?>">
-                                                                <?= (isset($data['no_ia']))? $yen." ".$remainyen: ""; ?>
-                                                            </td>
 
                                                             <td
                                                                 class="<?=  (isset($data['no_ia']))?$warnaremain: ""; ?>">
-                                                                <?= (isset($data['no_ia']))? $Rp." ".$remainrp: ""; ?>
+                                                                <?= (isset($data['no_ia']))? $yen." ".$remainyen." "."Million": ""; ?>
+                                                            </td>
+
+                                                            <td
+                                                                class="<?=  (isset($data['no_ia']))?$warnaremain: ""; ?>">
+                                                                <?= (isset($data['no_ia']))? $Rp." ".$remainrp." "."Million": ""; ?>
                                                             </td>
                                                             <td><?= (isset($data['no_ia']))?date("d M Y", strtotime($data['time_ia'])): "";  ?>
                                                             </td>

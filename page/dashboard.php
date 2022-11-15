@@ -166,17 +166,23 @@ if (!isset($_SESSION['yics_user'])) {
                                 <div class="col-lg-6 col-md-6  mb-2">
                                     <?php 
                                     $alokasi = mysqli_query($link_yics, "SELECT * FROM time_fiscal WHERE status='aktif'") or die(mysqli_error($link_yics));
+                                    if(mysqli_num_rows($alokasi)>0){                                    
                                     $data = mysqli_fetch_assoc($alokasi);
-                                    $_SESSION['periode'] = $data['periode'];
-                                    $_SESSION['awal'] = date("d M Y", strtotime($data['awal']));
-                                    $_SESSION['akhir'] = date("d M Y", strtotime($data['akhir']));
+                                    $periode = $data['periode'];
+                                    $awalf = date("d M Y", strtotime($data['awal']));
+                                    $akhirf = date("d M Y", strtotime($data['akhir']));
+                                    }else{
+                                        $periode="Pilih periode aktif";
+                                        $awalf="Pilih tahun aktif";
+                                        $akhirf="Pilih tahun aktif";
+                                    }
                                         ?>
 
                                     <h6 class="font-size-18 font-weight-400">Periode ( <span
-                                            style="color:red;"><?php echo  $_SESSION['periode']; ?> </span> ) :
-                                        <span style="color:red;"><?php echo $_SESSION['awal']; ?></span>
+                                            style="color:red;"><?= $periode; ?> </span> ) :
+                                        <span style="color:red;"><?= $awalf; ?></span>
                                         s.d
-                                        <span style="color:red;"><?php echo $_SESSION['akhir']; ?>
+                                        <span style="color:red;"><?= $akhirf; ?>
                                         </span>
                                     </h6>
                                 </div>
@@ -340,11 +346,14 @@ if (!isset($_SESSION['yics_user'])) {
                                             <span
                                                 class="white font-weight-400"><?php echo $row_card1 ['divisi']; ?></span>
                                             <div class=" white content-text text-center mb-0">
-                                                <span class="font-size-40 font-weight-100">Rp
-                                                    <?= number_format($card['total'] -  $total_consumtion_budget,0,',','.')  ?></span>
-
-                                                <p class="white font-weight-100 m-0 font-size-18"><u>"Budget Rp
-                                                        <?php echo number_format ($card['total'],0,',','.'); ?>"</u></p>
+                                                <span>
+                                                    <p class="font-size-30 font-weight-100 mt-10"> Rp
+                                                        <?= number_format($card['total'] -  $total_consumtion_budget,0,',','.')." "."Million"; ?>
+                                                    </p>
+                                                    <p class="white font-weight-100 m-0 font-size-20"><u>"Budget Rp
+                                                            <?php echo number_format ($card['total'],0,',','.')." "."Million";  ?>"</u>
+                                                    </p>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -366,25 +375,23 @@ if (!isset($_SESSION['yics_user'])) {
                                                 </button>
                                                 <span
                                                     class="white font-weight-400 "><?php echo $row_card['depart']; ?></span>
+                                                <?php 
+                                                $consumtion_budget = single_query("SELECT sum(cost_ia) as cost , count(*) as qty FROM ia
+                                                join proposal on ia.id_prop = proposal.id_prop
+                                                join depart on proposal.id_dep = depart.id_dep
+                                                where proposal.id_dep = {$row_card['id_dep']} and proposal.id_fis={$id_fis} {$where_time}
+                                                ");
+                                                $sisa_budget = $row_card['budget'] - $consumtion_budget['cost']; ?>
                                                 <div class="content-text text-center mb-0">
-                                                    <span class="white font-size-40 font-weight-100 mt-50">Rp
-                                                        <?php 
-
-                                                    $consumtion_budget = single_query("SELECT sum(cost_ia) as cost , count(*) as qty FROM ia
-                                                    join proposal on ia.id_prop = proposal.id_prop
-                                                    join depart on proposal.id_dep = depart.id_dep
-                                                    where proposal.id_dep = {$row_card['id_dep']} and proposal.id_fis={$id_fis} {$where_time}
-                                                    ");
-
-                                                    $sisa_budget = $row_card['budget'] - $consumtion_budget['cost'];
-
-                                                    echo number_format($sisa_budget,0,',','.');
-                                                    
-                                                    ?></span>
-                                                    <p class="white font-weight-100 m-0 font-size-18">"Budget Rp
-                                                        <?php echo number_format ($row_card['budget'],0,',','.'); ?>"
-                                                    </p>
-                                                    <p class="white font-weight-100 m-0"> Lihat Detail >></p>
+                                                    <span>
+                                                        <p class="white font-size-30 font-weight-100 mt-10">
+                                                            Rp <?= number_format($sisa_budget,0,',','.')." "; ?>Million
+                                                        </p>
+                                                        <p class="white font-weight-100 m-0 font-size-18">"Budget Rp
+                                                            <?php echo number_format ($row_card['budget'],0,',','.')." "; ?>Million"
+                                                        </p>
+                                                        <p class="white font-weight-100 m-0"> Lihat Detail >></p>
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -793,12 +800,21 @@ include '../elemen/footer.php';?>
         options: {
             scales: {
                 yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Million'
+                    },
+
                     ticks: {
                         beginAtZero: true
                     },
                     stacked: false
                 }],
                 xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Bulan'
+                    },
                     stacked: false
                 }]
             }
@@ -831,7 +847,7 @@ include '../elemen/footer.php';?>
         colors: [Config.colors("yellow", 500), Config.colors("red", 500), Config.colors("purple", 500)],
         // formatter: function (x) { return x + "%"}
         formatter: function(y, data) {
-            return 'Rp ' + y
+            return 'Rp ' + y + ' Million'
         },
     })
     </script>
@@ -1051,7 +1067,7 @@ include '../elemen/footer.php';?>
 
                             <div class="col-md-10 input-group">
                                 <textarea type="text" class="form-control" name="benefit" style=”height:100px;”
-                                    placeholder="Jelaskan secara singkat benefit proposal.." autocomplete="off"
+                                    placeholder="Jelaskan secara singkat benefit proposal.." autocomplete="off" value=""
                                     required></textarea>
                             </div>
 
