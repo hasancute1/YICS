@@ -692,7 +692,7 @@ include '../elemen/footer.php';?>
     $fis_aktif = single_query("SELECT id_fis FROM time_fiscal WHERE status='aktif'");
 
     // Grafik Akumulasi Budget
-    // ambil dari table tracking_prop
+    // ambil dari table ia
     $query_akumulasi = query("SELECT 
         MONTH(ia.time_ia) AS bulan, 
         SUM(ia.cost_ia) AS cost,
