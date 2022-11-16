@@ -13,7 +13,7 @@ include("../services/notifications.php");
 	 			FROM tracking_ia 
 				JOIN ia ON ia.id_ia = tracking_ia.id_ia
 				JOIN proposal ON proposal.id_prop = ia.id_prop
-				JOIN kategori_proposal ON kategori_proposal.id_kat = proposal.id_kat				
+				JOIN kategori_proposal ON kategori_proposal.id_kat = proposal.id_kat			
 						
 	 			WHERE proposal.id_dep={$depart}
 				GROUP BY id_ket
@@ -31,5 +31,3 @@ include("../services/notifications.php");
 
 	
  ?>
-
-
