@@ -558,7 +558,7 @@ $id_dept = $_GET['dept'];
                             dom: 'Bfrtip',
                             buttons: [{
                                     extend: 'excel',
-                                    title: 'CONTROL TABLE <?= $judul[$id_dept] ?> (x Million) PERIODE <?php echo $_SESSION["periode"]; ?>-<?php echo $_SESSION["periode"]+1; ?> ',
+                                    title: 'CONTROL TABLE <?= $judul[$id_dept] ?> (x Million) PERIODE <?= $periode; ?>-<?= $periode+1; ?> ',
                                     text: 'Excel',
                                     orientation: 'landscape',
                                     pageSize: 'LEGAL',
@@ -581,7 +581,7 @@ $id_dept = $_GET['dept'];
 
 
                                     },
-                                    title: 'CONTROL TABLE <?= $judul[$id_dept] ?> (x Million) PERIODE <?php echo $_SESSION["periode"]; ?>-<?php echo $_SESSION["periode"]+1; ?> ',
+                                    title: 'CONTROL TABLE <?= $judul[$id_dept] ?> (x Million) PERIODE <?= $periode; ?>-<?= $periode+1; ?> ',
                                     customize: function(win) {
 
                                         var last = null;
@@ -607,7 +607,7 @@ $id_dept = $_GET['dept'];
                                 },
                                 {
                                     extend: 'pdf',
-                                    title: 'CONTROL TABLE <?= $judul[$id_dept] ?> (x Million) PERIODE <?php echo $_SESSION["periode"]; ?>-<?php echo $_SESSION["periode"]+1; ?> ',
+                                    title: 'CONTROL TABLE <?= $judul[$id_dept] ?> (x Million) PERIODE <?= $periode; ?>-<?= $periode+1; ?> ',
                                     text: 'Pdf',
                                     orientation: 'landscape',
                                     pageSize: 'LEGAL',
