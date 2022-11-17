@@ -146,6 +146,7 @@ if (!isset($_SESSION['yics_user'])) {
                                                         <span class="font-size-20 bold">Allocation Budget</span>
                                                     </div>
                                                 </div>
+                                                <?php if($_SESSION['yics_level'] != '1'){ ?>
                                                 <div class="col-lg-4 col-md-4">
                                                     <div class="text-right">
                                                         <i href="" data-toggle="tooltip"
@@ -159,8 +160,8 @@ if (!isset($_SESSION['yics_user'])) {
 
                                                         <!--query edit data  -->
                                                         <?php 
-                    $editalokasi = mysqli_query($link_yics, "SELECT * FROM time_fiscal WHERE status='aktif'") or die(mysqli_error($link_yics));
-                    if(mysqli_num_rows($editalokasi)>0){$rows_editalokasi = mysqli_fetch_assoc($editalokasi)?>
+                                                        $editalokasi = mysqli_query($link_yics, "SELECT * FROM time_fiscal WHERE status='aktif'") or die(mysqli_error($link_yics));
+                                                        if(mysqli_num_rows($editalokasi)>0){$rows_editalokasi = mysqli_fetch_assoc($editalokasi)?>
                                                         <a href="formubahalokasibudget.php?ubah=<?php echo $rows_editalokasi['id_fis']; ?>"
                                                             data-toggle="tooltip" data-original-title="Edit">
                                                             <!-- end query edit data  -->
@@ -180,6 +181,7 @@ if (!isset($_SESSION['yics_user'])) {
                                                         </a>
                                                     </div>
                                                 </div>
+                                                <?php } ?>
                                             </div>
                                         </div>
                                         <div class="card-body card-shadow">
@@ -509,16 +511,14 @@ if (!isset($_SESSION['yics_user'])) {
 							?>
                                                         </td>
                                                         <td class="align-middle text-center">
-                                                            <a href="viewplan.php?ubah=<?php echo $data['id_prop']; ?>"
-                                                                data-toggle="tooltip" data-original-title="view">
+                                                            <a href="viewplan.php?ubah=<?php echo $data['id_prop']; ?>">
                                                                 <button type="button" class="btn btn-icon btn-info  ">
                                                                     <i class="icon wb-eye" aria-hidden="true"></i>
                                                                 </button>
                                                             </a>
                                                             <?php if($_SESSION['yics_level'] != '1'){ ?>
-                                                            <a href="formupdate.php?ubah=<?php echo $data['id_prop']; ?>"
-                                                                data-toggle="tooltip"
-                                                                data-original-title="Update Progress ">
+                                                            <a
+                                                                href="formupdate.php?ubah=<?php echo $data['id_prop']; ?>">
                                                                 <button type="button"
                                                                     class="btn btn-icon btn-success edit_proposal"
                                                                     data-toggle="modal"
@@ -527,8 +527,7 @@ if (!isset($_SESSION['yics_user'])) {
                                                                 </button>
                                                             </a>
                                                             <?php } ?>
-                                                            <a href="formedit.php?edit=<?php echo $data['id_prop']; ?>"
-                                                                data-toggle="tooltip" data-original-title="edit">
+                                                            <a href="formedit.php?edit=<?php echo $data['id_prop']; ?>">
                                                                 <button type="button"
                                                                     class="btn btn-icon btn-warning  edit_proposal"
                                                                     data-toggle="modal" data-target="#">
@@ -537,7 +536,6 @@ if (!isset($_SESSION['yics_user'])) {
                                                             </a>
                                                             <?php if($_SESSION['yics_level'] != '1'){ ?>
                                                             <a href="../proses/dashboard/tambahplanning.php?del=<?php echo $data['id_prop']; ?>"
-                                                                data-toggle="tooltip" data-original-title="Hapus"
                                                                 class="HapusData1">
                                                                 <button type="button" class="btn btn-icon btn-danger">
                                                                     <i class="icon oi-trashcan" aria-hidden="true"></i>
