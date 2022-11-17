@@ -448,7 +448,7 @@ if( $sisa_budget>0){
                                                         <td class="align-middle text-center"><?= $row['ia'] ?></td>
                                                         <td class="align-middle text-center"><?= $row['deskripsi'] ?>
                                                         </td>
-                                                        <td class="align-middle text-center"></td>
+                                                        <td class="align-middle text-center"><?= $row['benefit'] ?></td>
                                                         <td class="align-middle text-center">
                                                             <?= date('d M Y' , strtotime($row['time_ia']))  ?></td>
                                                         <td class="align-middle text-center">Rp
