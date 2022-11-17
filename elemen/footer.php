@@ -35,9 +35,7 @@
     <script src="../global/js/Plugin/jquery-appear.js"></script>
     <script src="../global/js/Plugin/nprogress.js"></script>
 
-    <script src="../base/assets/examples/js/advanced/animation.js"></script>
-
-    <!-- navbar -->
+    <script src="../base/assets/examples/js/advanced/animation.js"></script> <!-- navbar -->
     <script src="../global/js/Plugin/responsive-tabs.js"></script>
     <script src="../global/js/Plugin/closeable-tabs.js"></script>
     <script src="../global/js/Plugin/tabs.js"></script>

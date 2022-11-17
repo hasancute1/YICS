@@ -39,7 +39,7 @@ $url_aktive = $uri[0];
         </ul>
     </li>
     <li class="site-menu-item has-sub <?= ($url_aktive == "Tracking")? "active": ""; ?>">
-        <a href="searchdoc.php">
+        <a href="searchdoc2.php">
             <i class="site-menu-icon wb-shopping-cart" aria-hidden="true"></i>
             <span class="site-menu-title">TRACKING DOCUMENT</span>
             <span class="site-menu-tittle"></span>

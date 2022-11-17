@@ -611,19 +611,22 @@ include '../elemen/header.php';?>
                                         <div class="row <?= $nongol ?> ">
                                             <div class="col-md-1"></div>
                                             <div class="col-md-10">
-                                                <div class="card-body bg-<?= $approve_clr ?> h-250  text-center d "
+                                                <div class="card-body bg-<?= $approve_clr ?>   text-center d "
                                                     style="border-radius:10px" style="animation: mymove 5s infinite;"
                                                     id="d">
-                                                    <span class="mb-200">
-                                                        <h1 style="color:white;"><i
-                                                                class="icon <?=  $icon ?>  font-size-80"
-                                                                aria-hidden="true"> </i><?= $nama ?> </h1>
-                                                    </span>
-                                                    <hr style="width:35%; margin: auto;">
-                                                    <h4 style="color:white;"><i class="icon wb-calendar font-size-20"
-                                                            aria-hidden="true"> </i><?= $time; ?> </h4>
-                                                    <h4 style="color:white;"><i class="icon wb-user font-size-20"
-                                                            aria-hidden="true"> </i><?= $id_pic; ?></h4>
+
+                                                    <p class="font-size-30">
+                                                        <i class="icon <?=  $icon ?>  font-size-80" aria-hidden="true">
+                                                        </i>&nbsp;&nbsp;<?= $nama ?>
+                                                        &nbsp;&nbsp;&nbsp;
+                                                        <i class="icon wb-calendar font-size-40" aria-hidden="true">
+                                                        </i>&nbsp;<?= $time; ?>&nbsp;&nbsp;&nbsp;
+                                                        <i class="icon wb-user font-size-40" aria-hidden="true">
+                                                        </i>&nbsp;<?= $id_pic; ?>
+                                                    </p>
+
+                                                    <hr style=" margin: auto;">
+
 
                                                 </div>
                                             </div>

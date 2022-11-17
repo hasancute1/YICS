@@ -71,29 +71,12 @@ include '../elemen/header.php';?>
                                         <form autocomplete="off" method="get" action="" id="formulir">
                                             <div class="row card-body">
                                                 <div class="col-lg-2 col-md-2">
-                                                    <?php 
-                                                    $fiscal_aktif = single_query("SELECT * from time_fiscal WHERE status = 'AKTIF'");
-                                                    
-                                                    $list_periode = query("SELECT time_fiscal.id_fis , periode FROM tracking_ia
-                                                    JOIN  ia on tracking_ia.id_ia = ia.id_ia
-                                                    JOIN proposal on ia.id_prop = proposal.id_prop
-                                                    JOIN time_fiscal on proposal.id_fis  = time_fiscal.id_fis
-                                                    GROUP BY proposal.id_fis 
-                                                    ");
-
-                                                    ?>
                                                     <div class="form-group">
-                                                        <label for="depart">
+                                                        <label for="periode">
                                                             <h4>PERIODE</h4>
                                                         </label>
                                                         <select class="form-control" name="periode" id="periode">
                                                             <option>Pilih Periode</option>
-                                                            <?php foreach ($list_periode as $key => $row) { ?>
-                                                            <option value="<?= $row['id_fis'] ?>"
-                                                                <?= ($row['id_fis'] == $fiscal_aktif['id_fis'])?'selected':'' ?>>
-                                                                <?= $row['periode'] ?>
-                                                            </option>
-                                                            <?php } ?>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -131,18 +114,18 @@ include '../elemen/header.php';?>
                                                 </div>
 
                                                 <div class="col-lg-3 col-md-3">
-                                                    <div class="col-lg-12 col-md-12">
-                                                        <div class="form-group">
-                                                            <label for="cost_type">
-                                                                <h4>NO. IA</h4>
-                                                            </label>
-                                                            <select class="form-control" name="ia_selected"
-                                                                id="ia_selected">
-                                                                <option value="0">Pilih NO IA.</option>
-                                                            </select>
-                                                        </div>
 
+                                                    <div class="form-group">
+                                                        <label for="cost_type">
+                                                            <h4>NO. IA</h4>
+                                                        </label>
+                                                        <select class="form-control" name="ia_selected"
+                                                            id="ia_selected">
+                                                            <option value="0">Pilih NO IA.</option>
+                                                        </select>
                                                     </div>
+
+
                                                 </div>
                                             </div>
                                             <div class="card-footer col-lg-12 col-md-12 text-md-right bg-blue-100">
@@ -178,86 +161,109 @@ include '../elemen/header.php';?>
                             <!-- End first -->
                             <script type="text/javascript">
                             $(document).ready(function() {
+
                                 $.ajax({
-                                    type: 'POST',
-                                    url: "../proses/Search/depart.php",
+                                    type: 'GET',
+                                    url: "../proses/Search2/periode.php",
                                     cache: false,
                                     success: function(msg) {
-                                        $("#depart").html(msg);
+                                        $("#periode").html(msg);
                                     }
                                 });
 
-
-                                $("#depart").change(function() {
-                                    var depart = $("#depart").val();
-                                    console.log(depart);
+                                function getDepart() {
+                                    var data_formulir = $('#formulir').serialize();
                                     $.ajax({
-                                        type: 'POST',
-                                        url: "../proses/Search/cost_type.php",
+                                        type: 'GET',
+                                        url: "../proses/Search2/depart.php",
+                                        data: data_formulir,
+                                        cache: false,
+                                        success: function(msg) {
+                                            $("#depart").html(msg);
+                                        }
+                                    });
+                                }
+
+                                function getCostType() {
+                                    var dept = $("#depart").val();
+                                    var prd = $("#periode").val();
+                                    // console.log(depart);
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: "../proses/Search2/cost_type.php",
                                         data: {
-                                            depart: depart
+                                            depart: dept,
+                                            periode: prd
                                         },
                                         cache: false,
                                         success: function(msg) {
                                             $("#cost_type").html(msg);
                                         }
                                     });
-                                });
+                                }
 
-                                $("#cost_type").change(function() {
-                                    var data_formulir = $('#formulir').serialize();
-
+                                function getProp() {
+                                    var dept = $("#depart").val();
+                                    var prd = $("#periode").val();
+                                    var cost = $("#cost_type").val();
                                     $.ajax({
                                         type: 'GET',
-                                        url: "../proses/Search/get_proposal.php",
-                                        data: data_formulir,
+                                        url: "../proses/Search2/get_proposal.php",
+                                        data: {
+                                            depart: dept,
+                                            periode: prd,
+                                            cost_type: cost
+                                        },
                                         cache: false,
                                         success: function(msg) {
                                             $("#proposal").html(msg);
                                         }
                                     });
+                                }
 
+                                function getIA() {
+                                    var prop = $("#proposal").val();
                                     $.ajax({
                                         type: 'GET',
-                                        url: "../proses/Search/get_ia.php",
-                                        data: data_formulir,
+                                        url: "../proses/Search2/get_ia.php",
+                                        data: {
+                                            proposal: prop
+
+                                        },
                                         cache: false,
                                         success: function(msg) {
                                             $("#ia_selected").html(msg);
                                         }
                                     });
-
-
-
+                                }
+                                $("#periode").change(function() {
+                                    getDepart()
+                                    getCostType()
+                                    getProp()
+                                    getIA()
                                 });
 
+                                $("#depart").change(function() {
+                                    getCostType()
+                                    getProp()
+                                    getIA()
+                                });
 
+                                $("#cost_type").change(function() {
+                                    getProp()
+                                    getIA()
+                                });
                                 $("#proposal").change(function() {
-
-                                    var data_formulir = $('#formulir').serialize();
-
-                                    $.ajax({
-                                        type: 'GET',
-                                        url: "../proses/Search/get_ia.php",
-                                        data: data_formulir,
-                                        cache: false,
-                                        success: function(msg) {
-                                            $("#ia_selected").html(msg);
-                                        }
-                                    });
-
-
-
+                                    getIA()
                                 });
 
 
                                 $('#search').click(function(event) {
                                     event.preventDefault();
                                     var ia_selected = $('#ia_selected').val();
-
                                     $.ajax({
                                         type: 'GET',
-                                        url: "../proses/Search/tracking_ia.php",
+                                        url: "../proses/Search2/tracking_ia.php",
                                         data: {
                                             id_ia: ia_selected
                                         },
