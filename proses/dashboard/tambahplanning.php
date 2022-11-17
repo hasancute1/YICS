@@ -85,6 +85,16 @@ if (isset ($_SESSION['yics_user'])){
     }else if(isset ($_GET['del'])){
         //query delete
         $id=$_GET['del'];
+        //// aquery hapus di direktori
+        $hapusFile="SELECT * FROM proposal WHERE id_prop='$id'";
+        $hapusFi = mysqli_query($link_yics, $hapusFile)or die(mysqli_error($link_yics));
+        $file = mysqli_fetch_assoc($hapusFi);
+        $file_dulu=$file ['lampiran']; 
+        $target_dir_file = "../../image/uploads/";          
+        $target_file = $target_dir_file . $file_dulu;  
+        if( is_file( $target_file));
+        unlink( $target_file);
+        //// end qery hapus di direktori
         $query = "DELETE FROM proposal WHERE id_prop='$id'";
          $hasil_query = mysqli_query($link_yics, $query)or die(mysqli_error($link_yics));
          if($hasil_query){
@@ -106,8 +116,16 @@ if (isset ($_SESSION['yics_user'])){
        
         $cost_request=$_POST ['cost'];
         $cost = str_replace('.','' ,$cost_request);
-        
-        $target_dir = "../../image/uploads/";   
+
+      //   hapus file lama
+         $file_dulu=$_POST ['file_dulu']; 
+         $target_dir_file = "../../image/uploads/";          
+         $target_file = $target_dir_file . $file_dulu;  
+         if( is_file( $target_file));
+         unlink( $target_file);
+      // end hapus file lama
+
+      $target_dir = "../../image/uploads/";   
       $file_name =  basename($_FILES["lampiran"]["name"]);
 
       $target_file = $target_dir . $file_name;       
@@ -127,7 +145,7 @@ if (isset ($_SESSION['yics_user'])){
       
       } 
         
-       $UbahProposal = "UPDATE  proposal SET id_kat='$kategori',id_dep='$depart',proposal='$proposal',cost='$cost',lampiran='$lampiran',benefit='$benefit' WHERE id_prop = '$id'"; 
+       $UbahProposal = "UPDATE  proposal SET id_kat='$kategori',id_dep='$depart',proposal='$proposal',cost='$cost',lampiran='$file_name',benefit='$benefit' WHERE id_prop = '$id'"; 
        echo $UbahProposal;
        $sql = mysqli_query($link_yics, $UbahProposal)or die(mysqli_error($link_yics));
     // logika pakai session

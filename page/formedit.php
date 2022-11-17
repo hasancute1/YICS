@@ -111,7 +111,8 @@ include '../elemen/header.php';?>
                   $data = mysqli_fetch_assoc($proposal)
                 ?>
 
-                                            <form method="post" action="../proses/dashboard/tambahplanning.php">
+                                            <form method="post" action="../proses/dashboard/tambahplanning.php"
+                                                enctype="multipart/form-data">
                                                 <input type="hidden" name="edit">
                                                 <input type="hidden" class="form-control" name="id" autocomplete="off"
                                                     value="<?php echo $data['id_prop']; ?>" required>
@@ -194,12 +195,14 @@ include '../elemen/header.php';?>
                                                         <div class="input-group input-group-file"
                                                             data-plugin="inputGroupFile">
                                                             <input type="text" class="form-control" readonly=""
-                                                                value="<?= $data['lampiran']?>">
+                                                                value="<?= $data['lampiran']?>" name="file_dulu">
                                                             <div class="input-group-append">
                                                                 <span class="btn btn-success btn-file">
                                                                     <i class="icon wb-upload" aria-hidden="true"></i>
-                                                                    <input type="file" name="lampiran" multiple=""
-                                                                        required>
+
+                                                                    <input class="form-control-file" type="file"
+                                                                        name="lampiran" required>
+
                                                                 </span>
                                                             </div>
                                                         </div>
