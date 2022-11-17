@@ -615,11 +615,20 @@ include '../elemen/footer.php';?>
         GROUP BY  bulan
         ");
 
+    $query_bulan_terakhir = single_query("SELECT MAX(ia.time_ia) as max_date
+    FROM ia 
+    JOIN proposal on ia.id_prop = proposal.id_prop 
+    AND proposal.id_fis = '".$fis_aktif['id_fis']."'");
+
     if(isset($query_akumulasi[0])){        
-        $max_month = date('m' , strtotime($query_akumulasi[0]['max_date']) );
+        $max_month = date('m' , strtotime($query_bulan_terakhir['max_date']) );
     }else{
         $max_month = 4;
     }
+
+
+
+    // var_dump($max_month);
 
  
     foreach($query_akumulasi as $row){
@@ -627,7 +636,24 @@ include '../elemen/footer.php';?>
         // $list_bulan_aktif[] = $row['bulan']; 
     }
 
-    $list_bulan = [4,5,6,7,8,9,10,11,12,1,2,3];
+    // $list_bulan = [4,5,6,7,8,9,10,11,12,1,2,3];
+
+    $list_bulan = [
+        4 => 1,
+        5 => 2,
+        6 => 3,
+        7 => 4,
+        8 => 5,
+        9 => 6,
+        10 => 7,
+        11 => 8,
+        12 => 9,
+        1 => 10,
+        2 => 11,
+        3 => 12
+    ];
+
+
     // $last_data_query = end($query_akumulasi);
     // $bulan_terkahir = $last_data_query['bulan'];
 
@@ -636,7 +662,7 @@ include '../elemen/footer.php';?>
 
         $total = 0;
 
-        foreach ($list_bulan as $key => $bulan) { 
+        foreach ($list_bulan as $bulan => $key) { 
 
             if(isset($query_akum_array[$bulan])){
                 $total += $query_akum_array[$bulan];
