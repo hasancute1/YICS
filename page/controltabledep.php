@@ -83,6 +83,7 @@ $id_dept = $_GET['dept'];
                         <div class="page-header">
                             <h1 class="page-title font-size-26 font-weight-600">Control Table <?= $judul[$id_dept] ?> (x
                                 Million)
+
                             </h1>
                         </div>
                         <!-- <table class="table ">
@@ -172,7 +173,7 @@ $id_dept = $_GET['dept'];
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class=" card-body card-shadow table table-responsive table-bordered text-center 10px table-striped text-nowrap"
+                                            <div class=" card-body card-shadow  table-responsive table-bordered text-center 10px table-striped text-nowrap"
                                                 id="area">
                                                 <table class=" table tableproposal table-hover">
                                                     <thead class="table-info">
@@ -582,79 +583,87 @@ $id_dept = $_GET['dept'];
                         <?php if( $_SESSION['yics_level'] != "1"){ ?>
                         dom: 'Bfrtip',
                         buttons: [{
-                                extend: 'excel',
-                                title: 'CONTROL TABLE <?= $judul[$id_dept] ?> (x Million) PERIODE <?= $periode; ?>-<?= $periode+1; ?> ',
-                                text: 'Excel',
-                                orientation: 'landscape',
-                                pageSize: 'LEGAL',
-                                download: 'open',
-                                exportOptions: {
-                                    columns: ':not(.noexportar)'
-                                },
-                                customize: function(xlsx) {
-
-                                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
-                                    $('row:first c', sheet).attr('s', '2');
-                                    $('*c', sheet).attr('s', '25');
-
-                                }
-                            },
-                            {
-                                extend: "print",
-                                exportOptions: {
-                                    columns: ':not(.noexportar)',
-
-
-                                },
-                                title: 'CONTROL TABLE <?= $judul[$id_dept] ?> (x Million) PERIODE <?= $periode; ?>-<?= $periode+1; ?> ',
-                                customize: function(win) {
-
-                                    var last = null;
-                                    var current = null;
-                                    var bod = [];
-
-                                    var css = '@page { size: landscape; }',
-                                        head = win.document.head || win.document
-                                        .getElementsByTagName('head')[0],
-                                        style = win.document.createElement('style');
-
-                                    style.type = 'text/css';
-                                    style.media = 'print';
-
-                                    if (style.styleSheet) {
-                                        style.styleSheet.cssText = css;
-                                    } else {
-                                        style.appendChild(win.document.createTextNode(css));
-                                    }
-
-                                    head.appendChild(style);
-                                }
-                            },
-                            {
-                                extend: 'pdf',
-                                title: 'CONTROL TABLE <?= $judul[$id_dept] ?> (x Million) PERIODE <?= $periode; ?>-<?= $periode+1; ?> ',
-                                text: 'Pdf',
-                                orientation: 'landscape',
-                                pageSize: 'LEGAL',
-                                download: 'open',
-                                alignment: "center",
-                                exportOptions: {
-                                    columns: ':not(.noexportar)',
-                                    orthogonal: "PDF",
-                                    modifier: {
-                                        order: 'index',
-                                        page: 'current'
-                                    }
-                                },
-                                customize: function(doc) {
-
-                                    doc.styles.tableBodyEven.alignment = "center";
-                                    doc.styles.tableBodyOdd.alignment = "center";
-                                    doc.styles.tableFooter.alignment = "center";
-                                    doc.styles.tableHeader.alignment = "center";
-                                }
+                            text: '<i class="icon wb-print" aria-hidden="true"></i>',
+                            action: function(e, dt, node, config) {
+                                window.location =
+                                    "controltabledep2.php?dept=<?= $_GET['dept'] ?>";
                             }
-                        ],
+
+                        }],
+                        // buttons: [{
+                        //         extend: 'excel',
+                        //         title: 'CONTROL TABLE <?= $judul[$id_dept] ?> (x Million) PERIODE <?= $periode; ?>-<?= $periode+1; ?> ',
+                        //         text: 'Excel',
+                        //         orientation: 'landscape',
+                        //         pageSize: 'LEGAL',
+                        //         download: 'open',
+                        //         exportOptions: {
+                        //             columns: ':not(.noexportar)'
+                        //         },
+                        //         customize: function(xlsx) {
+
+                        //             var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                        //             $('row:first c', sheet).attr('s', '2');
+                        //             $('*c', sheet).attr('s', '25');
+
+                        //         }
+                        //     },
+                        //     {
+                        //         extend: "print",
+                        //         exportOptions: {
+                        //             columns: ':not(.noexportar)',
+
+
+                        //         },
+                        //         title: 'CONTROL TABLE <?= $judul[$id_dept] ?> (x Million) PERIODE <?= $periode; ?>-<?= $periode+1; ?> ',
+                        //         customize: function(win) {
+
+                        //             var last = null;
+                        //             var current = null;
+                        //             var bod = [];
+
+                        //             var css = '@page { size: landscape; }',
+                        //                 head = win.document.head || win.document
+                        //                 .getElementsByTagName('head')[0],
+                        //                 style = win.document.createElement('style');
+
+                        //             style.type = 'text/css';
+                        //             style.media = 'print';
+
+                        //             if (style.styleSheet) {
+                        //                 style.styleSheet.cssText = css;
+                        //             } else {
+                        //                 style.appendChild(win.document.createTextNode(css));
+                        //             }
+
+                        //             head.appendChild(style);
+                        //         }
+                        //     },
+                        //     {
+                        //         extend: 'pdf',
+                        //         title: 'CONTROL TABLE <?= $judul[$id_dept] ?> (x Million) PERIODE <?= $periode; ?>-<?= $periode+1; ?> ',
+                        //         text: 'Pdf',
+                        //         orientation: 'landscape',
+                        //         pageSize: 'LEGAL',
+                        //         download: 'open',
+                        //         alignment: "center",
+                        //         exportOptions: {
+                        //             columns: ':not(.noexportar)',
+                        //             orthogonal: "PDF",
+                        //             modifier: {
+                        //                 order: 'index',
+                        //                 page: 'current'
+                        //             }
+                        //         },
+                        //         customize: function(doc) {
+
+                        //             doc.styles.tableBodyEven.alignment = "center";
+                        //             doc.styles.tableBodyOdd.alignment = "center";
+                        //             doc.styles.tableFooter.alignment = "center";
+                        //             doc.styles.tableHeader.alignment = "center";
+                        //         }
+                        //     },
+                        // ],
                         <?php  } ?> "order": [7, 'desc'],
                         scrollX: true,
                         paging: true,

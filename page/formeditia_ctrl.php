@@ -85,11 +85,14 @@ include '../elemen/header.php';?>
                     ia.cost_ia AS cost_ia,
                     ia.time_ia AS time_ia,
                     ia.deskripsi AS deskripsi,
+                    time_fiscal.awal AS awal,
+                    time_fiscal.akhir AS akhir,
                     proposal.id_dep 
                     FROM ia 
                     JOIN proposal ON ia.id_prop = proposal.id_prop 
                     JOIN depart ON proposal.id_dep = depart.id_dep
                     JOIN kategori_proposal  ON proposal.id_kat = kategori_proposal.id_kat
+                    JOIN time_fiscal  ON proposal.id_fis = time_fiscal.id_fis
                     LEFT JOIN konversi_matauang ON proposal.id_matauang = konversi_matauang.id_matauang
                     WHERE id_ia='$id'"); 
 
@@ -98,6 +101,8 @@ include '../elemen/header.php';?>
                         $dep = $data_ia['depart'];
                         $id_prop = $data_ia['id_prop'];
                         $rp="RP";
+                        $fis_awal = $data_ia['awal'];
+                        $fis_akhir = $data_ia['akhir'];
 
                     $get_data_ia = single_query("SELECT sum(cost_ia) as cost_ia FROM ia 
                     JOIN proposal on ia.id_prop = proposal.id_prop
@@ -230,7 +235,8 @@ include '../elemen/header.php';?>
                                                             <div class="col-md-4">
                                                                 <input type="date" class="form-control" id="time_ia"
                                                                     placeholder="Diisi tanggal updaate" name="time_ia"
-                                                                    autocomplete="off"
+                                                                    autocomplete="off" max="<?= $fis_akhir ?>"
+                                                                    min="<?= $fis_awal ?>"
                                                                     value="<?=$data_ia['time_ia'] ?>">
                                                             </div>
                                                             <label class="col-md-2 col-form-label text-left"

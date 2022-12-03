@@ -166,11 +166,11 @@ include '../elemen/header.php';?>
                                                                                     </thead>
                                                                                     <tbody>
                                                                                         <?php
-                                              $name = $user_role['role_name'];
-                                              $ur = mysqli_query($link_yics, "SELECT * FROM view_data_user WHERE role_name='$name'") or die(mysqli_error($link_yics));
-                                              $no = 1;
-                                              while ($data = mysqli_fetch_array($ur)) {
-                                              ?>
+                                                                                            $name = $user_role['role_name'];
+                                                                                            $ur = mysqli_query($link_yics, "SELECT * FROM view_data_user WHERE role_name='$name'") or die(mysqli_error($link_yics));
+                                                                                            $no = 1;
+                                                                                            while ($data = mysqli_fetch_array($ur)) {
+                                                                                            ?>
                                                                                         <tr>
                                                                                             <td><?= $no++; ?></td>
                                                                                             <td><?= $data['username']; ?>
@@ -283,7 +283,7 @@ include '../elemen/header.php';?>
                                 <h3 class="modal-title">Add User</h3>
                             </div><!-- end modal-header--------- -->
                             <div class="modal-body">
-                                <form action="../proses/usersetting/user.php" method="POST" id="tambahdata"
+                                <form action="../proses/usersetting/category.php" method="POST" id="tambahdata"
                                     class="needs-validation">
                                     <input type="hidden" name="add">
                                     <br>
@@ -435,7 +435,7 @@ include '../elemen/header.php';?>
                         $('.HapusAll').click(function(a) {
                             a.preventDefault()
                             var getLink = '../proses/usersetting/user.php?proses='
-                            document.proses.method = "POST";
+                            document.proses.method = "GET";
                             document.proses.action = getLink;
                             console.log(getLink);
                             Swal.fire({

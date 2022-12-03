@@ -30,6 +30,8 @@ function single_query($query){
     if(mysqli_num_rows($data_query)>0){
 
         $result = mysqli_fetch_assoc($data_query);
+    }else{
+        return "data kosong";
     }
 
    return $result;

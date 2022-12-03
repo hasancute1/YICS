@@ -45,7 +45,7 @@ include '../elemen/header.php';?>
                 <div><br><br>
                     <!-- Site Navbar Utama -->
                     <?php include '../elemen/sidebarleft.php';?>
-                    
+
                     <!-- Site Navbar Search -->
                     <?php include '../elemen/sidebar.php';?>
                     <!-- End Site Navbar Search -->
@@ -149,7 +149,8 @@ include '../elemen/header.php';?>
                                                                     <th class="align-middle text-center" height="10px">
                                                                         ACTION</th>
                                                                     <th class="align-middle text-center" height="10px">
-                                                                        <input type="checkbox" id="checkAll"></th>
+                                                                        <input type="checkbox" id="checkAll">
+                                                                    </th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -190,7 +191,8 @@ include '../elemen/header.php';?>
                                                                     <td class="align-middle text-center" height="10px">
                                                                         <input name="check[]"
                                                                             value="<?php echo $data['id_kat']; ?>"
-                                                                            type="checkbox" class="check"></td>
+                                                                            type="checkbox" class="check">
+                                                                    </td>
                                                                 </tr>
                                                                 <?php
                                           $no++; // Tambah 1 setiap kali looping
@@ -317,9 +319,8 @@ include '../elemen/footer.php';?>
                                 </button>
                                 <h3 class="modal-title">ADD CATEGORY</h3>
                             </div><!-- end modal-header--------- -->
-                            <div class="modal-body">
-                                <form action="../proses/usersetting/category.php" method="POST" id="tambahdata"
-                                    class="needs-validation">
+                            <form action="../proses/usersetting/category.php" method="POST">
+                                <div class="modal-body">
                                     <input type="hidden" name="add">
                                     <br>
                                     <div class="form-group row">
@@ -329,14 +330,13 @@ include '../elemen/footer.php';?>
                                                 placeholder="Silahkan isi kategori" autocomplete="off" required>
                                         </div>
                                     </div>
-                                    <input type="number" class="form-control" name="id" placeholder="Silahkan isi nama"
-                                        autocomplete="off" required hidden>
 
-                            </div>
-                            <div class="modal-footer">
-                                <button type="reset" id="reset" class="btn btn-danger">Reset</button>
-                                <button type="submit" class="btn btn-primary">Save</button>
-                            </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="reset" id="reset" class="btn btn-danger">Reset</button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
                             </form><!-- end form-content--------- -->
                         </div><!-- end modal-content--------- -->
                     </div><!-- end modal-dialog--------- -->

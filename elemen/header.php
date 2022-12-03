@@ -70,6 +70,8 @@
         color: black;
     }
 
+
+
     @keyframes mymove {
         from {
             left: 200px;

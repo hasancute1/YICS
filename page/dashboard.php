@@ -403,7 +403,7 @@ if (!isset($_SESSION['yics_user'])) {
                             WHERE time_fiscal.status= 'aktif' AND proposal.username= {$_SESSION['yics_user']} ORDER BY depart.id_dep ASC")or die (mysqli_error($link_yics));
                             $no=1;
                           }else{
-
+                            // jika yang login general admin
                             $proposal = mysqli_query($link_yics ,"SELECT id_prop,
                             depart.id_dep AS id_dep,
                             depart.depart AS depart,

@@ -76,7 +76,7 @@
         <span class="float-right"><?=  $presentasi_imp ?>%</span>
     </h5>
     <div class="progress progress-sm">
-        <div class="progress-bar progress-bar-indicating active " style="width: <?=  $presentasi_imp ?>%;"
+        <div class="progress-bar progress-bar-indicating active " style="width:<?=  $presentasi_imp ?>%;"
             role="progressbar"></div>
     </div>
     <h5>
