@@ -130,7 +130,7 @@ include '../elemen/header.php';?>
                                             </div>
                                             <div class="card-footer col-lg-12 col-md-12 text-md-right bg-blue-100">
                                                 <a href="" data-toggle="tooltip" data-original-title="Reset">
-                                                    <button type="button" id="reset_form" class="btn btn-danger">
+                                                    <button type="submit" class="btn btn-danger">
                                                         RESET
                                                     </button>
                                                 </a>
@@ -294,11 +294,14 @@ include '../elemen/header.php';?>
 
 
                 <script>
-                $('#reset_form').click(function(event) {
-                    event.preventDefault();
-
-                    $(".terpilih").prop("selected", false);
-
+                $(function() {
+                    $('#reset_form').click(function() {
+                        $(':input', '#formulir')
+                            .not(':button, :submit, :reset, :hidden')
+                            .val('')
+                            .removeAttr('checked')
+                            .removeAttr('selected');
+                    });
                 });
                 </script>
 
