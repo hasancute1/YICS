@@ -90,6 +90,21 @@
         animation: mymove 3s infinite;
         animation-iteration-count: 2;
     }
+
+    .garis {
+
+
+        outline: solid;
+        outline-width: 2px;
+        outline-offset: 7px;
+    }
+
+    /* .dropdown-menu-center {
+        left: 50% !important;
+        right: auto !important;
+        text-align: center !important;
+        transform: translate(-50%, 0) !important;
+    } */
     </style>
 
     <link rel="apple-touch-icon" href="../base/assets/images/apple-touch-icon.png">

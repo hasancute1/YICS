@@ -83,12 +83,16 @@ if (!isset($_SESSION['yics_user'])) {
                                     if(mysqli_num_rows($alokasi)>0){                                    
                                     $data = mysqli_fetch_assoc($alokasi);
                                     $periode = $data['periode'];
+                                    $awa = $data['awal'];
+                                    $akhr = $data['akhir'];
                                     $awalf = date("d M Y", strtotime($data['awal']));
                                     $akhirf = date("d M Y", strtotime($data['akhir']));
                                     }else{
                                         $periode="Pilih periode aktif";
                                         $awalf="Pilih tahun aktif";
                                         $akhirf="Pilih tahun aktif";
+                                        $awa="Pilih tahun aktif";
+                                        $akhr="Pilih tahun aktif";
                                     }
                                         ?>
 
@@ -113,7 +117,7 @@ if (!isset($_SESSION['yics_user'])) {
                                                     <input type="date" name="start" id="start_date"
                                                         class="form-control bg-transparent datepicker"
                                                         value="<?= (isset($_GET['start']))? $_GET['start']:date('Y-m-d' , strtotime($awal_fiscal)); ?>"
-                                                        min="<?= date('Y-m-d' , strtotime($awal_fiscal)) ?>">
+                                                        min="<?= $awa; ?>" max="<?= $akhr; ?>">
 
                                                 </div>
                                             </div>
@@ -124,7 +128,8 @@ if (!isset($_SESSION['yics_user'])) {
                                                     </div>
                                                     <input type="date" name="end" id="end_date"
                                                         class="form-control bg-transparent datepicker"
-                                                        value="<?= (isset($_GET['end']))? $_GET['end']:date('Y-m-d'); ?>">
+                                                        value="<?= (isset($_GET['end']))? $_GET['end']:date('Y-m-d'); ?>"
+                                                        min="<?= $awa; ?>" max="<?= $akhr; ?>">
                                                 </div>
                                             </div>
                                             <div class="col-md-2 text-right">

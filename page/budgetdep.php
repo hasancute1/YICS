@@ -85,6 +85,7 @@ include '../elemen/header.php';?>
                     $data_fiscal = single_query("SELECT id_fis , awal from time_fiscal where status='aktif'");
                     $id_fis = $data_fiscal['id_fis'];
                     $awal_fiscal = $data_fiscal['awal'];
+                    $akhir_fiscal = $data_fiscal['akhir'];
 
                     $list_bulan = [
                         4 => 1,
@@ -184,7 +185,7 @@ include '../elemen/header.php';?>
                     <div class="page">
                         <div class="page-header">
                             <h1 class="page-title font-size-26 font-weight-600">Budget <?= $get_data_budget['depart']?>
-                                Overview (x Million)<?php echo  $bulanfis; echo  $thfis;?>
+                                Overview (x Million)
                             </h1>
                         </div>
 
@@ -198,10 +199,14 @@ include '../elemen/header.php';?>
                                     $periode = $data['periode'];
                                     $awalf = date("d M Y", strtotime($data['awal']));
                                     $akhirf = date("d M Y", strtotime($data['akhir']));
+                                    $awa = $data['awal'];
+                                    $akhr = $data['akhir'];
                                     }else{
                                         $periode="Pilih periode aktif";
                                         $awalf="Pilih tahun aktif";
                                         $akhirf="Pilih tahun aktif";
+                                        $awa="Pilih tahun aktif";
+                                        $akhr="Pilih tahun aktif";
                                     }
                                         ?>
 
@@ -227,7 +232,7 @@ include '../elemen/header.php';?>
                                                     <input type="date" name="start" id="start_date"
                                                         class="form-control bg-transparent datepicker"
                                                         value="<?= (isset($_GET['start']))? $_GET['start']:date('Y-m-d' , strtotime($awal_fiscal)); ?>"
-                                                        min="<?= date('Y-m-d' , strtotime($awal_fiscal)) ?>">
+                                                        min="<?= $awa; ?>" max="<?= $akhr; ?>">
 
                                                 </div>
                                             </div>
@@ -239,7 +244,7 @@ include '../elemen/header.php';?>
                                                     <input type="date" name="end" id="end_date"
                                                         class="form-control bg-transparent datepicker"
                                                         value="<?= (isset($_GET['end']))? $_GET['end']:date('Y-m-d'); ?>"
-                                                        min="<?= date('Y-m-d' , strtotime($awal_fiscal)) ?>">
+                                                        min="<?= $awa; ?>" max="<?= $akhr; ?>">
                                                 </div>
                                             </div>
                                             <div class="col-md-2 text-right">
@@ -279,12 +284,12 @@ include '../elemen/header.php';?>
                                                         <span>
                                                             <P class="white font-size-30 font-weight-100 mt-20">
                                                                 Rp
-                                                                <?= number_format($sisa_budget,0,',','.')." "."MILLION" ?>
+                                                                <?= number_format($sisa_budget,0,',','.')." "."Million" ?>
                                                             </P>
 
                                                             <p class="white font-weight-100 font-size-20 mt-10">
                                                                 "Budget Rp
-                                                                <?= number_format($get_data_budget['budget'],0,',','.')." "."MILLION"  ?>"
+                                                                <?= number_format($get_data_budget['budget'],0,',','.')." "."Million"  ?>"
                                                             </p>
                                                         </span>
                                                     </div>
@@ -370,11 +375,11 @@ if( $sisa_budget>0){
                                                     <div class="col-lg-6 col-md-5 mt-30" style="line-height: 15px;">
                                                         <h4>e-Wallet:</h4>
                                                         <p style="font-size: 20px; color:green;font-weight: bold;">Rp
-                                                            <?= number_format($get_data_budget['budget'],0,',','.')." "."MILLION" ?>
+                                                            <?= number_format($get_data_budget['budget'],0,',','.')." "."Million" ?>
                                                         </p>
                                                         <h4>Consummed:</h4>
                                                         <p style="font-size: 20px; color:blue;font-weight: bold;">Rp
-                                                            <?= number_format($consumtion_budget['cost'] ,0, ',','.')." "."MILLION"  ?>
+                                                            <?= number_format($consumtion_budget['cost'] ,0, ',','.')." "."Million"  ?>
                                                         </p>
                                                     </div>
                                                 </div>

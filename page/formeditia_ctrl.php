@@ -149,16 +149,11 @@ include '../elemen/header.php';?>
                                                         <input type="hidden" name="id_ia"
                                                             value="<?= $data_ia['id_ia'] ?>">
                                                         <div class="form-group row">
-                                                            <h4 class="col-md-2 modal-title text-left"
+                                                            <h4 class="col-md-12 modal-title text-left"
                                                                 style="color:black;">IA
                                                                 NO.
                                                             </h4>
-                                                            <div class="col-md-10 text-right">
-                                                                <a href="controltabledep.php?dept=<?= $id_dep ?>"
-                                                                    class=" btn btn-icon btn-warning">
-                                                                    <span>TUTUP FORM</span>
-                                                                </a>
-                                                            </div>
+
                                                         </div>
                                                         <div class="form-group row ">
                                                             <label class="col-md-2 col-form-label text-left"
@@ -254,8 +249,11 @@ include '../elemen/header.php';?>
                                                         </div>
                                                 </div>
                                                 <div class="card-footer text-right card-footer-transparent">
-                                                    <button type="reset" style="color:white;border-radius:10px;"
-                                                        class="btn bg-blue-grey-800 ">RESET</button>
+                                                    <a href="controltabledep.php?dept=<?= $id_dep ?>"
+                                                        style="color:white;border-radius:10px;"
+                                                        class="btn bg-blue-grey-800 ">
+                                                        <span>KEMBALI</span>
+                                                    </a>
                                                     <button type="submit" style="border-radius:10px;"
                                                         class="btn btn-primary ">SUBMIT</button>
                                                 </div>

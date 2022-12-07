@@ -84,11 +84,14 @@ include '../elemen/header.php';?>
                     ia.ia AS ia,
                     ia.cost_ia AS cost_ia,
                     ia.time_ia AS time_ia,
+                    time_fiscal.awal AS awal,
+                    time_fiscal.akhir AS akhir,
                     ia.deskripsi AS deskripsi,
                     proposal.id_dep 
                     FROM ia 
                     JOIN proposal ON ia.id_prop = proposal.id_prop 
                     JOIN depart ON proposal.id_dep = depart.id_dep
+                    JOIN time_fiscal  ON proposal.id_fis = time_fiscal.id_fis
                     JOIN kategori_proposal  ON proposal.id_kat = kategori_proposal.id_kat
                     LEFT JOIN konversi_matauang ON proposal.id_matauang = konversi_matauang.id_matauang
                     WHERE id_ia='$id'"); 
@@ -98,6 +101,8 @@ include '../elemen/header.php';?>
                         $dep = $data_ia['depart'];
                         $id_prop = $data_ia['id_prop'];
                         $rp="RP";
+                        $fis_awal = $data_ia['awal'];
+                        $fis_akhir = $data_ia['akhir'];
 
                     $get_data_ia = single_query("SELECT sum(cost_ia) as cost_ia FROM ia 
                     JOIN proposal on ia.id_prop = proposal.id_prop
@@ -144,16 +149,11 @@ include '../elemen/header.php';?>
                                                         <input type="hidden" name="id_ia"
                                                             value="<?= $data_ia['id_ia'] ?>">
                                                         <div class="form-group row">
-                                                            <h4 class="col-md-2 modal-title text-left"
+                                                            <h4 class="col-md-12 modal-title text-left"
                                                                 style="color:black;">IA
                                                                 NO.
                                                             </h4>
-                                                            <div class="col-md-10 text-right">
-                                                                <a href="controltabledep.php?dept=<?= $id_dep ?>"
-                                                                    class=" btn btn-icon btn-warning">
-                                                                    <span>TUTUP FORM</span>
-                                                                </a>
-                                                            </div>
+
                                                         </div>
                                                         <div class="form-group row ">
                                                             <label class="col-md-2 col-form-label text-left"
@@ -230,7 +230,8 @@ include '../elemen/header.php';?>
                                                             <div class="col-md-4">
                                                                 <input type="date" class="form-control" id="time_ia"
                                                                     placeholder="Diisi tanggal updaate" name="time_ia"
-                                                                    autocomplete="off"
+                                                                    autocomplete="off" max="<?= $fis_akhir ?>"
+                                                                    min="<?= $fis_awal ?>"
                                                                     value="<?=$data_ia['time_ia'] ?>">
                                                             </div>
                                                             <label class="col-md-2 col-form-label text-left"
@@ -248,8 +249,11 @@ include '../elemen/header.php';?>
                                                         </div>
                                                 </div>
                                                 <div class="card-footer text-right card-footer-transparent">
-                                                    <button type="reset" style="color:white;border-radius:10px;"
-                                                        class="btn bg-blue-grey-800 ">RESET</button>
+                                                    <a href="controltabledep.php?dept=<?= $id_dep ?>"
+                                                        style="color:white;border-radius:10px;"
+                                                        class="btn bg-blue-grey-800 ">
+                                                        <span>KEMBALI</span>
+                                                    </a>
                                                     <button type="submit" style="border-radius:10px;"
                                                         class="btn btn-primary ">SUBMIT</button>
                                                 </div>

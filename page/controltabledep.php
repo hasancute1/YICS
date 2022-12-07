@@ -108,12 +108,16 @@ $id_dept = $_GET['dept'];
                                     if(mysqli_num_rows($alokasi)>0){                                    
                                     $data = mysqli_fetch_assoc($alokasi);
                                     $periode = $data['periode'];
+                                    $awa = $data['awal'];
+                                    $akhr = $data['akhir'];
                                     $awalf = date("d M Y", strtotime($data['awal']));
                                     $akhirf = date("d M Y", strtotime($data['akhir']));
                                     }else{
                                         $periode="Pilih periode aktif";
                                         $awalf="Pilih tahun aktif";
                                         $akhirf="Pilih tahun aktif";
+                                        $awa="Pilih tahun aktif";
+                                        $akhr="Pilih tahun aktif";
                                     }
                                         ?>
 
@@ -139,6 +143,7 @@ $id_dept = $_GET['dept'];
                                                     </div>
                                                     <input type="date" name="start" id="start_date"
                                                         class="form-control bg-transparent datepicker"
+                                                        min="<?= $awa; ?>" max="<?= $akhr; ?>"
                                                         value="<?= (isset($_GET['start']))? $_GET['start']:date('Y-m-d'); ?>">
 
                                                 </div>
@@ -150,6 +155,7 @@ $id_dept = $_GET['dept'];
                                                     </div>
                                                     <input type="date" name="end" id="end_date"
                                                         class="form-control bg-transparent datepicker"
+                                                        min="<?= $awa; ?>" max="<?= $akhr; ?>"
                                                         value="<?= (isset($_GET['end']))? $_GET['end']:date('Y-m-d'); ?>">
                                                 </div>
                                             </div>

@@ -79,10 +79,13 @@ include '../elemen/header.php';?>
                                             $data_ia = single_query("SELECT * FROM ia 
                                             JOIN proposal on ia.id_prop = proposal.id_prop
                                             JOIN depart on proposal.id_dep = depart.id_dep
+                                            JOIN time_fiscal on proposal.id_fis = time_fiscal.id_fis
                                             JOIN kategori_proposal on proposal.id_kat = kategori_proposal.id_kat
                                             where id_ia='".$id_ia."'");    
                                              $cost_ia  = $data_ia['cost_ia'];
                                              $depart  = $data_ia['depart'];
+                                             $awal  = $data_ia['awal'];
+                                             $akhir  = $data_ia['akhir'];
                                             
                                             $progress_ia = query("SELECT * FROM progress where id_ket != 1");
 
@@ -317,6 +320,8 @@ include '../elemen/header.php';?>
                                                                             <div class="input-group-prepend">
                                                                                 <input type="datetime-local"
                                                                                     name="tgl[]"
+                                                                                    min="<?= $awal ?>T00:00"
+                                                                                    max="<?= $akhir ?>T00:00"
                                                                                     class="form-control bg-grey-200"
                                                                                     id="tgl-<?= $no ?>" value="<?php
                                                                                 if(isset($data_tracking['time'])){

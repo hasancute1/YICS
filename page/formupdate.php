@@ -92,14 +92,18 @@ include '../elemen/header.php';?>
                   $proposal = mysqli_query($link_yics ,"SELECT 
                   proposal.id_prop AS id_prop,
                   depart.depart AS depart,
+                  time_fiscal.awal AS awal,
+                  time_fiscal.akhir AS akhir,
                   kategori_proposal.kategori AS kategori,                 
                   proposal.proposal AS proposal
                   FROM proposal 
                   LEFT JOIN depart ON proposal.id_dep = depart.id_dep
                   LEFT JOIN kategori_proposal  ON proposal.id_kat = kategori_proposal.id_kat
-                  
+                  LEFT JOIN time_fiscal on proposal.id_fis = time_fiscal.id_fis
                   WHERE id_prop = '$id'")or die (mysqli_error($link_yics));
-                  $data = mysqli_fetch_assoc($proposal)
+                  $data = mysqli_fetch_assoc($proposal);
+                  $awal  = $data['awal'];
+                  $akhir  = $data['akhir'];
                 ?>
 
                                             <form method="POST" action="../proses/dashboard/tes2.php">
@@ -191,8 +195,7 @@ include '../elemen/header.php';?>
 														data_user.nama AS nama,
 														data_user.username AS username
 														FROM tracking_prop
-														LEFT JOIN data_user
-														ON tracking_prop.username = data_user.username
+														LEFT JOIN data_user	ON tracking_prop.username = data_user.username
 														WHERE id_prop = '$id' AND id_prog = '$rows_progress[id_prog]' ";
 														$sql = mysqli_query($link_yics, $qry)or die (mysqli_error($link_yics));
 														if(mysqli_num_rows($sql)>0){
@@ -319,6 +322,8 @@ include '../elemen/header.php';?>
                                                                 <td class="align-middle text-center">
                                                                     <div class="input-group-prepend">
                                                                         <input type="datetime-local" name="tgl[]"
+                                                                            min="<?= $awal ?>T00:00"
+                                                                            max="<?= $akhir ?>T00:00"
                                                                             class="form-control bg-grey-200"
                                                                             id="tgl-<?=$no?>" value="<?= $time ?>"
                                                                             autocomplete="off">

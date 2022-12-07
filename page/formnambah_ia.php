@@ -78,6 +78,8 @@ include '../elemen/header.php';?>
                     proposal.cost AS cost,
                     konversi_matauang.yen AS yen,
                     proposal.id_fis,
+                    time_fiscal.awal AS awal,
+                    time_fiscal.akhir AS akhir,
                     budget.id_bud AS id_bud,
                     proposal.id_dep
                    
@@ -86,6 +88,7 @@ include '../elemen/header.php';?>
                     LEFT JOIN budget ON proposal.id_fis = budget.id_fis
                     LEFT JOIN kategori_proposal  ON proposal.id_kat = kategori_proposal.id_kat
                     LEFT JOIN konversi_matauang ON proposal.id_matauang = konversi_matauang.id_matauang
+                    LEFT JOIN time_fiscal ON proposal.id_fis = time_fiscal.id_fis
                    
                     WHERE id_prop = '$id'")or die (mysqli_error($link_yics));
                     $data = mysqli_fetch_assoc($proposal);
@@ -93,7 +96,9 @@ include '../elemen/header.php';?>
                     $id_dep = $data['id_dep'];
                     $dep = $data['depart'];
                     $id_bud = $data['id_bud'];
-                     $rp="RP";
+                    $rp="RP";
+                    $awal= $data['awal'];
+                    $akhir= $data['akhir'];
 
                     $get_data_ia = single_query("SELECT sum(cost_ia) as cost_ia FROM ia 
                     JOIN proposal on ia.id_prop = proposal.id_prop
@@ -214,7 +219,8 @@ include '../elemen/header.php';?>
                                                             <div class="col-md-4">
                                                                 <input type="date" class="form-control" id="time_ia"
                                                                     placeholder="Diisi tanggal updaate" name="time_ia"
-                                                                    autocomplete="off" required>
+                                                                    autocomplete="off" min="<?= $awal ?>"
+                                                                    max="<?= $akhir ?>" required>
                                                             </div>
                                                             <label class="col-md-2 col-form-label text-left"
                                                                 style="color:black;">Remark
