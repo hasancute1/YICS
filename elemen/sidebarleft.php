@@ -7,6 +7,12 @@ $url_aktive = $uri[0];
 
 ?>
 <ul class="site-menu" data-plugin="menu">
+    <li class="site-menu-item has-sub <?= ($url_aktive == "my_order")? "active": ""; ?>">
+        <a href="my_order.php" class="animsition-link">
+            <i class="site-menu-icon wb-order" aria-hidden="true"></i>
+            <span class="site-menu-title">MY ORDERS</span>
+        </a>
+    </li>
     <li class="site-menu-item has-sub <?= ($url_aktive == "dashboard")? "active": ""; ?>">
         <a href="dashboard.php" class="animsition-link">
             <i class="site-menu-icon wb-dashboard" aria-hidden="true"></i>
