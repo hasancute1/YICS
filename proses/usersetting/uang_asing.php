@@ -5,8 +5,8 @@ if (isset ($_SESSION['yics_user'])){
    if(isset($_POST['ubah'])){
         // masukan data post ke variabel 
       $id_matauang=$_POST['id_matauang'];
-      $yen=str_replace(",", "",$_POST['yen']);;
-      $dollar=str_replace(",", "",$_POST['dollar']);
+      $yen=str_replace(".", "",$_POST['yen']);;
+      $dollar=str_replace(".", "",$_POST['dollar']);
        $UbahKurs = "UPDATE konversi_matauang SET id_matauang='$id_matauang',yen ='$yen',dollar ='$dollar' WHERE id_matauang = '$id_matauang'"; 
       //  echo $UbahKurs;
        $sql = mysqli_query($link_yics, $UbahKurs)or die(mysqli_error($link_yics));

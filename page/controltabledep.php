@@ -245,17 +245,17 @@ $id_dept = $_GET['dept'];
                                                             <th class="align-middle text-center">
                                                                 JPY</th>
                                                             <th class="align-middle text-center">
-                                                                Rp</th>
+                                                                IDR</th>
                                                             <th class="align-middle text-center">
                                                                 1000USD</th>
                                                             <th class="align-middle text-center">
                                                                 JPY</th>
                                                             <th class="align-middle text-center">
-                                                                Rp</th>
+                                                                IDR</th>
                                                             <th class="align-middle text-center">
                                                                 JPY</th>
                                                             <th class="align-middle text-center">
-                                                                Rp</th>
+                                                                IDR</th>
                                                             <th class="align-middle text-center">
                                                                 CT Updated</th>
 
@@ -267,7 +267,7 @@ $id_dept = $_GET['dept'];
 
                                                         <!-- query proposal control table -->
                                                         <?php 
-                                                        $Rp = "RP";
+                                                        $IDR = "IDR";
 
                              // where from request 
 
@@ -373,10 +373,10 @@ $id_dept = $_GET['dept'];
                                         $tombol_hidup="disabledlink"; 
                                     }
                                     if((isset($data['no_ia']) && $no_prop == 1)){
-                                        $remainrp = number_format (($data['cost']-$data['cost_ia']),0,',','.'); 
+                                        $remainIDR = number_format (($data['cost']-$data['cost_ia']),0,',','.'); 
                                        }else if((isset($data['no_ia']) && $no_prop != 1)) {
-                                        $remainrp = number_format ((0-$data['cost_ia']),0,',','.'); 
-                                       }else{ $remainrp ="";}
+                                        $remainIDR = number_format ((0-$data['cost_ia']),0,',','.'); 
+                                       }else{ $remainIDR ="";}
                                     // $id_before = $data['id_prop'];
 
                                     if((isset($data['no_ia']) && $no_prop == 1)){
@@ -384,7 +384,7 @@ $id_dept = $_GET['dept'];
                                        }else if((isset($data['no_ia']) && $no_prop != 1)) {
                                         $remainyen = number_format (((0-$data['cost_ia'])/$data['yen']),2,',','.'); 
                                        }else{ $remainyen ="";}
-                                    if ($remainrp<0){
+                                    if ($remainIDR<0){
                                         $warnaremain="bg-red-100";
                                     }else{
                                         $warnaremain="";
@@ -412,9 +412,9 @@ $id_dept = $_GET['dept'];
                                                             </td>
                                                             <td>
                                                                 <?php
-                                                                  $Rp="Rp"; ?>
+                                                                  $IDR="IDR"; ?>
 
-                                                                <?=($no_prop == 1)? $Rp." ".number_format ($data['cost'],0,',','.')." "."Million": ""; ?>
+                                                                <?=($no_prop == 1)? $IDR." ".number_format ($data['cost'],0,',','.')." "."Million": ""; ?>
                                                             </td>
                                                             <td> <?= (isset($data['no_ia']))? $no_prop: ""; ?>
                                                             </td>
@@ -422,12 +422,12 @@ $id_dept = $_GET['dept'];
                                                             <td></td>
                                                             <td><?= $data['ia_deskripsi'] ?></td>
                                                             <td></td>
-                                                            <td><?= (isset($data['no_ia']))?$Rp." ".number_format ($data['cost_ia'],0,',','.')." "."Million": ""; ?>
+                                                            <td><?= (isset($data['no_ia']))?$IDR." ".number_format ($data['cost_ia'],0,',','.')." "."Million": ""; ?>
                                                             </td>
                                                             <td></td>
                                                             <td><?= (isset($data['no_ia']))? $yen." ".number_format($data['cost_ia']/$data['yen'], 2, ',', '.')." "."Million": ""; ?>
                                                             </td>
-                                                            <td><?= (isset($data['no_ia']))? $Rp." ".number_format ($data['cost_ia'],0,',','.')." "."Million": ""; ?>
+                                                            <td><?= (isset($data['no_ia']))? $IDR." ".number_format ($data['cost_ia'],0,',','.')." "."Million": ""; ?>
                                                             </td>
 
 
@@ -438,7 +438,7 @@ $id_dept = $_GET['dept'];
 
                                                             <td
                                                                 class="<?=  (isset($data['no_ia']))?$warnaremain: ""; ?>">
-                                                                <?= (isset($data['no_ia']))? $Rp." ".$remainrp." "."Million": ""; ?>
+                                                                <?= (isset($data['no_ia']))? $IDR." ".$remainIDR." "."Million": ""; ?>
                                                             </td>
                                                             <td><?= (isset($data['no_ia']))?date("d M Y", strtotime($data['time_ia'])): "";  ?>
                                                             </td>

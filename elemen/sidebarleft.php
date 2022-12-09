@@ -5,6 +5,16 @@ $uri = explode('/', $uri);
 $uri = explode('.php' , $uri[3]);
 $url_aktive = $uri[0];
 
+$get_data_budget1 = mysqli_query($link_yics ,"SELECT * FROM budget JOIN depart on budget.id_dep = depart.id_dep
+                                                                   JOIN time_fiscal on time_fiscal.id_fis = budget.id_fis            
+                                                                    where `status`='aktif'") or die (mysqli_error($link_yics));                 
+                    if(mysqli_num_rows($get_data_budget1)>0){
+                        $get_data_budget = mysqli_fetch_assoc($get_data_budget1);
+                        $tombol_hidup="";
+                     }else{
+                        $tombol_hidup="disabledlink"; 
+                    }
+
 ?>
 <ul class="site-menu" data-plugin="menu">
     <li class="site-menu-item has-sub <?= ($url_aktive == "my_order")? "active": ""; ?>">
@@ -58,22 +68,28 @@ $url_aktive = $uri[0];
         </a>
         <ul class="site-menu-sub">
             <li class="site-menu-item open <?= ($url_aktive == "budgetdep" && $_GET['dep']== 1)? "active": ""; ?>"">
-                <a class=" animsition-link" href="budgetdep.php?dep=1">
+                <a class=" animsition-link <?= $tombol_hidup ?>" href="budgetdep.php?dep=1">
                 <span class="site-menu-title">Body Plant 1</span>
                 </a>
             </li>
             <li class="site-menu-item <?= ($url_aktive == "budgetdep" && $_GET['dep']== 2)? "active": ""; ?>"">
-                <a class=" animsition-link" href="budgetdep.php?dep=2">
+                <a class=" animsition-link <?= $tombol_hidup ?>" href="budgetdep.php?dep=2">
                 <span class="site-menu-title">Body Plant 2</span>
                 </a>
             </li>
             <li class="site-menu-item <?= ($url_aktive == "budgetdep" && $_GET['dep']== 3)? "active": ""; ?>">
-                <a class=" animsition-link" href="budgetdep.php?dep=3">
+                <a class=" animsition-link <?= $tombol_hidup ?>" href="budgetdep.php?dep=3">
                     <span class="site-menu-title">BQC</span>
                 </a>
             </li>
         </ul>
     </li>
+    </li>
+    <li class="site-menu-item has-sub <?= ($url_aktive == "MATERIAL")? "active": ""; ?>">
+        <a href="dashboard.php" class="animsition-link">
+            <i class="site-menu-icon wb-list-bulleted" aria-hidden="true"></i>
+            <span class="site-menu-title">MASTER MATERIAL</span>
+        </a>
     </li>
     <?php if( $_SESSION['yics_level'] != "1"){ ?>
     <li

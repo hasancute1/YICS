@@ -78,11 +78,11 @@ include '../elemen/header.php';?>
                                                           }
 
                                                             
-                                                            ?>
+                                                           
 
-                    <?php
+                 
                     $id_dep = $_GET['dep'];
-                    $data_fiscal = single_query("SELECT id_fis , awal from time_fiscal where status='aktif'");
+                    $data_fiscal = single_query("SELECT * from time_fiscal where status='aktif'");
                     $id_fis = $data_fiscal['id_fis'];
                     $awal_fiscal = $data_fiscal['awal'];
                     $akhir_fiscal = $data_fiscal['akhir'];
@@ -113,9 +113,14 @@ include '../elemen/header.php';?>
                      }
 
                    
-
-                    $get_data_budget = single_query("SELECT * FROM budget JOIN depart on budget.id_dep = depart.id_dep where budget.id_dep={$id_dep} and id_fis={$id_fis}");
-
+                    
+                    // $get_data_budget = single_query("SELECT * FROM budget JOIN depart on budget.id_dep = depart.id_dep where budget.id_dep={$id_dep} and id_fis={$id_fis}");
+                    
+                    $get_data_budget1 = mysqli_query($link_yics ,"SELECT * FROM budget JOIN depart on budget.id_dep = depart.id_dep where budget.id_dep={$id_dep} and id_fis={$id_fis}")
+                    or die (mysqli_error($link_yics));                 
+                    if(mysqli_num_rows($get_data_budget1)>0){
+                        $get_data_budget = mysqli_fetch_assoc($get_data_budget1);
+                     } 
                     $consumtion_budget = single_query("SELECT sum(cost_ia) as cost , count(*) as qty , max(ia.time_ia) as last_month FROM ia
                         join proposal on ia.id_prop = proposal.id_prop
                         join depart on proposal.id_dep = depart.id_dep
@@ -283,12 +288,12 @@ include '../elemen/header.php';?>
 
                                                         <span>
                                                             <P class="white font-size-30 font-weight-100 mt-20">
-                                                                Rp
+                                                                IDR
                                                                 <?= number_format($sisa_budget,0,',','.')." "."Million" ?>
                                                             </P>
 
                                                             <p class="white font-weight-100 font-size-20 mt-10">
-                                                                "Budget Rp
+                                                                "Budget IDR
                                                                 <?= number_format($get_data_budget['budget'],0,',','.')." "."Million"  ?>"
                                                             </p>
                                                         </span>
@@ -374,11 +379,11 @@ if( $sisa_budget>0){
                                                     </div>
                                                     <div class="col-lg-6 col-md-5 mt-30" style="line-height: 15px;">
                                                         <h4>e-Wallet:</h4>
-                                                        <p style="font-size: 20px; color:green;font-weight: bold;">Rp
+                                                        <p style="font-size: 20px; color:green;font-weight: bold;">IDR
                                                             <?= number_format($get_data_budget['budget'],0,',','.')." "."Million" ?>
                                                         </p>
                                                         <h4>Consummed:</h4>
-                                                        <p style="font-size: 20px; color:blue;font-weight: bold;">Rp
+                                                        <p style="font-size: 20px; color:blue;font-weight: bold;">IDR
                                                             <?= number_format($consumtion_budget['cost'] ,0, ',','.')." "."Million"  ?>
                                                         </p>
                                                     </div>
@@ -456,7 +461,7 @@ if( $sisa_budget>0){
                                                         <td class="align-middle text-center"><?= $row['benefit'] ?></td>
                                                         <td class="align-middle text-center">
                                                             <?= date('d M Y' , strtotime($row['time_ia']))  ?></td>
-                                                        <td class="align-middle text-center">Rp
+                                                        <td class="align-middle text-center">IDR
                                                             <?= number_format($row['cost_ia'],0,',','.') ?></td>
                                                         <td class="align-middle text-center">Closed</td>
                                                     </tr>

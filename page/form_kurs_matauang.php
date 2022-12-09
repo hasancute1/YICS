@@ -131,7 +131,7 @@ include '../elemen/header.php';?>
                                                                 <td class=" align-middle text-center">
                                                                     <div class="input-group">
                                                                         <div class="input-group-prepend">
-                                                                            <span class="input-group-text">RP</span>
+                                                                            <span class="input-group-text">IDR</span>
                                                                         </div>
                                                                         <input type="text" name="yen"
                                                                             class="form-control bg-green-100 uang"
@@ -162,13 +162,13 @@ include '../elemen/header.php';?>
                                                                 <td class="align-middle text-center">
                                                                     <div class="input-group">
                                                                         <div class="input-group-prepend">
-                                                                            <span class="input-group-text">RP</span>
+                                                                            <span class="input-group-text">IDR</span>
                                                                         </div>
 
                                                                         <input type="text" name="dollar"
                                                                             class="form-control bg-green-100 uang"
                                                                             placeholder="Nominal Rupiah"
-                                                                            value="<?php echo number_format($data['dollar']);?>">
+                                                                            value="<?php echo number_format(($data['dollar']),0,',','.');?>">
                                                                     </div>
                                                                 </td>
                                                             </tr>

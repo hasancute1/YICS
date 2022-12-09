@@ -48,7 +48,7 @@ include '../elemen/header.php';?>
                 <div><br><br>
 
                     <?php include '../elemen/sidebarleft.php';?>
-                    
+
                     <!-- Site Navbar Search -->
                     <?php include '../elemen/sidebar.php';?>
                     <!-- End Site Navbar Search -->
@@ -132,7 +132,7 @@ include '../elemen/header.php';?>
                                                                 <td class=" align-middle text-center">
                                                                     <div class="input-group">
                                                                         <div class="input-group-prepend">
-                                                                            <span class="input-group-text">RP</span>
+                                                                            <span class="input-group-text">IDR</span>
                                                                         </div>
                                                                         <input type="text" name="yen" readonly
                                                                             class="form-control"
@@ -172,13 +172,13 @@ include '../elemen/header.php';?>
                                                                 <td class="align-middle text-center">
                                                                     <div class="input-group">
                                                                         <div class="input-group-prepend">
-                                                                            <span class="input-group-text">RP</span>
+                                                                            <span class="input-group-text">IDR</span>
                                                                         </div>
 
                                                                         <input type="text" name="dollar" readonly
                                                                             class="form-control"
                                                                             placeholder="Nominal Rupiah"
-                                                                            value="<?php echo number_format($data['dollar']);?>">
+                                                                            value="<?php echo number_format(($data['dollar']),0,',','.'); ?>">
                                                                     </div>
                                                                 </td>
                                                                 <td class="align-middle text-center">

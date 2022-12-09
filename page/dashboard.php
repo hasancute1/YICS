@@ -268,10 +268,10 @@ if (!isset($_SESSION['yics_user'])) {
                                                 class="white font-weight-400"><?php echo $row_card1 ['divisi']; ?></span>
                                             <div class=" white content-text text-center mb-0">
                                                 <span>
-                                                    <p class="font-size-30 font-weight-100 mt-10"> Rp
+                                                    <p class="font-size-30 font-weight-100 mt-10"> IDR
                                                         <?= number_format($card['total'] -  $total_consumtion_budget,0,',','.')." "."Million"; ?>
                                                     </p>
-                                                    <p class="white font-weight-100 m-0 font-size-20"><u>"Budget Rp
+                                                    <p class="white font-weight-100 m-0 font-size-20"><u>"Budget IDR
                                                             <?php echo number_format ($card['total'],0,',','.')." "."Million";  ?>"</u>
                                                     </p>
                                                 </span>
@@ -306,9 +306,9 @@ if (!isset($_SESSION['yics_user'])) {
                                                 <div class="content-text text-center mb-0">
                                                     <span>
                                                         <p class="white font-size-30 font-weight-100 mt-10">
-                                                            Rp <?= number_format($sisa_budget,0,',','.')." "; ?>Million
+                                                            IDR <?= number_format($sisa_budget,0,',','.')." "; ?>Million
                                                         </p>
-                                                        <p class="white font-weight-100 m-0 font-size-18">"Budget Rp
+                                                        <p class="white font-weight-100 m-0 font-size-18">"Budget IDR
                                                             <?php echo number_format ($row_card['budget'],0,',','.')." "; ?>Million"
                                                         </p>
                                                         <p class="white font-weight-100 m-0"> Lihat Detail >></p>
@@ -790,7 +790,7 @@ include '../elemen/footer.php';?>
         colors: [Config.colors("yellow", 500), Config.colors("red", 500), Config.colors("purple", 500)],
         // formatter: function (x) { return x + "%"}
         formatter: function(y, data) {
-            return 'Rp ' + y + ' Million'
+            return 'IDR ' + y + ' Million'
         },
     })
     </script>
@@ -868,7 +868,7 @@ include '../elemen/footer.php';?>
                             <div class="col-md-10">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text">Rp</span>
+                                        <span class="input-group-text">IDR</span>
                                     </div>
                                     <input required name="budget<?=$i?>" type="text"
                                         id="<?php echo $rows_depart['depart']?>" class="form-control prc"
@@ -890,7 +890,7 @@ include '../elemen/footer.php';?>
                             <div class="col-md-10">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text">Rp</span>
+                                        <span class="input-group-text">IDR</span>
                                     </div>
                                     <span readonly type="text" id="result" class="form-control"
                                         placeholder="Total Budget Dept...">
@@ -988,41 +988,80 @@ include '../elemen/footer.php';?>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-2 col-form-label" style="color:black;">Cost</label>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text">Rp</span>
+                                        <span class="input-group-text">IDR</span>
                                     </div>
 
                                     <input required name="cost" type="text" class="form-control" id="rupiah"
                                         placeholder="Isi Cost Proposal...">
+                                    <div class="input-group-prepend ">
+                                        <span class="input-group-text bg-yellow-100">MILLION</span>
+                                    </div>
                                 </div>
                             </div>
-
+                        </div>
+                        <div class="form-group row">
                             <label class="col-md-2 col-form-label" style="color:black;">Lampiran</label>
-                            <div class="col-md-4 input-group">
-                                <input class="form-control-file" type="file" name="lampiran" required>
+
+                            <div class="col-md-5 input-group">
+                                <!-- <input class="form-control-file" type="file" name="lampiran" required> -->
+
+
+                                <div class="input-group input-group-file" data-plugin="inputGroupFile">
+                                    <div class="input-group-append">
+                                        <span class="btn btn-warning btn-file">
+                                            <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
+                                            <input type="file" name="lampiran" multiple="">
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" readonly=""
+                                        placeholder="Upload Scan Proposal ekstensi Anda..">
+                                </div>
+
+                            </div>
+                            <div class="col-md-5 input-group">
+                                <div class="input-group input-group-file" data-plugin="inputGroupFile">
+                                    <div class="input-group-append">
+                                        <span class="btn btn-success btn-file">
+                                            <i class="icon fa-file-excel-o" aria-hidden="true"></i>
+                                            <input type="file" name="lampiran" multiple="">
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" readonly=""
+                                        placeholder="Upload list material ekstensi Anda..">
+
+
+                                </div>
+
+
+
+
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-md-2 col-form-label" style="color:black;">Benefit</label>
+                            <label class="col-md-2 col-form-label" style="color:black;">Keterangan</label>
 
                             <div class="col-md-10 input-group">
                                 <textarea type="text" class="form-control" name="benefit" style=”height:100px;”
-                                    placeholder="Jelaskan secara singkat benefit proposal.." autocomplete="off" value=""
-                                    required></textarea>
+                                    placeholder="Deskripsikan secara singkat proposaL Anda.." autocomplete="off"
+                                    value="" required></textarea>
                             </div>
 
                         </div>
                 </div>
+
+
                 <div class="modal-footer">
                     <button type="reset" class="btn btn-danger">Reset</button>
                     <button type="submit" class="btn btn-primary">Save</button>
                 </div>
-                </form>
             </div>
+            </form>
         </div>
+    </div>
     </div>
     <!-- End Modal Tambah Alokasi Budget-->
 
