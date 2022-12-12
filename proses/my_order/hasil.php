@@ -28,44 +28,22 @@ $akhirf = date("d M Y", strtotime($fiscal_aktif['akhir']));
     </div>
 </div>
 <?php 
-$proposal = mysqli_query($link_yics ,"SELECT
-proposal.id_prop AS id_prop,
-depart.id_dep AS id_dep,
-depart.depart AS depart,
-kategori_proposal.kategori AS kategori,
-time_fiscal.id_fis AS id_fis,
-proposal.proposal AS proposal,
-tracking_prop.id_prog AS id_prog, 
-tracking_prop.id_approval AS id_approval,
-`time`,
-progress.step AS step,
-progress.nama_progress AS progress,
-approval.approval AS approval,
-proposal.cost AS cost,
-proposal.benefit AS benefit,
-proposal.lampiran AS lampiran,
-konversi_matauang.dollar AS dollar,
-konversi_matauang.yen AS yen,
-ia.id_ia AS id_ia,
-ia.ia AS no_ia,
-ia.deskripsi AS ia_deskripsi,
-ia.cost_ia AS cost_ia,
-data_user.nama AS pic_ia,
-ia.time_ia AS time_ia
-
-FROM tracking_prop   
-LEFT JOIN proposal  ON tracking_prop.id_prop = proposal.id_prop
-LEFT JOIN ia ON proposal.id_prop = ia.id_prop
-LEFT JOIN depart ON proposal.id_dep = depart.id_dep
-LEFT JOIN kategori_proposal  ON proposal.id_kat = kategori_proposal.id_kat
-LEFT JOIN time_fiscal  ON proposal.id_fis = time_fiscal.id_fis
-LEFT JOIN progress  ON tracking_prop.id_prog = progress.id_prog
-LEFT JOIN konversi_matauang ON proposal.id_matauang = konversi_matauang.id_matauang
-LEFT JOIN data_user ON ia.pic_ia = data_user.username  
-LEFT JOIN approval ON tracking_prop.id_approval = approval.id_approval  
+$proposal = mysqli_query($link_yics ,"SELECT id_prop,
+                            depart.id_dep AS id_dep,
+                            depart.depart AS depart,
+                            kategori_proposal.kategori AS kategori,
+                            time_fiscal.status,
+                            proposal.proposal AS proposal,
+                            proposal.cost AS cost,
+                            proposal.benefit AS benefit,
+                            proposal.lampiran
+                            FROM proposal 
+                            LEFT JOIN depart ON proposal.id_dep = depart.id_dep
+                            LEFT JOIN kategori_proposal  ON proposal.id_kat = kategori_proposal.id_kat
+                            LEFT JOIN time_fiscal  ON proposal.id_fis = time_fiscal.id_fis  
+                            
 
 WHERE time_fiscal.id_fis = '$id_fis' AND proposal.username= {$_SESSION['yics_user']} GROUP BY proposal.proposal ASC")or die (mysqli_error($link_yics));
-$no=1;
 if(mysqli_num_rows($proposal)>0){
 while($data = mysqli_fetch_assoc($proposal)){?>
 <?php $id_prop=$data['id_prop']; ?>
@@ -110,22 +88,25 @@ if(mysqli_num_rows($track_prop)>0){
 $data_track = mysqli_fetch_assoc($track_prop); 
 // mencatak angka persenan
 $persen = ($data_track['id_approval'] == 1 )?(($data_track['step']/5)*100):100;
+$lacak=$data_track['progress'];
 if($data_track['id_approval'] == 1 ){
 $text_progress = $persen."%";
-$color_progress = "progress-bar-info";
+$color_progress = "bg-green-100";
 }else{
 $text_progress = "STOP";
-$color_progress = "progress-bar-danger";
+$color_progress = "bg-danger";
 }
 ?>
-                    <?=$data_track['progress']?>
+
                     <?php 
 }else{
 $persen = 0;
-$color_progress = "";
+$color_progress = "bg-green-100";
 $text_progress = "0%";
+$lacak="Belum diproses";
 }
 ?>
+                    <?= $lacak;?>
                 </td>
 
 
@@ -138,9 +119,10 @@ $text_progress = "0%";
                 <td> &nbsp;:&nbsp;</td>
                 <td class="judul align-middle text-left ">
                     <?php echo $data['kategori']; ?>
+
                 </td>
                 </td>
-                <td class="judul align-middle text-center font-size-60 bg-green-100" rowspan="3">
+                <td class="judul align-middle text-center font-size-60 <?= $color_progress ?>" rowspan="3">
                     <?=  $text_progress; ?>
                 </td>
             </tr>
@@ -228,31 +210,10 @@ data-toggle="dropdown" aria-expanded="false">
                         </thead>
                         <tbody>
                             <?php 
-$ia = mysqli_query($link_yics ,"SELECT                          
-time_fiscal.status AS `status`,
-tracking_prop.id_prog AS id_prog, 
-tracking_prop.id_approval AS id_approval,
-`time`,
-progress.step AS step,
-progress.nama_progress AS progress,
-approval.approval AS approval,
-ia.id_ia AS id_ia,
-ia.ia AS no_ia,
-ia.deskripsi AS ia_deskripsi,
-ia.cost_ia AS cost_ia,
-data_user.nama AS pic_ia,
-ia.time_ia AS time_ia
-
-FROM tracking_prop   
-LEFT JOIN proposal  ON tracking_prop.id_prop = proposal.id_prop
-LEFT JOIN ia ON proposal.id_prop = ia.id_prop
-LEFT JOIN depart ON proposal.id_dep = depart.id_dep
-LEFT JOIN kategori_proposal  ON proposal.id_kat = kategori_proposal.id_kat
-LEFT JOIN time_fiscal  ON proposal.id_fis = time_fiscal.id_fis
-LEFT JOIN progress  ON tracking_prop.id_prog = progress.id_prog
-LEFT JOIN konversi_matauang ON proposal.id_matauang = konversi_matauang.id_matauang
-LEFT JOIN data_user ON ia.pic_ia = data_user.username  
-LEFT JOIN approval ON tracking_prop.id_approval = approval.id_approval  
+$ia = mysqli_query($link_yics ,"SELECT *
+FROM ia 
+JOIN proposal ON proposal.id_prop = ia.id_prop
+JOIN data_user ON data_user.username = ia.pic_ia
 
 WHERE proposal.id_prop= '$id_prop' GROUP BY id_ia ")or die (mysqli_error($link_yics));
 $no=1;
@@ -268,11 +229,11 @@ while($data_ia = mysqli_fetch_assoc($ia)){?>
                                     <?= $no; ?>
                                 </td>
                                 <td class=" align-middle text-center">
-                                    <?= $data_ia['no_ia'] ?>
+                                    <?= $data_ia['ia'] ?>
                                 </td>
                                 <td class=" align-middle text-center">
 
-                                    <?= $data_ia['ia_deskripsi'] ?>
+                                    <?= $data_ia['deskripsi'] ?>
                                 </td>
                                 <td class=" align-middle text-center">RP
                                     <?= number_format ($data_ia['cost_ia'],0,',','.')." "."Million"; ?>
@@ -281,7 +242,7 @@ while($data_ia = mysqli_fetch_assoc($ia)){?>
                                     <?= date("d M Y", strtotime($data_ia['time_ia'])); ?>
                                 </td>
                                 <td class=" align-middle text-center">
-                                    <?= $data_ia['pic_ia']; ?>
+                                    <?= $data_ia['nama']; ?>
                                 </td>
                                 <td class="align-middle text-center">
                                     <?php  
@@ -353,7 +314,7 @@ $kolom=mysqli_num_rows($kol);
                             <?php 
 			 $no++;
 }
-} 
+}
 ?>
                         </tbody>
                     </table>

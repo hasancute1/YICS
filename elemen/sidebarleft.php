@@ -85,12 +85,7 @@ $get_data_budget1 = mysqli_query($link_yics ,"SELECT * FROM budget JOIN depart o
         </ul>
     </li>
     </li>
-    <li class="site-menu-item has-sub <?= ($url_aktive == "MATERIAL")? "active": ""; ?>">
-        <a href="dashboard.php" class="animsition-link">
-            <i class="site-menu-icon wb-list-bulleted" aria-hidden="true"></i>
-            <span class="site-menu-title">MASTER MATERIAL</span>
-        </a>
-    </li>
+
     <?php if( $_SESSION['yics_level'] != "1"){ ?>
     <li
         class="site-menu-item has-sub open <?= (in_array($url_aktive, ["usersetting","categorysetting","fiscalsetting","kurs_matauang"] ))? "active": ""; ?>">

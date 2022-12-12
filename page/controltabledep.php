@@ -332,7 +332,7 @@ $id_dept = $_GET['dept'];
                                
                                 LEFT JOIN approval ON tracking_prop.id_approval = approval.id_approval
                                 WHERE tracking_prop.id_approval  = '1' AND progress.step = '5' 
-                                AND depart.id_dep='$id_dept'AND time_fiscal.status= 'aktif' {$query_start} {$query_end} {$query_level}"
+                                AND depart.id_dep='$id_dept'AND time_fiscal.status= 'aktif' {$query_start} {$query_end}"
                                 )
                                 or die (mysqli_error($link_yics));
                                 $no=0;
@@ -400,10 +400,15 @@ $id_dept = $_GET['dept'];
                                                             <td>
                                                                 <?= ($no_prop == 1)? $data['kategori']:""; ?></td>
 
-                                                            <td><a
+                                                            <td>
+                                                                <?php if($_SESSION['yics_level'] == '1'){ ?>
+
+                                                                <?= ($no_prop == 1)? $data['proposal']:""; ?>
+                                                                <?php  }else{?>
+                                                                <a
                                                                     href="formnambah_ia.php?add=<?php echo $data['id_prop']; ?>">
                                                                     <?= ($no_prop == 1)? $data['proposal']:""; ?></a>
-
+                                                                <?php } ?>
                                                             </td>
 
                                                             <td>

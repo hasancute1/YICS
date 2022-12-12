@@ -391,23 +391,8 @@ if (!isset($_SESSION['yics_user'])) {
                             //  }
 
 
-                          // jika yang login general user
-                          if( $_SESSION['yics_level'] == "1"){
-
-                            $proposal = mysqli_query($link_yics ,"SELECT id_prop,
-                            depart.id_dep AS id_dep,
-                            depart.depart AS depart,
-                            kategori_proposal.kategori AS kategori,
-                            time_fiscal.status,
-                            proposal.proposal AS proposal,
-                            proposal.lampiran
-                            FROM proposal 
-                            LEFT JOIN depart ON proposal.id_dep = depart.id_dep
-                            LEFT JOIN kategori_proposal  ON proposal.id_kat = kategori_proposal.id_kat
-                            LEFT JOIN time_fiscal  ON proposal.id_fis = time_fiscal.id_fis  
-                            WHERE time_fiscal.status= 'aktif' AND proposal.username= {$_SESSION['yics_user']} ORDER BY depart.id_dep ASC")or die (mysqli_error($link_yics));
-                            $no=1;
-                          }else{
+                         
+                       
                             // jika yang login general admin
                             $proposal = mysqli_query($link_yics ,"SELECT id_prop,
                             depart.id_dep AS id_dep,
@@ -423,7 +408,7 @@ if (!isset($_SESSION['yics_user'])) {
                             WHERE time_fiscal.status= 'aktif' ORDER BY depart.id_dep ASC")or die (mysqli_error($link_yics));
                             $no=1;
 
-                          }
+                         
 
 
 
@@ -531,7 +516,7 @@ if (!isset($_SESSION['yics_user'])) {
                                                                     <i class="icon wb-upload" aria-hidden="true"></i>
                                                                 </button>
                                                             </a>
-                                                            <?php } ?>
+
                                                             <a href="formedit.php?edit=<?php echo $data['id_prop']; ?>">
                                                                 <button type="button"
                                                                     class="btn btn-icon btn-warning  edit_proposal"
@@ -539,7 +524,7 @@ if (!isset($_SESSION['yics_user'])) {
                                                                     <i class="icon wb-edit" aria-hidden="true"></i>
                                                                 </button>
                                                             </a>
-                                                            <?php if($_SESSION['yics_level'] != '1'){ ?>
+
                                                             <a href="../proses/dashboard/tambahplanning.php?del=<?php echo $data['id_prop']; ?>"
                                                                 class="HapusData1">
                                                                 <button type="button" class="btn btn-icon btn-danger">
@@ -825,15 +810,20 @@ include '../elemen/footer.php';?>
                         <div class="form-group row">
                             <label class="col-md-2 col-form-label" style="color:black;">Periode tahun</label>
                             <div class="col-md-10">
-                                <div class="input-group">
-                                    <?php 
-                                                $tambahalok = mysqli_query($link_yics ,"SELECT id_fis,periode FROM time_fiscal WHERE status= 'aktif'")or die (mysqli_error($link_yics));
-                                                $data = mysqli_fetch_assoc($tambahalok)
-                                            ?>
-                                    <input type="text" value="<?php echo $data['periode']; ?>" class="form-control"
-                                        readonly>
-                                    <input name="id_fis" type="text" value="<?php echo $data['id_fis']; ?>"
-                                        class="form-control" readonly hidden>
+                                <div class="form-group">
+                                    <select name="id_fis" class="form-control" required>
+                                        <option value="">Pilih Periode</option>
+                                        <?php 
+                                                $periode = mysqli_query($link_yics,"SELECT * FROM time_fiscal") or die (mysqli_error($link_yics));
+                                                if(mysqli_num_rows($periode)>0){
+                                                while( $rows_periode = mysqli_fetch_assoc($periode)){?>
+                                        <option value="<?php echo $rows_periode['id_fis'] ?>">
+                                            <?php echo $rows_periode['periode'] ?></option>
+                                        <?php 
+                                              } 
+                                              }
+                                                ?>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -894,6 +884,7 @@ include '../elemen/footer.php';?>
                                     </div>
                                     <span readonly type="text" id="result" class="form-control"
                                         placeholder="Total Budget Dept...">
+
                                 </div>
                             </div>
                         </div>
@@ -928,6 +919,161 @@ include '../elemen/footer.php';?>
                         <input name="mata_uang" type="number" value="1" class="form-control" hidden>
                         <div class="form-group row">
                             <h4 class="col-md-12 modal-title text-left" style="color:black;">SUBJECT</h4>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" style="color:black;">Periode tahun</label>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <select name="id_fis" class="form-control" required>
+                                        <option value="">Pilih Periode</option>
+                                        <?php 
+                                                $periode = mysqli_query($link_yics,"SELECT * FROM time_fiscal") or die (mysqli_error($link_yics));
+                                                if(mysqli_num_rows($periode)>0){
+                                                while( $rows_periode = mysqli_fetch_assoc($periode)){?>
+                                        <option value="<?php echo $rows_periode['id_fis'] ?>">
+                                            <?php echo $rows_periode['periode'] ?></option>
+                                        <?php 
+                                              } 
+                                              }
+                                                ?>
+                                    </select>
+                                </div>
+
+
+
+
+                            </div>
+
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label text-left" style="color:black;">Department</label>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <select name="depart" class="form-control" required>
+                                        <option value="">Pilih Departement</option>
+                                        <?php 
+                                                $depart = mysqli_query($link_yics,"SELECT * FROM depart") or die (mysqli_error($link_yics));
+                                                if(mysqli_num_rows($depart)>0){
+                                                while( $rows_depart = mysqli_fetch_assoc($depart)){?>
+                                        <option value="<?php echo $rows_depart['id_dep'] ?>">
+                                            <?php echo $rows_depart['depart'] ?></option>
+                                        <?php 
+                                              } 
+                                              }
+                                                ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <label class="col-md-2 col-form-label text-left" style="color:black;">Category</label>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <select name="kategori" type="text" class="form-control" required>
+                                        <option value="">Pilih Category</option>
+                                        <?php 
+                                                $kategori = mysqli_query($link_yics,"SELECT * FROM kategori_proposal") or die (mysqli_error($link_yics));
+                                                if(mysqli_num_rows($kategori)>0){
+                                                while( $rows_kategori= mysqli_fetch_assoc($kategori)){?>
+                                        <option value="<?php echo $rows_kategori['id_kat'] ?>">
+                                            <?php echo $rows_kategori['kategori'] ?></option>
+                                        <?php 
+                                              } 
+                                              }
+                                                ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label text-left" style="color:black;">Proposal</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control " name="proposal"
+                                    placeholder=" Judul Proposal..." autocomplete="off" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" style="color:black;">Cost</label>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">IDR</span>
+                                    </div>
+
+                                    <input required name="cost" type="text" class="form-control" id="rupiah"
+                                        placeholder="Isi Cost Proposal...">
+                                    <div class="input-group-prepend ">
+                                        <span class="input-group-text bg-yellow-100">MILLION</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" style="color:black;">Lampiran</label>
+
+                            <div class="col-md-10 input-group">
+                                <!-- <input class="form-control-file" type="file" name="lampiran" required> -->
+
+
+                                <div class="input-group input-group-file" data-plugin="inputGroupFile">
+                                    <div class="input-group-append">
+                                        <span class="btn btn-warning btn-file">
+                                            <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
+                                            <input type="file" name="lampiran" multiple="">
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" readonly=""
+                                        placeholder="Upload Scan Proposal ekstensi Anda..">
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" style="color:black;">Keterangan</label>
+
+                            <div class="col-md-10 input-group">
+                                <textarea type="text" class="form-control" name="benefit" style=”height:100px;”
+                                    placeholder="Deskripsikan secara singkat proposaL Anda.." autocomplete="off"
+                                    value="" required></textarea>
+                            </div>
+
+                        </div>
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-danger">Reset</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+    </div>
+    <!-- End Modal Tambah Alokasi Budget-->
+
+
+    <!-- Modal tambah plannning proposal -->
+    <div class="modal fade modal-info " id="TambahPlaningProposal" aria-hidden="true"
+        aria-labelledby="TambahPlaningProposal" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-simple modal-center modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h3 class="modal-title">Tambah Data Planning Proposal</h3>
+                </div>
+                <div class="row">
+                </div>
+                <div class="modal-body">
+                    <form action="../proses/dashboard/tambahplanning.php" method="post" enctype="multipart/form-data">
+
+                        <input type="hidden" name="add">
+                        <input name="mata_uang" type="number" value="1" class="form-control" hidden>
+                        <div class="form-group row">
+                            <h4 class="col-md-10 modal-title text-left" style="color:black;">SUBJECT</h4>
+
                         </div>
                         <div class="form-group row">
                             <label class="col-md-2 col-form-label" style="color:black;">Periode tahun</label>
@@ -1005,7 +1151,7 @@ include '../elemen/footer.php';?>
                         <div class="form-group row">
                             <label class="col-md-2 col-form-label" style="color:black;">Lampiran</label>
 
-                            <div class="col-md-5 input-group">
+                            <div class="col-md-10 input-group">
                                 <!-- <input class="form-control-file" type="file" name="lampiran" required> -->
 
 
@@ -1021,24 +1167,7 @@ include '../elemen/footer.php';?>
                                 </div>
 
                             </div>
-                            <div class="col-md-5 input-group">
-                                <div class="input-group input-group-file" data-plugin="inputGroupFile">
-                                    <div class="input-group-append">
-                                        <span class="btn btn-success btn-file">
-                                            <i class="icon fa-file-excel-o" aria-hidden="true"></i>
-                                            <input type="file" name="lampiran" multiple="">
-                                        </span>
-                                    </div>
-                                    <input type="text" class="form-control" readonly=""
-                                        placeholder="Upload list material ekstensi Anda..">
 
-
-                                </div>
-
-
-
-
-                            </div>
                         </div>
 
                         <div class="form-group row">

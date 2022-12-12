@@ -122,7 +122,7 @@ include '../elemen/header.php';?>
                                                 </div>
                                                 <div class="form-group row">
                                                     <label class="col-md-2 col-form-label text-left"
-                                                        style="color:black;">Cost</label>
+                                                        style="color:black;">Periode</label>
                                                     <div class="col-md-4">
                                                         <input type="number"
                                                             class="form-control bg-green-100 text-uppercase"
@@ -185,9 +185,16 @@ include '../elemen/header.php';?>
                                                     <label class="col-md-2 col-form-label text-left"
                                                         style="color:black;">Cost</label>
                                                     <div class="col-md-4">
-                                                        <input type="number"
-                                                            class="form-control bg-grey-200 text-uppercase" name="cost"
-                                                            autocomplete="off" value="<?php echo $data['cost']; ?>">
+                                                        <div class="input-group">
+                                                            <input type="number"
+                                                                class="form-control bg-grey-200 text-uppercase"
+                                                                name="cost" autocomplete="off"
+                                                                value="<?php echo $data['cost']; ?>">
+                                                            <div class="input-group-prepend ">
+                                                                <span
+                                                                    class="input-group-text bg-yellow-100">MILLION</span>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     <label class="col-md-2 col-form-label text-left"
                                                         style="color:black;" for="file">Lampiran</label>
