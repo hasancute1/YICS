@@ -54,7 +54,7 @@ $get_data_budget1 = mysqli_query($link_yics ,"SELECT * FROM budget JOIN depart o
             </li>
         </ul>
     </li>
-    <li class="site-menu-item has-sub <?= ($url_aktive == "Tracking")? "active": ""; ?>">
+    <li class="site-menu-item has-sub <?= ($url_aktive == "searchdoc2")? "active": ""; ?>">
         <a href="searchdoc2.php">
             <i class="site-menu-icon wb-shopping-cart" aria-hidden="true"></i>
             <span class="site-menu-title">TRACKING DOCUMENT</span>

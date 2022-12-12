@@ -810,20 +810,15 @@ include '../elemen/footer.php';?>
                         <div class="form-group row">
                             <label class="col-md-2 col-form-label" style="color:black;">Periode tahun</label>
                             <div class="col-md-10">
-                                <div class="form-group">
-                                    <select name="id_fis" class="form-control" required>
-                                        <option value="">Pilih Periode</option>
-                                        <?php 
-                                                $periode = mysqli_query($link_yics,"SELECT * FROM time_fiscal") or die (mysqli_error($link_yics));
-                                                if(mysqli_num_rows($periode)>0){
-                                                while( $rows_periode = mysqli_fetch_assoc($periode)){?>
-                                        <option value="<?php echo $rows_periode['id_fis'] ?>">
-                                            <?php echo $rows_periode['periode'] ?></option>
-                                        <?php 
-                                              } 
-                                              }
-                                                ?>
-                                    </select>
+                                <div class="input-group">
+                                    <?php 
+                                                $tambahalok = mysqli_query($link_yics ,"SELECT id_fis,periode FROM time_fiscal WHERE status= 'aktif'")or die (mysqli_error($link_yics));
+                                                $data = mysqli_fetch_assoc($tambahalok)
+                                            ?>
+                                    <input type="text" value="<?php echo $data['periode']; ?>" class="form-control"
+                                        readonly>
+                                    <input name="id_fis" type="text" value="<?php echo $data['id_fis']; ?>"
+                                        class="form-control" readonly hidden>
                                 </div>
                             </div>
                         </div>
@@ -922,7 +917,7 @@ include '../elemen/footer.php';?>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-2 col-form-label" style="color:black;">Periode tahun</label>
-                            <div class="col-md-4">
+                            <div class="col-md-10">
                                 <div class="form-group">
                                     <select name="id_fis" class="form-control" required>
                                         <option value="">Pilih Periode</option>
