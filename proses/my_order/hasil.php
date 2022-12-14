@@ -131,10 +131,10 @@ $lacak="Belum diproses";
                     Proposal
                 </td>
                 <td> &nbsp;:&nbsp;</td>
-                <td><?php echo $data['proposal']; ?> <a href="../image/uploads/<?= $data['lampiran'] ?>"
-                        target="_blank">
+                <td><?php echo $data['proposal']; ?>&nbsp;&nbsp;
+                    <a href="../image/uploads/<?= $data['lampiran'] ?>" target="_blank">
 
-                        <i class="icon fa-file-pdf-o font-size-25"></i></a>
+                        <i class="icon fa-file-pdf-o " style="font-size:20px;"></i></a>
                 </td>
 
             </tr>

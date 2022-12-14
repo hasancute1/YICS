@@ -105,7 +105,16 @@
         text-align: center !important;
         transform: translate(-50%, 0) !important;
     } */
+    @media print {
+        @page {
+            size: landscape
+        }
+    }
+
+    ;
     </style>
+
+
 
     <link rel="apple-touch-icon" href="../base/assets/images/apple-touch-icon.png">
     <link rel="shortcut icon" href="../base/assets/images/favicon.ico">

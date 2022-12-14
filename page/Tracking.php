@@ -209,11 +209,25 @@ include '../elemen/header.php';?>
                                                         <h3 class="pearl-tittle"><?php echo $data_222['keterangan'] ; ?>
                                                         </h3>
                                                         <br>
-                                                        <div
-                                                            class="list-group bg-blue-grey-100 bg-inherit text-left w-250 ml-3">
+                                                        <div class="card  card-transparent  align-items-center "
+                                                            style="overflow-y: auto; max-height: 585px;">
+                                                            <div
+                                                                class="list-group bg-blue-grey-100 bg-inherit text-left w-250 ml-3">
 
-                                                            <?php 
-                                                           $bp = mysqli_query ($link_yics,"SELECT * FROM progress WHERE id_ket='2'");
+                                                                <?php 
+                                                              $qProg = "SELECT nama_progress, id_prog , step FROM progress WHERE id_ket='2'";
+                                                          
+
+                                                           if($data_ia['cost_ia'] < 50 ){
+                                                            $exception = " AND (step <> '12' AND step <> '13' AND step <> '16'  AND step <> '17' AND step <> '18'  AND step <> '19') ";
+                                                        }else if($data_ia['cost_ia'] > 50 AND $data_ia['cost_ia'] < 500){
+                                                            $exception = " AND ( step <> '18'  AND step <> '19') ";
+                                                        }else{
+                                                            $exception = "";
+                                                        }
+                                                        $bp = mysqli_query($link_yics,$qProg.$exception)or die(mysqli_error($link_yics));   
+                                                        
+                                                      
                                                            if(mysqli_num_rows($bp)>0){
                                                             while ($rows_bp = mysqli_fetch_assoc($bp)){
                                                                 //  QUERY TRACKING_PROPOSAL................................
@@ -252,37 +266,40 @@ include '../elemen/header.php';?>
 
 
 
-                                                            <div class="list-group-item bg-<?= "$approve_clr" ?>-300 ">
-                                                                <ul>
-                                                                    <li style="list-style-type: none;">
-                                                                        <i class="icon wb-<?= "$icon" ?>"
-                                                                            aria-hidden="true"></i>
-                                                                        <?= $rows_bp['nama_progress'] ?>
+                                                                <div
+                                                                    class="list-group-item bg-<?= "$approve_clr" ?>-300 ">
+                                                                    <ul>
+                                                                        <li style="list-style-type: none;">
+                                                                            <i class="icon wb-<?= "$icon" ?>"
+                                                                                aria-hidden="true"></i>
+                                                                            <?= $rows_bp['nama_progress'] ?>
 
-                                                                    </li>
+                                                                        </li>
 
 
-                                                                    <li style="list-style-type: none;">
-                                                                        <i class="icon oi-calendar" aria-hidden="true">
-                                                                            &nbsp;&nbsp; <?= "$time" ?></i>
-                                                                    </li>
+                                                                        <li style="list-style-type: none;">
+                                                                            <i class="icon oi-calendar"
+                                                                                aria-hidden="true">
+                                                                                &nbsp;&nbsp; <?= "$time" ?></i>
+                                                                        </li>
 
-                                                                    <li style="list-style-type: none;">
-                                                                        <i class="icon wb-user"
-                                                                            aria-hidden="true">&nbsp;</i><?= "$id_pic" ?>
-                                                                    </li>
+                                                                        <li style="list-style-type: none;">
+                                                                            <i class="icon wb-user"
+                                                                                aria-hidden="true">&nbsp;</i><?= "$id_pic" ?>
+                                                                        </li>
 
-                                                                </ul>
-                                                                <hr>
-                                                            </div>
+                                                                    </ul>
+                                                                    <hr>
+                                                                </div>
 
-                                                            <?php
+                                                                <?php
                                                         
                                                         }
                                                         } 
                                                         
                                                         ?>
 
+                                                            </div>
                                                         </div>
                                                     </div>
 
@@ -294,22 +311,15 @@ include '../elemen/header.php';?>
                                                         <h3 class="pearl-tittle"><?php echo $data_333['keterangan'] ; ?>
                                                         </h3>
                                                         <br>
-                                                        <div class="card  card-transparent  align-items-center "
-                                                            style="overflow-y: auto; max-height: 585px;">
-                                                            <div
-                                                                class="list-group bg-blue-grey-100 bg-inherit text-left w-250 ml-3">
 
-                                                                <?php  
+                                                        <div
+                                                            class="list-group bg-blue-grey-100 bg-inherit text-left w-250 ml-3">
+
+                                                            <?php  
                                                           
-                                                                $qProg = "SELECT nama_progress, id_prog , step FROM progress WHERE id_ket='3'";
-                                                                if($data_ia['cost_ia'] < 50 ){
-                                                                    $exception = " AND (step <> '16' AND step <> '17' AND step <> '18'  AND step <> '19') ";
-                                                                }else if($data_ia['cost_ia'] > 50 AND $data_ia['cost_ia'] < 500){
-                                                                    $exception = " AND ( step <> '18'  AND step <> '19') ";
-                                                                }else{
-                                                                    $exception = "";
-                                                                }
-                                                                $bp = mysqli_query($link_yics,$qProg.$exception)or die(mysqli_error($link_yics));
+                                                                $qProg = "SELECT *FROM progress WHERE id_ket='3'";
+                                                              
+                                                                $bp = mysqli_query($link_yics,$qProg)or die(mysqli_error($link_yics));
                                                             
                                                           
                                                            if(mysqli_num_rows($bp)>0){
@@ -352,41 +362,39 @@ include '../elemen/header.php';?>
 
 
 
-                                                                <div
-                                                                    class="list-group-item bg-<?= "$approve_clr" ?>-300 ">
-                                                                    <ul>
-                                                                        <li style="list-style-type: none;">
-                                                                            <i class="icon wb-<?= "$icon" ?>"
-                                                                                aria-hidden="true"></i>
-                                                                            <?= $rows_bp['nama_progress'] ?>
+                                                            <div class="list-group-item bg-<?= "$approve_clr" ?>-300 ">
+                                                                <ul>
+                                                                    <li style="list-style-type: none;">
+                                                                        <i class="icon wb-<?= "$icon" ?>"
+                                                                            aria-hidden="true"></i>
+                                                                        <?= $rows_bp['nama_progress'] ?>
 
-                                                                        </li>
+                                                                    </li>
 
 
-                                                                        <li style="list-style-type: none;">
-                                                                            <i class="icon oi-calendar"
-                                                                                aria-hidden="true">
-                                                                                &nbsp;&nbsp; <?= "$time" ?></i>
-                                                                        </li>
+                                                                    <li style="list-style-type: none;">
+                                                                        <i class="icon oi-calendar" aria-hidden="true">
+                                                                            &nbsp;&nbsp; <?= "$time" ?></i>
+                                                                    </li>
 
-                                                                        <li style="list-style-type: none;">
-                                                                            <i class="icon wb-user"
-                                                                                aria-hidden="true"></i>&nbsp;<?= "$id_pic" ?>
-                                                                        </li>
+                                                                    <li style="list-style-type: none;">
+                                                                        <i class="icon wb-user"
+                                                                            aria-hidden="true"></i>&nbsp;<?= "$id_pic" ?>
+                                                                    </li>
 
-                                                                    </ul>
-                                                                    <hr>
-                                                                </div>
+                                                                </ul>
+                                                                <hr>
+                                                            </div>
 
-                                                                <?php
+                                                            <?php
                                                         
                                                         }
                                                         } 
                                                         
                                                         ?>
 
-                                                            </div>
                                                         </div>
+
                                                         <div
                                                             class="list-group bg-blue-grey-100 bg-inherit text-left w-250 ml-3">
 
@@ -579,7 +587,7 @@ include '../elemen/header.php';?>
                                                                                 FROM tracking_ia
                                                                                 JOIN data_user ON tracking_ia.username = data_user.username                                                                                
                                                                                 JOIN progress ON  progress.id_prog = tracking_ia.id_prog 
-                                                                                WHERE id_ia = '$id_ia' AND tracking_ia.id_prog='30' ";
+                                                                                WHERE id_ia = '$id_ia' AND tracking_ia.id_prog='25' ";
                                                                                 $sql = mysqli_query($link_yics, $qry)or die (mysqli_error($link_yics));                                                                            
                                                                             if(mysqli_num_rows($sql)>0){
                                                                                 $data_tracking = mysqli_fetch_assoc($sql);                

@@ -413,13 +413,13 @@ $id_dept = $_GET['dept'];
 
                                                             <td>
                                                                 <?php  $yen="¥"; ?>
-                                                                <?= ($no_prop == 1)? $yen." ".number_format($data['cost']/$data['yen'], 2, ',', '.')." "."Million":""; ?>
+                                                                <?= ($no_prop == 1)?number_format($data['cost']/$data['yen'], 2, ',', '.'):""; ?>
                                                             </td>
                                                             <td>
                                                                 <?php
                                                                   $IDR="IDR"; ?>
 
-                                                                <?=($no_prop == 1)? $IDR." ".number_format ($data['cost'],0,',','.')." "."Million": ""; ?>
+                                                                <?=($no_prop == 1)?number_format ($data['cost'],0,',','.'): ""; ?>
                                                             </td>
                                                             <td> <?= (isset($data['no_ia']))? $no_prop: ""; ?>
                                                             </td>
@@ -427,23 +427,23 @@ $id_dept = $_GET['dept'];
                                                             <td></td>
                                                             <td><?= $data['ia_deskripsi'] ?></td>
                                                             <td></td>
-                                                            <td><?= (isset($data['no_ia']))?$IDR." ".number_format ($data['cost_ia'],0,',','.')." "."Million": ""; ?>
+                                                            <td><?= (isset($data['no_ia']))?number_format ($data['cost_ia'],0,',','.'): ""; ?>
                                                             </td>
                                                             <td></td>
-                                                            <td><?= (isset($data['no_ia']))? $yen." ".number_format($data['cost_ia']/$data['yen'], 2, ',', '.')." "."Million": ""; ?>
+                                                            <td><?= (isset($data['no_ia']))?number_format($data['cost_ia']/$data['yen'], 2, ',', '.'): ""; ?>
                                                             </td>
-                                                            <td><?= (isset($data['no_ia']))? $IDR." ".number_format ($data['cost_ia'],0,',','.')." "."Million": ""; ?>
+                                                            <td><?= (isset($data['no_ia']))?number_format ($data['cost_ia'],0,',','.'): ""; ?>
                                                             </td>
 
-
-                                                            <td
-                                                                class="<?=  (isset($data['no_ia']))?$warnaremain: ""; ?>">
-                                                                <?= (isset($data['no_ia']))? $yen." ".$remainyen." "."Million": ""; ?>
-                                                            </td>
 
                                                             <td
                                                                 class="<?=  (isset($data['no_ia']))?$warnaremain: ""; ?>">
-                                                                <?= (isset($data['no_ia']))? $IDR." ".$remainIDR." "."Million": ""; ?>
+                                                                <?= (isset($data['no_ia']))?$remainyen: ""; ?>
+                                                            </td>
+
+                                                            <td
+                                                                class="<?=  (isset($data['no_ia']))?$warnaremain: ""; ?>">
+                                                                <?= (isset($data['no_ia']))?$remainIDR: ""; ?>
                                                             </td>
                                                             <td><?= (isset($data['no_ia']))?date("d M Y", strtotime($data['time_ia'])): "";  ?>
                                                             </td>
@@ -597,7 +597,7 @@ $id_dept = $_GET['dept'];
                             text: '<i class="icon wb-print" aria-hidden="true"></i>',
                             action: function(e, dt, node, config) {
                                 window.location =
-                                    "controltabledep2.php?dept=<?= $_GET['dept'] ?>";
+                                    "controltabledep2.php?dept=<?= $_GET['dept'] ?>"
                             }
 
                         }],

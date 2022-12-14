@@ -94,10 +94,10 @@ include '../elemen/header.php';?>
 
                                                     <div class="form-group">
                                                         <label for="cost_type">
-                                                            <h4>COST TYPE</h4>
+                                                            <h4>Category</h4>
                                                         </label>
                                                         <select class="form-control" name="cost_type" id="cost_type">
-                                                            <option>Pilih Cost Type</option>
+                                                            <option>Pilih Category</option>
                                                         </select>
                                                     </div>
 

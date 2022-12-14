@@ -208,7 +208,7 @@ include '../elemen/header.php';?>
                                                           
                                                         $qProg = "SELECT nama_progress, id_prog , step FROM progress WHERE id_ket>='2'";
                                                         if($cost_ia < 50 ){
-                                                            $exception = " AND (step <> '16' AND step <> '17' AND step <> '18'  AND step <> '19') ";
+                                                            $exception = " AND (step <> '12' AND step <> '13' AND step <> '16'  AND step <> '17' AND step <> '18'  AND step <> '19') ";
                                                         }else if($cost_ia > 50 AND $cost_ia < 500){
                                                             $exception = " AND ( step <> '18'  AND step <> '19') ";
                                                         }else{

@@ -3,16 +3,12 @@ include("../config/config.php");
 if (!isset($_SESSION['yics_user'])) {
   header('location: ../index.php');
 }
-$judul = [
-    1 => "BODY PLANT 1",
-    2 => "BODY PLANT 2",
-    3 => "BQC"
-];
+
 
 $id_dept = $_GET['dept'];
 $judul = [
-    1 => "BODY PLANT 1",
-    2 => "BODY PLANT 2",
+    1 => "BODY 1",
+    2 => "BODY 2",
     3 => "BQC"
     ];
     
@@ -254,8 +250,9 @@ $judul = [
             <thead class="table-info" style="font-size:7px;">
                 <tr class="bg-white text-left border-top-0 coba">
                     <th colspan="19" class="coba">
-                        <h1 class="page-title font-size-20 font-weight-600">CONTROL TABLE <?= $judul[$id_dept] ?> (x
-                            Million) PERIODE <?= $periode; ?>-<?= $periode+1; ?>
+                        <h1 class="page-title font-size-20 font-weight-600">CONTROL TABLE YINV <?= $judul[$id_dept]; ?>
+                            FY <?= $periode; ?> ( x
+                            Million )
                         </h1>
                     </th>
                 </tr>
@@ -469,13 +466,13 @@ $judul = [
 
                     <td>
                         <?php  $yen="¥"; ?>
-                        <?= ($no_prop == 1)? $yen." ".number_format($data['cost']/$data['yen'], 2, ',', '.')." "."Million":""; ?>
+                        <?= ($no_prop == 1)?number_format($data['cost']/$data['yen'], 2, ',', '.'):""; ?>
                     </td>
                     <td>
                         <?php
                                                                   $Rp="Rp"; ?>
 
-                        <?=($no_prop == 1)? $Rp." ".number_format ($data['cost'],0,',','.')." "."Million": ""; ?>
+                        <?=($no_prop == 1)?number_format ($data['cost'],0,',','.'): ""; ?>
                     </td>
                     <td> <?= (isset($data['no_ia']))? $no_prop: ""; ?>
                     </td>
@@ -483,21 +480,21 @@ $judul = [
                     <td></td>
                     <td><?= $data['ia_deskripsi'] ?></td>
                     <td></td>
-                    <td><?= (isset($data['no_ia']))?$Rp." ".number_format ($data['cost_ia'],0,',','.')." "."Million": ""; ?>
+                    <td><?= (isset($data['no_ia']))?number_format ($data['cost_ia'],0,',','.'): ""; ?>
                     </td>
                     <td></td>
-                    <td><?= (isset($data['no_ia']))? $yen." ".number_format($data['cost_ia']/$data['yen'], 2, ',', '.')." "."Million": ""; ?>
+                    <td><?= (isset($data['no_ia']))?number_format($data['cost_ia']/$data['yen'], 2, ',', '.'): ""; ?>
                     </td>
-                    <td><?= (isset($data['no_ia']))? $Rp." ".number_format ($data['cost_ia'],0,',','.')." "."Million": ""; ?>
+                    <td><?= (isset($data['no_ia']))?number_format ($data['cost_ia'],0,',','.'): ""; ?>
                     </td>
 
-
-                    <td class="<?=  (isset($data['no_ia']))?$warnaremain: ""; ?>">
-                        <?= (isset($data['no_ia']))? $yen." ".$remainyen." "."Million": ""; ?>
-                    </td>
 
                     <td class="<?=  (isset($data['no_ia']))?$warnaremain: ""; ?>">
-                        <?= (isset($data['no_ia']))? $Rp." ".$remainrp." "."Million": ""; ?>
+                        <?= (isset($data['no_ia']))?$remainyen: ""; ?>
+                    </td>
+
+                    <td class="<?=  (isset($data['no_ia']))?$warnaremain: ""; ?>">
+                        <?= (isset($data['no_ia']))?$remainrp: ""; ?>
                     </td>
                     <td><?= (isset($data['no_ia']))?date("d M Y", strtotime($data['time_ia'])): "";  ?>
                     </td>
@@ -649,7 +646,7 @@ if (style.styleSheet) {
 }
 
 head.appendChild(style);
-
+document.title = 'CONTROL TABLE YINV <?= $judul[$id_dept]; ?>.pdf';
 window.print();
 </script>
 </body>
