@@ -48,26 +48,20 @@ if (isset ($_SESSION['yics_user'])){
     }else if(isset ($_GET['del'])){
         //query delete
         $id=$_GET['del'];
-        //// aquery hapus di direktori
-        $hapusFile="SELECT * FROM proposal WHERE id_prop='$id'";
-        $hapusFi = mysqli_query($link_yics, $hapusFile)or die(mysqli_error($link_yics));
-        $file = mysqli_fetch_assoc($hapusFi);
-        $file_dulu=$file ['lampiran']; 
-        $target_dir_file = "../../image/uploads/";          
-        $target_file = $target_dir_file . $file_dulu;  
-        if( is_file( $target_file));
-        unlink( $target_file);
+        //query fiscal
+        $id_page=$_GET['page'];
+        
         //// end qery hapus di direktori
-        $query = "DELETE FROM proposal WHERE id_prop='$id'";
+        $query = "DELETE FROM plan_proposal WHERE id_prop='$id'";
          $hasil_query = mysqli_query($link_yics, $query)or die(mysqli_error($link_yics));
          if($hasil_query){
             $_SESSION['info'] = "Dihapus";
             $_SESSION['pesan'] = "Data Berhasil Dihapus";
-            header('location: ../../page/forminputalokasibudget.php?ubah='.$id_fis);
+            header('location: ../../page/forminputalokasibudget.php?ubah='.$id_page);
          }else{
             $_SESSION['info'] = "Gagal Dihapus";
             $_SESSION['pesan'] = "Data Gagal Dihapus";
-            header('location: ../../page/forminputalokasibudget.php?ubah='.$id_fis);
+            header('location: ../../page/forminputalokasibudget.php?ubah='.$id_page);
          }
     }else if (isset($_POST['edit'])){
         // masukan data post ke variabel

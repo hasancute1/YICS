@@ -79,12 +79,14 @@ include '../elemen/header.php';?>
                                         </div>
                                         <div class="card-body bg-white">
 
+
                                             <?php 
                   //ambil data di url
                   $id=$_GET ["ubah"];
                   //query data mahasiswa berdasarkan id menghasilkan array numeric
                   
                 ?>
+
                                             <form action="../proses/dashboard/alokasi.php" method="POST" id="mainForm"
                                                 class="needs-validation sum"></form>
                                             <input type="hidden" name="ubah">
@@ -92,10 +94,12 @@ include '../elemen/header.php';?>
                                                 <h4 class="col-md-12 modal-title text-left" style="color:black;">
                                                     Tahun Fiscal</h4>
                                             </div>
-                                            <div class="form-group row">
-                                                <label class="col-md-2 col-form-label" style="color:black;">Periode
-                                                    tahun</label>
-                                                <div class="col-md-10">
+                                            <div class="form-group row ">
+                                                <label class="col-md-2 col-form-label   "
+                                                    style="color:black;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PERIODE
+                                                    TAHUN
+                                                </label>
+                                                <div class="col-md-5">
                                                     <div class="input-group">
                                                         <?php 
                     $tambahalok = mysqli_query($link_yics ,"SELECT 
@@ -105,8 +109,9 @@ include '../elemen/header.php';?>
                     WHERE time_fiscal.id_fis= '$id'")or die (mysqli_error($link_yics));
                     $data = mysqli_fetch_assoc($tambahalok)
                   ?>
-                                                        <input type="text" value="<?php echo $data['periode']; ?>"
-                                                            class="form-control" readonly>
+                                                        &nbsp;&nbsp;&nbsp;&nbsp; <input type="text"
+                                                            value="<?php echo $data['periode']; ?>" class="form-control"
+                                                            readonly>
                                                         <input name="id_fis" type="text"
                                                             value="<?php echo $data['id_fis']; ?>" class="form-control"
                                                             readonly hidden>
@@ -114,6 +119,7 @@ include '../elemen/header.php';?>
                                                 </div>
                                             </div>
                                             <hr>
+
                                             <?php 
                         $depart = mysqli_query($link_yics, "SELECT * FROM depart") or die (mysqli_error($link_yics));                       
                         ?>
@@ -131,133 +137,187 @@ include '../elemen/header.php';?>
                        
                         
                         ?>
-                                            <div class="form-group row">
-                                                <label class="col-md-2 col-form-label"
-                                                    style="color:black;"><?php echo $rows_depart['depart']; ?></label>
-                                                <div class="col-md-10">
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text">Rp</span>
-                                                        </div>
-                                                        <input type="text" class="form-control prc"
-                                                            placeholder="Isi Budget Dept...">
-
+                                            <div class="panel-group panel-group-continuous"
+                                                id="exampleAccordionContinuous" aria-multiselectable="true"
+                                                role="tablist">
+                                                <div class="panel">
+                                                    <div class="panel-heading"
+                                                        id="exampleHeadingContinuousOne<?= $i; ?>" role="tab">
+                                                        <a class="panel-title" data-parent="#exampleAccordionContinuous"
+                                                            data-toggle="collapse"
+                                                            href="#exampleCollapseContinuousOne<?= $i; ?>"
+                                                            aria-controls="exampleCollapseContinuousOne<?= $i; ?>"
+                                                            aria-expanded="false">
+                                                            <div class="form-group row">
+                                                                <label class="col-md-2 col-form-label"
+                                                                    style="color:black;"><?php echo $rows_depart['depart']; ?></label>
+                                                                <div class="col-md-9">
+                                                                    <div class="input-group">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text">IDR</span>
+                                                                        </div>
+                                                                        <?php 
+                                                                        $bdget_d = mysqli_query($link_yics ,"SELECT sum(cost) AS cost_dep
+                            FROM plan_proposal 
+                            JOIN depart ON plan_proposal.id_dep = depart.id_dep                           
+                            JOIN time_fiscal  ON plan_proposal.id_fis = time_fiscal.id_fis  
+                            WHERE time_fiscal.id_fis= '$id' AND depart.id_dep='$rows_depart[id_dep]'")or die (mysqli_error($link_yics));
+                                           
+						  // untuk memvalidasi apakah ada datanya
+                          if(mysqli_num_rows($bdget_d)>0){
+                           $bdget_dep = mysqli_fetch_assoc($bdget_d);
+                           $sum_dep = $bdget_dep['cost_dep'];
+                          }else{
+                            $sum_dep = 0;
+                          }
+                            ?>
+                                                                        <input type="text" class="form-control prc"
+                                                                            value="<?= (isset($sum_dep))? $sum_dep: "0"; ?>">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-1"></div>
+                                                            </div>
+                                                        </a>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <hr />
-                                            <form id="subForm<?= $i; ?>"
-                                                action="../proses/dashboard/tambah_planning_proposal.php" method="post"
-                                                enctype="multipart/form-data"></form>
-                                            <input type="hidden" name="add" form="subForm<?= $i; ?>">
-                                            <input name="depart" type="text"
-                                                value="<?php echo $rows_depart['id_dep']; ?>" class="form-control"
-                                                form="subForm<?= $i; ?>" hidden>
-                                            <input name="mata_uang" type="text" value="1" class="form-control"
-                                                form="subForm<?= $i; ?>" hidden>
-                                            <input name="id_fis" type="text" value="<?php echo $id; ?>"
-                                                class="form-control" readonly form="subForm<?= $i; ?>" hidden>
-                                            <div class="table table-responsive">
-                                                <table class="table display text-nowrap bg-blue-100" style="width:100%">
-                                                    <thead>
-                                                        <tr class="font-size-18">
-                                                            <th class="align-middle text-center" width="220px">
-                                                                Pic
-                                                                Area</th>
-                                                            <th class="align-middle text-center" width="180px">
-                                                                Category</th>
-                                                            <th class="align-middle text-center" width="480px">
-                                                                Proposal</th>
-                                                            <th class="align-middle text-center" width="120px">
-                                                                Cost
-                                                            </th>
-                                                            <th class="align-middle text-center" width="20px">
-                                                            </th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>
-                                                                <select name="area" type="text" class="form-control"
-                                                                    required form="subForm<?= $i; ?>">
-                                                                    <option value="">Pilih Area</option>
-                                                                    <?php 
+                                                    <hr />
+                                                    <div class="panel-collapse collapse"
+                                                        id="exampleCollapseContinuousOne<?= $i; ?>"
+                                                        aria-labelledby="exampleHeadingContinuousOne<?= $i; ?>"
+                                                        role="tabpanel">
+                                                        <div class="panel-body">
+
+                                                            <form id="subForm<?= $i; ?>"
+                                                                action="../proses/dashboard/tambah_planning_proposal.php"
+                                                                method="post" enctype="multipart/form-data"></form>
+                                                            <input type="hidden" name="add" form="subForm<?= $i; ?>">
+                                                            <input name="depart" type="text"
+                                                                value="<?php echo $rows_depart['id_dep']; ?>"
+                                                                class="form-control" form="subForm<?= $i; ?>" hidden>
+                                                            <input name="mata_uang" type="text" value="1"
+                                                                class="form-control" form="subForm<?= $i; ?>" hidden>
+                                                            <input name="id_fis" type="text" value="<?php echo $id; ?>"
+                                                                class="form-control" readonly form="subForm<?= $i; ?>"
+                                                                hidden>
+                                                            <div class="table table-responsive">
+                                                                <table class="table display text-nowrap bg-blue-100"
+                                                                    style="width:100%">
+                                                                    <thead>
+                                                                        <tr class="font-size-18">
+                                                                            <th class="align-middle text-center"
+                                                                                width="220px">
+                                                                                Pic
+                                                                                Area</th>
+                                                                            <th class="align-middle text-center"
+                                                                                width="180px">
+                                                                                Category</th>
+                                                                            <th class="align-middle text-center"
+                                                                                width="480px">
+                                                                                Proposal</th>
+                                                                            <th class="align-middle text-center"
+                                                                                width="120px">
+                                                                                Cost
+                                                                            </th>
+                                                                            <th class="align-middle text-center"
+                                                                                width="20px">
+                                                                            </th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <select name="area" type="text"
+                                                                                    class="form-control" required
+                                                                                    form="subForm<?= $i; ?>">
+                                                                                    <option value="">Pilih Area</option>
+                                                                                    <?php 
                                                                             $area = mysqli_query($link_yics,"SELECT * FROM data_user WHERE id_dep = '$rows_depart[id_dep]'") or die (mysqli_error($link_yics));
                                                                             if(mysqli_num_rows($area)>0){
                                                                             while( $rows_area= mysqli_fetch_assoc($area)){?>
-                                                                    <option value="<?php echo $rows_area['area'] ?>">
-                                                                        <?php echo $rows_area['area'] ?>
-                                                                    </option>
-                                                                    <?php 
+                                                                                    <option
+                                                                                        value="<?php echo $rows_area['area'] ?>">
+                                                                                        <?php echo $rows_area['area'] ?>
+                                                                                    </option>
+                                                                                    <?php 
                                                                               
                                                                             } 
                                                                                 }
                                                                                     ?>
-                                                                </select>
-                                                            </td>
-                                                            <td>
-                                                                <select name="kategori" type="text" class="form-control"
-                                                                    required form="subForm<?= $i; ?>">
-                                                                    <option value="">Pilih Category</option>
-                                                                    <?php 
+                                                                                </select>
+                                                                            </td>
+                                                                            <td>
+                                                                                <select name="kategori" type="text"
+                                                                                    class="form-control" required
+                                                                                    form="subForm<?= $i; ?>">
+                                                                                    <option value="">Pilih Category
+                                                                                    </option>
+                                                                                    <?php 
                                                                                 $kategori = mysqli_query($link_yics,"SELECT * FROM kategori_proposal") or die (mysqli_error($link_yics));
                                                                                 if(mysqli_num_rows($kategori)>0){
                                                                                 while( $rows_kategori= mysqli_fetch_assoc($kategori)){?>
-                                                                    <option
-                                                                        value="<?php echo $rows_kategori['id_kat'] ?>">
-                                                                        <?php echo $rows_kategori['kategori'] ?>
-                                                                    </option>
-                                                                    <?php 
+                                                                                    <option
+                                                                                        value="<?php echo $rows_kategori['id_kat'] ?>">
+                                                                                        <?php echo $rows_kategori['kategori'] ?>
+                                                                                    </option>
+                                                                                    <?php 
                                                                         } 
                                                                         }
                                                                             ?>
-                                                                </select>
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" class="form-control" name="proposal"
-                                                                    placeholder=" Isi deskripsi proposal.."
-                                                                    form="subForm<?= $i; ?>">
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" class="form-control" name="cost"
-                                                                    placeholder=" Isi cost.." form="subForm<?= $i; ?>">
-                                                            </td>
-                                                            <td>
-                                                                <button type="reset" class="btn btn-danger "
-                                                                    form="subForm<?= $i; ?>">
-                                                                    RESET
-                                                                </button>
-                                                                <button type="submit" class="btn btn-success btn-icon"
-                                                                    form="subForm<?= $i; ?>">
-                                                                    SUBMIT
-                                                                </button>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="table table-responsive">
-                                                <table class="table display text-nowrap table-bordered"
-                                                    style="width:100%">
-                                                    <thead class="bg-brown-300">
-                                                        <tr class="font-size-15 align-middle text-center">
-                                                            <th width="10px">No</th>
-                                                            <th width="200px">
-                                                                Category</th>
-                                                            <th>Proposal</th>
-                                                            <th width="200px">
-                                                                Cost
-                                                            </th>
-                                                            <th width="20px">
-                                                                Action
-                                                            </th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <?php  
+                                                                                </select>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="text" class="form-control"
+                                                                                    name="proposal"
+                                                                                    placeholder=" Isi deskripsi proposal.."
+                                                                                    form="subForm<?= $i; ?>">
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="text" class="form-control"
+                                                                                    name="cost"
+                                                                                    placeholder=" Isi cost.."
+                                                                                    form="subForm<?= $i; ?>">
+                                                                            </td>
+                                                                            <td>
+                                                                                <button type="reset"
+                                                                                    class="btn btn-danger "
+                                                                                    form="subForm<?= $i; ?>">
+                                                                                    RESET
+                                                                                </button>
+                                                                                <button type="submit"
+                                                                                    class="btn btn-success btn-icon"
+                                                                                    form="subForm<?= $i; ?>">
+                                                                                    SUBMIT
+                                                                                </button>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div class="table table-responsive">
+                                                                <table
+                                                                    class="table text-nowrap table-bordered text-uppercase"
+                                                                    style="width:100%">
+                                                                    <thead class="bg-brown-300">
+                                                                        <tr
+                                                                            class="font-size-15 align-middle text-center">
+                                                                            <th width="10px">No</th>
+                                                                            <th width="200px">
+                                                                                Category</th>
+                                                                            <th width="200px">
+                                                                                Area</th>
+                                                                            <th>Proposal</th>
+                                                                            <th width="200px">
+                                                                                Cost
+                                                                            </th>
+                                                                            <th width="20px">
+                                                                                Action
+                                                                            </th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <?php  
                                                     $isi = mysqli_query($link_yics ,"SELECT *
                             FROM plan_proposal 
                             JOIN depart ON plan_proposal.id_dep = depart.id_dep
@@ -269,59 +329,77 @@ include '../elemen/header.php';?>
                           if(mysqli_num_rows($isi)>0){
                            while($datad = mysqli_fetch_assoc($isi)){
                             $id_prop=$datad['id_prop'];
+                            $area=$datad['area'];
                             $kategori=$datad['kategori'];
                             $proposal=$datad['proposal'];
                             $cost=$datad['cost'];
                             ?>
-                                                        <tr class="align-middle text-center">
-                                                            <td class="align-middle text-center">
-                                                                <?=$no; ?>
-                                                            </td>
-                                                            <td class="align-middle text-center">
-                                                                <?= $kategori; ?>
-                                                            </td>
-                                                            <td class="align-middle text-center">
-                                                                <?= $proposal; ?>
-                                                            </td>
-                                                            <td class="align-middle text-center">
-                                                                <?= $cost; ?>
-                                                            </td>
-                                                            <td>
-                                                                <button type="submit" class="btn btn-danger btn-icon ">
-                                                                    <i class="icon oi-trashcan"></i>
-                                                                </button>
-                                                                <button type="submit" class="btn btn-warning btn-icon ">
-                                                                    <i class="icon wb-edit"></i>
-                                                                </button>
-                                                            </td>
-                                                        </tr>
-                                                        <?php
+                                                                        <tr class="align-middle text-center">
+                                                                            <td class="align-middle text-center">
+                                                                                <?=$no; ?>
+                                                                            </td>
+                                                                            <td class="align-middle text-center">
+                                                                                <?= $kategori; ?>
+                                                                            </td>
+                                                                            <td class="align-middle text-center">
+                                                                                <?= $area; ?>
+                                                                            </td>
+                                                                            <td class="align-middle text-center">
+                                                                                <?= $proposal; ?>
+                                                                            </td>
+                                                                            <td class="align-middle text-center">
+                                                                                <?= $cost; ?>
+                                                                            </td>
+                                                                            <td>
+                                                                                <a
+                                                                                    href="../proses/dashboard/tambah_planning_proposal.php?del=<?= $id_prop;?>&page=<?= $id; ?>">
+                                                                                    <button type=" button"
+                                                                                        class="btn btn-icon btn-danger">
+                                                                                        <i class="icon oi-trashcan"
+                                                                                            aria-hidden="true"></i>
+                                                                                    </button>
+                                                                                </a>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <?php
                                                                 $no++;
                                                                 }
-                                                                } 
-                                                                ?>
-                                                    </tbody>
-                                                </table>
+
+                                                                        
+                                                                
+                                                                }else{?>
+                                                                        <tr>
+                                                                            <td class="align-middle text-center"
+                                                                                colspan="7">
+                                                                                " BELUM ADA DATA PLANNING PROPOSAL "
+                                                                            </td>
+                                                                            <?php } ?>
+                                                                        </tr>
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-
-
-
-
                                             <?php 
                                             
                                             $i++;}
                                                 
                                             } ?>
                                             <!-- ................................................end query depart................................ -->
-                                            <hr>
+
 
                                             <div class="form-group row">
-                                                <label class="col-md-2 col-form-label" style="color:black;">Total
-                                                    Budget</label>
-                                                <div class="col-md-10">
+                                                <label class="col-md-2 col-form-label"
+                                                    style="color:black;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TOTAL
+                                                    BUDGET</label>
+                                                <div class="col-md-5">
                                                     <div class="input-group">
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                         <div class="input-group-prepend">
-                                                            <span class="input-group-text">Rp</span>
+                                                            <span class="input-group-text">IDR</span>
                                                         </div>
                                                         <span type="text" class="form-control"
                                                             placeholder="Total Budget Dept.." value="" id="result"
