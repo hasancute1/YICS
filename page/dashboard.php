@@ -154,39 +154,34 @@ if (!isset($_SESSION['yics_user'])) {
                                                 <?php if($_SESSION['yics_level'] != '1'){ ?>
                                                 <div class="col-lg-4 col-md-4">
                                                     <div class="text-right">
-                                                        <i href="" data-toggle="tooltip"
+                                                        <!-- <i href="" data-toggle="tooltip"
                                                             data-original-title="Tambah Data">
                                                             <button type="button" id="TambahAlokasiBudget"
                                                                 class="btn btn-icon btn-outline btn-info btn-xs"
                                                                 data-toggle="modal" data-target="#ModalAlokasiBudget">
                                                                 <i class="icon wb-plus" aria-hidden="true"></i>
                                                             </button>
-                                                        </i>
+                                                        </i> -->
 
                                                         <!--query edit data  -->
                                                         <?php 
                                                         $editalokasi = mysqli_query($link_yics, "SELECT * FROM time_fiscal WHERE status='aktif'") or die(mysqli_error($link_yics));
                                                         if(mysqli_num_rows($editalokasi)>0){$rows_editalokasi = mysqli_fetch_assoc($editalokasi)?>
-                                                        <a href="formubahalokasibudget.php?ubah=<?php echo $rows_editalokasi['id_fis']; ?>"
+                                                        <a href="forminputalokasibudget.php?input=<?php echo $rows_editalokasi['id_fis']; ?>"
                                                             data-toggle="tooltip" data-original-title="Edit">
                                                             <!-- end query edit data  -->
                                                             <button type="button"
-                                                                class="btn btn-success btn-icon btn-outline btn-xs"
+                                                                class="btn btn-info btn-icon btn-outline btn-xs"
                                                                 data-toggle="modal" data-target="#EditAlokasiBudget">
-                                                                <i class="icon wb-edit" aria-hidden="true"></i>
+                                                                <i class="icon wb-plus" aria-hidden="true"></i>
                                                             </button>
                                                         </a>
-                                                        <a href="../proses/dashboard/alokasi.php?del=<?php echo $rows_editalokasi['id_fis']; ?>"" data-toggle="
-                                                            tooltip" data-original-title="Hapus" class="HapusData">
-                                                            <?php } ?>
-                                                            <button type="button"
-                                                                class="btn btn-icon btn-danger btn-icon btn-outline btn-xs">
-                                                                <i class="icon oi-trashcan" aria-hidden="true"></i>
-                                                            </button>
-                                                        </a>
+
                                                     </div>
                                                 </div>
-                                                <?php } ?>
+                                                <?php
+                                                 }
+                                            } ?>
                                             </div>
                                         </div>
                                         <div class="card-body card-shadow">

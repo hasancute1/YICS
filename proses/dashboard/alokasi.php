@@ -14,7 +14,8 @@ if (isset ($_SESSION['yics_user'])){
                $budget=$_POST['budget'.$index];
                $id=$_POST['id_dept'.$index];
                $id_bud=$_POST['id_bud'.$index];
-               $inputFiscal = "UPDATE budget SET id_fis='$id_fis',id_dep ='$id',budget ='$budget' WHERE id_bud='$id_bud' "; 
+               $inputFiscal = "UPDATE budget SET id_fis='$id_fis',id_dep ='$id',budget ='$budget' WHERE id_bud='$id_bud' ";
+               // echo " $inputFiscal";
                $sql = mysqli_query($link_yics, $inputFiscal)or die(mysqli_error($link_yics));}
             }           
          else{
@@ -25,6 +26,7 @@ if (isset ($_SESSION['yics_user'])){
             $inputFiscal .= "('$id_fis','$id','$budget'),";
          }
          $inputFiscal=substr($inputFiscal,0,-1);
+         // echo " $inputFiscal" ;
          $sql = mysqli_query($link_yics, $inputFiscal)or die(mysqli_error($link_yics));
 
          }

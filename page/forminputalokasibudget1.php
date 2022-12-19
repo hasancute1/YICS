@@ -112,8 +112,7 @@ include '../elemen/header.php';?>
                                                                 class="form-control" readonly form="mainForm">
                                                             <input name="id_fis" type="text"
                                                                 value="<?php echo $data['id_fis']; ?>"
-                                                                class="form-control id_fis" readonly hidden
-                                                                form="mainForm">
+                                                                class="form-control" readonly hidden form="mainForm">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -147,19 +146,18 @@ include '../elemen/header.php';?>
                        
                         
                         ?>
-                                                <div class="panel-group panel-group-continuous "
+                                                <div class="panel-group panel-group-continuous"
                                                     id="exampleAccordionContinuous" aria-multiselectable="true"
                                                     role="tablist">
                                                     <div class="panel">
                                                         <div class="panel-heading"
                                                             id="exampleHeadingContinuousOne<?= $i; ?>" role="tab">
-                                                            <a class="panel-title showCollapse"
+                                                            <a class="panel-title"
                                                                 data-parent="#exampleAccordionContinuous"
                                                                 data-toggle="collapse"
                                                                 href="#exampleCollapseContinuousOne<?= $i; ?>"
                                                                 aria-controls="exampleCollapseContinuousOne<?= $i; ?>"
-                                                                aria-expanded="false" data-id="<?= $i; ?>"
-                                                                data-dept="<?= $i; ?>">
+                                                                aria-expanded="false">
                                                                 <div class="form-group row">
                                                                     <label class="col-md-2 col-form-label"
                                                                         style="color:black;"><?php echo $rows_depart['depart']; ?></label>
@@ -199,11 +197,12 @@ include '../elemen/header.php';?>
                                                             </a>
                                                         </div>
                                                         <hr />
-                                                        <div class="panel-collapse collapse "
+                                                        <div class="panel-collapse collapse"
                                                             id="exampleCollapseContinuousOne<?= $i; ?>"
                                                             aria-labelledby="exampleHeadingContinuousOne<?= $i; ?>"
                                                             role="tabpanel">
                                                             <div class="panel-body">
+
                                                                 <form id="subForm<?= $i; ?>"
                                                                     action="../proses/dashboard/tambah_planning_proposal.php"
                                                                     method="post" enctype="multipart/form-data"></form>
@@ -319,14 +318,90 @@ include '../elemen/header.php';?>
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
-                                                                <div class="row">
-                                                                    <div class="col-md-12">
-                                                                        <div class="data<?=$i?>"> </div>
+                                                                <div class="table table-responsive">
+                                                                    <table
+                                                                        class="table text-nowrap table-bordered text-uppercase"
+                                                                        style="width:100%">
+                                                                        <thead class="bg-brown-300">
+                                                                            <tr
+                                                                                class="font-size-15 align-middle text-center">
+                                                                                <th width="10px">No</th>
+                                                                                <th width="200px">
+                                                                                    Category</th>
+                                                                                <th width="200px">
+                                                                                    Area</th>
+                                                                                <th>Proposal</th>
+                                                                                <th width="200px">
+                                                                                    Cost
+                                                                                </th>
+                                                                                <th width="20px">
+                                                                                    Action
+                                                                                </th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <?php  
+                                                    $isi = mysqli_query($link_yics ,"SELECT *
+                            FROM plan_proposal 
+                            JOIN depart ON plan_proposal.id_dep = depart.id_dep
+                            JOIN kategori_proposal  ON plan_proposal.id_kat = kategori_proposal.id_kat
+                            JOIN time_fiscal  ON plan_proposal.id_fis = time_fiscal.id_fis  
+                            WHERE time_fiscal.id_fis= '$id' AND depart.id_dep='$rows_depart[id_dep]'")or die (mysqli_error($link_yics));
+                            $no=1;                      
+						  // untuk memvalidasi apakah ada datanya
+                          if(mysqli_num_rows($isi)>0){
+                           while($datad = mysqli_fetch_assoc($isi)){
+                            $id_prop=$datad['id_prop'];
+                            $area=$datad['area'];
+                            $kategori=$datad['kategori'];
+                            $proposal=$datad['proposal'];
+                            $cost = number_format ($datad['cost'],0,',','.');             
+                            ?>
+                                                                            <tr class="align-middle text-center">
+                                                                                <td class="align-middle text-center">
+                                                                                    <?=$no; ?>
+                                                                                </td>
+                                                                                <td class="align-middle text-center">
+                                                                                    <?= $kategori; ?>
+                                                                                </td>
+                                                                                <td class="align-middle text-center">
+                                                                                    <?= $area; ?>
+                                                                                </td>
+                                                                                <td class="align-middle text-center">
+                                                                                    <?= $proposal; ?>
+                                                                                </td>
+                                                                                <td class="align-middle text-center">
+                                                                                    <?= $cost; ?>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <a
+                                                                                        href="../proses/dashboard/tambah_planning_proposal.php?del=<?= $id_prop;?>&page=<?= $id; ?>">
+                                                                                        <button type=" button"
+                                                                                            class="btn btn-icon btn-danger">
+                                                                                            <i class="icon oi-trashcan"
+                                                                                                aria-hidden="true"></i>
+                                                                                        </button>
+                                                                                    </a>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <?php
+                                                                $no++;
+                                                                }
 
-                                                                    </div>
+                                                                        
+                                                                
+                                                                }else{?>
+                                                                            <tr>
+                                                                                <td class="align-middle text-center"
+                                                                                    colspan="7">
+                                                                                    " BELUM ADA DATA PLANNING PROPOSAL "
+                                                                                </td>
+                                                                                <?php } ?>
+                                                                            </tr>
 
+                                                                        </tbody>
+                                                                    </table>
                                                                 </div>
-
                                                             </div>
                                                         </div>
                                                     </div>
@@ -389,7 +464,6 @@ include '../elemen/header.php';?>
                 </div>
             </div>
         </div>
-        <div class="notifikasi_"></div>
         <!-- End Page -->
 
         <!-- Footer -->
@@ -400,96 +474,6 @@ include '../elemen/footer.php';?>
         <!--############ jquery penjumlahan loopinng attribut classs ################# -->
         <script>
         $(document).ready(function() {
-
-            $('.showCollapse').on('click', function() {
-                var index = $(this).attr('data-id');
-                var idDept = $(this).attr('data-dept');
-                console.log(index + idDept)
-                dataShow(idDept, index)
-            })
-
-            function dataShow(idDept, index) {
-                var id_fis = $('.id_fis').val()
-                $.ajax({
-                    type: 'GET',
-                    url: "../proses/alokasibudget/ajax/get_tampilan.php",
-                    data: {
-                        idDept: idDept,
-                        id_fis: id_fis,
-                        ind: index
-                    },
-                    cache: false,
-                    success: function(msg) {
-
-                        $(".data" + index).html(msg);
-                    }
-                });
-            }
-            $(document).on('click', '.hapus', function(a) {
-                a.preventDefault()
-                var index = $(this).attr('data-id');
-                var idDept = $(this).attr('data-dept');
-                var ind = $(this).attr('data-in');
-                Swal.fire({
-                    title: 'Apakah yakin?',
-                    text: "Data ini akan dihapus selamanya!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            type: 'GET',
-                            url: "../proses/alokasibudget/ajax/get_hapus.php",
-                            data: {
-                                index: index
-                            },
-                            success: function(msg) {
-                                $(".notifikasi_").html(msg);
-                                console.log(ind)
-                                dataShow(idDept, ind)
-                            }
-                        });
-                    }
-                })
-
-
-
-            })
-            //update 
-            // $('.submit').on('click', function(a) {
-            //     a.preventDefault()
-            //     var index = $(this).attr('id') //1
-            //     var idDept = $(this).attr('data-id') //001
-            //     var form = $('#form' + index).serialize()
-            //     $.ajax({
-            //         type: 'GET',
-            //         url: "../proses/my_order/prs.php",
-            //         data: form
-            //         success: function(msg) {
-            //             dataShow(idDept, index)
-            //         }
-            //     });
-            // })
-            // $('.hapus').on('click', function(a) {
-            //     a.preventDefault()
-            //     var index = $(this).attr('id') //1
-            //     var idDept = $(this).attr('data-id') //001
-            //     var data = $(this).attr()
-            //     $.ajax({
-            //         type: 'GET',
-            //         url: "../proses/alokasibudget/ajax/get_tampilan.php",
-            //         data: form
-            //         success: function(msg) {
-            //             dataShow(idDept, index)
-            //         }
-            //     });
-            // })
-
-
-
             $(".sum").on('input', '.prc', function() {
                 var calculated_total_sum = 0;
                 $(".sum .prc").each(function() {
@@ -500,17 +484,71 @@ include '../elemen/footer.php';?>
                 });
                 $("#result").html(calculated_total_sum);
             });
-            $('.rupiah').keyup(function(event) {
-                // skip for arrow keys
-                if (event.which >= 37 && event.which <= 40) return;
+        });
 
-                // format number
-                $(this).val(function(index, value) {
-                    return value
-                        .replace(/\D/g, "")
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-                });
+
+        $('.rupiah').keyup(function(event) {
+
+            // skip for arrow keys
+            if (event.which >= 37 && event.which <= 40) return;
+
+            // format number
+            $(this).val(function(index, value) {
+                return value
+                    .replace(/\D/g, "")
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
             });
         });
         </script>
         <!--############ end jquery penjumlahan loopinng attribut classs ################# -->
+
+        <script>
+        $('.showCollapse').on('click', function() {
+            var index = $(this).attr('data-id');
+            var idDept = $(this).attr('data-dept');
+            dataShow(idDept, index)
+        })
+        //update 
+        $('.submit').on('click', function(a) {
+            a.preventDefault()
+            var index = $(this).attr('id') //1
+            var idDept = $(this).attr('data-id') //001
+            var form = $('#form' + index).serialize()
+            $.ajax({
+                type: 'GET',
+                url: "../proses/my_order/prs.php",
+                data: form
+                success: function(msg) {
+                    dataShow(idDept, index)
+                }
+            });
+        })
+        $('.hapus').on('click', function(a) {
+            a.preventDefault()
+            var index = $(this).attr('id') //1
+            var idDept = $(this).attr('data-id') //001
+            var data = $(this).attr()
+            $.ajax({
+                type: 'GET',
+                url: "../proses/my_order/prs.php",
+                data: form
+                success: function(msg) {
+                    dataShow(idDept, index)
+                }
+            });
+        })
+
+        function dataShow(idDept, index) {
+            $.ajax({
+                type: 'GET',
+                url: "../proses/my_order/hasil.php",
+                data: {
+                    idDept: idDept
+                },
+                cache: false,
+                success: function(msg) {
+                    $(".data" + index).html(msg);
+                }
+            });
+        }
+        </script>

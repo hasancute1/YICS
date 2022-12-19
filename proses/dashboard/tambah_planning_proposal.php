@@ -26,11 +26,11 @@ if (isset ($_SESSION['yics_user'])){
         if(mysqli_num_rows($qry)>0){
             $_SESSION['info'] = "Gagal Disimpan";
             $_SESSION['pesan'] = "Data User Sudah Ada di Database";
-            header('location: ../../page/forminputalokasibudget.php?ubah='.$id_fis);
+            header('location: ../../page/forminputalokasibudget.php?input='.$id_fis);
         }else{
             $_SESSION['info'] = "Disimpan";
             $_SESSION['pesan'] = "Data Berhasil Disimpan";
-            header('location: ../../page/forminputalokasibudget.php?ubah='.$id_fis);
+            header('location: ../../page/forminputalokasibudget.php?input='.$id_fis);
          }
          $inputproposal = "INSERT INTO plan_proposal (`area`,`id_dep`,`id_kat`,`proposal`,`cost`,`id_fis`,`id_matauang`) VALUES ('$area','$depart','$kategori','$proposal','$cost','$id_fis','$id_matauang')"; 
          echo " $inputproposal ";
@@ -57,11 +57,11 @@ if (isset ($_SESSION['yics_user'])){
          if($hasil_query){
             $_SESSION['info'] = "Dihapus";
             $_SESSION['pesan'] = "Data Berhasil Dihapus";
-            header('location: ../../page/forminputalokasibudget.php?ubah='.$id_page);
+            header('location: ../../page/forminputalokasibudget.php?input='.$id_page);
          }else{
             $_SESSION['info'] = "Gagal Dihapus";
             $_SESSION['pesan'] = "Data Gagal Dihapus";
-            header('location: ../../page/forminputalokasibudget.php?ubah='.$id_page);
+            header('location: ../../page/forminputalokasibudget.php?input='.$id_page);
          }
     }else if (isset($_POST['edit'])){
         // masukan data post ke variabel
@@ -110,11 +110,11 @@ if (isset ($_SESSION['yics_user'])){
         // echo "tes1";kategori_proposal
          $_SESSION['info'] = "Gagal Diubah";
          $_SESSION['pesan'] = "Data User Sudah Ada di Database";
-         header('location: ../../page/forminputalokasibudget.php?ubah='.$id_fis);
+         header('location: ../../page/forminputalokasibudget.php?input='.$id_fis);
        }else{
          $_SESSION['info'] = "Diubah";
          $_SESSION['pesan'] = "Data Berhasil Diubah";
-         header('location: ../../page/forminputalokasibudget.php?ubah='.$id_fis);
+         header('location: ../../page/forminputalokasibudget.php?input='.$id_fis);
         }
       }else if(isset ($_GET['proses'])){
       // print_r($_POST['check']);
@@ -125,11 +125,11 @@ if (isset ($_SESSION['yics_user'])){
             if($hasil_delete){
                $_SESSION['info'] = "Dihapus";
                $_SESSION['pesan'] = "Data Berhasil Dihapus";
-               header('location: ../../page/forminputalokasibudget.php?ubah='.$id_fis);
+               header('location: ../../page/forminputalokasibudget.php?input='.$id_fis);
             }else{ 
                $_SESSION['info'] = "Gagal Dihapus";
                $_SESSION['pesan'] = "Data Gagal Dihapus";
-               header('location: ../../page/forminputalokasibudget.php?ubah='.$id_fis);
+               header('location: ../../page/forminputalokasibudget.php?input='.$id_fis);
          } 
     }     
 }else {
