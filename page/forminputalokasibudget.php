@@ -189,7 +189,7 @@ include '../elemen/header.php';?>
                                                                                 value="<?= (isset($sum_dep))? $sum_dep: "0"; ?>"
                                                                                 form="mainForm">
                                                                             <input required name="id_dept<?=$i?>"
-                                                                                value="<?php echo $rows_depart['id_dep']?>"
+                                                                                value="<?= $rows_depart['id_dep']?>"
                                                                                 type="text" class=" form-control"
                                                                                 form="mainForm" hidden>
                                                                         </div>
@@ -204,13 +204,14 @@ include '../elemen/header.php';?>
                                                             aria-labelledby="exampleHeadingContinuousOne<?= $i; ?>"
                                                             role="tabpanel">
                                                             <div class="panel-body">
-                                                                <form id="subForm<?= $i; ?>"
+                                                                <!-- --------------------------------------------------------------------------FORM INPUT.................................................................................................                                                                -->
+                                                                <form id="subForm<?= $i; ?>" class="form-input"
                                                                     action="../proses/dashboard/tambah_planning_proposal.php"
                                                                     method="post" enctype="multipart/form-data"></form>
                                                                 <input type="hidden" name="add"
                                                                     form="subForm<?= $i; ?>">
                                                                 <input name="depart" type="text"
-                                                                    value="<?php echo $rows_depart['id_dep']; ?>"
+                                                                    value="<?= $rows_depart['id_dep']; ?>"
                                                                     class="form-control" form="subForm<?= $i; ?>"
                                                                     hidden>
                                                                 <input name="mata_uang" type="text" value="1"
@@ -245,10 +246,13 @@ include '../elemen/header.php';?>
                                                                         </thead>
                                                                         <tbody>
                                                                             <tr>
+
                                                                                 <td>
                                                                                     <select name="area" type="text"
-                                                                                        class="form-control" required
-                                                                                        form="subForm<?= $i; ?>">
+                                                                                        class="form-control"
+                                                                                        id="area<?= $i; ?>"
+                                                                                        form="subForm<?= $i; ?>"
+                                                                                        required>
                                                                                         <option value="">Pilih Area
                                                                                         </option>
                                                                                         <?php 
@@ -265,11 +269,16 @@ include '../elemen/header.php';?>
                                                                                 }
                                                                                     ?>
                                                                                     </select>
+                                                                                    <span class="pesan-area<?= $i; ?>"
+                                                                                        style="display:none;color:red;">Sahabat
+                                                                                        harus meengisi area</span>
                                                                                 </td>
                                                                                 <td>
                                                                                     <select name="kategori" type="text"
-                                                                                        class="form-control" required
-                                                                                        form="subForm<?= $i; ?>">
+                                                                                        class="form-control"
+                                                                                        id="kategori<?= $i; ?>"
+                                                                                        form="subForm<?= $i; ?>"
+                                                                                        required>
                                                                                         <option value="">Pilih Category
                                                                                         </option>
                                                                                         <?php 
@@ -285,20 +294,33 @@ include '../elemen/header.php';?>
                                                                         }
                                                                             ?>
                                                                                     </select>
+                                                                                    <span
+                                                                                        class="pesan-kategori<?= $i; ?>"
+                                                                                        style="display:none;color:red;">Sahabat
+                                                                                        harus mengisi kategori</span>
                                                                                 </td>
                                                                                 <td>
                                                                                     <input type="text"
+                                                                                        id="proposal<?= $i; ?>"
                                                                                         class="form-control"
                                                                                         name="proposal"
                                                                                         placeholder=" Isi deskripsi proposal.."
-                                                                                        form="subForm<?= $i; ?>">
+                                                                                        form="subForm<?= $i; ?>"
+                                                                                        required>
+                                                                                    <span
+                                                                                        class="pesan-proposal<?= $i; ?>"
+                                                                                        style="display:none;color:red;">Sahabat
+                                                                                        harus mengisi proposal</span>
                                                                                 </td>
                                                                                 <td>
-                                                                                    <input type="text"
+                                                                                    <input type="text" required
                                                                                         class="form-control rupiah"
-                                                                                        name="cost"
+                                                                                        name="cost" id="cost<?= $i; ?>"
                                                                                         placeholder=" Isi cost.."
                                                                                         form="subForm<?= $i; ?>">
+                                                                                    <span class="pesan-cost<?= $i; ?>"
+                                                                                        style="display:none;color:red;">Sahabat
+                                                                                        harus mengisi cost</span>
                                                                                 </td>
                                                                                 <td>
                                                                                     <button type="reset"
@@ -307,8 +329,11 @@ include '../elemen/header.php';?>
                                                                                         RESET
                                                                                     </button>
                                                                                     <button type="submit"
-                                                                                        class="btn btn-success btn-icon"
-                                                                                        form="subForm<?= $i; ?>">
+                                                                                        class="btn btn-success btn-icon simpan"
+                                                                                        form="subForm<?= $i; ?>"
+                                                                                        data-id="<?= $i; ?>"
+                                                                                        data-dept="<?=$rows_depart['id_dep'];?>"
+                                                                                        data-in="<?=$i?>">
                                                                                         SUBMIT
                                                                                     </button>
                                                                                 </td>
@@ -318,6 +343,7 @@ include '../elemen/header.php';?>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
+                                                                    <!-- ----------------------------------------------------------------------end form----------------------------------------------------------------------------------                                                                     -->
                                                                 </div>
                                                                 <div class="row">
                                                                     <div class="col-md-12">
@@ -454,39 +480,82 @@ include '../elemen/footer.php';?>
                         });
                     }
                 })
-
-
-
             })
-            //update 
-            // $('.submit').on('click', function(a) {
-            //     a.preventDefault()
-            //     var index = $(this).attr('id') //1
-            //     var idDept = $(this).attr('data-id') //001
-            //     var form = $('#form' + index).serialize()
-            //     $.ajax({
-            //         type: 'GET',
-            //         url: "../proses/my_order/prs.php",
-            //         data: form
-            //         success: function(msg) {
-            //             dataShow(idDept, index)
-            //         }
-            //     });
-            // })
-            // $('.hapus').on('click', function(a) {
-            //     a.preventDefault()
-            //     var index = $(this).attr('id') //1
-            //     var idDept = $(this).attr('data-id') //001
-            //     var data = $(this).attr()
-            //     $.ajax({
-            //         type: 'GET',
-            //         url: "../proses/alokasibudget/ajax/get_tampilan.php",
-            //         data: form
-            //         success: function(msg) {
-            //             dataShow(idDept, index)
-            //         }
-            //     });
-            // })
+            $(document).on('click', '.simpan', function(a) {
+                a.preventDefault()
+                var index = $(this).attr('data-id');
+                var idDept = $(this).attr('data-dept');
+                var ind = $(this).attr('data-in');
+
+                var area = $('#area' + index).val();
+                var kategori = $('#kategori' + index).val();
+                var proposal = $('#proposal' + index).val();
+                var cost = $('#cost' + index).val();
+
+                var data = $('#subForm' + index).serialize();
+
+                console.log(area);
+                console.log(kategori);
+                console.log(proposal);
+                console.log(cost);
+
+                if (area != "" && kategori != "" && proposal != "" && cost != "") {
+                    $.ajax({
+                        type: 'POST',
+                        url: "../proses/alokasibudget/ajax/post_insert.php",
+                        data: data,
+                        success: function(msg) {
+                            $(".notifikasi_").html(msg);
+                            $('#subForm' + index).trigger("reset");
+                            // console.log(ind)
+                            dataShow(idDept, ind)
+                        }
+                    });
+                } else {
+                    if (area == "") {
+                        $(".pesan-area" + index).css('display', 'block');
+                    } else {
+
+                    }
+                    if (kategori == "") {
+                        $(".pesan-kategori" + index).css('display', 'block');
+                    } else {}
+                    if (cost == "") {
+                        $(".pesan-cost" + index).css('display', 'block');
+                    } else {}
+                    if (proposal == "") {
+                        $(".pesan-proposal" + index).css('display', 'block');
+                    } else {}
+                }
+                $("#area" + index).change(function() {
+                    if ($(this).val() == "") {
+                        $(".pesan-area" + index).css('display', 'color', 'red');
+                    } else {
+                        $(".pesan-area" + index).css('display', 'none');
+                    }
+                });
+                $("#kategori" + index).change(function() {
+                    if ($(this).val() == "") {
+                        $(".pesan-kategori" + index).css('display', 'color', 'red');
+                    } else {
+                        $(".pesan-kategori" + index).css('display', 'none');
+                    }
+                });
+                $("#cost" + index).change(function() {
+                    if ($(this).val() == "") {
+                        $(".pesan-cost" + index).css('display', 'color', 'red');
+                    } else {
+                        $(".pesan-cost" + index).css('display', 'none');
+                    }
+                });
+                $("#proposal" + index).change(function() {
+                    if ($(this).val() == "") {
+                        $(".pesan-proposal" + index).css('display', 'color', 'red');
+                    } else {
+                        $(".pesan-proposal" + index).css('display', 'none');
+                    }
+                });
+            })
 
 
 

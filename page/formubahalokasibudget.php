@@ -180,9 +180,9 @@ include '../elemen/header.php';?>
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text">Rp</span>
                                                             </div>
-                                                            <span type="text" class="form-control"
+                                                            <input type="text" class="form-control"
                                                                 placeholder="Total Budget Dept.." value="" id="result"
-                                                                readonly></span>
+                                                                readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -220,7 +220,7 @@ include '../elemen/footer.php';?>
                         calculated_total_sum += parseFloat(get_textbox_value);
                     }
                 });
-                $("#result").html(calculated_total_sum);
+                $("#result").val(calculated_total_sum);
             });
         });
         </script>

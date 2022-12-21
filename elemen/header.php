@@ -112,6 +112,12 @@
     }
 
     ;
+
+    .pesan {
+        display: none;
+        color: white;
+        margin: 10px;
+    }
     </style>
 
 
@@ -188,7 +194,8 @@
     <link rel="stylesheet" href="../global/vendor/nprogress/nprogress.css">
     <link rel="stylesheet" href="../base/assets/examples/css/advanced/animation.css">
 
-
+    <link rel="stylesheet" href="../global/vendor/formvalidation/formValidation.css">
+    <link rel="stylesheet" href="../base/assets/examples/css/forms/validation.css">
 
     <!-- <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'> -->
 
