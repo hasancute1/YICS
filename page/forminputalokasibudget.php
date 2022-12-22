@@ -184,10 +184,13 @@ include '../elemen/header.php';?>
                             $sum_dep = 0;
                           }
                             ?>
-                                                                            <input type="text" class="form-control prc"
-                                                                                required name="budget<?=$i?>"
-                                                                                value="<?= (isset($sum_dep))? $sum_dep: "0"; ?>"
-                                                                                form="mainForm">
+                                                                            <input type="text"
+                                                                                class="form-control department<?=$i?> bg-red-100  prc"
+                                                                                name="budget<?=$i?>" form="mainForm"
+                                                                                value="<?=  $sum_dep ?>">
+
+
+
                                                                             <input required name="id_dept<?=$i?>"
                                                                                 value="<?= $rows_depart['id_dep']?>"
                                                                                 type="text" class=" form-control"
@@ -271,7 +274,7 @@ include '../elemen/header.php';?>
                                                                                     </select>
                                                                                     <span class="pesan-area<?= $i; ?>"
                                                                                         style="display:none;color:red;">Sahabat
-                                                                                        harus meengisi area</span>
+                                                                                        harus mengisi area</span>
                                                                                 </td>
                                                                                 <td>
                                                                                     <select name="kategori" type="text"
@@ -319,8 +322,8 @@ include '../elemen/header.php';?>
                                                                                         placeholder=" Isi cost.."
                                                                                         form="subForm<?= $i; ?>">
                                                                                     <span class="pesan-cost<?= $i; ?>"
-                                                                                        style="display:none;color:red;">Sahabat
-                                                                                        harus mengisi cost</span>
+                                                                                        style="display:none;color:red;">
+                                                                                        Isi cost...</span>
                                                                                 </td>
                                                                                 <td>
                                                                                     <button type="reset"
@@ -389,10 +392,12 @@ include '../elemen/header.php';?>
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text">IDR</span>
                                                             </div>
-                                                            <input type="text" class="form-control"
-                                                                placeholder="Total Budget Dept.." id="result"
+                                                            <input type="text"
+                                                                class="form-control all1 all2 all3 bg-green-100"
+                                                                id="result"
                                                                 value="<?= (isset($sum_all))? $sum_all: "0"; ?>"
                                                                 readonly>
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -446,9 +451,17 @@ include '../elemen/footer.php';?>
                     },
                     cache: false,
                     success: function(msg) {
-
                         $(".data" + index).html(msg);
-                    }
+                        var oi = $(".oi" + idDept).val();
+                        console.log(oi)
+                        $(".department" + index).val(oi);
+                        var ai = $(".ai" + idDept).val();
+                        console.log(ai)
+                        $(".all" + index).val(ai);
+
+
+                    },
+
                 });
             }
             $(document).on('click', '.hapus', function(a) {

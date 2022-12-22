@@ -749,13 +749,23 @@ include '../elemen/footer.php';?>
     <!-- // query grfaik donut morris ########################-->
     <?php 
     // <!-- GRAFIK DONUT SHIFT ############################################################################## -->
-    $query_id_dept = mysqli_query($link_yics, "SELECT * FROM view_alokasi_budget WHERE status='aktif'") or die(mysqli_error($link_yics));
+    $query_id_dept = mysqli_query($link_yics, "SELECT * FROM budget
+    JOIN time_fiscal ON time_fiscal.id_fis = budget.id_fis
+    JOIN depart ON depart.id_dep = budget.id_dep
+     WHERE time_fiscal.status='aktif'") or die(mysqli_error($link_yics));
     if(mysqli_num_rows($query_id_dept)>0){
-        while($rows_id_dept = mysqli_fetch_assoc($query_id_dept)){              
-            $array_donut_dept[] = array('label' => $rows_id_dept['depart'], 'value' => $rows_id_dept['budget']); 
-        }    
-        $json_morris = json_encode($array_donut_dept);
+        while($rows_id_dept = mysqli_fetch_assoc($query_id_dept)){
+            $bud_m=$rows_id_dept['budget'];
+            $dep_m=$rows_id_dept['depart'];
+            $array_donut_dept[] = array('label' => $dep_m, 'value' => $bud_m);             
+        }
+    }else{
+        $bud_m=0;
+        $dep_m="BUDGET";
+        $array_donut_dept[] = array('label' => $dep_m, 'value' => $bud_m);  
     }
+
+$json_morris = json_encode($array_donut_dept);
   ?>
 
     <!-- // javascript grfaik donut ########################-->

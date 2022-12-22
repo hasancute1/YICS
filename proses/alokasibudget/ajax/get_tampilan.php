@@ -6,6 +6,42 @@ $index=$_GET['ind'];
 
 
 ?>
+<?php 
+                           $bdget_a = mysqli_query($link_yics ,"SELECT sum(cost) AS cost_dep
+                            FROM plan_proposal 
+                            JOIN depart ON plan_proposal.id_dep = depart.id_dep                           
+                            JOIN time_fiscal  ON plan_proposal.id_fis = time_fiscal.id_fis  
+                            WHERE time_fiscal.id_fis= '$id'")or die (mysqli_error($link_yics));
+                                           
+						  // untuk memvalidasi apakah ada datanya
+                          if(mysqli_num_rows($bdget_a)>0){
+                           $bdget_all = mysqli_fetch_assoc($bdget_a);                          
+                           $sum_all = number_format ($bdget_all['cost_dep'],0,',','.');    
+                          }else{
+                            $sum_all = 0;
+                          }
+                            
+                           
+                          $bdget_d = mysqli_query($link_yics ,"SELECT sum(cost) AS cost_dep
+                           FROM plan_proposal 
+                           JOIN depart ON plan_proposal.id_dep = depart.id_dep                           
+                           JOIN time_fiscal  ON plan_proposal.id_fis = time_fiscal.id_fis  
+                           WHERE time_fiscal.id_fis= '$id' AND depart.id_dep='$dep'")or die (mysqli_error($link_yics));
+                                          
+                         // untuk memvalidasi apakah ada datanya
+                         if(mysqli_num_rows($bdget_d)>0){
+                          $bdget_dep = mysqli_fetch_assoc($bdget_d);                          
+                          $sum_dep = number_format ($bdget_dep['cost_dep'],0,',','.');    
+                         }else{
+                           $sum_dep = 0;
+                         }
+                           ?>
+
+
+<div hidden>
+    <input class="align-middle text-center ai<?=$dep ?>" type="text" value="<?= (isset($sum_all))? $sum_all: "0"; ?>">
+    <input class="align-middle text-center oi<?=$dep ?>" type="text" value="<?= (isset($sum_dep))? $sum_dep: "0"; ?>">
+</div>
 
 <div class="table table-responsive">
     <table class="table text-nowrap table-bordered text-uppercase" style="width:100%">
@@ -41,7 +77,8 @@ $index=$_GET['ind'];
                             $area=$datad['area'];
                             $kategori=$datad['kategori'];
                             $proposal=$datad['proposal'];
-                            $cost = number_format ($datad['cost'],0,',','.');             
+                            $cost = number_format ($datad['cost'],0,',','.');
+                                      
                             ?>
             <tr class="align-middle text-center">
                 <td class="align-middle text-center">
@@ -67,12 +104,10 @@ $index=$_GET['ind'];
 
                 </td>
             </tr>
+
             <?php
                                                                 $no++;
-                                                                }
-
-                                                                        
-                                                                
+                                                                }          
                                                                 }else{?>
             <tr>
                 <td class="align-middle text-center" colspan="7">

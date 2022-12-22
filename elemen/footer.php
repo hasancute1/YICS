@@ -34,8 +34,7 @@
     <script src="../global/vendor/aspieprogress/jquery-asPieProgress.js"></script>
     <script src="../global/js/Plugin/jquery-appear.js"></script>
     <script src="../global/js/Plugin/nprogress.js"></script>
-    <script src="../global/vendor/formvalidation/formValidation.min.js"></script>
-    <script src="../global/vendor/formvalidation/framework/bootstrap4.min.js"></script>
+
 
     <script src="../base/assets/examples/js/advanced/animation.js"></script> <!-- navbar -->
     <script src="../global/js/Plugin/responsive-tabs.js"></script>
