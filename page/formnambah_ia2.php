@@ -71,24 +71,24 @@ include '../elemen/header.php';?>
                      //query data mahasiswa berdasarkan id menghasilkan array numeric
                     $proposal = mysqli_query($link_yics ,"SELECT 
                    
-                   plan_proposal.id_prop AS id_prop,
-                   plan_proposal.proposal AS proposal,
+                    proposal.id_prop AS id_prop,
+                    proposal.proposal AS proposal,
                     depart.depart AS depart,
                     kategori_proposal.kategori AS kategori,
-                    plan_proposal.cost AS cost,
+                    proposal.cost AS cost,
                     konversi_matauang.yen AS yen,
-                    plan_proposal.id_fis,
+                    proposal.id_fis,
                     time_fiscal.awal AS awal,
                     time_fiscal.akhir AS akhir,
                     budget.id_bud AS id_bud,
-                    plan_proposal.id_dep
+                    proposal.id_dep
                    
-                    FROM plan_proposal 
-                    LEFT JOIN depart ON plan_proposal.id_dep = depart.id_dep
-                    LEFT JOIN budget ON plan_proposal.id_fis = budget.id_fis
-                    LEFT JOIN kategori_proposal  ON plan_proposal.id_kat = kategori_proposal.id_kat
-                    LEFT JOIN konversi_matauang ON plan_proposal.id_matauang = konversi_matauang.id_matauang
-                    LEFT JOIN time_fiscal ON plan_proposal.id_fis = time_fiscal.id_fis
+                    FROM proposal 
+                    LEFT JOIN depart ON proposal.id_dep = depart.id_dep
+                    LEFT JOIN budget ON proposal.id_fis = budget.id_fis
+                    LEFT JOIN kategori_proposal  ON proposal.id_kat = kategori_proposal.id_kat
+                    LEFT JOIN konversi_matauang ON proposal.id_matauang = konversi_matauang.id_matauang
+                    LEFT JOIN time_fiscal ON proposal.id_fis = time_fiscal.id_fis
                    
                     WHERE id_prop = '$id'")or die (mysqli_error($link_yics));
                     $data = mysqli_fetch_assoc($proposal);
@@ -101,7 +101,7 @@ include '../elemen/header.php';?>
                     $akhir= $data['akhir'];
 
                     $get_data_ia = single_query("SELECT sum(cost_ia) as cost_ia FROM ia 
-                    JOIN plan_proposal on ia.id_prop = plan_proposal.id_prop
+                    JOIN proposal on ia.id_prop = proposal.id_prop
                     where ia.id_prop='$id'");
                     $consumtion_budget = $get_data_ia['cost_ia'];
                     $get_data_budget1 = mysqli_query($link_yics ,"SELECT * FROM budget where id_dep='$id_dep' and id_fis='$id_fis'");

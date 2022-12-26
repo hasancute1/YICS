@@ -297,19 +297,13 @@ $id_dept = $_GET['dept'];
 
 
                               $proposal = mysqli_query($link_yics ,"SELECT
-                                proposal.id_prop AS id_prop,
+                                plan_proposal.id_prop AS id_prop,
                                 depart.id_dep AS id_dep,
                                 depart.depart AS depart,
                                 kategori_proposal.kategori AS kategori,
                                 time_fiscal.status AS `status`,
-                                proposal.proposal AS proposal,
-                                tracking_prop.id_prog AS id_prog, 
-                                tracking_prop.id_approval AS id_approval,
-                                `time`,
-                                progress.step AS step,
-                                progress.nama_progress AS progress,
-                                approval.approval AS approval,
-                                proposal.cost AS cost,
+                                plan_proposal.proposal AS proposal,                                                          
+                                plan_proposal.cost AS cost,
                                 konversi_matauang.dollar AS dollar,
                                 konversi_matauang.yen AS yen,
                                 ia.id_ia AS id_ia,
@@ -319,20 +313,19 @@ $id_dept = $_GET['dept'];
                                 data_user.nama AS pic_ia,
                                 ia.time_ia AS time_ia
                                 
-                                FROM tracking_prop   
-                                LEFT JOIN proposal  ON tracking_prop.id_prop = proposal.id_prop
-                                LEFT JOIN ia ON proposal.id_prop = ia.id_prop
-                                LEFT JOIN depart ON proposal.id_dep = depart.id_dep
-                                LEFT JOIN kategori_proposal  ON proposal.id_kat = kategori_proposal.id_kat
-                                LEFT JOIN time_fiscal  ON proposal.id_fis = time_fiscal.id_fis
-                                LEFT JOIN progress  ON tracking_prop.id_prog = progress.id_prog
-                                LEFT JOIN konversi_matauang ON proposal.id_matauang = konversi_matauang.id_matauang
+                                FROM plan_proposal   
+                               
+                                LEFT JOIN ia ON plan_proposal.id_prop = ia.id_prop
+                                LEFT JOIN depart ON plan_proposal.id_dep = depart.id_dep
+                                LEFT JOIN kategori_proposal  ON plan_proposal.id_kat = kategori_proposal.id_kat
+                                LEFT JOIN time_fiscal  ON plan_proposal.id_fis = time_fiscal.id_fis
+                                
+                                LEFT JOIN konversi_matauang ON plan_proposal.id_matauang = konversi_matauang.id_matauang
                                 LEFT JOIN data_user ON ia.pic_ia = data_user.username 
                                 
                                
-                                LEFT JOIN approval ON tracking_prop.id_approval = approval.id_approval
-                                WHERE tracking_prop.id_approval  = '1' AND progress.step = '5' 
-                                AND depart.id_dep='$id_dept'AND time_fiscal.status= 'aktif' {$query_start} {$query_end}"
+                                
+                                WHERE depart.id_dep='$id_dept'AND time_fiscal.status= 'aktif' {$query_start} {$query_end}"
                                 )
                                 or die (mysqli_error($link_yics));
                                 $no=0;

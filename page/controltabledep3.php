@@ -319,7 +319,7 @@ $id_dept = $_GET['dept'];
                                 data_user.nama AS pic_ia,
                                 ia.time_ia AS time_ia
                                 
-                                FROM plan_proposal   
+                                FROM tracking_prop   
                                 LEFT JOIN proposal  ON tracking_prop.id_prop = proposal.id_prop
                                 LEFT JOIN ia ON proposal.id_prop = ia.id_prop
                                 LEFT JOIN depart ON proposal.id_dep = depart.id_dep
