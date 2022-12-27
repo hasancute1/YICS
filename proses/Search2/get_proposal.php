@@ -21,7 +21,7 @@ echo "<option value=''>Pilih Proposal</option>";
 //                     id_kat = {$id_kat}
 // ");
 
-$list_proposal = query("SELECT * FROM proposal              
+$list_proposal = query("SELECT * FROM plan_proposal              
                 WHERE id_fis = {$id_fis} AND
                     id_dep = {$id_dep} AND
                     id_kat = {$id_kat}

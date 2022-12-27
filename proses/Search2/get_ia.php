@@ -5,7 +5,7 @@ include("../services/notifications.php");
 
 
 /**
- * 1. ambil list proposal 
+ * 1. ambil list plan_proposal 
  * 2. ambil list ia
  */
 
@@ -20,7 +20,7 @@ if($id_prop != 0){
 
 
 $list_ia = query("SELECT * FROM ia
-              JOIN proposal on ia.id_prop = proposal.id_prop
+              JOIN plan_proposal on ia.id_prop = plan_proposal.id_prop
               where ia.id_prop = {$id_prop}
 ");
 

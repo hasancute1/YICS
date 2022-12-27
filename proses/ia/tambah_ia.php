@@ -13,7 +13,7 @@ $cost_ia = $_POST['cost_ia'];
 $cost_ia = str_replace('.' , '' , $cost_ia);
 $time_ia = $_POST['time_ia'];
 
-$data_prop = single_query("SELECT * from proposal where id_prop={$id_prop}");
+$data_prop = single_query("SELECT * from plan_proposal join data_user on data_user.area=plan_proposal.area where id_prop={$id_prop}");
 
 $notif = FALSE;
 
@@ -58,7 +58,10 @@ $qry = mysqli_query($link_yics, "SELECT ia FROM ia WHERE ia = '$ia' ")or die(mys
     $id=$_GET['del'];
     $id_page=$_GET['page'];
 
-    $get_data_ia = single_query("SELECT * from ia join proposal on ia.id_prop = proposal.id_prop where ia.id_ia = {$id}");
+    $get_data_ia = single_query("SELECT * from ia 
+    join plan_proposal on ia.id_prop = plan_proposal.id_prop 
+    join data_user on data_user.area= plan_proposal.area 
+    where ia.id_ia = {$id}");
 
 
     $query = "DELETE FROM ia WHERE id_ia='$id'";
@@ -99,7 +102,7 @@ $qry = mysqli_query($link_yics, "SELECT ia FROM ia WHERE ia = '$ia' ")or die(mys
         $cost_ia = $_POST['cost_ia'];
         $cost_ia = str_replace('.' , '' , $cost_ia);
 
-    $data_ia = single_query("SELECT * from ia join proposal on ia.id_prop = proposal.id_prop where id_ia={$id_ia}");
+    $data_ia = single_query("SELECT * from ia join plan_proposal on ia.id_prop = plan_proposal.id_prop where id_ia={$id_ia}");
 
     $UbahIa = "UPDATE ia SET id_prop='$id_prop',ia ='$ia',id_ia ='$id_ia',deskripsi ='$ia_desc',pic_ia ='$pic_ia',time_ia ='$time_ia',cost_ia ='$cost_ia' WHERE id_ia = '$id_ia'"; 
        $sql = mysqli_query($link_yics, $UbahIa)or die(mysqli_error($link_yics));

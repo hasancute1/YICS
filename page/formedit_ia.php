@@ -73,13 +73,13 @@ include '../elemen/header.php';?>
                     // get data proposal & ia
                     
                     $data_ia = single_query("SELECT
-                     proposal.id_prop AS id_prop,
-                    proposal.proposal AS proposal,
+                     plan_proposal.id_prop AS id_prop,
+                    plan_proposal.proposal AS proposal,
                     depart.depart AS depart,
                     kategori_proposal.kategori AS kategori,
-                    proposal.cost AS cost,
+                    plan_proposal.cost AS cost,
                     konversi_matauang.yen AS yen,
-                    proposal.id_fis,
+                    plan_proposal.id_fis,
                     ia.id_ia AS id_ia,
                     ia.ia AS ia,
                     ia.cost_ia AS cost_ia,
@@ -87,13 +87,13 @@ include '../elemen/header.php';?>
                     time_fiscal.awal AS awal,
                     time_fiscal.akhir AS akhir,
                     ia.deskripsi AS deskripsi,
-                    proposal.id_dep 
+                    plan_proposal.id_dep 
                     FROM ia 
-                    JOIN proposal ON ia.id_prop = proposal.id_prop 
-                    JOIN depart ON proposal.id_dep = depart.id_dep
-                    JOIN time_fiscal  ON proposal.id_fis = time_fiscal.id_fis
-                    JOIN kategori_proposal  ON proposal.id_kat = kategori_proposal.id_kat
-                    LEFT JOIN konversi_matauang ON proposal.id_matauang = konversi_matauang.id_matauang
+                    JOIN plan_proposal ON ia.id_prop = plan_proposal.id_prop 
+                    JOIN depart ON plan_proposal.id_dep = depart.id_dep
+                    JOIN time_fiscal  ON plan_proposal.id_fis = time_fiscal.id_fis
+                    JOIN kategori_proposal  ON plan_proposal.id_kat = kategori_proposal.id_kat
+                    LEFT JOIN konversi_matauang ON plan_proposal.id_matauang = konversi_matauang.id_matauang
                     WHERE id_ia='$id'"); 
 
                         $id_fis = $data_ia['id_fis'];
@@ -105,7 +105,7 @@ include '../elemen/header.php';?>
                         $fis_akhir = $data_ia['akhir'];
 
                     $get_data_ia = single_query("SELECT sum(cost_ia) as cost_ia FROM ia 
-                    JOIN proposal on ia.id_prop = proposal.id_prop
+                    JOIN plan_proposal on ia.id_prop = plan_proposal.id_prop
                     where ia.id_prop='$id_prop'");
                     $consumtion_budget = $get_data_ia['cost_ia'];
                     $get_data_budget1 = mysqli_query($link_yics ,"SELECT * FROM budget where id_dep='$id_dep' and id_fis='$id_fis'");

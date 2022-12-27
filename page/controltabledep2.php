@@ -325,7 +325,7 @@ $judul = [
             </thead>
             <tbody style="font-size:5px;">
 
-                <!-- query proposal control table -->
+                <!-- query plan_proposal control table -->
                 <?php 
                                                         $Rp = "RP";
 
@@ -350,26 +350,26 @@ $judul = [
 
 
                              if( $_SESSION['yics_level'] == "1"){
-                                $query_level = "AND proposal.username={$_SESSION['yics_user']}";
+                                $query_level = "AND plan_proposal.username={$_SESSION['yics_user']}";
                              }else{
                                 $query_level = "";
                              }
 
 
                               $proposal = mysqli_query($link_yics ,"SELECT
-                                proposal.id_prop AS id_prop,
+                                plan_proposal.id_prop AS id_prop,
                                 depart.id_dep AS id_dep,
                                 depart.depart AS depart,
                                 kategori_proposal.kategori AS kategori,
                                 time_fiscal.status AS `status`,
-                                proposal.proposal AS proposal,
+                                plan_proposal.proposal AS proposal,
                                 tracking_prop.id_prog AS id_prog, 
                                 tracking_prop.id_approval AS id_approval,
                                 `time`,
                                 progress.step AS step,
                                 progress.nama_progress AS progress,
                                 approval.approval AS approval,
-                                proposal.cost AS cost,
+                                plan_proposal.cost AS cost,
                                 konversi_matauang.dollar AS dollar,
                                 konversi_matauang.yen AS yen,
                                 ia.id_ia AS id_ia,
@@ -380,13 +380,13 @@ $judul = [
                                 ia.time_ia AS time_ia
                                 
                                 FROM tracking_prop   
-                                LEFT JOIN proposal  ON tracking_prop.id_prop = proposal.id_prop
-                                LEFT JOIN ia ON proposal.id_prop = ia.id_prop
-                                LEFT JOIN depart ON proposal.id_dep = depart.id_dep
-                                LEFT JOIN kategori_proposal  ON proposal.id_kat = kategori_proposal.id_kat
-                                LEFT JOIN time_fiscal  ON proposal.id_fis = time_fiscal.id_fis
+                                LEFT JOIN plan_proposal  ON tracking_prop.id_prop = plan_proposal.id_prop
+                                LEFT JOIN ia ON plan_proposal.id_prop = ia.id_prop
+                                LEFT JOIN depart ON plan_proposal.id_dep = depart.id_dep
+                                LEFT JOIN kategori_proposal  ON plan_proposal.id_kat = kategori_proposal.id_kat
+                                LEFT JOIN time_fiscal  ON plan_proposal.id_fis = time_fiscal.id_fis
                                 LEFT JOIN progress  ON tracking_prop.id_prog = progress.id_prog
-                                LEFT JOIN konversi_matauang ON proposal.id_matauang = konversi_matauang.id_matauang
+                                LEFT JOIN konversi_matauang ON plan_proposal.id_matauang = konversi_matauang.id_matauang
                                 LEFT JOIN data_user ON ia.pic_ia = data_user.username 
                                 
                                

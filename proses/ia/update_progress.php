@@ -58,7 +58,7 @@ if (isset ($_SESSION['yics_user'])){
                     if(!$sql){
                          $_SESSION['info'] = "Gagal Disimpan";
                          $_SESSION['pesan'] = "Data Gagal Diupdate";
-                         header('location: ../../page/controltabledep1.php?dept='.$id_dept);
+                         header('location: ../../page/controltabledep.php?dept='.$id_dept);
                     }else{
                          // kirim notifikasi ke pic
                          $notif = TRUE;
@@ -72,7 +72,7 @@ if (isset ($_SESSION['yics_user'])){
                     if(!$sql){
                          $_SESSION['info'] = "Gagal Disimpan";
                          $_SESSION['pesan'] = "Data Gagal Diupdate";
-                         header('location: ../../page/controltabledep1.php?dept='.$id_dept);
+                         header('location: ../../page/controltabledep.php?dept='.$id_dept);
                     }else{
                          // kirim notifikasi ke pic
                          $notif = TRUE;
@@ -93,7 +93,7 @@ if (isset ($_SESSION['yics_user'])){
                     if(!$sql){
                          $_SESSION['info'] = "Gagal Disimpan";
                          $_SESSION['pesan'] = "Data Gagal Diupdate";
-                         header('location: ../../page/controltabledep1.php?dept='.$id_dept);
+                         header('location: ../../page/controltabledep.php?dept='.$id_dept);
                     }else{
 
                          // lakukan pengecekan apakah ada id_prog yang lebih besar dari id_prog ini,
@@ -113,7 +113,7 @@ if (isset ($_SESSION['yics_user'])){
                     if(!$sql){
                          $_SESSION['info'] = "Gagal Disimpan";
                          $_SESSION['pesan'] = "Data Gagal Diupdate";
-                         header('location: ../../page/controltabledep1.php?dept='.$id_dept);
+                         header('location: ../../page/controltabledep.php?dept='.$id_dept);
                     }else{
 
                           // kirim notifikasi ke pic
@@ -139,11 +139,11 @@ if (isset ($_SESSION['yics_user'])){
      if($sql){
           $_SESSION['info'] = "Disimpan";
           $_SESSION['pesan'] = "Data Berhasil Diupdate";
-          header('location: ../../page/controltabledep1.php?dept='.$id_dept);
+          header('location: ../../page/controltabledep.php?dept='.$id_dept);
      }else{
           $_SESSION['info'] = "Gagal Disimpan";
           $_SESSION['pesan'] = "Data Gagal Diupdate";
-          header('location: ../../page/controltabledep1.php?dept='.$id_dept);
+          header('location: ../../page/controltabledep.php?dept='.$id_dept);
      }   
      
      /**

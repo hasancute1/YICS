@@ -151,7 +151,7 @@ if (!isset($_SESSION['yics_user'])) {
                                                         <span class="font-size-20 bold">Allocation Budget</span>
                                                     </div>
                                                 </div>
-                                                <?php if($_SESSION['yics_level'] != '1'){ ?>
+                                                <?php if($_SESSION['yics_level'] == '2'){ ?>
                                                 <div class="col-lg-4 col-md-4">
                                                     <div class="text-right">
                                                         <!-- <i href="" data-toggle="tooltip"
@@ -501,7 +501,7 @@ if (!isset($_SESSION['yics_user'])) {
                                                                     <i class="icon wb-eye" aria-hidden="true"></i>
                                                                 </button>
                                                             </a>
-                                                            <?php if($_SESSION['yics_level'] != '1'){ ?>
+                                                            <?php if($_SESSION['yics_level'] == '2'){ ?>
                                                             <a
                                                                 href="formupdate.php?ubah=<?php echo $data['id_prop']; ?>">
                                                                 <button type="button"

@@ -29,7 +29,7 @@ $get_data_budget1 = mysqli_query($link_yics ,"SELECT * FROM budget JOIN depart o
             <span class="site-menu-title">DASHBOARD</span>
         </a>
     </li>
-    <?php if( $_SESSION['yics_level'] == "1"){ ?>
+    <?php if( $_SESSION['yics_level'] == "2"){ ?>
     <li class="site-menu-item has-sub open <?= ($url_aktive == "controltabledep")? "active": ""; ?>">
         <a href="javascript:void(0)">
             <i class="site-menu-icon wb-table" aria-hidden="true"></i>
@@ -114,7 +114,7 @@ $get_data_budget1 = mysqli_query($link_yics ,"SELECT * FROM budget JOIN depart o
     </li>
     </li>
 
-    <?php if( $_SESSION['yics_level'] != "1"){ ?>
+    <?php if( $_SESSION['yics_level'] == "2"){ ?>
     <li
         class="site-menu-item has-sub open <?= (in_array($url_aktive, ["usersetting","categorysetting","fiscalsetting","kurs_matauang"] ))? "active": ""; ?>">
         <a href="javascript:void(0)">
