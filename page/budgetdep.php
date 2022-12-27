@@ -458,7 +458,7 @@ include '../elemen/header.php';?>
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 col-md-12 col-print-12">
-                                                <canvas id="myBar4" height="46" width="150%"></canvas>
+                                                <canvas id="chart" height="46" width="150%"></canvas>
 
                                             </div>
 
@@ -582,6 +582,41 @@ include '../elemen/footer.php';?>
                                         labelString: 'Bulan'
                                     },
                                     stacked: false
+                                }]
+                            }
+                        }
+                    });
+                    </script>
+                    <script>
+                    var canvas = document.getElementById('chart');
+                    new Chart(canvas, {
+                        type: 'line',
+                        data: {
+                            labels: ['1', '2', '3', '4', '5'],
+                            datasets: [{
+                                label: 'A',
+                                yAxisID: 'A',
+                                data: [100, 96, 84, 76, 69]
+                            }, {
+                                label: 'B',
+                                yAxisID: 'B',
+                                data: [1, 1, 1, 1, 0]
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    id: 'A',
+                                    type: 'linear',
+                                    position: 'left',
+                                }, {
+                                    id: 'B',
+                                    type: 'linear',
+                                    position: 'right',
+                                    ticks: {
+                                        max: 1,
+                                        min: 0
+                                    }
                                 }]
                             }
                         }
