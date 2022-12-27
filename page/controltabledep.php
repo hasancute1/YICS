@@ -189,7 +189,7 @@ $id_dept = $_GET['dept'];
                                                                 INVESTMENT PLANNING CONTROL TABLE</th>
 
                                                             <th class="judul align-middle text-center export-col"
-                                                                colspan="7">
+                                                                colspan="6">
                                                                 IMPLEMENTATION CONTROL TABLE</th>
 
                                                             <th class="judul align-middle text-center table-info noexportar"
@@ -215,22 +215,14 @@ $id_dept = $_GET['dept'];
                                                                 CATEGORY</th>
                                                             <th class="judul align-middle text-center" rowspan="2">
                                                                 DESCRIPTION</th>
-                                                            <th class="judul align-middle text-center" rowspan="2">
-                                                                TOTAL MILL JPY</th>
-                                                            <th class="judul align-middle text-center" rowspan="2">
-                                                                TOTAL MILL IDR</th>
+
                                                             <th class="judul align-middle text-center" rowspan="2">No
                                                             </th>
                                                             <th class="judul align-middle text-center" colspan="2">IA
                                                                 No.</th>
                                                             <th class="judul align-middle text-center" rowspan="2">
                                                                 DESCRIPTION</th>
-                                                            <th class="judul align-middle text-center" colspan="3">
-                                                                Original Currency</th>
-                                                            <th class="judul align-middle text-center" colspan="2">
-                                                                Actual In</th>
-                                                            <th class="judul align-middle text-center" colspan="2">
-                                                                Remaining</th>
+
                                                             <th class="judul align-middle text-center" rowspan="2">
                                                                 Valid Until</th>
                                                             <th class="judul align-middle text-center">Remark</th>
@@ -242,20 +234,7 @@ $id_dept = $_GET['dept'];
                                                                 Subject</th>
                                                             <th class="align-middle text-center">
                                                                 IO</th>
-                                                            <th class="align-middle text-center">
-                                                                JPY</th>
-                                                            <th class="align-middle text-center">
-                                                                IDR</th>
-                                                            <th class="align-middle text-center">
-                                                                1000USD</th>
-                                                            <th class="align-middle text-center">
-                                                                JPY</th>
-                                                            <th class="align-middle text-center">
-                                                                IDR</th>
-                                                            <th class="align-middle text-center">
-                                                                JPY</th>
-                                                            <th class="align-middle text-center">
-                                                                IDR</th>
+
                                                             <th class="align-middle text-center">
                                                                 CT Updated</th>
 
@@ -404,40 +383,17 @@ $id_dept = $_GET['dept'];
                                                                 <?php } ?>
                                                             </td>
 
-                                                            <td>
-                                                                <?php  $yen="¥"; ?>
-                                                                <?= ($no_prop == 1)?number_format($data['cost']/$data['yen'], 2, ',', '.'):""; ?>
-                                                            </td>
-                                                            <td>
-                                                                <?php
-                                                                  $IDR="IDR"; ?>
 
-                                                                <?=($no_prop == 1)?number_format ($data['cost'],0,',','.'): ""; ?>
-                                                            </td>
                                                             <td> <?= (isset($data['no_ia']))? $no_prop: ""; ?>
                                                             </td>
                                                             <td><?= $data['no_ia'] ?></td>
                                                             <td></td>
                                                             <td><?= $data['ia_deskripsi'] ?></td>
-                                                            <td></td>
-                                                            <td><?= (isset($data['no_ia']))?number_format ($data['cost_ia'],0,',','.'): ""; ?>
-                                                            </td>
-                                                            <td></td>
-                                                            <td><?= (isset($data['no_ia']))?number_format($data['cost_ia']/$data['yen'], 2, ',', '.'): ""; ?>
-                                                            </td>
-                                                            <td><?= (isset($data['no_ia']))?number_format ($data['cost_ia'],0,',','.'): ""; ?>
-                                                            </td>
 
 
-                                                            <td
-                                                                class="<?=  (isset($data['no_ia']))?$warnaremain: ""; ?>">
-                                                                <?= (isset($data['no_ia']))?$remainyen: ""; ?>
-                                                            </td>
 
-                                                            <td
-                                                                class="<?=  (isset($data['no_ia']))?$warnaremain: ""; ?>">
-                                                                <?= (isset($data['no_ia']))?$remainIDR: ""; ?>
-                                                            </td>
+
+
                                                             <td><?= (isset($data['no_ia']))?date("d M Y", strtotime($data['time_ia'])): "";  ?>
                                                             </td>
                                                             <td><?= (isset($data['no_ia']))?$data['pic_ia']: ""; ?></td>
@@ -523,36 +479,6 @@ $id_dept = $_GET['dept'];
                                                                         <i class="icon wb-eye" aria-hidden="true"></i>
                                                                     </button>
                                                                 </a>
-
-                                                                <?php if( $_SESSION['yics_level'] != "1"){ ?>
-
-                                                                <a href="formupdate_ia.php?id_ia=<?= $data['id_ia'] ?>"
-                                                                    class="<?= $tombol_hidup ?>">
-                                                                    <button type="button"
-                                                                        class="btn btn-icon btn-success">
-                                                                        <i class="icon wb-upload"
-                                                                            aria-hidden="true"></i>
-                                                                    </button>
-                                                                </a>
-
-                                                                <a href="formeditia_ctrl.php?id_ia=<?= $data['id_ia']?>"
-                                                                    class="<?= $tombol_hidup ?>">
-                                                                    <button type="button"
-                                                                        class="btn btn-icon btn-warning">
-                                                                        <i class="icon wb-edit" aria-hidden="true"></i>
-                                                                    </button>
-                                                                </a>
-                                                                <a href="../proses/ia/hapus_ia.php?del=<?= $data['id_ia']?>&page=<?= $data['id_dep']?>"
-                                                                    class="<?= $tombol_hidup ?> HapusData">
-                                                                    <button type="button"
-                                                                        class="btn btn-icon btn-danger">
-                                                                        <i class="icon oi-trashcan"
-                                                                            aria-hidden="true"></i>
-                                                                    </button>
-                                                                </a>
-
-                                                                <?php } ?>
-
                                                             </td>
                                                         </tr>
                                                         <?php 
@@ -584,91 +510,7 @@ $id_dept = $_GET['dept'];
                 $(document).ready(function() {
 
                     var table = $('.tableproposal').DataTable({
-                        <?php if( $_SESSION['yics_level'] != "1"){ ?>
-                        dom: 'Bfrtip',
-                        buttons: [{
-                            text: '<i class="icon wb-print" aria-hidden="true"></i>',
-                            action: function(e, dt, node, config) {
-                                window.location =
-                                    "controltabledep2.php?dept=<?= $_GET['dept'] ?>"
-                            }
 
-                        }],
-                        // buttons: [{
-                        //         extend: 'excel',
-                        //         title: 'CONTROL TABLE <?= $judul[$id_dept] ?> (x Million) PERIODE <?= $periode; ?>-<?= $periode+1; ?> ',
-                        //         text: 'Excel',
-                        //         orientation: 'landscape',
-                        //         pageSize: 'LEGAL',
-                        //         download: 'open',
-                        //         exportOptions: {
-                        //             columns: ':not(.noexportar)'
-                        //         },
-                        //         customize: function(xlsx) {
-
-                        //             var sheet = xlsx.xl.worksheets['sheet1.xml'];
-                        //             $('row:first c', sheet).attr('s', '2');
-                        //             $('*c', sheet).attr('s', '25');
-
-                        //         }
-                        //     },
-                        //     {
-                        //         extend: "print",
-                        //         exportOptions: {
-                        //             columns: ':not(.noexportar)',
-
-
-                        //         },
-                        //         title: 'CONTROL TABLE <?= $judul[$id_dept] ?> (x Million) PERIODE <?= $periode; ?>-<?= $periode+1; ?> ',
-                        //         customize: function(win) {
-
-                        //             var last = null;
-                        //             var current = null;
-                        //             var bod = [];
-
-                        //             var css = '@page { size: landscape; }',
-                        //                 head = win.document.head || win.document
-                        //                 .getElementsByTagName('head')[0],
-                        //                 style = win.document.createElement('style');
-
-                        //             style.type = 'text/css';
-                        //             style.media = 'print';
-
-                        //             if (style.styleSheet) {
-                        //                 style.styleSheet.cssText = css;
-                        //             } else {
-                        //                 style.appendChild(win.document.createTextNode(css));
-                        //             }
-
-                        //             head.appendChild(style);
-                        //         }
-                        //     },
-                        //     {
-                        //         extend: 'pdf',
-                        //         title: 'CONTROL TABLE <?= $judul[$id_dept] ?> (x Million) PERIODE <?= $periode; ?>-<?= $periode+1; ?> ',
-                        //         text: 'Pdf',
-                        //         orientation: 'landscape',
-                        //         pageSize: 'LEGAL',
-                        //         download: 'open',
-                        //         alignment: "center",
-                        //         exportOptions: {
-                        //             columns: ':not(.noexportar)',
-                        //             orthogonal: "PDF",
-                        //             modifier: {
-                        //                 order: 'index',
-                        //                 page: 'current'
-                        //             }
-                        //         },
-                        //         customize: function(doc) {
-
-                        //             doc.styles.tableBodyEven.alignment = "center";
-                        //             doc.styles.tableBodyOdd.alignment = "center";
-                        //             doc.styles.tableFooter.alignment = "center";
-                        //             doc.styles.tableHeader.alignment = "center";
-                        //         }
-                        //     },
-                        // ],
-                        <?php  } ?> "order": [7, 'desc'],
                         scrollX: true,
                         paging: true,
                         ordering: false,

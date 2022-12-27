@@ -29,6 +29,7 @@ $get_data_budget1 = mysqli_query($link_yics ,"SELECT * FROM budget JOIN depart o
             <span class="site-menu-title">DASHBOARD</span>
         </a>
     </li>
+    <?php if( $_SESSION['yics_level'] == "1"){ ?>
     <li class="site-menu-item has-sub open <?= ($url_aktive == "controltabledep")? "active": ""; ?>">
         <a href="javascript:void(0)">
             <i class="site-menu-icon wb-table" aria-hidden="true"></i>
@@ -54,6 +55,33 @@ $get_data_budget1 = mysqli_query($link_yics ,"SELECT * FROM budget JOIN depart o
             </li>
         </ul>
     </li>
+    <?php }else{?>
+    <li class="site-menu-item has-sub open <?= ($url_aktive == "controltabledep1")? "active": ""; ?>">
+        <a href="javascript:void(0)">
+            <i class="site-menu-icon wb-table" aria-hidden="true"></i>
+            <span class="site-menu-title">CONTROL TABLES</span>
+            <span class="site-menu-arrow"></span>
+        </a>
+        <ul class="site-menu-sub">
+            <li
+                class="site-menu-item open <?= ($url_aktive == "controltabledep1" && $_GET['dept'] == 1)? "active": ""; ?>">
+                <a class="animsition-link" href="controltabledep1.php?dept=1">
+                    <span class="site-menu-title">Body Plant 1</span>
+                </a>
+            </li>
+            <li class="site-menu-item <?= ($url_aktive == "controltabledep" && $_GET['dept']==2)? "active": ""; ?>">
+                <a class="animsition-link" href="controltabledep1.php?dept=2">
+                    <span class="site-menu-title">Body Plant 2</span>
+                </a>
+            </li>
+            <li class="site-menu-item <?= ($url_aktive == "controltabledep" && $_GET['dept']==3)? "active": ""; ?>">
+                <a class="animsition-link" href="controltabledep1.php?dept=3">
+                    <span class="site-menu-title">BQC</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <?php } ?>
     <li class="site-menu-item has-sub <?= ($url_aktive == "searchdoc2")? "active": ""; ?>">
         <a href="searchdoc2.php">
             <i class="site-menu-icon wb-shopping-cart" aria-hidden="true"></i>
