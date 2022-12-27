@@ -229,9 +229,9 @@ if (!isset($_SESSION['yics_user'])) {
                                     $depart = query("SELECT * FROM budget JOIN depart on budget.id_dep = depart.id_dep where id_fis={$id_fis}");        
 
                                     $consumtion_budget = query("SELECT depart.id_dep , sum(cost_ia) as cost FROM ia
-                                        join proposal on ia.id_prop = proposal.id_prop
-                                        join depart on proposal.id_dep = depart.id_dep
-                                        where proposal.id_fis={$id_fis} {$where_time}
+                                        join plan_proposal on ia.id_prop = plan_proposal.id_prop
+                                        join depart on plan_proposal.id_dep = depart.id_dep
+                                        where plan_proposal.id_fis={$id_fis} {$where_time}
                                         group by depart
                                     ");  
 
@@ -258,13 +258,36 @@ if (!isset($_SESSION['yics_user'])) {
                                                 $card=mysqli_fetch_array(mysqli_query($link_yics,"SELECT sum(budget) 
                                                         AS total FROM view_alokasi_budget WHERE status='aktif'")) or die (mysqli_error($link_yics));
                                                 
+
+                                                // ------------------------------------------akumulasi budget yang direject----------------------------
+
+$budget_reject = mysqli_query($link_yics ,"SELECT sum(ia.cost_ia) AS cost_rjct FROM tracking_ia
+join ia on tracking_ia.id_ia = ia.id_ia
+join plan_proposal on ia.id_prop = plan_proposal.id_prop
+join depart on plan_proposal.id_dep = depart.id_dep                                           
+where  plan_proposal.id_fis={$id_fis}
+ and approval = '0' GROUP BY approval = '0'")
+or die (mysqli_error($link_yics));                 
+if(mysqli_num_rows($budget_reject)>0){
+    $budget_reject1 = mysqli_fetch_assoc($budget_reject);
+    if(isset($budget_reject1['cost_rjct'])){
+       $brjct =$budget_reject1['cost_rjct'];
+   }else{
+       $brjct=0;
+     }                       
+ }else{
+   $brjct=0;
+ }
+
+
+
                                                 ?>
                                             <span
                                                 class="white font-weight-400"><?php echo $row_card1 ['divisi']; ?></span>
                                             <div class=" white content-text text-center mb-0">
                                                 <span>
                                                     <p class="font-size-30 font-weight-100 mt-10"> IDR
-                                                        <?= number_format($card['total'] -  $total_consumtion_budget,0,',','.')." "."Million"; ?>
+                                                        <?= number_format(($card['total'] -  $total_consumtion_budget)+$brjct,0,',','.')." "."Million"; ?>
                                                     </p>
                                                     <p class="white font-weight-100 m-0 font-size-20"><u>"Budget IDR
                                                             <?php echo number_format ($card['total'],0,',','.')." "."Million";  ?>"</u>
@@ -292,12 +315,35 @@ if (!isset($_SESSION['yics_user'])) {
                                                 <span
                                                     class="white font-weight-400 "><?php echo $row_card['depart']; ?></span>
                                                 <?php 
+
+// ------------------------------------------akumulasi budget yang direject----------------------------
+
+$budget_reject = mysqli_query($link_yics ,"SELECT sum(ia.cost_ia) AS cost_rjct FROM tracking_ia
+join ia on tracking_ia.id_ia = ia.id_ia
+join plan_proposal on ia.id_prop = plan_proposal.id_prop
+join depart on plan_proposal.id_dep = depart.id_dep                                           
+where plan_proposal.id_dep = {$row_card['id_dep']} and plan_proposal.id_fis={$id_fis}
+ and approval = '0' GROUP BY approval = '0'")
+or die (mysqli_error($link_yics));                 
+if(mysqli_num_rows($budget_reject)>0){
+    $budget_reject1 = mysqli_fetch_assoc($budget_reject);
+    if(isset($budget_reject1['cost_rjct'])){
+       $brjct =$budget_reject1['cost_rjct'];
+   }else{
+       $brjct=0;
+     }                       
+ }else{
+   $brjct=0;
+ }
+
+
+
                                                 $consumtion_budget = single_query("SELECT sum(cost_ia) as cost , count(*) as qty FROM ia
-                                                join proposal on ia.id_prop = proposal.id_prop
-                                                join depart on proposal.id_dep = depart.id_dep
-                                                where proposal.id_dep = {$row_card['id_dep']} and proposal.id_fis={$id_fis} {$where_time}
+                                                join plan_proposal on ia.id_prop = plan_proposal.id_prop
+                                                join depart on plan_proposal.id_dep = depart.id_dep
+                                                where plan_proposal.id_dep = {$row_card['id_dep']} and plan_proposal.id_fis={$id_fis} {$where_time}
                                                 ");
-                                                $sisa_budget = $row_card['budget'] - $consumtion_budget['cost']; ?>
+                                                $sisa_budget = ($row_card['budget'] - $consumtion_budget['cost']    )+$brjct; ?>
                                                 <div class="content-text text-center mb-0">
                                                     <span>
                                                         <p class="white font-size-30 font-weight-100 mt-10">

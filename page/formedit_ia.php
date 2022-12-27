@@ -100,14 +100,58 @@ include '../elemen/header.php';?>
                         $id_dep = $data_ia['id_dep'];
                         $dep = $data_ia['depart'];
                         $id_prop = $data_ia['id_prop'];
-                        $rp="RP";
+                        $IDR="IDR";
                         $fis_awal = $data_ia['awal'];
                         $fis_akhir = $data_ia['akhir'];
 
-                    $get_data_ia = single_query("SELECT sum(cost_ia) as cost_ia FROM ia 
-                    JOIN plan_proposal on ia.id_prop = plan_proposal.id_prop
-                    where ia.id_prop='$id_prop'");
-                    $consumtion_budget = $get_data_ia['cost_ia'];
+               // ------------------------------------------akumulasi budget yang direjecT PER DEPART----------------------------
+
+$budget_reject = mysqli_query($link_yics ,"SELECT sum(ia.cost_ia) AS cost_rjct FROM tracking_ia
+join ia on tracking_ia.id_ia = ia.id_ia
+join plan_proposal on ia.id_prop = plan_proposal.id_prop
+join depart on plan_proposal.id_dep = depart.id_dep                                           
+where plan_proposal.id_dep = {$id_dep} and plan_proposal.id_fis={$id_fis}
+ and approval = '0' GROUP BY approval = '0'")
+or die (mysqli_error($link_yics));                 
+if(mysqli_num_rows($budget_reject)>0){
+    $budget_reject1 = mysqli_fetch_assoc($budget_reject);
+   $brjct =$budget_reject1['cost_rjct'];
+ }else{
+   $brjct=0;
+ }
+// ------------------------------------------akumulasi budget yang direjecT PER DEPART----------------------------
+
+
+
+// ------------------------------------------akumulasi budget yang direjecT PER PROPOSAL----------------------------
+
+$ia_prop = mysqli_query($link_yics ,"SELECT sum(ia.cost_ia) AS cost_rjct FROM tracking_ia
+join ia on tracking_ia.id_ia = ia.id_ia
+join plan_proposal on ia.id_prop = plan_proposal.id_prop
+join depart on plan_proposal.id_dep = depart.id_dep                                           
+where ia.id_prop={$id}  and plan_proposal.id_dep = {$id_dep} and plan_proposal.id_fis={$id_fis}
+ and approval = '0' GROUP BY approval = '0'")
+or die (mysqli_error($link_yics));                 
+if(mysqli_num_rows($budget_reject)>0){
+    $ia_proprj = mysqli_fetch_assoc($ia_prop);
+    if(isset($ia_proprj['cost_rjct'])){
+        $ia_proprjct =$ia_proprj['cost_rjct'];
+    }else{
+        $ia_proprjct=0;
+      }   
+ }else{
+   $ia_proprjct=0;
+ }
+// ------------------------------------------akumulasi budget yang direjecT PER PROPOSAL----------------------------
+         
+
+                        $get_data_ia = single_query("SELECT sum(cost_ia) as cost_ia FROM ia 
+                        JOIN plan_proposal on ia.id_prop = plan_proposal.id_prop
+                        join depart on plan_proposal.id_dep = depart.id_dep
+                        
+                        where plan_proposal.id_dep = {$id_dep} and plan_proposal.id_fis={$id_fis}");
+                                            $consumtion_budget = $get_data_ia['cost_ia']-$brjct;
+
                     $get_data_budget1 = mysqli_query($link_yics ,"SELECT * FROM budget where id_dep='$id_dep' and id_fis='$id_fis'");
                     $get_data_budget = mysqli_fetch_assoc($get_data_budget1);
                     $sisa_budget = $get_data_budget['budget'] - $consumtion_budget;
@@ -183,15 +227,15 @@ include '../elemen/header.php';?>
                                                         <div class="form-group row text-left">
                                                             <label class="col-md-2 col-form-label mt-4"
                                                                 style="color:black;">In
-                                                                RP</label>
+                                                                IDR</label>
                                                             <div class="col-md-4">
                                                                 <span
                                                                     style="color:red;font-size: 13px;font-style: italic;">*(Sisa
-                                                                    budget <?= $dep ?> : Rp
+                                                                    budget <?= $dep ?> : IDR
                                                                     <?= number_format($sisa_budget,0,',','.')  ?>)</span>
                                                                 <div class="input-group">
                                                                     <div class="input-group-prepend">
-                                                                        <span class="input-group-text">RP</span>
+                                                                        <span class="input-group-text">IDR</span>
                                                                     </div>
                                                                     <input type="text" class="form-control uang"
                                                                         autocomplete="off" placeholder="Nominal Rupiah"
@@ -301,7 +345,7 @@ include '../elemen/header.php';?>
                                                                         <td class="text-left" style="color:black;">Cost
                                                                             Proposal</td>
                                                                         <td> &nbsp;:&nbsp;</td>
-                                                                        <td><?= $rp." ". number_format($data_ia['cost'], 0, ',', '.');?>
+                                                                        <td><?= $IDR." ". number_format($data_ia['cost'], 0, ',', '.');?>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
@@ -370,14 +414,14 @@ include '../elemen/header.php';?>
                                                                             <td><?= $no; ?></td>
                                                                             <td><?= $row['ia']; ?></td>
                                                                             <td><?= $row['deskripsi']; ?></td>
-                                                                            <?php $rp="RP"; ?>
+                                                                            <?php $IDR="IDR"; ?>
 
                                                                             </td>
 
                                                                             <td><?= date("d M Y", strtotime($row['time_ia'])); ?>
                                                                             </td>
                                                                             <td><?= $row['pic_ia']; ?></td>
-                                                                            <td><?= $rp." ".number_format($row['cost_ia'], 0, ',', '.');?>
+                                                                            <td><?= $IDR." ".number_format($row['cost_ia'], 0, ',', '.');?>
                                                                             <td>
                                                                                 <a href="formedit_ia.php?id_ia=<?= $row['id_ia']?>"
                                                                                     class="btn btn-icon btn-warning  edit_ia">
@@ -406,11 +450,11 @@ include '../elemen/header.php';?>
                                                                 <table class=" table " width="200%">
                                                                     <tr>
                                                                         <td class="judul align-middle text-center "
-                                                                            rowspan="3" width="100px">
+                                                                            rowspan="4" width="100px">
 
                                                                         </td>
                                                                         <td class="judul align-middle text-center"
-                                                                            width="700px" rowspan="3">
+                                                                            width="700px" rowspan="4">
 
                                                                         </td>
                                                                         <td class="text-left" width="300px">Total Cost
@@ -421,8 +465,16 @@ include '../elemen/header.php';?>
                                                                 AS total FROM ia WHERE id_prop='$id_prop'")) or die (mysqli_error($link_yics));;
                                                             ?>
                                                                         <td class="bg-red-100" width="250px">
-                                                                            <?= $rp." ".number_format($total_costia['total'], 0, ',', '.');?>
+                                                                            <?= $IDR." ".number_format($total_costia['total'], 0, ',', '.');?>
                                                                         </td>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td class="text-left">Total Cost Ia Ditolak
+                                                                        </td>
+                                                                        <td> &nbsp;:&nbsp;</td>
+                                                                        <td><?= $IDR." ". number_format($ia_proprjct, 0, ',', '.');?>
                                                                         </td>
                                                                     </tr>
 
@@ -431,14 +483,14 @@ include '../elemen/header.php';?>
                                                                         </td>
                                                                         <td> &nbsp;:&nbsp;</td>
 
-                                                                        <td><?= $rp." ". number_format(($data_ia['cost'])-($total_costia['total']), 0, ',', '.');?>
+                                                                        <td><?= $IDR." ". number_format(($data_ia['cost'])-($total_costia['total'])+$ia_proprjct, 0, ',', '.');?>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td class="text-left">Available Saldo
                                                                             <?= $data_ia['depart']; ?></td>
                                                                         <td> &nbsp;:&nbsp;</td>
-                                                                        <td><?=$rp." ".number_format($sisa_budget,0,',','.')  ?>
+                                                                        <td><?=$IDR." ".number_format($sisa_budget,0,',','.')  ?>
                                                                         </td>
                                                                     </tr>
                                                                 </table>

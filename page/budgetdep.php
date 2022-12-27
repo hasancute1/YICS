@@ -110,8 +110,26 @@ include '../elemen/header.php';?>
 
                         $where_time = "";
                      }
+// ------------------------------------------akumulasi budget yang direject----------------------------
 
-                   
+                     $budget_reject = mysqli_query($link_yics ,"SELECT sum(ia.cost_ia) AS cost_rjct FROM tracking_ia
+                     join ia on tracking_ia.id_ia = ia.id_ia
+                     join plan_proposal on ia.id_prop = plan_proposal.id_prop
+                     join depart on plan_proposal.id_dep = depart.id_dep                                           
+                     where plan_proposal.id_dep = {$id_dep} and plan_proposal.id_fis={$id_fis}
+                      and approval = '0' GROUP BY approval = '0'")
+                     or die (mysqli_error($link_yics));                 
+                     if(mysqli_num_rows($budget_reject)>0){
+                         $budget_reject1 = mysqli_fetch_assoc($budget_reject);
+                         if(isset($budget_reject1['cost_rjct'])){
+                            $brjct =$budget_reject1['cost_rjct'];
+                        }else{
+                            $brjct=0;
+                          }                       
+                      }else{
+                        $brjct=0;
+                      }
+                    
                     
                     // $get_data_budget = single_query("SELECT * FROM budget JOIN depart on budget.id_dep = depart.id_dep where budget.id_dep={$id_dep} and id_fis={$id_fis}");
                     
@@ -121,9 +139,9 @@ include '../elemen/header.php';?>
                         $get_data_budget = mysqli_fetch_assoc($get_data_budget1);
                      } 
                     $consumtion_budget = single_query("SELECT sum(cost_ia) as cost , count(*) as qty , max(ia.time_ia) as last_month FROM ia
-                        join proposal on ia.id_prop = proposal.id_prop
-                        join depart on proposal.id_dep = depart.id_dep
-                        where proposal.id_dep = {$id_dep} and proposal.id_fis={$id_fis} {$where_time}
+                        join plan_proposal on ia.id_prop = plan_proposal.id_prop
+                        join depart on plan_proposal.id_dep = depart.id_dep
+                        where plan_proposal.id_dep = {$id_dep} and plan_proposal.id_fis={$id_fis} {$where_time}
                     ");  
 
                     // bulan terakhir consumtion budget
@@ -131,9 +149,9 @@ include '../elemen/header.php';?>
                     $last_month = date('m' , strtotime($last_month));
                     
                     $consumtion_budget_data = query("SELECT MONTH(ia.time_ia) AS bulan, sum(ia.cost_ia) as cost FROM ia
-                    join proposal on ia.id_prop = proposal.id_prop
-                    join depart on proposal.id_dep = depart.id_dep
-                    where proposal.id_dep = {$id_dep} and proposal.id_fis={$id_fis} {$where_time}
+                    join plan_proposal on ia.id_prop = plan_proposal.id_prop
+                    join depart on plan_proposal.id_dep = depart.id_dep
+                    where plan_proposal.id_dep = {$id_dep} and plan_proposal.id_fis={$id_fis} {$where_time}
                     GROUP BY bulan
                     ");  
 
@@ -156,10 +174,10 @@ include '../elemen/header.php';?>
                     //query tabel closed
                     $data_ia = query("SELECT * from tracking_ia
                         join ia on tracking_ia.id_ia = ia.id_ia
-                        join proposal on ia.id_prop = proposal.id_prop
-                        join depart on proposal.id_dep = depart.id_dep
-                        join kategori_proposal on proposal.id_kat = kategori_proposal.id_kat                      
-                        where proposal.id_dep = {$id_dep} and proposal.id_fis={$id_fis}
+                        join plan_proposal on ia.id_prop = plan_proposal.id_prop
+                        join depart on plan_proposal.id_dep = depart.id_dep
+                        join kategori_proposal on plan_proposal.id_kat = kategori_proposal.id_kat                      
+                        where plan_proposal.id_dep = {$id_dep} and plan_proposal.id_fis={$id_fis}
                         and id_prog = 25 {$where_time} and approval = '1'
                     ");              
 
@@ -192,7 +210,7 @@ include '../elemen/header.php';?>
                                 <div class="col-lg-10 col-md-10 ">
                                     <h1 class="page-title font-size-26 font-weight-600">Budget
                                         <?= $get_data_budget['depart']?>
-                                        Overview (x Million)
+                                        Overview (x Million) <?= $brjct ?>
                                     </h1>
                                 </div>
                                 <div class="col-lg-2 col-md-2 text-right d-print-none">
@@ -297,7 +315,7 @@ include '../elemen/header.php';?>
 
                                                             <?php                                                          
                                                             $total_budget = $get_data_budget['budget'];
-                                                            $consumtion_budget_cost = $consumtion_budget['cost'];
+                                                            $consumtion_budget_cost = $consumtion_budget['cost']-$brjct;
 
                                                             $sisa_budget = $total_budget - $consumtion_budget_cost;
 
@@ -366,8 +384,11 @@ include '../elemen/header.php';?>
                                                         }
 
 
-
+                                                        if($sisa==0 or  $total_budget==0){
+                                                            $persentase_budget = 0;   
+                                                        }else{
                                                                 $persentase_budget =ceil( $sisa / $total_budget * 100);
+                                                            }
                                                                 if ( $id_dep ==1){
                                                                     $warna = 'yellow';
                                                                 }
@@ -403,7 +424,7 @@ include '../elemen/header.php';?>
                                                             <h4>Consummed:</h4>
                                                             <p style="font-size: 20px; color:blue;font-weight: bold;">
                                                                 IDR
-                                                                <?= number_format($consumtion_budget['cost'] ,0, ',','.')." "."Million"  ?>
+                                                                <?= number_format($consumtion_budget_cost ,0, ',','.')." "."Million"  ?>
                                                             </p>
                                                         </div>
                                                     </div>
