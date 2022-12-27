@@ -13,8 +13,10 @@ if (isset ($_SESSION['yics_user'])){
          $index = 0;
          $id_ia = $_POST['id_ia'];
          //data proposal
-         $data_ia = single_query("SELECT ia , proposal.username,proposal.id_dep AS id_dep FROM ia 
-         join proposal on ia.id_prop = proposal.id_prop
+         $data_ia = single_query("SELECT * FROM ia 
+         join plan_proposal on ia.id_prop = plan_proposal.id_prop
+         join data_user on data_user.area = plan_proposal.area
+        
          WHERE id_ia={$id_ia}");
           $id_dept=$data_ia['id_dep'];
      //     var_dump($_POST['id_prog']);
@@ -56,7 +58,7 @@ if (isset ($_SESSION['yics_user'])){
                     if(!$sql){
                          $_SESSION['info'] = "Gagal Disimpan";
                          $_SESSION['pesan'] = "Data Gagal Diupdate";
-                         header('location: ../../page/controltabledep.php?dept='.$id_dept);
+                         header('location: ../../page/controltabledep1.php?dept='.$id_dept);
                     }else{
                          // kirim notifikasi ke pic
                          $notif = TRUE;
@@ -70,7 +72,7 @@ if (isset ($_SESSION['yics_user'])){
                     if(!$sql){
                          $_SESSION['info'] = "Gagal Disimpan";
                          $_SESSION['pesan'] = "Data Gagal Diupdate";
-                         header('location: ../../page/controltabledep.php?dept='.$id_dept);
+                         header('location: ../../page/controltabledep1.php?dept='.$id_dept);
                     }else{
                          // kirim notifikasi ke pic
                          $notif = TRUE;
@@ -91,7 +93,7 @@ if (isset ($_SESSION['yics_user'])){
                     if(!$sql){
                          $_SESSION['info'] = "Gagal Disimpan";
                          $_SESSION['pesan'] = "Data Gagal Diupdate";
-                         header('location: ../../page/controltabledep.php?dept='.$id_dept);
+                         header('location: ../../page/controltabledep1.php?dept='.$id_dept);
                     }else{
 
                          // lakukan pengecekan apakah ada id_prog yang lebih besar dari id_prog ini,
@@ -111,7 +113,7 @@ if (isset ($_SESSION['yics_user'])){
                     if(!$sql){
                          $_SESSION['info'] = "Gagal Disimpan";
                          $_SESSION['pesan'] = "Data Gagal Diupdate";
-                         header('location: ../../page/controltabledep.php?dept='.$id_dept);
+                         header('location: ../../page/controltabledep1.php?dept='.$id_dept);
                     }else{
 
                           // kirim notifikasi ke pic
@@ -137,11 +139,11 @@ if (isset ($_SESSION['yics_user'])){
      if($sql){
           $_SESSION['info'] = "Disimpan";
           $_SESSION['pesan'] = "Data Berhasil Diupdate";
-          header('location: ../../page/controltabledep.php?dept='.$id_dept);
+          header('location: ../../page/controltabledep1.php?dept='.$id_dept);
      }else{
           $_SESSION['info'] = "Gagal Disimpan";
           $_SESSION['pesan'] = "Data Gagal Diupdate";
-          header('location: ../../page/controltabledep.php?dept='.$id_dept);
+          header('location: ../../page/controltabledep1.php?dept='.$id_dept);
      }   
      
      /**

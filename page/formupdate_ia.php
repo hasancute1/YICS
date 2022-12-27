@@ -77,10 +77,10 @@ include '../elemen/header.php';?>
                                             $id_ia = $_GET['id_ia'];
                                             
                                             $data_ia = single_query("SELECT * FROM ia 
-                                            JOIN proposal on ia.id_prop = proposal.id_prop
-                                            JOIN depart on proposal.id_dep = depart.id_dep
-                                            JOIN time_fiscal on proposal.id_fis = time_fiscal.id_fis
-                                            JOIN kategori_proposal on proposal.id_kat = kategori_proposal.id_kat
+                                            JOIN plan_proposal on ia.id_prop = plan_proposal.id_prop
+                                            JOIN depart on plan_proposal.id_dep = depart.id_dep
+                                            JOIN time_fiscal on plan_proposal.id_fis = time_fiscal.id_fis
+                                            JOIN kategori_proposal on plan_proposal.id_kat = kategori_proposal.id_kat
                                             where id_ia='".$id_ia."'");    
                                              $cost_ia  = $data_ia['cost_ia'];
                                              $depart  = $data_ia['depart'];
