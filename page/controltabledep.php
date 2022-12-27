@@ -185,11 +185,11 @@ $id_dept = $_GET['dept'];
                                                     <thead class="table-info">
                                                         <tr>
                                                             <th class="judul align-middle text-center export-col"
-                                                                colspan="6">
+                                                                colspan="4">
                                                                 INVESTMENT PLANNING CONTROL TABLE</th>
 
                                                             <th class="judul align-middle text-center export-col"
-                                                                colspan="13">
+                                                                colspan="7">
                                                                 IMPLEMENTATION CONTROL TABLE</th>
 
                                                             <th class="judul align-middle text-center table-info noexportar"
