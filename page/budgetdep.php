@@ -134,14 +134,17 @@ $r_ia = mysqli_query($link_yics ,"SELECT sum(cost_ia) as costi FROM tracking_ia
 join ia on tracking_ia.id_ia = ia.id_ia
 JOIN plan_proposal ON ia.id_prop = plan_proposal.id_prop
 JOIN depart ON plan_proposal.id_dep = depart.id_dep
-where plan_proposal.id_dep={$id_dep} and id_fis={$id_fis} and approval='0'  GROUP BY tracking_ia.id_ia ORDER BY plan_proposal.cost ASC")
+where plan_proposal.id_dep={$id_dep} and id_fis={$id_fis} and approval='0'  GROUP BY plan_proposal.id_prop ORDER BY plan_proposal.cost ASC")
 or die (mysqli_error($link_yics));                 
 if(mysqli_num_rows($r_ia)>0){
 while($r_i = mysqli_fetch_assoc($r_ia))
 {
-    echo "hasan";
-    echo $r_i['costi'];
-$r_i[]=$r_i['costi'];
+        if(isset($r_i['costi'])){
+        $r= $r_i['costi'];
+        $r_ib[]=$r;
+        }else{
+        $r=0;
+        }
  }
 }else {echo "DATA BELUM ADA";}
 // $labelcos=json_encode($labelcos); 
@@ -158,7 +161,7 @@ or die (mysqli_error($link_yics));
 if(mysqli_num_rows($label_c)>0){
 while($label_cx = mysqli_fetch_assoc($label_c))
 {
-$labelcos[]=$label_cx['costia'];
+$labelcos[]=$r-$label_cx['costia'];
  }
 }else {echo "DATA BELUM ADA";}
 $labelcos=json_encode($labelcos); 
@@ -263,11 +266,6 @@ $labelcos=json_encode($labelcos);
                                     <h1 class="page-title font-size-26 font-weight-600">Budget
                                         <?= $get_data_budget['depart']?>
                                         Overview (x Million)
-                                        <?php foreach ($r_i as $iw) {
-                                        echo "$iw <br>";
-                                        }
-?>
-
                                     </h1>
                                 </div>
                                 <div class="col-lg-2 col-md-2 text-right d-print-none">
@@ -626,24 +624,11 @@ include '../elemen/footer.php';?>
                                         display: true,
                                         labelString: 'M I L L I O N'
                                     },
-                                }, {
-                                    id: 'B',
-                                    type: 'linear',
-                                    position: 'right',
-                                    scaleLabel: {
-                                        display: true,
-                                        labelString: 'M I L L I O N'
-                                    },
-                                    ticks: {
-                                        max: 1,
-                                        min: 0
-                                    }
-
                                 }],
                                 xAxes: [{
                                     scaleLabel: {
                                         display: true,
-                                        labelString: 'B U L A N'
+                                        labelString: 'P R O P O S A L'
                                     },
                                     stacked: false
                                 }]

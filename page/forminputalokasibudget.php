@@ -445,6 +445,7 @@ include '../elemen/footer.php';?>
                     type: 'GET',
                     url: "../proses/alokasibudget/ajax/get_tampilan.php",
                     data: {
+                        // nama : variabel
                         idDept: idDept,
                         id_fis: id_fis,
                         ind: index
@@ -499,12 +500,10 @@ include '../elemen/footer.php';?>
                 var index = $(this).attr('data-id');
                 var idDept = $(this).attr('data-dept');
                 var ind = $(this).attr('data-in');
-
                 var area = $('#area' + index).val();
                 var kategori = $('#kategori' + index).val();
                 var proposal = $('#proposal' + index).val();
                 var cost = $('#cost' + index).val();
-
                 var data = $('#subForm' + index).serialize();
 
                 console.log(area);
@@ -593,6 +592,38 @@ include '../elemen/footer.php';?>
                         .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
                 });
             });
+
+
+
         });
         </script>
         <!--############ end jquery penjumlahan loopinng attribut classs ################# -->
+
+        <script>
+        $(document).on('click', '.edit', function() {
+
+            var id_prop = $(this).attr('data-id');
+            var depart = $(this).attr('data-dept');
+            var masuk = $(this).attr('data-in');
+
+            console.log(id_prop);
+            console.log(depart);
+            console.log(masuk);
+
+
+            $.ajax({
+                type: 'GET',
+                url: "../proses/alokasibudget/ajax/get_tampilan.php",
+                data: {
+                    // nama : variabel
+                    id_pro: id_prop,
+                    depart: depart,
+                    masuk: masuk
+                },
+                cache: false,
+                success: function(msg) {
+                    $('#EditAlokasiBudget').modal('show');
+                }
+            });
+        });
+        </script>

@@ -169,14 +169,12 @@ if (!isset($_SESSION['yics_user'])) {
                                                         if(mysqli_num_rows($editalokasi)>0){$rows_editalokasi = mysqli_fetch_assoc($editalokasi)?>
                                                         <a href="forminputalokasibudget.php?input=<?php echo $rows_editalokasi['id_fis']; ?>"
                                                             data-toggle="tooltip" data-original-title="Edit">
-                                                            <!-- end query edit data  -->
                                                             <button type="button"
-                                                                class="btn btn-info btn-icon btn-outline btn-xs"
-                                                                data-toggle="modal" data-target="#EditAlokasiBudget">
+                                                                class="btn btn-info btn-icon btn-outline btn-xs">
                                                                 <i class="icon wb-plus" aria-hidden="true"></i>
                                                             </button>
                                                         </a>
-
+                                                        <!-- end query edit data  -->
                                                     </div>
                                                 </div>
                                                 <?php
@@ -1239,6 +1237,148 @@ $json_morris = json_encode($array_donut_dept);
     </div>
     </div>
     <!-- End Modal Tambah Alokasi Budget-->
+
+
+    <!-- Modal Edit Alokasi Budget -->
+    <div class="modal fade modal-info " id="EditAlokasiBudget" aria-hidden="true" aria-labelledby="EditAlokasiBudget"
+        role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-simple modal-center modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h3 class="modal-title">Tambah Data Planning Proposal</h3>
+                </div>
+                <div class="row">
+                </div>
+                <div class="modal-body">
+                    <form action="../proses/dashboard/tambahplanning.php" method="post" enctype="multipart/form-data">
+
+                        <input type="hidden" name="add">
+                        <input name="mata_uang" type="number" value="1" class="form-control" hidden>
+                        <div class="form-group row">
+                            <h4 class="col-md-10 modal-title text-left" style="color:black;">SUBJECT</h4>
+
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" style="color:black;">Periode tahun</label>
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <input type="text" value="<?php echo $data['periode']; ?>" class="form-control"
+                                        readonly>
+                                    <input name="id_fis" type="text" value="<?php echo $data['id_fis']; ?>"
+                                        class="form-control" readonly hidden>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label text-left" style="color:black;">Department</label>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <select name="depart" class="form-control" required>
+                                        <option value="">Pilih Departement</option>
+                                        <?php 
+                                                $depart = mysqli_query($link_yics,"SELECT * FROM depart") or die (mysqli_error($link_yics));
+                                                if(mysqli_num_rows($depart)>0){
+                                                while( $rows_depart = mysqli_fetch_assoc($depart)){?>
+                                        <option value="<?php echo $rows_depart['id_dep'] ?>">
+                                            <?php echo $rows_depart['depart'] ?></option>
+                                        <?php 
+                                              } 
+                                              }
+                                                ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <label class="col-md-2 col-form-label text-left" style="color:black;">Category</label>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <select name="kategori" type="text" class="form-control" required>
+                                        <option value="">Pilih Category</option>
+                                        <?php 
+                                                $kategori = mysqli_query($link_yics,"SELECT * FROM kategori_proposal") or die (mysqli_error($link_yics));
+                                                if(mysqli_num_rows($kategori)>0){
+                                                while( $rows_kategori= mysqli_fetch_assoc($kategori)){?>
+                                        <option value="<?php echo $rows_kategori['id_kat'] ?>">
+                                            <?php echo $rows_kategori['kategori'] ?></option>
+                                        <?php 
+                                              } 
+                                              }
+                                                ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label text-left" style="color:black;">Proposal</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control " name="proposal"
+                                    placeholder=" Judul Proposal..." autocomplete="off" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" style="color:black;">Cost</label>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">IDR</span>
+                                    </div>
+
+                                    <input required name="cost" type="text" class="form-control" id="rupiah"
+                                        placeholder="Isi Cost Proposal...">
+                                    <div class="input-group-prepend ">
+                                        <span class="input-group-text bg-yellow-100">MILLION</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" style="color:black;">Lampiran</label>
+
+                            <div class="col-md-10 input-group">
+                                <!-- <input class="form-control-file" type="file" name="lampiran" required> -->
+
+
+                                <div class="input-group input-group-file" data-plugin="inputGroupFile">
+                                    <div class="input-group-append">
+                                        <span class="btn btn-warning btn-file">
+                                            <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
+                                            <input type="file" name="lampiran" multiple="">
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" readonly=""
+                                        placeholder="Upload Scan Proposal ekstensi Anda..">
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" style="color:black;">Keterangan</label>
+
+                            <div class="col-md-10 input-group">
+                                <textarea type="text" class="form-control" name="benefit" style=”height:100px;”
+                                    placeholder="Deskripsikan secara singkat proposaL Anda.." autocomplete="off"
+                                    value="" required></textarea>
+                            </div>
+
+                        </div>
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-danger">Reset</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+    </div>
+    <!-- End Edit Alokasi Budget -->
 
 
 

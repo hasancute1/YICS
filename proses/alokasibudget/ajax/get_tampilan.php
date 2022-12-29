@@ -3,7 +3,7 @@ include("../../../config/config.php");
 $dep=$_GET['idDept'];
 $id=$_GET['id_fis'];
 $index=$_GET['ind'];
-
+$id_pro=$_GET['id_pro'];
 
 ?>
 <?php 
@@ -44,7 +44,7 @@ $index=$_GET['ind'];
 </div>
 
 <div class="table table-responsive">
-    <table class="table text-nowrap table-bordered text-uppercase" style="width:100%">
+    <table class="table text-nowrap table-bordered text-uppercase edit1" style="width:100%">
         <thead class="bg-brown-300">
             <tr class="font-size-15 align-middle text-center">
                 <th width="10px">No</th>
@@ -63,8 +63,8 @@ $index=$_GET['ind'];
         </thead>
         <tbody>
             <?php  
-                                                    $isi = mysqli_query($link_yics ,"SELECT *
-                            FROM plan_proposal 
+                            $isi = mysqli_query($link_yics ,"SELECT *
+                            FROM plan_proposal
                             JOIN depart ON plan_proposal.id_dep = depart.id_dep
                             JOIN kategori_proposal  ON plan_proposal.id_kat = kategori_proposal.id_kat
                             JOIN time_fiscal  ON plan_proposal.id_fis = time_fiscal.id_fis  
@@ -97,10 +97,16 @@ $index=$_GET['ind'];
                     <?= $cost; ?>
                 </td>
                 <td>
-                    <button type=" button" class="btn btn-icon btn-danger hapus" data-id="<?= $id_prop ?>"
+                    <button type=" button" class="btn btn-outline btn-icon btn-danger hapus" data-id="<?= $id_prop ?>"
                         data-dept="<?=$dep?>" data-in="<?=$index?>">
                         <i class="icon oi-trashcan" aria-hidden="true"></i>
                     </button>
+                    <button type="button" class="btn btn-outline btn-icon btn-info edit" data-toggle="modal"
+                        data-target="#EditAlokasiBudget" data-id="<?= $id_prop ?>" data-dept="<?=$dep?>"
+                        data-in="<?=$index?>">
+                        <i class="icon wb-edit" aria-hidden="true"></i>
+                    </button>
+
 
                 </td>
             </tr>
@@ -117,3 +123,136 @@ $index=$_GET['ind'];
             </tr>
 
         </tbody>
+
+        <?php  
+                            $isi_m = mysqli_query($link_yics ,"SELECT *
+                            FROM plan_proposal
+                            JOIN depart ON plan_proposal.id_dep = depart.id_dep
+                            JOIN kategori_proposal  ON plan_proposal.id_kat = kategori_proposal.id_kat
+                            JOIN time_fiscal  ON plan_proposal.id_fis = time_fiscal.id_fis  
+                            WHERE plan_proposal.id_prop='$id_prop'")or die (mysqli_error($link_yics));
+                            $no=1;                      
+						  // untuk memvalidasi apakah ada datanya
+                          if(mysqli_num_rows($isi_m)>0){
+                            $isi_mo = mysqli_fetch_assoc($isi_m);
+                            $id_fis_m=$isi_mo['id_fis'];
+                            $periode_m=$isi_mo['periode'];
+                            $id_prop_m=$isi_mo['id_prop'];
+                            $depart_m=$isi_mo['depart'];
+                            $area_m=$isi_mo['area'];
+                            $kategori_m=$isi_mo['kategori'];
+                            $proposal_m=$isi_mo['proposal'];
+                            $cost_m = number_format ($isi_mo['cost'],0,',','.');
+                          }            
+                            ?>
+
+
+
+
+
+        <!-- Modal Edit Alokasi Budget -->
+
+        <div class="modal fade modal-info " id="EditAlokasiBudget" aria-hidden="true"
+            aria-labelledby="EditAlokasiBudget" role="dialog" tabindex="-1">
+            <div class="modal-dialog modal-simple modal-center modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <h3 class="modal-title">Tambah Data Planning Proposal</h3>
+                    </div>
+                    <div class="row">
+                    </div>
+
+                    <div class="modal-body">
+                        <form action="../proses/dashboard/tambahplanning.php" method="post"
+                            enctype="multipart/form-data">
+                            <input type="hidden" name="add">
+                            <input name="mata_uang" type="number" value="1" class="form-control" hidden>
+                            <div class="form-group row">
+                                <h4 class="col-md-10 modal-title text-left" style="color:black;">SUBJECnnnT</h4>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label" style="color:black;">Periode tahun</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" name="periode" id="periode" class="form-control" readonly
+                                            value="">
+                                        <input name="id_fis" id="id_fis" type="text" class="form-control" readonly
+                                            hidden value="<?= $id_fis_m ?>">
+                                    </div>
+                                </div>
+                                <label class="col-md-2 col-form-label" style="color:black;">Department</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" value="<?= $depart_m ?>"" class=" form-control" readonly>
+                                        <input name="dep" id="dep" type="text" class="form-control" readonly hidden>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label text-left" style="color:black;">Pic Area</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" name="area" id="area" class="form-control" readonly
+                                            value="<?= $area_m ?>">
+                                    </div>
+                                </div>
+                                <label class="col-md-2 col-form-label text-left" style="color:black;">Category</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <select name="katgr" id="katgr" type="text" class="form-control" required>
+                                            <option value=""><?= $kategori_m ?>"</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label text-left" style="color:black;">Proposal</label>
+                                <div class="col-md-10">
+                                    <input type="text" value="<?= $proposal_m ?>" class="form-control " name="proposal"
+                                        id="proposal" placeholder=" Judul Proposal..." autocomplete="off" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label" style="color:black;">Cost</label>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">IDR</span>
+                                        </div>
+
+                                        <input required name="cost" id="cost" type="text" class="form-control"
+                                            id="rupiah" placeholder="Isi Cost Proposal..." value="<?= $cost_m ?>">
+                                        <div class="input-group-prepend ">
+                                            <span class="input-group-text bg-yellow-100">MILLION</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-danger">Reset</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+</div>
+<!-- End Edit Alokasi Budget -->
+
+
+
+
+<!-- cara mas ana..... -->
+<!-- <script>
+$(".edit1").on("click", ".edit", function() {
+    var data = this;
+    var data1 = $(this).data("id");
+
+    $("#periode").val(data1);
+})
+</script> -->
