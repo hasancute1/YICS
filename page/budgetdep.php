@@ -129,7 +129,59 @@ include '../elemen/header.php';?>
                       }else{
                         $brjct=0;
                       }
-                    
+                      // --------------------------------------------------------------quuery minus nol id prop-------------------------------------
+$r_ia = mysqli_query($link_yics ,"SELECT sum(cost_ia) as costi FROM tracking_ia
+join ia on tracking_ia.id_ia = ia.id_ia
+JOIN plan_proposal ON ia.id_prop = plan_proposal.id_prop
+JOIN depart ON plan_proposal.id_dep = depart.id_dep
+where plan_proposal.id_dep={$id_dep} and id_fis={$id_fis} and approval='0'  GROUP BY tracking_ia.id_ia ORDER BY plan_proposal.cost ASC")
+or die (mysqli_error($link_yics));                 
+if(mysqli_num_rows($r_ia)>0){
+while($r_i = mysqli_fetch_assoc($r_ia))
+{
+    echo "hasan";
+    echo $r_i['costi'];
+$r_i[]=$r_i['costi'];
+ }
+}else {echo "DATA BELUM ADA";}
+// $labelcos=json_encode($labelcos); 
+
+
+
+// -------------------------------------------------------------end json label x  dan nilaigrafik bar-------------------------------------
+// --------------------------------------------------------------quuery label cost actual grafik bar-------------------------------------
+$label_c = mysqli_query($link_yics ,"SELECT sum(cost_ia) as costia FROM ia
+JOIN plan_proposal ON ia.id_prop = plan_proposal.id_prop
+JOIN depart ON plan_proposal.id_dep = depart.id_dep
+where plan_proposal.id_dep={$id_dep} and id_fis={$id_fis}  GROUp BY ia.id_prop ORDER BY plan_proposal.cost ASC")
+or die (mysqli_error($link_yics));                 
+if(mysqli_num_rows($label_c)>0){
+while($label_cx = mysqli_fetch_assoc($label_c))
+{
+$labelcos[]=$label_cx['costia'];
+ }
+}else {echo "DATA BELUM ADA";}
+$labelcos=json_encode($labelcos); 
+
+
+// -------------------------------------------------------------end json label x  dan nilaigrafik bar-------------------------------------
+
+// --------------------------------------------------------------quuery label x grafik bar-------------------------------------
+                    $label_x = mysqli_query($link_yics ,"SELECT * FROM plan_proposal
+                    JOIN depart on plan_proposal.id_dep = depart.id_dep
+                    where plan_proposal.id_dep={$id_dep} and id_fis={$id_fis} ORDER BY cost ASC")
+                    or die (mysqli_error($link_yics));                 
+                    if(mysqli_num_rows($label_x)>0){
+                    while($label_sx = mysqli_fetch_assoc($label_x))
+                    {
+                    $labelX[]=$label_sx['proposal'];
+                    $cost_t[]=$label_sx['cost'];
+                     }
+                    }else {echo "DATA BELUM ADA";}                
+// -------------------------------------------------------------- end query label x grafik bar-------------------------------------
+                     $labelX=json_encode($labelX);  
+                     $cost_t=json_encode($cost_t);  
+// -------------------------------------------------------------end json label x  dan nilaigrafik bar-------------------------------------
                     
                     // $get_data_budget = single_query("SELECT * FROM budget JOIN depart on budget.id_dep = depart.id_dep where budget.id_dep={$id_dep} and id_fis={$id_fis}");
                     
@@ -210,7 +262,12 @@ include '../elemen/header.php';?>
                                 <div class="col-lg-10 col-md-10 ">
                                     <h1 class="page-title font-size-26 font-weight-600">Budget
                                         <?= $get_data_budget['depart']?>
-                                        Overview (x Million) <?= $brjct ?>
+                                        Overview (x Million)
+                                        <?php foreach ($r_i as $iw) {
+                                        echo "$iw <br>";
+                                        }
+?>
+
                                     </h1>
                                 </div>
                                 <div class="col-lg-2 col-md-2 text-right d-print-none">
@@ -535,72 +592,28 @@ include '../elemen/header.php';?>
                     <!-- Footer -->
                     <?php
 include '../elemen/footer.php';?>
-                    <script>
-                    var ctx = document.getElementById("myBar4").getContext('2d');
-                    var myBar4 = new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: ["Aprl", "Mei", "Jun", "July", "Agst", "Sept", "Oct", "Nov", "Dec", "Jan",
-                                "Feb", "March"
-                            ],
-                            datasets: [
 
-                                {
-                                    type: 'line',
-                                    label: "BUDGET  <?= $get_data_budget['depart']?>",
-                                    borderColor: Config.colors("grey", 800),
-                                    data: <?= $net_budget ?>,
-                                    order: 1,
-                                },
-                                {
-                                    label: "CONSUMTION <?= $get_data_budget['depart']?>",
-                                    backgroundColor: Config.colors("<?= $warna ?>", 100),
-                                    borderColor: Config.colors("<?= $warna ?>", 800),
-                                    hoverBackgroundColor: Config.colors("<?= $warna ?>", 100),
-                                    borderWidth: 2,
-                                    data: <?=$data_grafik_con_budget?>
-                                },
-
-
-                            ]
-                        },
-                        options: {
-                            scales: {
-                                yAxes: [{
-                                    scaleLabel: {
-                                        display: true,
-                                        labelString: 'Million'
-                                    },
-                                    ticks: {
-                                        beginAtZero: true
-                                    },
-                                    stacked: false
-                                }],
-                                xAxes: [{
-                                    scaleLabel: {
-                                        display: true,
-                                        labelString: 'Bulan'
-                                    },
-                                    stacked: false
-                                }]
-                            }
-                        }
-                    });
-                    </script>
                     <script>
                     var canvas = document.getElementById('chart');
                     new Chart(canvas, {
-                        type: 'line',
+                        type: 'bar',
                         data: {
-                            labels: ['1', '2', '3', '4', '5'],
+                            labels: <?= $labelX ?>,
                             datasets: [{
-                                label: 'A',
-                                yAxisID: 'A',
-                                data: [100, 96, 84, 76, 69]
+                                type: 'line',
+                                label: "PLAN PROPOSAL  <?= $get_data_budget['depart']?>",
+                                borderColor: Config.colors("grey", 800),
+                                data: <?= $cost_t ?>,
+                                order: 1,
+                                yAxisID: 'A'
                             }, {
-                                label: 'B',
-                                yAxisID: 'B',
-                                data: [1, 1, 1, 1, 0]
+                                label: "ACTUAL PROPOSAL <?= $get_data_budget['depart']?>",
+                                backgroundColor: Config.colors("<?= $warna ?>", 100),
+                                borderColor: Config.colors("<?= $warna ?>", 800),
+                                hoverBackgroundColor: Config.colors("<?= $warna ?>", 100),
+                                borderWidth: 2,
+                                data: <?=$labelcos?>,
+                                yAxisID: 'A',
                             }]
                         },
                         options: {
@@ -609,14 +622,30 @@ include '../elemen/footer.php';?>
                                     id: 'A',
                                     type: 'linear',
                                     position: 'left',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'M I L L I O N'
+                                    },
                                 }, {
                                     id: 'B',
                                     type: 'linear',
                                     position: 'right',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'M I L L I O N'
+                                    },
                                     ticks: {
                                         max: 1,
                                         min: 0
                                     }
+
+                                }],
+                                xAxes: [{
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'B U L A N'
+                                    },
+                                    stacked: false
                                 }]
                             }
                         }
