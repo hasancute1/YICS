@@ -3,7 +3,7 @@ include("../../../config/config.php");
 $dep=$_GET['idDept'];
 $id=$_GET['id_fis'];
 $index=$_GET['ind'];
-$id_pro=$_GET['id_pro'];
+// $id_pro=$_GET['id_pro'];
 
 ?>
 <?php 
@@ -76,6 +76,9 @@ $id_pro=$_GET['id_pro'];
                             $id_prop=$datad['id_prop'];
                             $area=$datad['area'];
                             $kategori=$datad['kategori'];
+                            $id_kat=$datad['id_kat'];
+                            $depart=$datad['depart'];
+                            $periode=$datad['periode'];
                             $proposal=$datad['proposal'];
                             $cost = number_format ($datad['cost'],0,',','.');
                                       
@@ -103,7 +106,9 @@ $id_pro=$_GET['id_pro'];
                     </button>
                     <button type="button" class="btn btn-outline btn-icon btn-info edit" data-toggle="modal"
                         data-target="#EditAlokasiBudget" data-id="<?= $id_prop ?>" data-dept="<?=$dep?>"
-                        data-in="<?=$index?>">
+                        data-in="<?=$index?>" data-pro="<?= $id_prop ?>" data-ktr="<?= $id_kat ?>"
+                        data-cst="<?= $cost ?>" data-dpt="<?= $depart ?>" data-psl="<?= $proposal ?>"
+                        data-are="<?= $area ?>" data-prd="<?= $periode ?>">
                         <i class="icon wb-edit" aria-hidden="true"></i>
                     </button>
 
@@ -125,31 +130,26 @@ $id_pro=$_GET['id_pro'];
         </tbody>
 
         <?php  
-                            $isi_m = mysqli_query($link_yics ,"SELECT *
-                            FROM plan_proposal
-                            JOIN depart ON plan_proposal.id_dep = depart.id_dep
-                            JOIN kategori_proposal  ON plan_proposal.id_kat = kategori_proposal.id_kat
-                            JOIN time_fiscal  ON plan_proposal.id_fis = time_fiscal.id_fis  
-                            WHERE plan_proposal.id_prop='$id_prop'")or die (mysqli_error($link_yics));
-                            $no=1;                      
-						  // untuk memvalidasi apakah ada datanya
-                          if(mysqli_num_rows($isi_m)>0){
-                            $isi_mo = mysqli_fetch_assoc($isi_m);
-                            $id_fis_m=$isi_mo['id_fis'];
-                            $periode_m=$isi_mo['periode'];
-                            $id_prop_m=$isi_mo['id_prop'];
-                            $depart_m=$isi_mo['depart'];
-                            $area_m=$isi_mo['area'];
-                            $kategori_m=$isi_mo['kategori'];
-                            $proposal_m=$isi_mo['proposal'];
-                            $cost_m = number_format ($isi_mo['cost'],0,',','.');
-                          }            
+                        //     $isi_m = mysqli_query($link_yics ,"SELECT *
+                        //     FROM plan_proposal
+                        //     JOIN depart ON plan_proposal.id_dep = depart.id_dep
+                        //     JOIN kategori_proposal  ON plan_proposal.id_kat = kategori_proposal.id_kat
+                        //     JOIN time_fiscal  ON plan_proposal.id_fis = time_fiscal.id_fis  
+                        //     WHERE plan_proposal.id_prop='$id_prop'")or die (mysqli_error($link_yics));
+                        //     $no=1;                      
+						//   // untuk data modal
+                        //   if(mysqli_num_rows($isi_m)>0){
+                        //     $isi_mo = mysqli_fetch_assoc($isi_m);
+                        //     $id_fis_m=$isi_mo['id_fis'];
+                        //     $periode_m=$isi_mo['periode'];
+                        //     $id_prop_m=$isi_mo['id_prop'];
+                        //     $depart_m=$isi_mo['depart'];
+                        //     $area_m=$isi_mo['area'];
+                        //     $kategori_m=$isi_mo['kategori'];
+                        //     $proposal_m=$isi_mo['proposal'];
+                        //     $cost_m = number_format ($isi_mo['cost'],0,',','.');
+                        //   }            
                             ?>
-
-
-
-
-
         <!-- Modal Edit Alokasi Budget -->
 
         <div class="modal fade modal-info " id="EditAlokasiBudget" aria-hidden="true"
@@ -160,18 +160,17 @@ $id_pro=$_GET['id_pro'];
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
-                        <h3 class="modal-title">Tambah Data Planning Proposal</h3>
+                        <h3 class="modal-title">Edit Data Planning Proposal</h3>
                     </div>
                     <div class="row">
                     </div>
 
-                    <div class="modal-body">
-                        <form action="../proses/dashboard/tambahplanning.php" method="post"
-                            enctype="multipart/form-data">
+                    <div class="modal-body" class="text-uppercase">
+                        <form action="../proses/dashboard/tambahplanning.php" method="post">
                             <input type="hidden" name="add">
                             <input name="mata_uang" type="number" value="1" class="form-control" hidden>
                             <div class="form-group row">
-                                <h4 class="col-md-10 modal-title text-left" style="color:black;">SUBJECnnnT</h4>
+                                <h4 class="col-md-10 modal-title text-left" style="color:black;">SUBJECT</h4>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-2 col-form-label" style="color:black;">Periode tahun</label>
@@ -180,13 +179,13 @@ $id_pro=$_GET['id_pro'];
                                         <input type="text" name="periode" id="periode" class="form-control" readonly
                                             value="">
                                         <input name="id_fis" id="id_fis" type="text" class="form-control" readonly
-                                            hidden value="<?= $id_fis_m ?>">
+                                            hidden>
                                     </div>
                                 </div>
                                 <label class="col-md-2 col-form-label" style="color:black;">Department</label>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <input type="text" value="<?= $depart_m ?>"" class=" form-control" readonly>
+                                        <input type="text" class="form-control" form-control" readonly id="depart">
                                         <input name="dep" id="dep" type="text" class="form-control" readonly hidden>
                                     </div>
                                 </div>
@@ -196,15 +195,33 @@ $id_pro=$_GET['id_pro'];
                                 <label class="col-md-2 col-form-label text-left" style="color:black;">Pic Area</label>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <input type="text" name="area" id="area" class="form-control" readonly
-                                            value="<?= $area_m ?>">
+                                        <select type="text" name="area" id="area" class="form-control">
+                                            <?php  
+                                           $area = mysqli_query($link_yics,"SELECT * FROM data_user WHERE id_dep = '$dep'") or die (mysqli_error($link_yics));                                       
+                                            foreach ($area AS $are){
+                                            $areab= $are['area'];                                                                                   
+                                            ?>
+                                            <option value="<?= $areab ?>"><?= $areab ?></option>
+                                            <?php
+                                            }
+                                            ?>
+                                        </select>
                                     </div>
                                 </div>
                                 <label class="col-md-2 col-form-label text-left" style="color:black;">Category</label>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <select name="katgr" id="katgr" type="text" class="form-control" required>
-                                            <option value=""><?= $kategori_m ?>"</option>
+                                        <select name="katgr" id="katgr" class="form-control" required>
+                                            <?php  
+                                            $kategori = mysqli_query($link_yics,"SELECT * FROM kategori_proposal");                                       
+                                            foreach ($kategori AS $kat){
+                                            $id_kat = $kat['id_kat'];
+                                            $kate = $kat['kategori'];                                           
+                                            ?>
+                                            <option value="<?= $id_kat ?>"><?= $kate ?></option>
+                                            <?php
+                                            }
+                                            ?>
                                         </select>
                                     </div>
                                 </div>
@@ -212,8 +229,8 @@ $id_pro=$_GET['id_pro'];
                             <div class="form-group row">
                                 <label class="col-md-2 col-form-label text-left" style="color:black;">Proposal</label>
                                 <div class="col-md-10">
-                                    <input type="text" value="<?= $proposal_m ?>" class="form-control " name="proposal"
-                                        id="proposal" placeholder=" Judul Proposal..." autocomplete="off" required>
+                                    <input type="text" class="form-control text-uppercase" name="proposal" id="proposal"
+                                        placeholder=" Judul Proposal..." autocomplete="off" required>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -248,11 +265,23 @@ $id_pro=$_GET['id_pro'];
 
 
 <!-- cara mas ana..... -->
-<!-- <script>
+<script>
 $(".edit1").on("click", ".edit", function() {
     var data = this;
-    var data1 = $(this).data("id");
+    var data1 = $(this).data("pro");
+    var data2 = $(this).data("ktr");
+    var data3 = $(this).data("cst");
+    var data4 = $(this).data("dpt");
+    var data5 = $(this).data("psl");
+    var data6 = $(this).data("are");
+    var data7 = $(this).data("prd");
 
     $("#periode").val(data1);
+    $("#katgr").val(data2);
+    $("#cost").val(data3);
+    $("#depart").val(data4);
+    $("#proposal").val(data5);
+    $("#area").val(data6);
+    $("#periode").val(data7);
 })
-</script> -->
+</script>
