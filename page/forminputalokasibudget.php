@@ -427,6 +427,19 @@ include '../elemen/header.php';?>
         <?php
 include '../elemen/footer.php';?>
 
+
+        <!--############ modal edit ################# -->
+        <form role="form" method="POST" id="form-edit">
+            <div class="modal fade modal-info " id="modal-edit" aria-hidden="true" aria-labelledby="EditAlokasiBudget"
+                role="dialog" tabindex="-1">
+                <div class="modal-dialog modal-simple modal-center modal-lg">
+                    <div class="modal-content">
+                        <div id="data-edit"> </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!--############ end modal edit ################# -->
         <!--############ jquery penjumlahan loopinng attribut classs ################# -->
         <!--############ jquery penjumlahan loopinng attribut classs ################# -->
         <script>
@@ -494,23 +507,8 @@ include '../elemen/footer.php';?>
                         });
                     }
                 })
-            })
-            $(document).on('click', '.ubah', function(a) {
-                a.preventDefault()
-                var data = $('#modalForm').serialize();
-                console.log(data)
-                // $.ajax({
-                //     type: 'POST',
-                //     url: "../proses/alokasibudget/ajax/post_update.php",
-                //     data: data,
-                //     success: function(msg) {
-                //         $(".notifikasi_").html(msg);
-                //         $('#modalForm').trigger("resetmodal");
-                //         // console.log(ind)
-                //         dataShow(idDept, ind)
-                //     }
-                // });
             });
+
             $(document).on('click', '.simpan', function(a) {
                 a.preventDefault()
                 var index = $(this).attr('data-id');
@@ -585,6 +583,33 @@ include '../elemen/footer.php';?>
                 });
             })
 
+            // ...............................................................................???????????
+
+            $("#form-edit").on('click', '.ubah1', function(a) {
+                a.preventDefault()
+                var idDept = $('#idDept').val();
+                var ind = $('#ind').val();
+                var dataform = $("#form-edit").serialize();
+
+
+
+
+                $.ajax({
+                    type: 'POST',
+                    url: "../proses/alokasibudget/ajax/post_update.php",
+                    data: dataform,
+                    success: function(msg) {
+                        $('#modal-edit').modal('hide');
+                        $(".notifikasi_").html(msg);
+                        // $('#subForm' + index).trigger("reset");
+                        // console.log(ind)
+                        dataShow(idDept, ind)
+                    }
+                });
+            });
+
+
+
 
 
             $(".sum").on('input', '.prc', function() {
@@ -614,3 +639,40 @@ include '../elemen/footer.php';?>
         });
         </script>
         <!--############ end jquery penjumlahan loopinng attribut classs ################# -->
+
+        <script>
+        $(document).ready(function() {
+
+            $(document).on('click', '#edit', function(e) {
+                e.preventDefault();
+                $("#modal-edit").modal('show');
+                $.post('../proses/alokasibudget/ajax/edit.php', {
+                        id: $(this).attr('data-id'),
+                        idDept: $(this).attr('data-dept'),
+                        ind: $(this).attr('data-in')
+                    },
+                    function(html) {
+                        $("#data-edit").html(html);
+                    }
+                );
+            });
+
+
+            // $("#form-edit").on('click', '.ubah1', function(e) {
+            //     e.preventDefault();
+            //     var idDept = $('#idDept').val();
+            //     var ind = $('#ind').val();
+            //     var dataform = $("#form-edit").serialize();
+            //     $.ajax({
+            //         type: 'POST',
+            //         url: "../proses/alokasibudget/ajax/post_update.php",
+            //         data: dataform,
+            //         success: function(msg) {
+            //             $('#modal-edit').modal('hide');
+            //             $(".notifikasi_").html(msg);
+            //             dataShow(idDept, ind)
+            //         }
+            //     });
+            // });
+        });
+        </script>
