@@ -38,8 +38,8 @@ $ind=$_POST['ind'];
 </div>
 <div class="row"></div>
 <div class="modal-body" class="text-uppercase">
-    <input name="add" id="idDept" value="<?= $idDept ?>">
-    <input name="add" id="ind" value="<?= $ind ?>">
+    <input name="add" id="idDept" value="<?= $idDept ?>" hidden>
+    <input name="add" id="ind" value="<?= $ind ?>" hidden>
     <input name="mata_uang" type="number" value="1" class="form-control" hidden>
     <div class="form-group row">
         <h4 class="col-md-10 modal-title text-left" style="color:black;">SUBJECT</h4>
@@ -84,6 +84,8 @@ $ind=$_POST['ind'];
                                             }
                                             ?>
                 </select>
+                <span class="pesan-area" style="display:none;color:red;">Sahabat
+                    harus mengisi area</span>
             </div>
         </div>
         <label class="col-md-2 col-form-label text-left" style="color:black;">Category</label>
@@ -109,7 +111,11 @@ $ind=$_POST['ind'];
                                             }
                                             ?>
                 </select>
+                <span class="pesan-kategori" style="display:none;color:red;">Sahabat
+                    harus mengisi kategori</span>
             </div>
+
+            </td>
         </div>
     </div>
     <div class="form-group row">
@@ -117,10 +123,13 @@ $ind=$_POST['ind'];
         <div class="col-md-10">
             <input type="text" class="form-control text-uppercase" name="proposal_m" id="proposal"
                 placeholder=" Judul Proposal..." autocomplete="off" value="<?= $proposal_m ?>" required>
+            <span class="pesan-proposal" style="display:none;color:red;">Sahabat
+                harus mengisi proposal</span>
             <input type="text" class="form-control text-uppercase" name="id_pro_m" id="id_pro_m"
                 placeholder=" Judul Proposal..." autocomplete="off" value="<?= $id ?>" hidden>
         </div>
     </div>
+
     <div class="form-group row">
         <label class="col-md-2 col-form-label" style="color:black;">Cost</label>
         <div class="col-md-6">
@@ -133,7 +142,10 @@ $ind=$_POST['ind'];
                 <div class="input-group-prepend ">
                     <span class="input-group-text bg-yellow-100">MILLION</span>
                 </div>
+
             </div>
+            <span class="pesan-cost" style="display:none;color:red;">
+                Isi cost...</span>
         </div>
     </div>
 </div>

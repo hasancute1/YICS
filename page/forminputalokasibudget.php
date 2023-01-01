@@ -584,29 +584,94 @@ include '../elemen/footer.php';?>
             })
 
             // ...............................................................................???????????
+            $(document).on('click', '#edit', function(e) {
+                e.preventDefault();
+                $("#modal-edit").modal('show');
+                $.post('../proses/alokasibudget/ajax/edit.php', {
+                        id: $(this).attr('data-id'),
+                        idDept: $(this).attr('data-dept'),
+                        ind: $(this).attr('data-in')
+                    },
+                    function(html) {
+                        $("#data-edit").html(html);
+                    }
+                );
+            });
+
+            // ...............................................................................???????????
 
             $("#form-edit").on('click', '.ubah1', function(a) {
                 a.preventDefault()
                 var idDept = $('#idDept').val();
                 var ind = $('#ind').val();
+                var area = $('#area').val();
+                var kategori = $('#katgr').val();
+                var proposal = $('#proposal').val();
+                var cost = $('#cost').val();
                 var dataform = $("#form-edit").serialize();
 
 
 
 
-                $.ajax({
-                    type: 'POST',
-                    url: "../proses/alokasibudget/ajax/post_update.php",
-                    data: dataform,
-                    success: function(msg) {
-                        $('#modal-edit').modal('hide');
-                        $(".notifikasi_").html(msg);
-                        // $('#subForm' + index).trigger("reset");
-                        // console.log(ind)
-                        dataShow(idDept, ind)
+                if (area != "" && kategori != "" && proposal != "" && cost != "") {
+                    $.ajax({
+                        type: 'POST',
+                        url: "../proses/alokasibudget/ajax/post_update.php",
+                        data: dataform,
+                        success: function(msg) {
+                            $('#modal-edit').modal('hide');
+                            $(".notifikasi_").html(msg);
+                            // $('#subForm' + index).trigger("reset");
+                            // console.log(ind)
+                            dataShow(idDept, ind)
+                        }
+                    });
+                } else {
+                    if (area == "") {
+                        $(".pesan-area").css('display', 'block');
+                    } else {
+
+                    }
+                    if (kategori == "") {
+                        $(".pesan-kategori").css('display', 'block');
+                    } else {}
+                    if (cost == "") {
+                        $(".pesan-cost").css('display', 'block');
+                    } else {}
+                    if (proposal == "") {
+                        $(".pesan-proposal").css('display', 'block');
+                    } else {}
+                }
+                $("#area").change(function() {
+                    if ($(this).val() == "") {
+                        $(".pesan-area").css('display', 'color', 'red');
+                    } else {
+                        $(".pesan-area").css('display', 'none');
+                    }
+                });
+                $("#kategori").change(function() {
+                    if ($(this).val() == "") {
+                        $(".pesan-kategori").css('display', 'color', 'red');
+                    } else {
+                        $(".pesan-kategori").css('display', 'none');
+                    }
+                });
+                $("#cost").change(function() {
+                    if ($(this).val() == "") {
+                        $(".pesan-cost").css('display', 'color', 'red');
+                    } else {
+                        $(".pesan-cost").css('display', 'none');
+                    }
+                });
+                $("#proposal").change(function() {
+                    if ($(this).val() == "") {
+                        $(".pesan-proposal").css('display', 'color', 'red');
+                    } else {
+                        $(".pesan-proposal").css('display', 'none');
                     }
                 });
             });
+
 
 
 
@@ -643,19 +708,7 @@ include '../elemen/footer.php';?>
         <script>
         $(document).ready(function() {
 
-            $(document).on('click', '#edit', function(e) {
-                e.preventDefault();
-                $("#modal-edit").modal('show');
-                $.post('../proses/alokasibudget/ajax/edit.php', {
-                        id: $(this).attr('data-id'),
-                        idDept: $(this).attr('data-dept'),
-                        ind: $(this).attr('data-in')
-                    },
-                    function(html) {
-                        $("#data-edit").html(html);
-                    }
-                );
-            });
+
 
 
             // $("#form-edit").on('click', '.ubah1', function(e) {
