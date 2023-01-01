@@ -495,6 +495,22 @@ include '../elemen/footer.php';?>
                     }
                 })
             })
+            $(document).on('click', '.ubah', function(a) {
+                a.preventDefault()
+                var data = $('#modalForm').serialize();
+                console.log(data)
+                // $.ajax({
+                //     type: 'POST',
+                //     url: "../proses/alokasibudget/ajax/post_update.php",
+                //     data: data,
+                //     success: function(msg) {
+                //         $(".notifikasi_").html(msg);
+                //         $('#modalForm').trigger("resetmodal");
+                //         // console.log(ind)
+                //         dataShow(idDept, ind)
+                //     }
+                // });
+            });
             $(document).on('click', '.simpan', function(a) {
                 a.preventDefault()
                 var index = $(this).attr('data-id');
@@ -598,32 +614,3 @@ include '../elemen/footer.php';?>
         });
         </script>
         <!--############ end jquery penjumlahan loopinng attribut classs ################# -->
-
-        <script>
-        $(document).on('click', '.edit', function() {
-
-            var id_prop = $(this).attr('data-id');
-            var depart = $(this).attr('data-dept');
-            var masuk = $(this).attr('data-in');
-
-            console.log(id_prop);
-            console.log(depart);
-            console.log(masuk);
-
-
-            $.ajax({
-                type: 'GET',
-                url: "../proses/alokasibudget/ajax/get_tampilan.php",
-                data: {
-                    // nama : variabel
-                    id_pro: id_prop,
-                    depart: depart,
-                    masuk: masuk
-                },
-                cache: false,
-                success: function(msg) {
-                    $('#EditAlokasiBudget').modal('show');
-                }
-            });
-        });
-        </script>

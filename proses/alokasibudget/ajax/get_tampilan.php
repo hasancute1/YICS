@@ -156,18 +156,19 @@ $index=$_GET['ind'];
             aria-labelledby="EditAlokasiBudget" role="dialog" tabindex="-1">
             <div class="modal-dialog modal-simple modal-center modal-lg">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                        <h3 class="modal-title">Edit Data Planning Proposal</h3>
-                    </div>
-                    <div class="row">
-                    </div>
+                    <form method="post" id="modalForm">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <h3 class="modal-title">Edit Data Planning Proposal</h3>
+                        </div>
+                        <div class="row">
+                        </div>
 
-                    <div class="modal-body" class="text-uppercase">
-                        <form action="../proses/dashboard/tambahplanning.php" method="post">
-                            <input type="hidden" name="add">
+                        <div class="modal-body" class="text-uppercase">
+
+                            <input type="hidden" name="add" value="1">
                             <input name="mata_uang" type="number" value="1" class="form-control" hidden>
                             <div class="form-group row">
                                 <h4 class="col-md-10 modal-title text-left" style="color:black;">SUBJECT</h4>
@@ -195,7 +196,7 @@ $index=$_GET['ind'];
                                 <label class="col-md-2 col-form-label text-left" style="color:black;">Pic Area</label>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <select type="text" name="area" id="area" class="form-control">
+                                        <select type="text" name="area_m" id="area" class="form-control">
                                             <?php  
                                            $area = mysqli_query($link_yics,"SELECT * FROM data_user WHERE id_dep = '$dep'") or die (mysqli_error($link_yics));                                       
                                             foreach ($area AS $are){
@@ -211,7 +212,7 @@ $index=$_GET['ind'];
                                 <label class="col-md-2 col-form-label text-left" style="color:black;">Category</label>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <select name="katgr" id="katgr" class="form-control" required>
+                                        <select name="id_ket_m" id="katgr" class="form-control" required>
                                             <?php  
                                             $kategori = mysqli_query($link_yics,"SELECT * FROM kategori_proposal");                                       
                                             foreach ($kategori AS $kat){
@@ -229,8 +230,10 @@ $index=$_GET['ind'];
                             <div class="form-group row">
                                 <label class="col-md-2 col-form-label text-left" style="color:black;">Proposal</label>
                                 <div class="col-md-10">
-                                    <input type="text" class="form-control text-uppercase" name="proposal" id="proposal"
-                                        placeholder=" Judul Proposal..." autocomplete="off" required>
+                                    <input type="text" class="form-control text-uppercase" name="proposal_m"
+                                        id="proposal" placeholder=" Judul Proposal..." autocomplete="off" required>
+                                    <input type="text" class="form-control text-uppercase" name="proposal_m"
+                                        id="id_pro_m" placeholder=" Judul Proposal..." autocomplete="off" required>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -241,7 +244,7 @@ $index=$_GET['ind'];
                                             <span class="input-group-text">IDR</span>
                                         </div>
 
-                                        <input required name="cost" id="cost" type="text" class="form-control"
+                                        <input required name="cost_m" id="cost" type="text" class="form-control"
                                             id="rupiah" placeholder="Isi Cost Proposal..." value="<?= $cost_m ?>">
                                         <div class="input-group-prepend ">
                                             <span class="input-group-text bg-yellow-100">MILLION</span>
@@ -249,13 +252,15 @@ $index=$_GET['ind'];
                                     </div>
                                 </div>
                             </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="reset" class="btn btn-danger">Reset</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
-                    </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="reset" class="btn btn-danger" id="resetmodal">Reset</button>
+                            <button type="submit" class="btn btn-primary ubah" id="resetmodal"
+                                form="modalForm">Ubah</button>
+                        </div>
+                    </form>
                 </div>
-                </form>
+
             </div>
         </div>
 </div>
@@ -268,13 +273,13 @@ $index=$_GET['ind'];
 <script>
 $(".edit1").on("click", ".edit", function() {
     var data = this;
-    var data1 = $(this).data("pro");
+    var data1 = $(this).data("prd");
     var data2 = $(this).data("ktr");
     var data3 = $(this).data("cst");
     var data4 = $(this).data("dpt");
     var data5 = $(this).data("psl");
     var data6 = $(this).data("are");
-    var data7 = $(this).data("prd");
+    var data7 = $(this).data("pro");
 
     $("#periode").val(data1);
     $("#katgr").val(data2);
@@ -282,6 +287,28 @@ $(".edit1").on("click", ".edit", function() {
     $("#depart").val(data4);
     $("#proposal").val(data5);
     $("#area").val(data6);
-    $("#periode").val(data7);
+    $("#id_pro_m").val(data7);
+    dataEEE(data1, data2)
 })
+
+
+
+$(document).on('click', '.ubah', function(a) {
+
+    a.preventDefault()
+    var data = $('#modalForm').serialize();
+    var prd = $("#periode").val(data1);
+    console.log(prd)
+    // $.ajax({
+    //     type: 'POST',
+    //     url: "../proses/alokasibudget/ajax/post_update.php",
+    //     data: data,
+    //     success: function(msg) {
+    //         $(".notifikasi_").html(msg);
+    //         $('#modalForm').trigger("resetmodal");
+    //         // console.log(ind)
+    //         dataShow(idDept, ind)
+    //     }
+    // });
+});
 </script>
