@@ -588,9 +588,9 @@ include '../elemen/footer.php';?>
                 e.preventDefault();
                 $("#modal-edit").modal('show');
                 $.post('../proses/alokasibudget/ajax/edit.php', {
-                        id: $(this).attr('data-id'),
-                        idDept: $(this).attr('data-dept'),
-                        ind: $(this).attr('data-in')
+                        id: $(this).attr('data-id'), //id prop
+                        idDept: $(this).attr('data-dept'), //id in collapse
+                        ind: $(this).attr('data-in') //id in collapse
                     },
                     function(html) {
                         $("#data-edit").html(html);
@@ -604,10 +604,12 @@ include '../elemen/footer.php';?>
                 a.preventDefault()
                 var idDept = $('#idDept').val();
                 var ind = $('#ind').val();
+                //// variabel form validasi
                 var area = $('#area').val();
                 var kategori = $('#katgr').val();
                 var proposal = $('#proposal').val();
                 var cost = $('#cost').val();
+                //// end variabel form validasi
                 var dataform = $("#form-edit").serialize();
 
 
