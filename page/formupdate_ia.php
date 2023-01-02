@@ -179,8 +179,7 @@ include '../elemen/header.php';?>
 
 
 
-                                                    <form id="formupdate" method="POST"
-                                                        action="../proses/ia/update_progress.php">
+                                                    <form method="POST" action="../proses/ia/update_progress.php">
                                                         <input type="hidden" name="add">
                                                         <input type="hidden" name="id_ia" value="<?= $id_ia ?>">
 
@@ -362,9 +361,8 @@ include '../elemen/header.php';?>
                                                             <div class=" col-md-12 text-right">
                                                                 <button type="reset"
                                                                     class="btn btn-danger">Reset</button>
-                                                                <input type="submit" class="btn btn-primary simpan"
+                                                                <input type="submit" class="btn btn-primary"
                                                                     value="save" name='addd'>
-                                                                <input class="btn btn-primary tes" value="tes">
                                                             </div>
                                                         </div>
                                                     </form>
@@ -382,47 +380,6 @@ include '../elemen/header.php';?>
 
                     <!-- Footer -->
                     <?php include '../elemen/footer.php';?>
-                    <!-- Modal -->
-                    <div class=" add_npk modal fade" id="npk" tabindex="5" role="dialog"
-                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title text-danger" id="exampleModalCenterTitle">Konfirmasi Npk Pic
-                                        Tagane !</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <form action="data-control.php" method="post">
-                                        <div class="form-row">
-                                            <div class="form-group col-md-12">
-                                                <input type="hidden" name="no_urut" class="form-control" id="no_urut1"
-                                                    value="">
-                                                <br>
-                                                <input type="number" name="npk" class="form-control " id="npk1" value=""
-                                                    placeholder="masukan npk pic tagane disini" autofocus>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <input type="submit" id="konfir" class="btn btn-primary float-right"
-                                        value="Konfirmasi">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="notifikasi_"></div>
-                    <!-- modal -->
-
-
-
-
-
-
-
                     <script>
                     // Dokumen sudah ready maka jalankan function
                     $(document).ready(function() {
@@ -477,7 +434,6 @@ include '../elemen/header.php';?>
 
                             // jika html ini ada checked 
                             if ($(this).is(':checked')) {
-                                // $('#npk').modal('show');
                                 // maka cetak approve step variabel index
                                 console.log('approve_step' + index);
                                 // jika id approve step variable index ada checked
@@ -495,27 +451,5 @@ include '../elemen/header.php';?>
                                 }
                             }
                         });
-                        // $("#formupdate").on('click', '.simpan', function(a) {
-                        //     a.preventDefault()
-                        //     var index = $(".reject").attr('data-id');
-                        //     $('#tgl-' + index).prop("required", true);
-                        //     if ($(".reject").is(':checked')) {
-                        //         $('#npk').modal('show');
-                        //         var dataform = $("#formupdate").serialize();
-
-                        //     } else {
-                        //         $('#tgl-' + index).prop("required", true);
-                        //         $("#formupdate").submit();
-                        //         // $.ajax({
-                        //         //     type: 'POST',
-                        //         //     url: "../proses/ia/update_progress.php",
-                        //         //     data: dataform,
-                        //         //     success: function(msg) {
-                        //         //         // $(".notifikasi_").html(msg);
-
-                        //         //     }
-                        //         // });
-                        //     }
-                        // });
                     });
                     </script>
