@@ -79,7 +79,7 @@ include '../elemen/header.php';?>
                                             $data_ia = single_query("SELECT * FROM ia 
                                             JOIN plan_proposal on ia.id_prop = plan_proposal.id_prop
                                             JOIN depart on plan_proposal.id_dep = depart.id_dep
-                                            JOIN time_fiscal on plan_proposal.id_fis = time_fiscal.id_fis
+                                            JOIN time_fiscal on plan_proposal.id_fis = time_fiscal.id_fis                                           
                                             JOIN kategori_proposal on plan_proposal.id_kat = kategori_proposal.id_kat
                                             where id_ia='".$id_ia."'");    
                                              $cost_ia  = $data_ia['cost_ia'];
@@ -179,7 +179,8 @@ include '../elemen/header.php';?>
 
 
 
-                                                    <form method="POST" action="../proses/ia/update_progress.php">
+                                                    <form method="POST" action="../proses/ia/update_progress.php"
+                                                        id="formupdate">
                                                         <input type="hidden" name="add">
                                                         <input type="hidden" name="id_ia" value="<?= $id_ia ?>">
 
@@ -361,7 +362,7 @@ include '../elemen/header.php';?>
                                                             <div class=" col-md-12 text-right">
                                                                 <button type="reset"
                                                                     class="btn btn-danger">Reset</button>
-                                                                <input type="submit" class="btn btn-primary"
+                                                                <input type="submit" class="btn btn-primary simpan"
                                                                     value="save" name='addd'>
                                                             </div>
                                                         </div>
@@ -370,6 +371,7 @@ include '../elemen/header.php';?>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="notifikasi_"></div>
                                 </div>
                                 <!-- End Third Right -->
                                 <!-- End Third Row -->
@@ -377,6 +379,49 @@ include '../elemen/header.php';?>
                         </div>
                     </div>
                     <!-- End Page -->
+                    <!--############ modal edit ################# -->
+                    <form action="raeson.php" method="post" id="form-reason">
+                        <div class="modal fade modal-info " id="npk" aria-hidden="true"
+                            aria-labelledby="EditAlokasiBudget" role="dialog" tabindex="-1">
+                            <div class="modal-dialog modal-simple modal-center modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                        <h3 class="modal-title">Cancel Reason</h3>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <div class="form-row">
+                                            <div class="form-group col-md-12">
+                                                <br>
+                                                <input type="text" name="id_prop" class="form-control"
+                                                    value="<?= $data_ia['id_prop']; ?>">
+                                                <input type="text" name="id_ia" class="form-control"
+                                                    value="<?=  $id_ia ?>">
+                                                <input type="text" name="reason" class="form-control " id="reason"
+                                                    placeholder="Alasan kenapa no ia dihentikan..." required
+                                                    style=”width:500%;”>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input type="submit" id="konfir" class="btn btn-primary float-right"
+                                            value="Konfirmasi">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                    <!--############ end modal edit ################# -->
+
+
+
+
+
 
                     <!-- Footer -->
                     <?php include '../elemen/footer.php';?>
@@ -449,7 +494,54 @@ include '../elemen/header.php';?>
                                     // maka id  apporove step  index di klik
                                     $('#reject_step' + next_index).click();
                                 }
+                                $('#npk').modal('show');
                             }
+                        });
+                        $("#form-reason").on('click', '#konfir', function(a) {
+                            a.preventDefault()
+                            var reason = $('#reason').val();
+                            var dataform = $("#form-reason").serialize();
+                            $.ajax({
+                                type: 'POST',
+                                url: "../proses/ctrl_tble/ajax/post_insert.php",
+                                data: dataform,
+                                success: function(msg) {
+                                    $('#npk').modal('hide');
+                                    $(".notifikasi_").html(msg);
+                                    // $('#subForm' + index).trigger("reset");
+                                    // console.log(ind)
+
+                                }
+                            });
                         });
                     });
                     </script>
+
+
+
+                    <!-- <script>
+                    $(document).ready(function() {
+                        $("#formupdate").on('click', '.simpan', function(a) {
+                            a.preventDefault()
+                            // var index = $(".reject").attr('data-id');
+                            // $('#tgl-' + index).prop("required", true);
+                            if ($(".reject").is(':checked')) {
+                                $('#npk').modal('show');
+                                var dataform = $("#formupdate").serialize();
+
+                            } else {
+                                $('#tgl-' + index).prop("required", true);
+                                $("#formupdate").submit();
+                                // $.ajax({
+                                //     type: 'POST',
+                                //     url: "../proses/ia/update_progress.php",
+                                //     data: dataform,
+                                //     success: function(msg) {
+                                //         // $(".notifikasi_").html(msg);
+
+                                //     }
+                                // });
+                            }
+                        });
+                    });
+                    </script> -->

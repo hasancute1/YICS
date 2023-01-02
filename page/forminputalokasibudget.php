@@ -707,7 +707,7 @@ include '../elemen/footer.php';?>
         </script>
         <!--############ end jquery penjumlahan loopinng attribut classs ################# -->
 
-        <script>
+        <!-- <script>
         $(document).ready(function() {
 
 
@@ -730,4 +730,4 @@ include '../elemen/footer.php';?>
             //     });
             // });
         });
-        </script>
+        </script> -->

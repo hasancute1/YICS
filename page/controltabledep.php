@@ -316,6 +316,7 @@ $id_dept = $_GET['dept'];
                                 ia.deskripsi AS ia_deskripsi,
                                 ia.cost_ia AS cost_ia,
                                 data_user.nama AS pic_ia,
+                                notif_ia_rjct.reason AS reason,
                                 ia.time_ia AS time_ia
                                 
                                 FROM plan_proposal   
@@ -324,7 +325,7 @@ $id_dept = $_GET['dept'];
                                 LEFT JOIN depart ON plan_proposal.id_dep = depart.id_dep
                                 LEFT JOIN kategori_proposal  ON plan_proposal.id_kat = kategori_proposal.id_kat
                                 LEFT JOIN time_fiscal  ON plan_proposal.id_fis = time_fiscal.id_fis
-                                
+                                LEFT JOIN notif_ia_rjct on notif_ia_rjct.id_prop = plan_proposal.id_prop
                                 LEFT JOIN konversi_matauang ON plan_proposal.id_matauang = konversi_matauang.id_matauang
                                 LEFT JOIN data_user ON ia.pic_ia = data_user.username 
                                 
@@ -501,9 +502,8 @@ $id_dept = $_GET['dept'];
                                                                     ?>
 
                                                                 </td>
-
+                                                                <?php if($text_progress !="STOP"){?>
                                                                 <td class="align-middle text-center">
-
                                                                     <div class="progress mt-20 text-center ">
                                                                         <div class="progress-bar progress-bar-striped  <?=$color_progress?> active"
                                                                             aria-valuenow="" aria-valuemin="0"
@@ -513,19 +513,37 @@ $id_dept = $_GET['dept'];
                                                                             <?=$text_progress?>
                                                                         </div>
                                                                     </div>
-                                                                    <?php
-							
-							?>
                                                                 </td>
-
-
-
-
-
-
-
-
-
+                                                                <?php }else{?>
+                                                                <td class="align-middle text-center"
+                                                                    onclick="submitResult(event)">
+                                                                    <div class="progress mt-20 text-center ">
+                                                                        <div class="progress-bar progress-bar-striped  <?=$color_progress?> active"
+                                                                            aria-valuenow="" aria-valuemin="0"
+                                                                            aria-valuemax="100"
+                                                                            style="width: <?=$persen?>%;"
+                                                                            aria-valuemax="100" role="progressbar">
+                                                                            <?=$text_progress?>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <?php
+                                                                $no_ia=$data["no_ia"];
+                                                                $reason=$data["reason"];
+                                                             }?>
+                                                                <script>
+                                                                function submitResult(e) {
+                                                                    Swal.fire({
+                                                                        title: '<strong><?= $no_ia; ?></strong>',
+                                                                        icon: 'info',
+                                                                        html: '<?= $reason; ?> ',
+                                                                        showCloseButton: true,
+                                                                        focusConfirm: false,
+                                                                        confirmButtonText: '<i">Laporan Diterima !!</i>',
+                                                                        cancelButtonAriaLabel: 'Close'
+                                                                    })
+                                                                }
+                                                                </script>
                                                                 <td>
                                                                     <a href="Tracking.php?id_ia=<?= $data['id_ia'] ?>"
                                                                         class="<?= $tombol_hidup ?>">
