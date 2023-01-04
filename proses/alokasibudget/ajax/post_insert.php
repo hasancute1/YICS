@@ -7,7 +7,7 @@ include("../../../config/config.php");
         $id_matauang=$_POST ['mata_uang'];              
 
         $cost_request=$_POST ['cost'];
-        $cost = str_replace('.','' ,$cost_request); 
+        $cost = str_replace(',','.' ,$cost_request); 
 
         $id_fis=$_POST ['id_fis']; 
         $area =$_POST ['area'];

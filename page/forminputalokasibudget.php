@@ -179,7 +179,7 @@ include '../elemen/header.php';?>
 						  // untuk memvalidasi apakah ada datanya
                           if(mysqli_num_rows($bdget_d)>0){
                            $bdget_dep = mysqli_fetch_assoc($bdget_d);                          
-                           $sum_dep = number_format ($bdget_dep['cost_dep'],0,',','.');    
+                           $sum_dep = number_format ($bdget_dep['cost_dep'],2,',','');    
                           }else{
                             $sum_dep = 0;
                           }
@@ -316,6 +316,7 @@ include '../elemen/header.php';?>
                                                                                         harus mengisi proposal</span>
                                                                                 </td>
                                                                                 <td>
+
                                                                                     <input type="text" required
                                                                                         class="form-control rupiah"
                                                                                         name="cost" id="cost<?= $i; ?>"
@@ -377,7 +378,7 @@ include '../elemen/header.php';?>
 						  // untuk memvalidasi apakah ada datanya
                           if(mysqli_num_rows($total_bdget)>0){
                            $total_bdg = mysqli_fetch_assoc($total_bdget);
-                           $sum_all = number_format ($total_bdg['cost_all'],0,',','.');                          
+                           $sum_all = number_format ($total_bdg['cost_all'],2,',','.');                          
                           }else{
                             $sum_all = 0;
                           }
@@ -393,7 +394,7 @@ include '../elemen/header.php';?>
                                                                 <span class="input-group-text">IDR</span>
                                                             </div>
                                                             <input type="text"
-                                                                class="form-control all1 all2 all3 bg-green-100"
+                                                                class="form-control all1 all2 all3 bg-green-100 rupiah"
                                                                 id="result"
                                                                 value="<?= (isset($sum_all))? $sum_all: "0"; ?>"
                                                                 readonly>
@@ -689,17 +690,17 @@ include '../elemen/footer.php';?>
                 });
                 $("#result").html(calculated_total_sum);
             });
-            $('.rupiah').keyup(function(event) {
-                // skip for arrow keys
-                if (event.which >= 37 && event.which <= 40) return;
+            // $('.rupiah').keyup(function(event) {
+            //     // skip for arrow keys
+            //     if (event.which >= 37 && event.which <= 40) return;
 
-                // format number
-                $(this).val(function(index, value) {
-                    return value
-                        .replace(/\D/g, "")
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-                });
-            });
+            //     // format number
+            //     $(this).val(function(index, value) {
+            //         return value
+            //             .replace(/\D/g, "")
+            //             .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            //     });
+            // });
 
 
 

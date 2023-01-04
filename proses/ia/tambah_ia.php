@@ -10,7 +10,7 @@ $id_prop = $_POST['id_prop'];
 $ia = $_POST['ia'];
 $ia_desc = $_POST['ia_desc'];
 $cost_ia = $_POST['cost_ia'];
-$cost_ia = str_replace('.' , '' , $cost_ia);
+$cost_ia = str_replace(',' , '.' , $cost_ia);
 $time_ia = $_POST['time_ia'];
 
 $data_prop = single_query("SELECT * from plan_proposal join data_user on data_user.area=plan_proposal.area where id_prop={$id_prop}");
@@ -100,7 +100,7 @@ $qry = mysqli_query($link_yics, "SELECT ia FROM ia WHERE ia = '$ia' ")or die(mys
         $pic_ia = $_POST['pic_ia'];
         $time_ia = $_POST['time_ia'];
         $cost_ia = $_POST['cost_ia'];
-        $cost_ia = str_replace('.' , '' , $cost_ia);
+        $cost_ia = str_replace(',' , '.' , $cost_ia);
 
     $data_ia = single_query("SELECT * from ia join plan_proposal on ia.id_prop = plan_proposal.id_prop where id_ia={$id_ia}");
 

@@ -182,7 +182,8 @@ $id_dept = $_GET['dept'];
                                             <div class="card-body card-shadow">
                                                 <div class=" table-responsive">
                                                     <table
-                                                        class=" table tableproposal table-bordered text-nowrap text-center">
+                                                        class=" table tableproposal table-bordered text-nowrap text-center"
+                                                        width="100%">
                                                         <thead class="table-info">
                                                             <tr>
                                                                 <th class="judul align-middle text-center export-col"
@@ -325,13 +326,13 @@ $id_dept = $_GET['dept'];
                                 LEFT JOIN depart ON plan_proposal.id_dep = depart.id_dep
                                 LEFT JOIN kategori_proposal  ON plan_proposal.id_kat = kategori_proposal.id_kat
                                 LEFT JOIN time_fiscal  ON plan_proposal.id_fis = time_fiscal.id_fis
-                                LEFT JOIN notif_ia_rjct on notif_ia_rjct.id_prop = plan_proposal.id_prop
+                                LEFT JOIN notif_ia_rjct  ON notif_ia_rjct.id_prop = plan_proposal.id_prop                                
                                 LEFT JOIN konversi_matauang ON plan_proposal.id_matauang = konversi_matauang.id_matauang
                                 LEFT JOIN data_user ON ia.pic_ia = data_user.username 
                                 
                                
                                 
-                                WHERE depart.id_dep='$id_dept'AND time_fiscal.status= 'aktif' {$query_start} {$query_end}"
+                                WHERE depart.id_dep='$id_dept'AND time_fiscal.status= 'aktif' {$query_start} {$query_end} GROUP BY ia.id_ia  ORDER BY plan_proposal.proposal ASC   "
                                 )
                                 or die (mysqli_error($link_yics));
                                 $no=0;
@@ -345,6 +346,8 @@ $id_dept = $_GET['dept'];
                                 if(mysqli_num_rows($proposal)>0){
                                 while($data = mysqli_fetch_assoc($proposal)){                                   
                                     $id= $data['id_prop'];
+                                    $n0_ia=$data['reason'];
+                                    // $n0_ia=$data['no_ia'];
                                     
 
                                     if($id_before == $data['id_prop']){
@@ -372,9 +375,9 @@ $id_dept = $_GET['dept'];
                                         $tombol_hidup="disabledlink"; 
                                     }
                                     if((isset($data['no_ia']) && $no_prop == 1)){
-                                        $remainIDR = number_format (($data['cost']-$data['cost_ia']),0,',','.'); 
+                                        $remainIDR = number_format (($data['cost']-$data['cost_ia']),2,',','.'); 
                                        }else if((isset($data['no_ia']) && $no_prop != 1)) {
-                                        $remainIDR = number_format ((0-$data['cost_ia']),0,',','.'); 
+                                        $remainIDR = number_format ((0-$data['cost_ia']),2,',','.'); 
                                        }else{ $remainIDR ="";}
                                     // $id_before = $data['id_prop'];
 
@@ -418,7 +421,7 @@ $id_dept = $_GET['dept'];
                                                                     <?php
                                                                   $IDR="IDR"; ?>
 
-                                                                    <?=($no_prop == 1)?number_format ($data['cost'],0,',','.'): ""; ?>
+                                                                    <?=($no_prop == 1)?number_format ($data['cost'],2,',','.'): ""; ?>
                                                                 </td>
                                                                 <td> <?= (isset($data['no_ia']))? $no_prop: ""; ?>
                                                                 </td>
@@ -426,12 +429,12 @@ $id_dept = $_GET['dept'];
                                                                 <td></td>
                                                                 <td><?= $data['ia_deskripsi'] ?></td>
                                                                 <td></td>
-                                                                <td><?= (isset($data['no_ia']))?number_format ($data['cost_ia'],0,',','.'): ""; ?>
+                                                                <td><?= (isset($data['no_ia']))?number_format ($data['cost_ia'],2,',','.'): ""; ?>
                                                                 </td>
                                                                 <td></td>
                                                                 <td><?= (isset($data['no_ia']))?number_format($data['cost_ia']/$data['yen'], 2, ',', '.'): ""; ?>
                                                                 </td>
-                                                                <td><?= (isset($data['no_ia']))?number_format ($data['cost_ia'],0,',','.'): ""; ?>
+                                                                <td><?= (isset($data['no_ia']))?number_format ($data['cost_ia'],2,',','.'): ""; ?>
                                                                 </td>
 
 
@@ -499,11 +502,29 @@ $id_dept = $_GET['dept'];
                                                                         $color_progress = "";
                                                                         $text_progress = "0%";
                                                                     }
+
+                                                                      
+                                                                $alasan=mysqli_query($link_yics,"SELECT * FROM notif_ia_rjct 
+                                                                JOIN ia ON notif_ia_rjct.id_ia = ia.id_ia
+                                                                WHERE notif_ia_rjct.id_ia = '$data[id_ia]' AND notif_ia_rjct.id_prop = '$id'  ")or die (mysqli_error($link_yics)); 
+                                                                if(mysqli_num_rows($alasan)>0){     
+                                                                $d_alsn=mysqli_fetch_assoc($alasan);
+                                                                $no_iaf=$d_alsn['ia'];
+                                                                $rea=$d_alsn['reason'];                                                                
+                                                             }else{
+                                                                 $no_iaf="no ia anda";
+                                                                $rea="ditolak";
+                                                                
+                                                             }
+                                                                    
                                                                     ?>
 
                                                                 </td>
-                                                                <?php if($text_progress !="STOP"){?>
-                                                                <td class="align-middle text-center">
+
+
+
+                                                                <td class="align-middle text-center <?= ($text_progress == "STOP")? "reason":""; ?>"
+                                                                    data-reason="<?=$rea?> " data-noia="<?=$no_iaf?>">
                                                                     <div class="progress mt-20 text-center ">
                                                                         <div class="progress-bar progress-bar-striped  <?=$color_progress?> active"
                                                                             aria-valuenow="" aria-valuemin="0"
@@ -514,36 +535,8 @@ $id_dept = $_GET['dept'];
                                                                         </div>
                                                                     </div>
                                                                 </td>
-                                                                <?php }else{?>
-                                                                <td class="align-middle text-center"
-                                                                    onclick="submitResult(event)">
-                                                                    <div class="progress mt-20 text-center ">
-                                                                        <div class="progress-bar progress-bar-striped  <?=$color_progress?> active"
-                                                                            aria-valuenow="" aria-valuemin="0"
-                                                                            aria-valuemax="100"
-                                                                            style="width: <?=$persen?>%;"
-                                                                            aria-valuemax="100" role="progressbar">
-                                                                            <?=$text_progress?>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <?php
-                                                                $no_ia=$data["no_ia"];
-                                                                $reason=$data["reason"];
-                                                             }?>
-                                                                <script>
-                                                                function submitResult(e) {
-                                                                    Swal.fire({
-                                                                        title: '<strong><?= $no_ia; ?></strong>',
-                                                                        icon: 'info',
-                                                                        html: '<?= $reason; ?> ',
-                                                                        showCloseButton: true,
-                                                                        focusConfirm: false,
-                                                                        confirmButtonText: '<i">Laporan Diterima !!</i>',
-                                                                        cancelButtonAriaLabel: 'Close'
-                                                                    })
-                                                                }
-                                                                </script>
+
+
                                                                 <td>
                                                                     <a href="Tracking.php?id_ia=<?= $data['id_ia'] ?>"
                                                                         class="<?= $tombol_hidup ?>">
@@ -728,6 +721,21 @@ $id_dept = $_GET['dept'];
                             if (result.isConfirmed) {
                                 window.location.href = getLink;
                             }
+                        })
+                    })
+
+
+                    $('.reason').click(function() {
+                        var reason = $(this).attr('data-reason');
+                        var noia = $(this).attr('data-noia');
+                        Swal.fire({
+                            title: '<strong></strong>' + noia,
+                            icon: 'info',
+                            html: '' + reason,
+                            showCloseButton: true,
+                            focusConfirm: false,
+                            confirmButtonText: '<i">Laporan Diterima !!</i>',
+                            cancelButtonAriaLabel: 'Close'
                         })
                     })
                 })

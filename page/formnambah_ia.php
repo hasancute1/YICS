@@ -223,12 +223,12 @@ if(mysqli_num_rows($budget_reject)>0){
                                                                 <span
                                                                     style="color:red;font-size: 13px;font-style: italic;">*(Sisa
                                                                     budget <?= $dep ?> : IDR
-                                                                    <?= number_format($sisa_budget,0,',','.')  ?>)</span>
+                                                                    <?= number_format($sisa_budget,2,',','.')  ?>)</span>
                                                                 <div class="input-group">
                                                                     <div class="input-group-prepend">
                                                                         <span class="input-group-text">IDR</span>
                                                                     </div>
-                                                                    <input type="text" class="form-control uang"
+                                                                    <input type="text" class="form-control"
                                                                         autocomplete="off" placeholder="Nominal Rupiah"
                                                                         name="cost_ia" id="cost_ia" required>
                                                                 </div>
@@ -240,7 +240,7 @@ if(mysqli_num_rows($budget_reject)>0){
                                                                 <span
                                                                     style="color:red;font-size: 13px;font-style: italic;">*(Sisa
                                                                     budget <?= $dep ?> : YJP
-                                                                    <?= number_format($sisa_budget / $data['yen'],1,',','.')  ?>)</span>
+                                                                    <?= number_format($sisa_budget / $data['yen'],2,',','.')  ?>)</span>
                                                                 <div class="input-group">
                                                                     <div class="input-group-prepend">
                                                                         <span class="input-group-text">JPY</span>
@@ -329,7 +329,7 @@ if(mysqli_num_rows($budget_reject)>0){
                                                                         <td class="text-left" style="color:black;">Cost
                                                                             Proposal</td>
                                                                         <td> &nbsp;:&nbsp;</td>
-                                                                        <td><?= $IDR." ". number_format($data['cost'], 0, ',', '.');?>
+                                                                        <td><?= $IDR." ". number_format($data['cost'], 2, ',', '.');?>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
@@ -390,7 +390,7 @@ if(mysqli_num_rows($budget_reject)>0){
                                                                             <td><?= date("d M Y", strtotime($row['time_ia'])); ?>
                                                                             </td>
                                                                             <td><?= $row['pic_ia']; ?></td>
-                                                                            <td><?= $IDR." ".number_format($row['cost_ia'], 0, ',', '.');?>
+                                                                            <td><?= $IDR." ".number_format($row['cost_ia'], 2, ',', '.');?>
                                                                             <td>
                                                                                 <a href="formedit_ia.php?id_ia=<?= $row['id_ia']?>"
                                                                                     class="btn btn-icon btn-warning  edit_ia">
@@ -433,7 +433,7 @@ if(mysqli_num_rows($budget_reject)>0){
                                                                                     AS total FROM ia WHERE id_prop='$id'")) or die (mysqli_error($link_yics));;
                                                                                 ?>
                                                                         <td class="bg-red-100" width="250px">
-                                                                            <?= $IDR." ".number_format($total_costia['total'], 0, ',', '.');?>
+                                                                            <?= $IDR." ".number_format($total_costia['total'], 2, ',', '.');?>
                                                                         </td>
                                                                     </tr>
 
@@ -443,21 +443,21 @@ if(mysqli_num_rows($budget_reject)>0){
                                                                         <td class="text-left">Total Cost Ia Ditolak
                                                                         </td>
                                                                         <td> &nbsp;:&nbsp;</td>
-                                                                        <td><?= $IDR." ". number_format($ia_proprjct, 0, ',', '.');?>
+                                                                        <td><?= $IDR." ". number_format($ia_proprjct, 2, ',', '.');?>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td class="text-left">Available Saldo Proposal
                                                                         </td>
                                                                         <td> &nbsp;:&nbsp;</td>
-                                                                        <td><?= $IDR." ". number_format(($data['cost'])-($total_costia['total'])+$ia_proprjct, 0, ',', '.');?>
+                                                                        <td><?= $IDR." ". number_format(($data['cost'])-($total_costia['total'])+$ia_proprjct, 2, ',', '.');?>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td class="text-left">Available Saldo
                                                                             <?= $data['depart']; ?></td>
                                                                         <td> &nbsp;:&nbsp;</td>
-                                                                        <td><?=$IDR." ".number_format($sisa_budget,0,',','.')  ?>
+                                                                        <td><?=$IDR." ".number_format($sisa_budget,2,',','.')  ?>
                                                                         </td>
                                                                     </tr>
                                                                 </table>

@@ -16,7 +16,7 @@ $index=$_GET['ind'];
 						  // untuk memvalidasi apakah ada datanya
                           if(mysqli_num_rows($bdget_a)>0){
                            $bdget_all = mysqli_fetch_assoc($bdget_a);                          
-                           $sum_all = number_format ($bdget_all['cost_dep'],0,',','.');    
+                           $sum_all = number_format ($bdget_all['cost_dep'],2,',','.');    
                           }else{
                             $sum_all = 0;
                           }
@@ -31,7 +31,7 @@ $index=$_GET['ind'];
                          // untuk memvalidasi apakah ada datanya
                          if(mysqli_num_rows($bdget_d)>0){
                           $bdget_dep = mysqli_fetch_assoc($bdget_d);                          
-                          $sum_dep = number_format ($bdget_dep['cost_dep'],0,',','.');    
+                          $sum_dep = number_format ($bdget_dep['cost_dep'],2,',','.');    
                          }else{
                            $sum_dep = 0;
                          }
@@ -68,7 +68,7 @@ $index=$_GET['ind'];
                             JOIN depart ON plan_proposal.id_dep = depart.id_dep
                             JOIN kategori_proposal  ON plan_proposal.id_kat = kategori_proposal.id_kat
                             JOIN time_fiscal  ON plan_proposal.id_fis = time_fiscal.id_fis  
-                            WHERE time_fiscal.id_fis= '$id' AND depart.id_dep='$dep'")or die (mysqli_error($link_yics));
+                            WHERE time_fiscal.id_fis= '$id' AND depart.id_dep='$dep' ORDER BY plan_proposal.proposal ASC")or die (mysqli_error($link_yics));
                             $no=1;                      
 						  // untuk memvalidasi apakah ada datanya
                           if(mysqli_num_rows($isi)>0){
@@ -80,7 +80,7 @@ $index=$_GET['ind'];
                             $depart=$datad['depart'];
                             $periode=$datad['periode'];
                             $proposal=$datad['proposal'];
-                            $cost = number_format ($datad['cost'],0,',','.');
+                            $cost = number_format ($datad['cost'],2,',','.');
                                       
                             ?>
             <tr class="align-middle text-center">

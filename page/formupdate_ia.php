@@ -397,9 +397,9 @@ include '../elemen/header.php';?>
                                             <div class="form-group col-md-12">
                                                 <br>
                                                 <input type="text" name="id_prop" class="form-control"
-                                                    value="<?= $data_ia['id_prop']; ?>">
+                                                    value="<?= $data_ia['id_prop']; ?>" hidden>
                                                 <input type="text" name="id_ia" class="form-control"
-                                                    value="<?=  $id_ia ?>">
+                                                    value="<?=  $id_ia ?>" hidden>
                                                 <input type="text" name="reason" class="form-control " id="reason"
                                                     placeholder="Alasan kenapa no ia dihentikan..." required
                                                     style=”width:500%;”>

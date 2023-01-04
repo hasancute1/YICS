@@ -192,17 +192,16 @@ include '../elemen/header.php';?>
                                                         <input required type="password" required class="form-control"
                                                             name="password" id="psw" minlength="8" maxlength="8"
                                                             placeholder="Silahkan isi password baru" autocomplete="off"
-                                                            pattern="(?=.*d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                                                            title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
+                                                            pattern="(?=.*d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
                                                         <input type="checkbox" onclick="myFunction()">&nbsp; Tampilkan
                                                         Password
                                                         <br>
 
                                                         <div id="message">
-                                                            <span>Must contain at least one
-                                                                number and one
-                                                                uppercase and lowercase letter, and at least 8 or more
-                                                                characters</span>
+                                                            <span>Harus berisi setidaknya satu
+                                                                nomor dan satu
+                                                                huruf besar dan kecil, dan minimal 8 atau lebih
+                                                                karakter</span>
                                                             <h3>Password harus terdiri dari: </h3>
                                                             <p id="letter" class="invalid">Memiliki <b>huruf kecil</b>
                                                             </p>

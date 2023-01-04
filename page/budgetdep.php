@@ -161,7 +161,7 @@ or die (mysqli_error($link_yics));
 if(mysqli_num_rows($label_c)>0){
 while($label_cx = mysqli_fetch_assoc($label_c))
 {
-$labelcos[]=$r-$label_cx['costia'];
+$labelcos[]=$label_cx['costia']-$r;
  }
 }else {echo "DATA BELUM ADA";}
 $labelcos=json_encode($labelcos); 
@@ -379,12 +379,12 @@ $labelcos=json_encode($labelcos);
                                                             <span>
                                                                 <P class="white font-size-30 font-weight-100 mt-20">
                                                                     IDR
-                                                                    <?= number_format($sisa_budget,0,',','.')." "."Million" ?>
+                                                                    <?= number_format($sisa_budget,2,',','.')." "."Million" ?>
                                                                 </P>
 
                                                                 <p class="white font-weight-100 font-size-20 mt-10">
                                                                     "Budget IDR
-                                                                    <?= number_format($get_data_budget['budget'],0,',','.')." "."Million"  ?>"
+                                                                    <?= number_format($get_data_budget['budget'],2,',','.')." "."Million"  ?>"
                                                                 </p>
                                                             </span>
                                                         </div>
@@ -474,12 +474,12 @@ $labelcos=json_encode($labelcos);
                                                             <h4>e-Wallet:</h4>
                                                             <p style="font-size: 20px; color:green;font-weight: bold;">
                                                                 IDR
-                                                                <?= number_format($get_data_budget['budget'],0,',','.')." "."Million" ?>
+                                                                <?= number_format($get_data_budget['budget'],2,',','.')." "."Million" ?>
                                                             </p>
                                                             <h4>Consummed:</h4>
                                                             <p style="font-size: 20px; color:blue;font-weight: bold;">
                                                                 IDR
-                                                                <?= number_format($consumtion_budget_cost ,0, ',','.')." "."Million"  ?>
+                                                                <?= number_format($consumtion_budget_cost ,2, ',','.')." "."Million"  ?>
                                                             </p>
                                                         </div>
                                                     </div>
@@ -567,7 +567,7 @@ $labelcos=json_encode($labelcos);
                                                             <td class="align-middle text-center">
                                                                 <?= date('d M Y' , strtotime($row['time_ia']))  ?></td>
                                                             <td class="align-middle text-center">IDR
-                                                                <?= number_format($row['cost_ia'],0,',','.') ?></td>
+                                                                <?= number_format($row['cost_ia'],2,',','.') ?></td>
                                                             <td class="align-middle text-center">Closed</td>
                                                         </tr>
 

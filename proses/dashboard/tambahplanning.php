@@ -13,7 +13,7 @@ if (isset ($_SESSION['yics_user'])){
         $id_matauang=$_POST ['mata_uang'];              
 
         $cost_request=$_POST ['cost'];
-        $cost = str_replace('.','' ,$cost_request); 
+        $cost = str_replace(',','.' ,$cost_request); 
 
         $id_fis=$_POST ['id_fis']; 
         $username =$_SESSION['yics_user']; 
@@ -115,7 +115,7 @@ if (isset ($_SESSION['yics_user'])){
         $benefit=$_POST ['benefit'];   
        
         $cost_request=$_POST ['cost'];
-        $cost = str_replace('.','' ,$cost_request);
+        $cost = str_replace(',','.' ,$cost_request);
 
       //   hapus file lama
          $file_dulu=$_POST ['file_dulu']; 

@@ -11,7 +11,8 @@ if (isset ($_SESSION['yics_user'])){
             // $inputFiscal = "UPDATE budget SET id_fis=$id_fis,id_dept ='$id',budget ='$budget' where id_fis=$id_fis "; 
             // $inputFiscal = "UPDATE budget SET "; 
             for($index = 1 ; $index <= $totalData ; $index++){
-               $budget=$_POST['budget'.$index];
+               
+               $budget = str_replace(',','.' ,$_POST['budget'.$index]);               
                $id=$_POST['id_dept'.$index];
                $id_bud=$_POST['id_bud'.$index];
                $inputFiscal = "UPDATE budget SET id_fis='$id_fis',id_dep ='$id',budget ='$budget' WHERE id_bud='$id_bud' ";
@@ -21,7 +22,7 @@ if (isset ($_SESSION['yics_user'])){
          else{
             $inputFiscal = "INSERT INTO budget (`id_fis`,`id_dep`,`budget`) VALUES "; 
             for($index = 1 ; $index <= $totalData ; $index++){
-            $budget=$_POST['budget'.$index];    
+            $budget=str_replace(',','.' ,$_POST['budget'.$index]);  
             $id=$_POST['id_dept'.$index];  
             $inputFiscal .= "('$id_fis','$id','$budget'),";
          }

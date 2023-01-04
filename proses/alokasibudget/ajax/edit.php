@@ -22,7 +22,7 @@ $ind=$_POST['ind'];
                             $kategori_m=$isi_mo['kategori'];
                             $id_kat_m=$isi_mo['id_kat'];
                             $proposal_m=$isi_mo['proposal'];
-                            $cost_m = number_format ($isi_mo['cost'],0,',','.');
+                            $cost_m = number_format ($isi_mo['cost'],2,',','');
                           }            
                             ?>
 
