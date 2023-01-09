@@ -21,7 +21,7 @@ $pic_ia = $_POST['pic_ia'];
 $GLOBALS['id_prop'];
 // cek username sudah ada apa blm?
 $qry = mysqli_query($link_yics, "SELECT ia FROM ia WHERE ia = '$ia' ")or die(mysqli_error($link_yics));
-      
+$qry = mysqli_query($link_yics, "SELECT sum(cost_ia) AS cost_dep JOIN FROM ia WHERE ia = '$ia' ")or die(mysqli_error($link_yics));     
 // logika pakai session
     if(mysqli_num_rows($qry)>0){
         $_SESSION['info'] = "Gagal Disimpan";

@@ -607,6 +607,7 @@ $judul = [
 <!--[if lt IE 8]>
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
+<!-- get data -->
 <?php
                                                             
                                                             $alokasi = mysqli_query($link_yics, "SELECT * FROM time_fiscal WHERE status='aktif'") or die(mysqli_error($link_yics));
@@ -617,7 +618,7 @@ $judul = [
                                                             $akhir =  date_create($data['akhir']);
                                                             $diffawal=date_diff($awal,$now);
                                                             $diffakhir=date_diff($akhir,$now);
-                                                           
+                                                            
                                                           $awalfis= $diffawal->m +1;
                                                           $thfis =$diffawal->y;
                                                           $bulanfis="";
@@ -661,8 +662,106 @@ $judul = [
 
                         $where_time = "";
                      }
+// ------------------------------------------akumulasi budget yang direject----------------------------
 
-                   
+                     $budget_reject = mysqli_query($link_yics ,"SELECT sum(ia.cost_ia) AS cost_rjct FROM tracking_ia
+                     join ia on tracking_ia.id_ia = ia.id_ia
+                     join plan_proposal on ia.id_prop = plan_proposal.id_prop
+                     join depart on plan_proposal.id_dep = depart.id_dep                                           
+                     where plan_proposal.id_dep = {$id_dep} and plan_proposal.id_fis={$id_fis}
+                      and approval = '0' GROUP BY approval = '0'")
+                     or die (mysqli_error($link_yics));                 
+                     if(mysqli_num_rows($budget_reject)>0){
+                         $budget_reject1 = mysqli_fetch_assoc($budget_reject);
+                         if(isset($budget_reject1['cost_rjct'])){
+                            $brjct =$budget_reject1['cost_rjct'];
+                        }else{
+                            $brjct=0;
+                          }                       
+                      }else{
+                        $brjct=0;
+                      }
+    // --------------------------------------------------------------quuery label cost actual grafik bar-------------------------------------
+// $tes_ia = mysqli_query($link_yics ,"SELECT sum(cost_ia) as costia 
+// FROM ia
+// JOIN (SELECT * FROM tracking_ia
+// join ia on tracking_ia.id_ia = ia.id_ia
+// JOIN plan_proposal ON ia.id_prop = plan_proposal.id_prop
+// JOIN depart ON plan_proposal.id_dep = depart.id_dep
+// where plan_proposal.id_dep={$id_dep} and id_fis={$id_fis} and approval='0'  GROUP BY plan_proposal.id_prop ORDER BY plan_proposal.cost ASC)
+// tracking_ia
+// JOIN plan_proposal ON ia.id_prop = plan_proposal.id_prop
+// JOIN depart ON plan_proposal.id_dep = depart.id_dep
+// where plan_proposal.id_dep={$id_dep} and id_fis={$id_fis}  GROUp BY ia.id_prop ORDER BY plan_proposal.cost ASC")
+// or die (mysqli_error($link_yics));                 
+// if(mysqli_num_rows($label_c)>0){
+// while($tes_i = mysqli_fetch_assoc($tes_ia))
+// {$tes[]=$tes_i['costia'];
+//  }
+// }else {echo "DATA BELUM ADA";}
+// $tes=json_encode($tes); 
+
+
+// -------------------------------------------------------------end json label x  dan nilaigrafik bar-------------------------------------
+
+
+
+                      // --------------------------------------------------------------quuery minus nol id prop-------------------------------------
+$r_ia = mysqli_query($link_yics ,"SELECT sum(cost_ia) as cost_i FROM tracking_ia
+join ia on tracking_ia.id_ia = ia.id_ia
+JOIN plan_proposal ON ia.id_prop = plan_proposal.id_prop
+JOIN depart ON plan_proposal.id_dep = depart.id_dep
+where plan_proposal.id_dep={$id_dep} and id_fis={$id_fis} and approval='0'  GROUP BY plan_proposal.id_prop ORDER BY plan_proposal.cost ASC")
+or die (mysqli_error($link_yics));                 
+if(mysqli_num_rows($r_ia)>0){
+while($r_i = mysqli_fetch_assoc($r_ia))
+{
+        if(isset($r_i['cost_i'])){
+        $r= $r_i['cost_i'];
+        echo "$r  dsdsadasda";
+        $r_ib[]=$r;
+        }else{
+        $r=0;
+        }
+ }
+}else { $r=0;}
+// $labelcos=json_encode($labelcos); 
+
+
+
+// -------------------------------------------------------------end json label x  dan nilaigrafik bar-------------------------------------
+// --------------------------------------------------------------quuery label cost actual grafik bar-------------------------------------
+$label_c = mysqli_query($link_yics ,"SELECT sum(cost_ia) as costia FROM ia
+JOIN plan_proposal ON ia.id_prop = plan_proposal.id_prop
+JOIN depart ON plan_proposal.id_dep = depart.id_dep
+where plan_proposal.id_dep={$id_dep} and id_fis={$id_fis}  GROUp BY ia.id_prop ORDER BY plan_proposal.cost ASC")
+or die (mysqli_error($link_yics));                 
+if(mysqli_num_rows($label_c)>0){
+while($label_cx = mysqli_fetch_assoc($label_c))
+{$labelcos[]=$label_cx['costia']-$r;
+ }
+}else {echo "DATA BELUM ADA";}
+$labelcos=json_encode($labelcos); 
+
+
+// -------------------------------------------------------------end json label x  dan nilaigrafik bar-------------------------------------
+
+// --------------------------------------------------------------quuery label x grafik bar-------------------------------------
+                    $label_x = mysqli_query($link_yics ,"SELECT * FROM plan_proposal
+                    JOIN depart on plan_proposal.id_dep = depart.id_dep
+                    where plan_proposal.id_dep={$id_dep} and id_fis={$id_fis} ORDER BY cost ASC")
+                    or die (mysqli_error($link_yics));                 
+                    if(mysqli_num_rows($label_x)>0){
+                    while($label_sx = mysqli_fetch_assoc($label_x))
+                    {
+                    $labelX[]=$label_sx['proposal'];
+                    $cost_t[]=$label_sx['cost'];
+                     }
+                    }else {echo "DATA BELUM ADA";}                
+// -------------------------------------------------------------- end query label x grafik bar-------------------------------------
+                     $labelX=json_encode($labelX);  
+                     $cost_t=json_encode($cost_t);  
+// -------------------------------------------------------------end json label x  dan nilaigrafik bar-------------------------------------
                     
                     // $get_data_budget = single_query("SELECT * FROM budget JOIN depart on budget.id_dep = depart.id_dep where budget.id_dep={$id_dep} and id_fis={$id_fis}");
                     
@@ -672,9 +771,9 @@ $judul = [
                         $get_data_budget = mysqli_fetch_assoc($get_data_budget1);
                      } 
                     $consumtion_budget = single_query("SELECT sum(cost_ia) as cost , count(*) as qty , max(ia.time_ia) as last_month FROM ia
-                        join proposal on ia.id_prop = proposal.id_prop
-                        join depart on proposal.id_dep = depart.id_dep
-                        where proposal.id_dep = {$id_dep} and proposal.id_fis={$id_fis} {$where_time}
+                        join plan_proposal on ia.id_prop = plan_proposal.id_prop
+                        join depart on plan_proposal.id_dep = depart.id_dep
+                        where plan_proposal.id_dep = {$id_dep} and plan_proposal.id_fis={$id_fis} {$where_time}
                     ");  
 
                     // bulan terakhir consumtion budget
@@ -682,9 +781,9 @@ $judul = [
                     $last_month = date('m' , strtotime($last_month));
                     
                     $consumtion_budget_data = query("SELECT MONTH(ia.time_ia) AS bulan, sum(ia.cost_ia) as cost FROM ia
-                    join proposal on ia.id_prop = proposal.id_prop
-                    join depart on proposal.id_dep = depart.id_dep
-                    where proposal.id_dep = {$id_dep} and proposal.id_fis={$id_fis} {$where_time}
+                    join plan_proposal on ia.id_prop = plan_proposal.id_prop
+                    join depart on plan_proposal.id_dep = depart.id_dep
+                    where plan_proposal.id_dep = {$id_dep} and plan_proposal.id_fis={$id_fis} {$where_time}
                     GROUP BY bulan
                     ");  
 
@@ -707,10 +806,10 @@ $judul = [
                     //query tabel closed
                     $data_ia = query("SELECT * from tracking_ia
                         join ia on tracking_ia.id_ia = ia.id_ia
-                        join proposal on ia.id_prop = proposal.id_prop
-                        join depart on proposal.id_dep = depart.id_dep
-                        join kategori_proposal on proposal.id_kat = kategori_proposal.id_kat                      
-                        where proposal.id_dep = {$id_dep} and proposal.id_fis={$id_fis}
+                        join plan_proposal on ia.id_prop = plan_proposal.id_prop
+                        join depart on plan_proposal.id_dep = depart.id_dep
+                        join kategori_proposal on plan_proposal.id_kat = kategori_proposal.id_kat                      
+                        where plan_proposal.id_dep = {$id_dep} and plan_proposal.id_fis={$id_fis}
                         and id_prog = 25 {$where_time} and approval = '1'
                     ");              
 

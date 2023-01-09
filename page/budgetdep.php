@@ -129,8 +129,33 @@ include '../elemen/header.php';?>
                       }else{
                         $brjct=0;
                       }
+    // --------------------------------------------------------------quuery label cost actual grafik bar-------------------------------------
+// $tes_ia = mysqli_query($link_yics ,"SELECT sum(cost_ia) as costia 
+// FROM ia
+// JOIN (SELECT * FROM tracking_ia
+// join ia on tracking_ia.id_ia = ia.id_ia
+// JOIN plan_proposal ON ia.id_prop = plan_proposal.id_prop
+// JOIN depart ON plan_proposal.id_dep = depart.id_dep
+// where plan_proposal.id_dep={$id_dep} and id_fis={$id_fis} and approval='0'  GROUP BY plan_proposal.id_prop ORDER BY plan_proposal.cost ASC)
+// tracking_ia
+// JOIN plan_proposal ON ia.id_prop = plan_proposal.id_prop
+// JOIN depart ON plan_proposal.id_dep = depart.id_dep
+// where plan_proposal.id_dep={$id_dep} and id_fis={$id_fis}  GROUp BY ia.id_prop ORDER BY plan_proposal.cost ASC")
+// or die (mysqli_error($link_yics));                 
+// if(mysqli_num_rows($label_c)>0){
+// while($tes_i = mysqli_fetch_assoc($tes_ia))
+// {$tes[]=$tes_i['costia'];
+//  }
+// }else {echo "DATA BELUM ADA";}
+// $tes=json_encode($tes); 
+
+
+// -------------------------------------------------------------end json label x  dan nilaigrafik bar-------------------------------------
+
+
+
                       // --------------------------------------------------------------quuery minus nol id prop-------------------------------------
-$r_ia = mysqli_query($link_yics ,"SELECT sum(cost_ia) as costi FROM tracking_ia
+$r_ia = mysqli_query($link_yics ,"SELECT sum(cost_ia) as cost_i FROM tracking_ia
 join ia on tracking_ia.id_ia = ia.id_ia
 JOIN plan_proposal ON ia.id_prop = plan_proposal.id_prop
 JOIN depart ON plan_proposal.id_dep = depart.id_dep
@@ -139,14 +164,15 @@ or die (mysqli_error($link_yics));
 if(mysqli_num_rows($r_ia)>0){
 while($r_i = mysqli_fetch_assoc($r_ia))
 {
-        if(isset($r_i['costi'])){
-        $r= $r_i['costi'];
+        if(isset($r_i['cost_i'])){
+        $r= $r_i['cost_i'];
+        echo "$r  dsdsadasda";
         $r_ib[]=$r;
         }else{
         $r=0;
         }
  }
-}else {echo "DATA BELUM ADA";}
+}else { $r=0;}
 // $labelcos=json_encode($labelcos); 
 
 
@@ -160,8 +186,7 @@ where plan_proposal.id_dep={$id_dep} and id_fis={$id_fis}  GROUp BY ia.id_prop O
 or die (mysqli_error($link_yics));                 
 if(mysqli_num_rows($label_c)>0){
 while($label_cx = mysqli_fetch_assoc($label_c))
-{
-$labelcos[]=$label_cx['costia']-$r;
+{$labelcos[]=$label_cx['costia']-$r;
  }
 }else {echo "DATA BELUM ADA";}
 $labelcos=json_encode($labelcos); 

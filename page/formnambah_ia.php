@@ -261,10 +261,17 @@ if(mysqli_num_rows($budget_reject)>0){
                                                                 style="color:black;">Valid
                                                                 Until </label>
                                                             <div class="col-md-4">
-                                                                <input type="date" class="form-control" id="time_ia"
+                                                                <?php 
+                        $data_fiscal = single_query("SELECT id_fis,akhir from time_fiscal where status='aktif'");
+                        $id_fis = $data_fiscal['id_fis'];
+                        $akhir_fiscal = $data_fiscal['akhir'];
+                        
+                    ?>
+                                                                <input type="text" class="form-control" id="time_ia"
                                                                     placeholder="Diisi tanggal updaate" name="time_ia"
                                                                     autocomplete="off" min="<?= $awal ?>"
-                                                                    max="<?= $akhir ?>" required>
+                                                                    value="<?= $akhir_fiscal ?> " max="<?= $akhir ?>"
+                                                                    required readonly>
                                                             </div>
                                                             <label class="col-md-2 col-form-label text-left"
                                                                 style="color:black;">Remark
@@ -440,7 +447,7 @@ if(mysqli_num_rows($budget_reject)>0){
 
 
                                                                     <tr>
-                                                                        <td class="text-left">Total Cost Ia Ditolak
+                                                                        <td class="text-left">Total Cost Ia Return
                                                                         </td>
                                                                         <td> &nbsp;:&nbsp;</td>
                                                                         <td><?= $IDR." ". number_format($ia_proprjct, 2, ',', '.');?>

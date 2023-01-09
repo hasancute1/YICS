@@ -372,8 +372,45 @@ include '../elemen/header.php';?>
                         <!-- End Third Row -->
                     </div>
                 </div>
+                <div class="notifikasi_"></div>
             </div>
             <!-- End Page -->
+            <!--############ modal edit ################# -->
+            <form action="raeson.php" method="post" id="form-reason">
+                <div class="modal fade modal-info " id="npk" aria-hidden="true" aria-labelledby="EditAlokasiBudget"
+                    role="dialog" tabindex="-1">
+                    <div class="modal-dialog modal-simple modal-center modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <h3 class="modal-title">Cancel Reason</h3>
+                            </div>
+                            <div class="modal-body">
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <br>
+                                        <input type="text" name="id_prop" class="form-control" value="<?= $id; ?>"
+                                            hidden>
+                                        <input type="text" name="reason" class="form-control " id="reason"
+                                            placeholder="Alasan kenapa no ia dihentikan..." required
+                                            style=”width:500%;”>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <input type="submit" id="konfir" class="btn btn-primary float-right" value="Konfirmasi">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+            <!--############ end modal edit ################# -->
+
 
             <!-- Footer -->
             <?php include '../elemen/footer.php';?>
@@ -446,7 +483,25 @@ include '../elemen/header.php';?>
                             // maka id  apporove step  index di klik
                             $('#reject_step' + next_index).click();
                         }
+                        $('#npk').modal('show');
                     }
+                });
+                $("#form-reason").on('click', '#konfir', function(a) {
+                    a.preventDefault()
+                    var reason = $('#reason').val();
+                    var dataform = $("#form-reason").serialize();
+                    $.ajax({
+                        type: 'POST',
+                        url: "../proses/dashboard/ajax/post_insert.php",
+                        data: dataform,
+                        success: function(msg) {
+                            $('#npk').modal('hide');
+                            $(".notifikasi_").html(msg);
+                            // $('#subForm' + index).trigger("reset");
+                            // console.log(ind)
+
+                        }
+                    });
                 });
             });
             </script>

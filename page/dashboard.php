@@ -377,14 +377,7 @@ if(mysqli_num_rows($budget_reject)>0){
                                                 <div class="col-lg-4 col-md-4 ">
                                                     <?php 
                                                     $SessionArea= $_SESSION['area'];
-                                                    $proposal = mysqli_query($link_yics ,
-                                                    "SELECT * FROM plan_proposal 
-                                                    JOIN depart ON plan_proposal.id_dep = depart.id_dep
-                                                    JOIN kategori_proposal  ON plan_proposal.id_kat = kategori_proposal.id_kat
-                                                    JOIN time_fiscal  ON plan_proposal.id_fis = time_fiscal.id_fis                             
-                                                    JOIN data_user  ON data_user.area = plan_proposal.area                          
-                                                    WHERE time_fiscal.id_fis = '$id_fis' AND plan_proposal.area= '$SessionArea'")or die (mysqli_error($link_yics));
-                                                    if(mysqli_num_rows($proposal)>0){?>
+                                                   ?>
                                                     <div class="float-right">
                                                         <i href="" data-toggle="tooltip"
                                                             data-original-title="Tambah Data">
@@ -395,14 +388,6 @@ if(mysqli_num_rows($budget_reject)>0){
                                                                 <i class="icon wb-plus" aria-hidden="true"></i></button>
                                                         </i>
                                                     </div>
-                                                    <?php 
-                                                    } else{?>
-                                                    <div class="float-right">
-                                                        <button type="button" onclick="submitResult(event)"
-                                                            class="btn btn-icon btn-info btn-xs btn-outline">
-                                                            <i class="icon wb-plus" aria-hidden="true"></i></button>
-                                                    </div>
-                                                    <?php  }  ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -540,10 +525,23 @@ if(mysqli_num_rows($budget_reject)>0){
 								$color_progress = "";
 								$text_progress = "0%";
 							  }
+                              $alasan=mysqli_query($link_yics,"SELECT * FROM notif_prop_rjct 
+                                                                JOIN proposal ON notif_prop_rjct.id_prop = proposal.id_prop
+                                                                WHERE notif_prop_rjct.id_prop = '$data[id_prop]'")or die (mysqli_error($link_yics)); 
+                                                                if(mysqli_num_rows($alasan)>0){     
+                                                                $d_alsn=mysqli_fetch_assoc($alasan);
+                                                                $no_iaf=$d_alsn['proposal'];
+                                                                $rea=$d_alsn['reason'];                                                                
+                                                             }else{
+                                                                 $no_iaf="proposal anda";
+                                                                $rea="ditolak";
+                                                                
+                                                             }
                               ?>
                                                         </td>
 
-                                                        <td class="align-middle text-center">
+                                                        <td class="align-middle text-center <?= ($text_progress == "STOP")? "reason":""; ?>"
+                                                            data-reason="<?=$rea?> " data-noia="<?=$no_iaf?>">
 
                                                             <div class="progress mt-20 text-center ">
                                                                 <div class="progress-bar progress-bar-striped  <?=$color_progress?> active"
@@ -588,6 +586,10 @@ if(mysqli_num_rows($budget_reject)>0){
                                                                     <i class="icon oi-trashcan" aria-hidden="true"></i>
                                                                 </button>
                                                             </a>
+                                                            <button type="button" class="btn btn-icon btn-danger kontak"
+                                                                data-id="<?php echo $data['id_prop']; ?>">
+                                                                <i class="icon fa-address-card" aria-hidden="true"></i>
+                                                            </button>
                                                             <?php } ?>
 
                                                         </td>
@@ -1001,18 +1003,10 @@ if(mysqli_num_rows($proposal)>0){
                             <label class="col-md-2 col-form-label" style="color:black;">Periode tahun</label>
                             <div class="col-md-10">
                                 <div class="form-group">
-                                    <select name="id_fis" class="form-control" required>
-                                        <?php 
-                                               foreach($proposal AS $a ){?>
-                                        <option value="<?= $a['id_fis'] ?>"><?= $a['periode'] ?></option>)
-                                        <?php }
-                                                 ?>
-                                    </select>
+                                    <input type="text" name="id_fis" class="form-control" required
+                                        value="<?= $id_fis ?>" hidden>
+                                    <input type="text" class="form-control" required value="<?= $periode ?>" readonly>
                                 </div>
-
-
-
-
                             </div>
 
                         </div>
@@ -1020,14 +1014,19 @@ if(mysqli_num_rows($proposal)>0){
                             <label class="col-md-2 col-form-label text-left" style="color:black;">Department</label>
                             <div class="col-md-4">
                                 <div class="form-group">
+
                                     <select name="depart" class="form-control" required>
                                         <option value="">Pilih Departement</option>
                                         <?php 
-                                               foreach($proposal AS $a ){?>
-                                        <option value="<?= $a['id_dep'] ?>"><?= $a['depart'] ?></option>)
-                                        <?php }
-                                                 ?>
-
+                                        $depart = mysqli_query($link_yics,"SELECT * FROM depart") or die (mysqli_error($link_yics));
+                                        if(mysqli_num_rows($depart)>0){
+                                        while( $rows_depart= mysqli_fetch_assoc($depart)){?>
+                                        <option value="<?php echo $rows_depart['id_dep'] ?>">
+                                            <?php echo $rows_depart['depart'] ?></option>
+                                        <?php 
+                                        } 
+                                        }
+                                            ?>
                                     </select>
                                 </div>
                             </div>
@@ -1035,12 +1034,17 @@ if(mysqli_num_rows($proposal)>0){
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <select name="kategori" type="text" class="form-control" required>
-                                        <option value="">Pilih Category</option>
+                                        <option value="">Pilih Category </option>
                                         <?php 
-                                               foreach($proposal AS $a ){?>
-                                        <option value="<?= $a['id_kat'] ?>"><?= $a['kategori'] ?></option>)
-                                        <?php }
-                                                 ?>
+                                        $kategori = mysqli_query($link_yics,"SELECT * FROM kategori_proposal") or die (mysqli_error($link_yics));
+                                        if(mysqli_num_rows($kategori)>0){
+                                        while( $rows_kategori= mysqli_fetch_assoc($kategori)){?>
+                                        <option value="<?php echo $rows_kategori['id_kat'] ?>">
+                                            <?php echo $rows_kategori['kategori'] ?></option>
+                                        <?php 
+                                        } 
+                                        }
+                                            ?>
                                     </select>
                                 </div>
                             </div>
@@ -1049,14 +1053,9 @@ if(mysqli_num_rows($proposal)>0){
                             <label class="col-md-2 col-form-label text-left" style="color:black;">Proposal</label>
                             <div class="col-md-10">
 
-                                <select type="text" class="form-control " name="proposal" required>
-                                    <option value="">Pilih Proposal</option>
-                                    <?php 
-                                               foreach($proposal AS $a ){?>
-                                    <option value="<?= $a['proposal'] ?>"><?= $a['proposal'] ?></option>)
-                                    <?php }
-                                                 ?>
-                                </select>
+                                <input type="text" class="form-control " name="proposal"
+                                    placeholder="Isi judul Proposal..." required>
+
                             </div>
                         </div>
                         <div class="form-group row">
@@ -1098,6 +1097,15 @@ if(mysqli_num_rows($proposal)>0){
                         </div>
 
                         <div class="form-group row">
+                            <label class="col-md-2 col-form-label" style="color:black;">No Hp</label>
+
+                            <div class="col-md-10 input-group">
+                                <input type="number" class="form-control" name="hp"
+                                    placeholder="No hp yang bisa dihubungi.." autocomplete="off" required>
+                            </div>
+
+                        </div>
+                        <div class="form-group row">
                             <label class="col-md-2 col-form-label" style="color:black;">Keterangan</label>
 
                             <div class="col-md-10 input-group">
@@ -1120,7 +1128,18 @@ if(mysqli_num_rows($proposal)>0){
     </div>
     </div>
     <!-- Modal end tambah plannning proposal -->
-
+    <!--############ modal edit ################# -->
+    <form role="form" method="POST" id="form-edit">
+        <div class="modal fade modal-info " id="modal-edit" aria-hidden="true" aria-labelledby="EditAlokasiBudget"
+            role="dialog" tabindex="-1">
+            <div class="modal-dialog modal-simple modal-center modal-lg">
+                <div class="modal-content">
+                    <div id="data-edit"> </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!--############ end modal edit ################# -->
 
 
 
@@ -1226,15 +1245,31 @@ if(mysqli_num_rows($proposal)>0){
     })
     </script>
     <script>
-    function submitResult(e) {
+    $(document).on('click', '.kontak', function(e) {
+        e.preventDefault();
+        $("#modal-edit").modal('show');
+        $.post('../proses/dashboard/ajax/info.php', {
+                id: $(this).attr('data-id'), //id prop                
+            },
+            function(html) {
+                $("#data-edit").html(html);
+            }
+        );
+    });
+    </script>
+
+    <script>
+    $(document).on('click', '.reason', function() {
+        var reason = $(this).attr('data-reason');
+        var noia = $(this).attr('data-noia');
         Swal.fire({
-            title: '<strong>MAAF !!! </strong>',
+            title: '<strong></strong>' + noia,
             icon: 'info',
-            html: 'Sahabat belum mengajukan planning proposal ',
+            html: '' + reason,
             showCloseButton: true,
             focusConfirm: false,
             confirmButtonText: '<i">Laporan Diterima !!</i>',
             cancelButtonAriaLabel: 'Close'
         })
-    }
+    })
     </script>

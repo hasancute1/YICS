@@ -11,9 +11,10 @@ if (isset ($_SESSION['yics_user'])){
         $proposal=$_POST ['proposal'];                 
         $benefit=$_POST ['benefit'];             
         $id_matauang=$_POST ['mata_uang'];              
+        $hp=$_POST ['hp'];              
 
         $cost_request=$_POST ['cost'];
-        $cost = str_replace(',','.' ,$cost_request); 
+        $cost = str_replace(',','.' ,$cost_request);  
 
         $id_fis=$_POST ['id_fis']; 
         $username =$_SESSION['yics_user']; 
@@ -54,7 +55,7 @@ if (isset ($_SESSION['yics_user'])){
             $_SESSION['pesan'] = "Data Berhasil Disimpan";
             header('location: ../../page/dashboard.php');
          }
-         $inputproposal = "INSERT INTO proposal (`id_dep`,`username`,`id_kat`,`proposal`,`cost`,`id_fis`,`lampiran`,`id_matauang`,`benefit`) VALUES ('$depart',$username,'$kategori','$proposal','$cost','$id_fis','$file_name','$id_matauang','$benefit')"; 
+         $inputproposal = "INSERT INTO proposal (`id_dep`,`username`,`id_kat`,`proposal`,`cost`,`id_fis`,`lampiran`,`id_matauang`,`benefit`,`hp`) VALUES ('$depart',$username,'$kategori','$proposal','$cost','$id_fis','$file_name','$id_matauang','$benefit','$hp')"; 
          $sql = mysqli_query($link_yics, $inputproposal)or die(mysqli_error($link_yics));
 
          $last_id = mysqli_insert_id($link_yics);

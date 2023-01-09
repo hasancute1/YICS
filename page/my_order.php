@@ -167,7 +167,7 @@ include '../elemen/header.php';?>
                 });
             });
         });
-    </> --> -->
+    </> -->
 
         <!-- <script type="text/javascript">
     $(document).ready(function() {
