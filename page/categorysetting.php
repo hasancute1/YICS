@@ -126,7 +126,7 @@ include '../elemen/header.php';?>
                                                                         placeholder="Search..." value="<?=$cari?>">
                                                                     <span class="input-group-append">
                                                                         <button type="submit" class="btn btn-primary"><i
-                                                                                class="icon wb-search"
+                                                                                class="icon wb-search v"
                                                                                 aria-hidden="true"></i></button>
                                                                         <a href="categorysetting.php"
                                                                             class="btn btn-danger">Reset</a>
