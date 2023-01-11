@@ -12,6 +12,7 @@ $ia_desc = $_POST['ia_desc'];
 $cost_ia = $_POST['cost_ia'];
 $cost_ia = str_replace(',' , '.' , $cost_ia);
 $time_ia = $_POST['time_ia'];
+$validuntil = $_POST['validuntil'];
 
 $data_prop = single_query("SELECT * from plan_proposal join data_user on data_user.area=plan_proposal.area where id_prop={$id_prop}");
 
@@ -21,7 +22,7 @@ $pic_ia = $_POST['pic_ia'];
 $GLOBALS['id_prop'];
 // cek username sudah ada apa blm?
 $qry = mysqli_query($link_yics, "SELECT ia FROM ia WHERE ia = '$ia' ")or die(mysqli_error($link_yics));
-$qry = mysqli_query($link_yics, "SELECT sum(cost_ia) AS cost_dep JOIN FROM ia WHERE ia = '$ia' ")or die(mysqli_error($link_yics));     
+// $qry = mysqli_query($link_yics, "SELECT sum(cost_ia) AS cost_dep JOIN FROM ia WHERE ia = '$ia' ")or die(mysqli_error($link_yics));     
 // logika pakai session
     if(mysqli_num_rows($qry)>0){
         $_SESSION['info'] = "Gagal Disimpan";
@@ -40,7 +41,7 @@ $qry = mysqli_query($link_yics, "SELECT sum(cost_ia) AS cost_dep JOIN FROM ia WH
     }
 
 
-        $inputproposal = "INSERT INTO ia (`id_prop`,`ia`,`deskripsi`,`cost_ia`,`time_ia`,`pic_ia`) VALUES ('$id_prop','$ia','$ia_desc','$cost_ia','$time_ia','$pic_ia')"; 
+        $inputproposal = "INSERT INTO ia (`id_prop`,`ia`,`deskripsi`,`cost_ia`,`time_ia`,`pic_ia`,`validuntil`) VALUES ('$id_prop','$ia','$ia_desc','$cost_ia','$time_ia','$pic_ia','$validuntil')"; 
         $sql = mysqli_query($link_yics, $inputproposal)or die(mysqli_error($link_yics));
 
         if($notif){

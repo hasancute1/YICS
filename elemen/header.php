@@ -99,12 +99,10 @@
         outline-offset: 7px;
     }
 
-    /* .dropdown-menu-center {
-        left: 50% !important;
-        right: auto !important;
-        text-align: center !important;
-        transform: translate(-50%, 0) !important;
-    } */
+    .coret {
+        text-decoration: line-through;
+    }
+
     @media print {
         @page {
             size: landscape

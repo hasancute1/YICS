@@ -112,23 +112,23 @@ include '../elemen/header.php';?>
                      }
 // ------------------------------------------akumulasi budget yang direject----------------------------
 
-                     $budget_reject = mysqli_query($link_yics ,"SELECT sum(ia.cost_ia) AS cost_rjct FROM tracking_ia
-                     join ia on tracking_ia.id_ia = ia.id_ia
-                     join plan_proposal on ia.id_prop = plan_proposal.id_prop
-                     join depart on plan_proposal.id_dep = depart.id_dep                                           
-                     where plan_proposal.id_dep = {$id_dep} and plan_proposal.id_fis={$id_fis}
-                      and approval = '0' GROUP BY approval = '0'")
-                     or die (mysqli_error($link_yics));                 
-                     if(mysqli_num_rows($budget_reject)>0){
-                         $budget_reject1 = mysqli_fetch_assoc($budget_reject);
-                         if(isset($budget_reject1['cost_rjct'])){
-                            $brjct =$budget_reject1['cost_rjct'];
-                        }else{
-                            $brjct=0;
-                          }                       
-                      }else{
-                        $brjct=0;
-                      }
+                    //  $budget_reject = mysqli_query($link_yics ,"SELECT sum(ia.cost_ia) AS cost_rjct FROM tracking_ia
+                    //  join ia on tracking_ia.id_ia = ia.id_ia
+                    //  join plan_proposal on ia.id_prop = plan_proposal.id_prop
+                    //  join depart on plan_proposal.id_dep = depart.id_dep                                           
+                    //  where plan_proposal.id_dep = {$id_dep} and plan_proposal.id_fis={$id_fis}
+                    //   and approval = '0' GROUP BY approval = '0'")
+                    //  or die (mysqli_error($link_yics));                 
+                    //  if(mysqli_num_rows($budget_reject)>0){
+                    //      $budget_reject1 = mysqli_fetch_assoc($budget_reject);
+                    //      if(isset($budget_reject1['cost_rjct'])){
+                    //         $brjct =$budget_reject1['cost_rjct'];
+                    //     }else{
+                    //         $brjct=0;
+                    //       }                       
+                    //   }else{
+                    //     $brjct=0;
+                    //   }
     // --------------------------------------------------------------quuery label cost actual grafik bar-------------------------------------
 // $tes_ia = mysqli_query($link_yics ,"SELECT sum(cost_ia) as costia 
 // FROM ia
@@ -155,24 +155,24 @@ include '../elemen/header.php';?>
 
 
                       // --------------------------------------------------------------quuery minus nol id prop-------------------------------------
-$r_ia = mysqli_query($link_yics ,"SELECT sum(cost_ia) as cost_i FROM tracking_ia
-join ia on tracking_ia.id_ia = ia.id_ia
-JOIN plan_proposal ON ia.id_prop = plan_proposal.id_prop
-JOIN depart ON plan_proposal.id_dep = depart.id_dep
-where plan_proposal.id_dep={$id_dep} and id_fis={$id_fis} and approval='0'  GROUP BY plan_proposal.id_prop ORDER BY plan_proposal.cost ASC")
-or die (mysqli_error($link_yics));                 
-if(mysqli_num_rows($r_ia)>0){
-while($r_i = mysqli_fetch_assoc($r_ia))
-{
-        if(isset($r_i['cost_i'])){
-        $r= $r_i['cost_i'];
-        echo "$r  dsdsadasda";
-        $r_ib[]=$r;
-        }else{
-        $r=0;
-        }
- }
-}else { $r=0;}
+// $r_ia = mysqli_query($link_yics ,"SELECT sum(cost_ia) as cost_i FROM tracking_ia
+// join ia on tracking_ia.id_ia = ia.id_ia
+// JOIN plan_proposal ON ia.id_prop = plan_proposal.id_prop
+// JOIN depart ON plan_proposal.id_dep = depart.id_dep
+// where plan_proposal.id_dep={$id_dep} and id_fis={$id_fis} and approval='0'  GROUP BY plan_proposal.id_prop ORDER BY plan_proposal.cost ASC")
+// or die (mysqli_error($link_yics));                 
+// if(mysqli_num_rows($r_ia)>0){
+// while($r_i = mysqli_fetch_assoc($r_ia))
+// {
+//         if(isset($r_i['cost_i'])){
+//         $r= $r_i['cost_i'];
+//         echo "$r  dsdsadasda";
+//         $r_ib[]=$r;
+//         }else{
+//         $r=0;
+//         }
+//  }
+// }else { $r=0;}
 // $labelcos=json_encode($labelcos); 
 
 
@@ -186,9 +186,16 @@ where plan_proposal.id_dep={$id_dep} and id_fis={$id_fis}  GROUp BY ia.id_prop O
 or die (mysqli_error($link_yics));                 
 if(mysqli_num_rows($label_c)>0){
 while($label_cx = mysqli_fetch_assoc($label_c))
-{$labelcos[]=$label_cx['costia']-$r;
+{
+    if(isset($label_cx['costia'])){
+                $ra= $label_cx['costia'];               
+                }else{
+                $ra=0;
+                }    
+                $labelcos[]=$ra;
  }
-}else {echo "DATA BELUM ADA";}
+}else {$ra=0;
+    $labelcos[]=$ra;}
 $labelcos=json_encode($labelcos); 
 
 
@@ -197,7 +204,7 @@ $labelcos=json_encode($labelcos);
 // --------------------------------------------------------------quuery label x grafik bar-------------------------------------
                     $label_x = mysqli_query($link_yics ,"SELECT * FROM plan_proposal
                     JOIN depart on plan_proposal.id_dep = depart.id_dep
-                    where plan_proposal.id_dep={$id_dep} and id_fis={$id_fis} ORDER BY cost ASC")
+                    where plan_proposal.id_dep={$id_dep} and id_fis={$id_fis} ORDER BY cost ASC ")
                     or die (mysqli_error($link_yics));                 
                     if(mysqli_num_rows($label_x)>0){
                     while($label_sx = mysqli_fetch_assoc($label_x))
@@ -395,7 +402,7 @@ $labelcos=json_encode($labelcos);
 
                                                             <?php                                                          
                                                             $total_budget = $get_data_budget['budget'];
-                                                            $consumtion_budget_cost = $consumtion_budget['cost']-$brjct;
+                                                            $consumtion_budget_cost = $consumtion_budget['cost'];
 
                                                             $sisa_budget = $total_budget - $consumtion_budget_cost;
 

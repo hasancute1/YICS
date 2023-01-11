@@ -14,7 +14,7 @@ if (isset ($_SESSION['yics_user'])){
         $pic_ia = $_POST['pic_ia'];
         $time_ia = $_POST['time_ia'];
         $cost_ia = $_POST['cost_ia'];
-        $cost_ia = str_replace('.' , '' , $cost_ia);
+        $cost_ia = str_replace(',' , '.' , $cost_ia);
 
     $UbahIa = "UPDATE ia SET id_prop='$id_prop',ia ='$ia',id_ia ='$id_ia',deskripsi ='$ia_desc',pic_ia ='$pic_ia',time_ia ='$time_ia',cost_ia ='$cost_ia' WHERE id_ia = '$id_ia'"; 
        $sql = mysqli_query($link_yics, $UbahIa)or die(mysqli_error($link_yics));

@@ -371,7 +371,7 @@ ia.ia AS no_ia,
 ia.deskripsi AS ia_deskripsi,
 ia.cost_ia AS cost_ia,
 data_user.nama AS pic_ia,
-notif_ia_rjct.reason AS reason,
+
 ia.time_ia AS time_ia
 
 FROM plan_proposal   
@@ -379,14 +379,13 @@ FROM plan_proposal
 LEFT JOIN ia ON plan_proposal.id_prop = ia.id_prop
 LEFT JOIN depart ON plan_proposal.id_dep = depart.id_dep
 LEFT JOIN kategori_proposal  ON plan_proposal.id_kat = kategori_proposal.id_kat
-LEFT JOIN time_fiscal  ON plan_proposal.id_fis = time_fiscal.id_fis
-LEFT JOIN notif_ia_rjct  ON notif_ia_rjct.id_prop = plan_proposal.id_prop                                
+LEFT JOIN time_fiscal  ON plan_proposal.id_fis = time_fiscal.id_fis                                                               
 LEFT JOIN konversi_matauang ON plan_proposal.id_matauang = konversi_matauang.id_matauang
 LEFT JOIN data_user ON ia.pic_ia = data_user.username 
 
 
 
-WHERE depart.id_dep='$id_dept'AND time_fiscal.status= 'aktif' {$query_start} {$query_end} GROUP BY ia.id_ia  ORDER BY plan_proposal.proposal ASC   "
+WHERE depart.id_dep='$id_dept'AND time_fiscal.status= 'aktif' {$query_start} {$query_end}   ORDER BY plan_proposal.proposal ASC   "
 )
 or die (mysqli_error($link_yics));
 $no=0;
@@ -399,10 +398,9 @@ $id_before = '';
 // untuk memvalidasi apakah ada datanya
 if(mysqli_num_rows($proposal)>0){
 while($data = mysqli_fetch_assoc($proposal)){                                   
-$id= $data['id_prop'];
-$n0_ia=$data['reason'];
-// $n0_ia=$data['no_ia'];
-
+$id= $data['id_prop'];                                   
+$cost_ia= $data['cost_ia'];                                   
+// $n0_ia=$data['no_ia'];                                   
 
 if($id_before == $data['id_prop']){
 $no_prop += 1;     
@@ -440,6 +438,20 @@ $remainyen = number_format ((($data['cost']-$data['cost_ia'])/$data['yen']),2,',
 }else if((isset($data['no_ia']) && $no_prop != 1)) {
 $remainyen = number_format (((0-$data['cost_ia'])/$data['yen']),2,',','.'); 
 }else{ $remainyen ="";}
+
+if((isset($data['no_ia']) && $no_prop == 1)){
+$remainIDRx = number_format (($data['cost']-$data['cost_ia']),2,'.',''); 
+}else if((isset($data['no_ia']) && $no_prop != 1)) {
+$remainIDRx = number_format ((0-$data['cost_ia']),2,'.',''); 
+}else{ $remainIDRx ="0";}
+// $id_before = $data['id_prop'];
+
+if((isset($data['no_ia']) && $no_prop == 1)){
+$remainyenx = number_format ((($data['cost']-$data['cost_ia'])/$data['yen']),2,'.',''); 
+}else if((isset($data['no_ia']) && $no_prop != 1)) {
+$remainyenx = number_format (((0-$data['cost_ia'])/$data['yen']),2,'.',''); 
+}else{ $remainyenx ="0";}
+
 if ($remainIDR<0){
 $warnaremain="bg-red-100";
 }else{
@@ -447,7 +459,7 @@ $warnaremain="";
 }
 ?>
 
-                <tr class="<?php if ($no%2==0){ echo "bg-blue-100"; } else{ echo ""; } ?> text-uppercase font-size-10">
+                <tr class="<?php if ($no%2==0){ echo "bg-blue-100"; } else{ echo ""; } ?> text-uppercase">
                     <td> <span class=""><?= $nomor_table ?></span>
                     </td>
                     <td>
@@ -466,42 +478,100 @@ $warnaremain="";
                     </td>
 
                     <td>
-                        <?php  $yen="¥"; ?>
+                        <!-- ---------------------------------------------------------------------------------------angka untuk penjumlahan--------------------------------------------------------------------- -->
+                        <span class="nilai"
+                            hidden><?= ($no_prop == 1)?number_format($data['cost']/$data['yen'], 2, '.', ''):"0"; ?></span>
+                        <!-- ---------------------------------------------------------------------------------------angka untuk penjumlahan--------------------------------------------------------------------- -->
+
+
                         <?= ($no_prop == 1)?number_format($data['cost']/$data['yen'], 2, ',', '.'):""; ?>
                     </td>
                     <td>
-                        <?php
-      $IDR="IDR"; ?>
+                        <!-- ---------------------------------------------------------------------------------------angka untuk penjumlahan--------------------------------------------------------------------- -->
+                        <span class="nilai1"
+                            hidden><?=($no_prop == 1)?number_format ($data['cost'], 2, '.', ''): "0"; ?></span>
+                        <!-- ---------------------------------------------------------------------------------------angka untuk penjumlahan--------------------------------------------------------------------- -->
+
+
 
                         <?=($no_prop == 1)?number_format ($data['cost'],2,',','.'): ""; ?>
                     </td>
-                    <td> <?= (isset($data['no_ia']))? $no_prop: ""; ?>
+                    <td class="<?= ($cost_ia == 0)? "coret":""; ?>">
+                        <?= (isset($data['no_ia']))? $no_prop: ""; ?>
                     </td>
-                    <td><?= $data['no_ia'] ?></td>
+                    <td class="<?= ($cost_ia == 0)? "coret":""; ?>">
+                        <?= $data['no_ia'] ?></td>
                     <td></td>
-                    <td><?= $data['ia_deskripsi'] ?></td>
+                    <td class="<?= ($cost_ia == 0)? "coret":""; ?>">
+                        <?= $data['ia_deskripsi'] ?></td>
                     <td></td>
-                    <td><?= (isset($data['no_ia']))?number_format ($data['cost_ia'],2,',','.'): ""; ?>
-                    </td>
-                    <td></td>
-                    <td><?= (isset($data['no_ia']))?number_format($data['cost_ia']/$data['yen'], 2, ',', '.'): ""; ?>
-                    </td>
-                    <td><?= (isset($data['no_ia']))?number_format ($data['cost_ia'],2,',','.'): ""; ?>
-                    </td>
+                    <td class="<?= ($cost_ia == 0)? "coret":""; ?>">
+                        <!-- ---------------------------------------------------------------------------------------angka untuk penjumlahan--------------------------------------------------------------------- -->
+                        <span class="nilai2"
+                            hidden><?= (isset($data['no_ia']))?number_format ($data['cost_ia'],2,'.',''): "0"; ?></span>
+                        <!-- ---------------------------------------------------------------------------------------angka untuk penjumlahan--------------------------------------------------------------------- -->
 
+                        <?= (isset($data['no_ia']))?number_format ($data['cost_ia'],2,',','.'): ""; ?>
+                    </td>
+                    <td></td>
+                    <td class="<?= ($cost_ia == 0)? "coret":""; ?>">
+                        <!-- ---------------------------------------------------------------------------------------angka untuk penjumlahan--------------------------------------------------------------------- -->
 
-                    <td class="<?=  (isset($data['no_ia']))?$warnaremain: ""; ?>">
+                        <span class="nilai3"
+                            hidden><?= (isset($data['no_ia']))?number_format($data['cost_ia']/$data['yen'], 2, '.', ''): "0"; ?></span>
+                        <!-- ---------------------------------------------------------------------------------------angka untuk penjumlahan--------------------------------------------------------------------- -->
+
+                        <?= (isset($data['no_ia']))?number_format($data['cost_ia']/$data['yen'], 2, ',', '.'): ""; ?>
+                    </td>
+                    <td class="<?= ($cost_ia == 0)? "coret":""; ?>">
+                        <!-- ---------------------------------------------------------------------------------------angka untuk penjumlahan--------------------------------------------------------------------- -->
+                        <span class="nilai4"
+                            hidden><?= (isset($data['no_ia']))?number_format ($data['cost_ia'],2,'.',''): "0"; ?></span>
+                        <!-- ---------------------------------------------------------------------------------------end angka untuk penjumlahan--------------------------------------------------------------------- -->
+
+                        <?= (isset($data['no_ia']))?number_format ($data['cost_ia'],2,',','.'): ""; ?>
+                    </td>
+                    <td class="<?= ($cost_ia == 0)? "coret":""; ?>
+       <?=  (isset($data['no_ia']))?$warnaremain: ""; ?>">
+
+                        <!-- ---------------------------------------------------------------------------------------angka untuk penjumlahan--------------------------------------------------------------------- -->
+                        <span class="nilai5" hidden><?php 
+       if(isset($data['no_ia'])&&$cost_ia == 0){
+        echo 0;
+       }else{?>
+                            <?= (isset($data['no_ia']))?$remainyenx: "0"; ?>
+                            <?php }?></span>
+                        <!-- ---------------------------------------------------------------------------------------end angka untuk penjumlahan--------------------------------------------------------------------- -->
+                        <?php 
+       if(isset($data['no_ia'])&&$cost_ia == 0){
+        echo 0;
+       }else{?>
                         <?= (isset($data['no_ia']))?$remainyen: ""; ?>
+                        <?php }?>
                     </td>
 
-                    <td class="<?=  (isset($data['no_ia']))?$warnaremain: ""; ?>">
+                    <td class="<?= ($cost_ia == 0)? "coret":""; ?> <?=  (isset($data['no_ia']))?$warnaremain: ""; ?>">
+                        <!-- ---------------------------------------------------------------------------------------angka untuk penjumlahan--------------------------------------------------------------------- -->
+                        <span class="nilai6" hidden><?php 
+       if(isset($data['no_ia'])&&$cost_ia == 0){
+        echo 0;
+       }else{?>
+                            <?= (isset($data['no_ia']))?$remainIDRx: "0"; ?>
+                            <?php }?></span>
+                        <!-- ---------------------------------------------------------------------------------------end angka untuk penjumlahan--------------------------------------------------------------------- -->
+                        <?php 
+      if(isset($data['no_ia'])&&$cost_ia == 0){
+        echo 0;
+       }else{?>
                         <?= (isset($data['no_ia']))?$remainIDR: ""; ?>
+                        <?php }?>
                     </td>
-                    <td><?= (isset($data['no_ia']))?date("d M Y", strtotime($data['time_ia'])): "";  ?>
+                    <td class="<?= ($cost_ia == 0)? "coret":""; ?>">
+                        <?= (isset($data['no_ia']))?date("d M Y", strtotime($data['time_ia'])): "";  ?>
                     </td>
-                    <td><?= (isset($data['no_ia']))?$data['pic_ia']: ""; ?>
+                    <td class="<?= ($cost_ia == 0)? "coret":""; ?>">
+                        <?= (isset($data['no_ia']))?$data['pic_ia']: ""; ?>
                     </td>
-
                 </tr>
                 <?php 
 
@@ -511,6 +581,29 @@ $nomor_urut_before = $nomor_urut;
 }
 }
 ?>
+                <tr class="align-middle text-center bg-green-200">
+                    <td class="align-middle text-center bg-green-200">TOTAL
+                    </td>
+                    <td class="align-middle text-center bg-green-200"></td>
+                    <td class="align-middle text-center bg-green-200"></td>
+                    <td class="align-middle text-center bg-green-200"></td>
+                    <td class="align-middle text-center bg-green-200"><span class="hasil"></span></td>
+                    <td class="align-middle text-center bg-green-200"><span class="hasil1"></span></td>
+                    <td class="align-middle text-center bg-green-200"></td>
+                    <td class="align-middle text-center bg-green-200"></td>
+                    <td class="align-middle text-center bg-green-200"></td>
+                    <td class="align-middle text-center bg-green-200"></td>
+                    <td class="align-middle text-center bg-green-200"></td>
+                    <td class="align-middle text-center bg-green-200"><span class="hasil2"></span></td>
+                    <td class="align-middle text-center bg-green-200"></td>
+                    <td class="align-middle text-center bg-green-200"><span class="hasil3"></span></td>
+                    <td class="align-middle text-center bg-green-200"><span class="hasil4"></span></td>
+                    <td class="align-middle text-center bg-green-200"><span class="hasil5"></span></td>
+                    <td class="align-middle text-center bg-green-200"><span class="hasil6"></span></td>
+                    <td class="align-middle text-center bg-green-200"></td>
+                    <td class="align-middle text-center bg-green-200"></td>
+
+                </tr>
             </tbody>
         </table>
     </div>
@@ -650,6 +743,57 @@ if (style.styleSheet) {
 head.appendChild(style);
 document.title = 'CONTROL TABLE YINV <?= $judul[$id_dept]; ?>.pdf';
 window.print();
+</script>
+<script>
+var sum = 0;
+$('.nilai').each(function() {
+    sum += parseFloat($(this).text());
+    itu = sum.toFixed(2).replace(".", ",")
+});
+$('.hasil').text(itu);
+
+var sum1 = 0;
+$('.nilai1').each(function() {
+    sum1 += parseFloat($(this).text());
+    itu1 = sum1.toFixed(2).replace(".", ",")
+});
+$('.hasil1').text(itu1);
+
+var sum2 = 0;
+$('.nilai2').each(function() {
+    sum2 += parseFloat($(this).text());
+    itu2 = sum2.toFixed(2).replace(".", ",")
+});
+$('.hasil2').text(itu2);
+
+var sum3 = 0;
+$('.nilai3').each(function() {
+    sum3 += parseFloat($(this).text());
+    itu3 = sum3.toFixed(2).replace(".", ",")
+});
+$('.hasil3').text(itu3);
+
+var sum4 = 0;
+$('.nilai4').each(function() {
+    sum4 += parseFloat($(this).text());
+    itu4 = sum4.toFixed(2).replace(".", ",")
+});
+$('.hasil4').text(itu4);
+
+var sum5 = 0;
+$('.nilai5').each(function() {
+    sum5 += parseFloat($(this).text());
+    itu5 = sum5.toFixed(2).replace(".", ",")
+});
+$('.hasil5').text(itu5);
+
+
+var sum6 = 0;
+$('.nilai6').each(function() {
+    sum6 += parseFloat($(this).text());
+    itu6 = sum6.toFixed(2).replace(".", ",")
+});
+$('.hasil6').text(itu6);
 </script>
 </body>
 

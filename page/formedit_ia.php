@@ -70,7 +70,7 @@ include '../elemen/header.php';?>
 
                     $id = $_GET['id_ia'];
 
-                    // get data proposal & ia
+                    // get data plan_proposal & ia
                     
                     $data_ia = single_query("SELECT
                      plan_proposal.id_prop AS id_prop,
@@ -84,15 +84,15 @@ include '../elemen/header.php';?>
                     ia.ia AS ia,
                     ia.cost_ia AS cost_ia,
                     ia.time_ia AS time_ia,
+                    ia.deskripsi AS deskripsi,
                     time_fiscal.awal AS awal,
                     time_fiscal.akhir AS akhir,
-                    ia.deskripsi AS deskripsi,
                     plan_proposal.id_dep 
                     FROM ia 
                     JOIN plan_proposal ON ia.id_prop = plan_proposal.id_prop 
                     JOIN depart ON plan_proposal.id_dep = depart.id_dep
-                    JOIN time_fiscal  ON plan_proposal.id_fis = time_fiscal.id_fis
                     JOIN kategori_proposal  ON plan_proposal.id_kat = kategori_proposal.id_kat
+                    JOIN time_fiscal  ON plan_proposal.id_fis = time_fiscal.id_fis
                     LEFT JOIN konversi_matauang ON plan_proposal.id_matauang = konversi_matauang.id_matauang
                     WHERE id_ia='$id'"); 
 
@@ -103,8 +103,7 @@ include '../elemen/header.php';?>
                         $IDR="IDR";
                         $fis_awal = $data_ia['awal'];
                         $fis_akhir = $data_ia['akhir'];
-
-               // ------------------------------------------akumulasi budget yang direjecT PER DEPART----------------------------
+// ------------------------------------------akumulasi budget yang direjecT PER DEPART----------------------------
 
 $budget_reject = mysqli_query($link_yics ,"SELECT sum(ia.cost_ia) AS cost_rjct FROM tracking_ia
 join ia on tracking_ia.id_ia = ia.id_ia
@@ -143,14 +142,18 @@ if(mysqli_num_rows($budget_reject)>0){
    $ia_proprjct=0;
  }
 // ------------------------------------------akumulasi budget yang direjecT PER PROPOSAL----------------------------
-         
 
-                        $get_data_ia = single_query("SELECT sum(cost_ia) as cost_ia FROM ia 
-                        JOIN plan_proposal on ia.id_prop = plan_proposal.id_prop
-                        join depart on plan_proposal.id_dep = depart.id_dep
-                        
-                        where plan_proposal.id_dep = {$id_dep} and plan_proposal.id_fis={$id_fis}");
-                                            $consumtion_budget = $get_data_ia['cost_ia']-$brjct;
+
+
+
+
+
+$get_data_ia = single_query("SELECT sum(cost_ia) as cost_ia FROM ia 
+JOIN plan_proposal on ia.id_prop = plan_proposal.id_prop
+join depart on plan_proposal.id_dep = depart.id_dep
+
+where plan_proposal.id_dep = {$id_dep} and plan_proposal.id_fis={$id_fis}");
+                    $consumtion_budget = $get_data_ia['cost_ia']-$brjct;
 
                     $get_data_budget1 = mysqli_query($link_yics ,"SELECT * FROM budget where id_dep='$id_dep' and id_fis='$id_fis'");
                     $get_data_budget = mysqli_fetch_assoc($get_data_budget1);
@@ -231,18 +234,27 @@ if(mysqli_num_rows($budget_reject)>0){
                                                             <div class="col-md-4">
                                                                 <span
                                                                     style="color:red;font-size: 13px;font-style: italic;">*(Sisa
-                                                                    budget <?= $dep ?> : IDR
-                                                                    <?= number_format($sisa_budget,2,',','.')  ?>)</span>
+                                                                    budget <?= $dep ?> : IDR </span>
+                                                                <span
+                                                                    style="color:red;font-size: 13px;font-style: italic;"
+                                                                    class="cek">
+                                                                    <?= number_format($sisa_budget,2,',','.')  ?></span>
+                                                                <span
+                                                                    style="color:red;font-size: 13px;font-style: italic;"
+                                                                    class="cek2 d-none">
+                                                                    <?= number_format($sisa_budget,2,',','.')  ?></span>
+
                                                                 <div class="input-group">
                                                                     <div class="input-group-prepend">
                                                                         <span class="input-group-text">IDR</span>
                                                                     </div>
-                                                                    <input type="text" class="form-control"
+                                                                    <input type="text" class="form-control uu"
                                                                         autocomplete="off" placeholder="Nominal Rupiah"
                                                                         name="cost_ia" id="cost_ia" required
                                                                         value="<?=number_format($data_ia['cost_ia'],2,',','') ?>">
                                                                 </div>
                                                             </div>
+
                                                             <label class="col-md-2 col-form-label mt-4"
                                                                 style="color:black;">In
                                                                 JPY</label>
@@ -267,29 +279,70 @@ if(mysqli_num_rows($budget_reject)>0){
                                                                 Valid
                                                                 Update</h4>
                                                         </div>
+
                                                         <div class="form-group row">
+                                                            <label class="col-md-2 col-form-label text-left"
+                                                                style="color:black;">Valid
+                                                                In </label>
+                                                            <div class="col-md-4">
+                                                                <div class="input-group">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text">
+                                                                            <i class="icon wb-calendar"
+                                                                                aria-hidden="true"></i>
+                                                                        </span>
+                                                                    </div>
+                                                                    <input type="date" id="time_ia"
+                                                                        placeholder="Diisi tanggal updaate"
+                                                                        name="time_ia" autocomplete="off"
+                                                                        class="form-control datepicker"
+                                                                        value="<?=$data_ia['time_ia'] ?>"
+                                                                        min="<?= $awal ?>" max="<?= $akhir?>" required>
+                                                                </div>
+                                                            </div>
                                                             <label class="col-md-2 col-form-label text-left"
                                                                 style="color:black;">Valid
                                                                 Until </label>
                                                             <div class="col-md-4">
-                                                                <input type="date" class="form-control" id="time_ia"
-                                                                    placeholder="Diisi tanggal updaate" name="time_ia"
-                                                                    autocomplete="off" max="<?= $fis_akhir ?>"
-                                                                    min="<?= $fis_awal ?>"
-                                                                    value="<?=$data_ia['time_ia'] ?>">
+                                                                <?php 
+                                                                    $data_fiscal = single_query("SELECT id_fis,akhir from time_fiscal where status='aktif'");
+                                                                    $id_fis = $data_fiscal['id_fis'];
+                                                                    $akhir_fiscal = $data_fiscal['akhir'];
+                                                                    
+                                                                ?>
+                                                                <div class="input-group">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text">to</span>
+                                                                    </div>
+                                                                    <input type="text" class="form-control bg-grey-200"
+                                                                        placeholder="Diisi tanggal updaate"
+                                                                        name="validuntil" autocomplete="off"
+                                                                        min="<?= $awal ?>" value="<?= $akhir_fiscal ?> "
+                                                                        max="<?= $akhir ?>" required readonly>
+                                                                </div>
+
                                                             </div>
+                                                        </div>
+                                                        <div class="form-group row">
                                                             <label class="col-md-2 col-form-label text-left"
                                                                 style="color:black;">Remark
                                                                 Ct Update</label>
                                                             <div class="col-md-4">
-                                                                <select id="pic_ia" class="form-control bg-grey-200"
-                                                                    autocomplete="off" name="pic_ia">
-                                                                    <option value="<?= $_SESSION['yics_user']; ?>">
-                                                                        <?= $_SESSION['yics_nama']; ?>
-                                                                    </option>
-                                                                </select>
-                                                            </div>
+                                                                <input type="text" class="form-control bg-grey-200"
+                                                                    autocomplete="off" name="pic_ia" hidden
+                                                                    value="<?= $_SESSION['yics_user']; ?>">
+                                                                <div class="input-group">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text"><i
+                                                                                class="icon wb-user"></i></span>
+                                                                    </div>
+                                                                    <input type="text" id="pic_ia"
+                                                                        class="form-control bg-grey-200"
+                                                                        autocomplete="off"
+                                                                        value="<?= $_SESSION['yics_nama']; ?>">
+                                                                </div>
 
+                                                            </div>
                                                         </div>
                                                 </div>
                                                 <div class="card-footer text-right card-footer-transparent">
@@ -298,8 +351,8 @@ if(mysqli_num_rows($budget_reject)>0){
                                                         class="btn bg-blue-grey-800 ">
                                                         <span>KEMBALI</span>
                                                     </a>
-                                                    <button type="submit" style="border-radius:10px;"
-                                                        class="btn btn-primary ">SUBMIT</button>
+                                                    <button type="submit " style="border-radius:10px;"
+                                                        class="btn btn-primary validasi " disabled>SUBMIT</button>
                                                 </div>
                                                 </form>
                                             </div>
@@ -470,20 +523,14 @@ if(mysqli_num_rows($budget_reject)>0){
                                                                         </td>
                                                                     </tr>
 
-                                                                    <tr>
-                                                                        <td class="text-left">Total Cost Ia Ditolak
-                                                                        </td>
-                                                                        <td> &nbsp;:&nbsp;</td>
-                                                                        <td><?= $IDR." ". number_format($ia_proprjct, 2, ',', '.');?>
-                                                                        </td>
-                                                                    </tr>
+
 
                                                                     <tr>
                                                                         <td class="text-left">Available Saldo Proposal
                                                                         </td>
                                                                         <td> &nbsp;:&nbsp;</td>
 
-                                                                        <td><?= $IDR." ". number_format(($data_ia['cost'])-($total_costia['total'])+$ia_proprjct, 2, ',', '.');?>
+                                                                        <td><?= $IDR." ". number_format(($data_ia['cost'])-($total_costia['total']), 2, ',', '.');?>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
@@ -605,4 +652,32 @@ if(mysqli_num_rows($budget_reject)>0){
             })
         })
     })
+    </script>
+    <script>
+    $(document).ready(function() {
+        $('.uu').keyup(function() {
+            $('.cek').addClass('d-none');
+            $('.cek2').removeClass('d-none');
+            var sum6 = $('.uu').val().replace(",", ".");
+            var sumd6 = $('.cek').text().replace(",", ".");
+            var iii = sumd6 - sum6
+            ii = iii.toFixed(2) //agar yang di belakang koma hanya 2
+            if (ii < 0) {
+                Swal.fire({
+                    title: '<strong> SISA SALDO TIDAK MENCUKUPI</strong>',
+                    icon: 'warning',
+                    html: 'IDR &nbsp' + ii,
+                    showCloseButton: true,
+                    focusConfirm: false,
+                    confirmButtonText: '<i">Laporan Diterima !!</i>',
+                    cancelButtonAriaLabel: 'Close'
+                })
+                $('.validasi').prop("disabled", true);
+            } else {
+                $('.validasi').prop("disabled", false);
+            }
+            $('.cek2').text(ii);
+            // console.log(ii);
+        });
+    });
     </script>

@@ -87,7 +87,7 @@ if (isset ($_SESSION['yics_user'])){
           }else if(isset($_POST['reject_step'.$i])){
                $max +=1;
                if($jml_data > 0){
-                   
+                   $saldo_berkurang =mysqli_query($link_yics,"UPDATE ia SET cost_ia = '0' WHERE `id_ia` =  '$id_ia'");
                     $sql = mysqli_query($link_yics,"UPDATE tracking_ia SET approval = '0', `time` = '$time' WHERE `id_ia` =  '$id_ia' AND id_prog = '$prog'");
                    
                     if(!$sql){
@@ -108,6 +108,7 @@ if (isset ($_SESSION['yics_user'])){
 
                     }
                }else{
+                    $saldo_berkurang =mysqli_query($link_yics,"UPDATE ia SET cost_ia = '0' WHERE `id_ia` =  '$id_ia'");
                     $insertTracking = " INSERT INTO tracking_ia (`id_ia`, `id_prog`, `approval`,`username`,`time`) VALUES  ('$id_ia', '$prog', '0','$pic', '$time' )";
                     $sql = mysqli_query($link_yics, $insertTracking)or die(mysqli_error($link_yics));
                     if(!$sql){
