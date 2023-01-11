@@ -516,7 +516,7 @@ $id_dept = $_GET['dept'];
                                                                     <?php }?>
                                                                 </td>
                                                                 <td class="<?= ($cost_ia == 0)? "coret":""; ?>">
-                                                                    <?= (isset($data['no_ia']))?date("d M Y", strtotime($data['time_ia'])): "";  ?>
+                                                                    <?= (isset($data['no_ia']))?date("d M Y", strtotime( $akhirf)): "";  ?>
                                                                 </td>
                                                                 <td class="<?= ($cost_ia == 0)? "coret":""; ?>">
                                                                     <?= (isset($data['no_ia']))?$data['pic_ia']: ""; ?>

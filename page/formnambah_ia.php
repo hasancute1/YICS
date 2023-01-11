@@ -305,7 +305,7 @@ if(mysqli_num_rows($budget_reject)>0){
                                                                     <input type="text" class="form-control bg-grey-200"
                                                                         placeholder="Diisi tanggal updaate"
                                                                         name="validuntil" autocomplete="off"
-                                                                        min="<?= $awal ?>" value="<?= $akhir_fiscal ?> "
+                                                                        min="<?= $awal ?>" value="<?= $akhir_fiscal ?>"
                                                                         max="<?= $akhir ?>" required readonly>
                                                                 </div>
 
@@ -318,7 +318,7 @@ if(mysqli_num_rows($budget_reject)>0){
                                                             <div class="col-md-4">
                                                                 <input type="text" class="form-control bg-grey-200"
                                                                     autocomplete="off" name="pic_ia" hidden
-                                                                    value=" <?= $_SESSION['yics_user']; ?>">
+                                                                    value="<?= $_SESSION['yics_user']; ?>">
                                                                 <div class="input-group">
                                                                     <div class="input-group-prepend">
                                                                         <span class="input-group-text"><i
@@ -327,7 +327,7 @@ if(mysqli_num_rows($budget_reject)>0){
                                                                     <input type="text" id="pic_ia"
                                                                         class="form-control bg-grey-200"
                                                                         autocomplete="off"
-                                                                        value=" <?= $_SESSION['yics_nama']; ?>">
+                                                                        value="<?= $_SESSION['yics_nama']; ?>">
                                                                 </div>
 
                                                             </div>
@@ -416,11 +416,31 @@ if(mysqli_num_rows($budget_reject)>0){
                                                                     </thead>
                                                                     <tbody>
                                                                         <?php 
-                                                        $no = 1 ;                                                        
-                                                        $list_ia = mysqli_query($link_yics,"SELECT * FROM ia JOIN data_user ON data_user.username = ia.pic_ia WHERE id_prop = '$id'")                                                       
-                                                        or die(mysqli_error($link_yics));
+                                                        $no = 1 ;
+                                                        
+                                                        $list_ia = mysqli_query($link_yics,"SELECT 
+                                                        id_ia,
+                                                        deskripsi,
+                                                        ia,
+                                                        deskripsi,
+                                                        id_prop,
+                                                        cost_ia,
+                                                        data_user.nama AS pic_ia,
+                                                        time_ia
+                                                        FROM ia 
+                                                        LEFT JOIN data_user
+                                                        ON ia.pic_ia = data_user.username 
+                                                        WHERE id_prop = '$id'") or die(mysqli_error($link_yics));
                                                             if(mysqli_num_rows($list_ia)>0){
-                                                            while($row = mysqli_fetch_assoc($list_ia)){?>
+                                                              
+                                                            while($row = mysqli_fetch_assoc($list_ia)){  
+
+                                                               
+
+                                                            
+                                                                ?>
+
+
                                                                         <tr class="row-ia text-center">
                                                                             <td hidden><?= $row['id_ia']; ?></td>
                                                                             <td><?= $no; ?></td>
@@ -430,9 +450,9 @@ if(mysqli_num_rows($budget_reject)>0){
 
                                                                             </td>
 
-                                                                            <td><?= date("d M Y", strtotime($row['validuntil'])); ?>
+                                                                            <td><?= date("d M Y", strtotime($akhir_fiscal)); ?>
                                                                             </td>
-                                                                            <td><?= $row['nama']; ?></td>
+                                                                            <td><?= $row['pic_ia']; ?></td>
                                                                             <td><?= $IDR." ".number_format($row['cost_ia'], 2, ',', '.');?>
                                                                             <td>
                                                                                 <a href="formedit_ia.php?id_ia=<?= $row['id_ia']?>"

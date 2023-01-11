@@ -471,7 +471,7 @@ where plan_proposal.id_dep = {$id_dep} and plan_proposal.id_fis={$id_fis}");
 
                                                                             </td>
 
-                                                                            <td><?= date("d M Y", strtotime($row['time_ia'])); ?>
+                                                                            <td><?= date("d M Y", strtotime($akhir_fiscal)); ?>
                                                                             </td>
                                                                             <td><?= $row['pic_ia']; ?></td>
                                                                             <td><?= $IDR." ".number_format($row['cost_ia'], 2, ',', '.');?>

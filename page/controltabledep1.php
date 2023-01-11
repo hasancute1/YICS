@@ -246,122 +246,137 @@ $id_dept = $_GET['dept'];
 
                                                         <!-- query proposal control table -->
                                                         <?php 
-                                                        $IDR = "IDR";
+$IDR = "IDR";
 
-                             // where from request 
+// where from request 
 
-                             if(isset($_GET['start'])){
+if(isset($_GET['start'])){
 
-                                $query_start = "AND ia.time_ia >= '{$_GET['start']}'";
+$query_start = "AND ia.time_ia >= '{$_GET['start']}'";
 
-                             }else{
-                                $query_start = "";
-                             }
-
-
-                             if(isset($_GET['end'])){
-
-                                $query_end = "AND ia.time_ia <= '{$_GET['end']}'";
-
-                             }else{
-                                $query_end = "";
-                             }
+}else{
+$query_start = "";
+}
 
 
-                             if( $_SESSION['yics_level'] == "1"){
-                                $query_level = "AND proposal.username={$_SESSION['yics_user']}";
-                             }else{
-                                $query_level = "";
-                             }
+if(isset($_GET['end'])){
+
+$query_end = "AND ia.time_ia <= '{$_GET['end']}'";
+
+}else{
+$query_end = "";
+}
 
 
-                              $proposal = mysqli_query($link_yics ,"SELECT
-                                plan_proposal.id_prop AS id_prop,
-                                depart.id_dep AS id_dep,
-                                depart.depart AS depart,
-                                kategori_proposal.kategori AS kategori,
-                                time_fiscal.status AS `status`,
-                                plan_proposal.proposal AS proposal,                                                          
-                                plan_proposal.cost AS cost,
-                                konversi_matauang.dollar AS dollar,
-                                konversi_matauang.yen AS yen,
-                                ia.id_ia AS id_ia,
-                                ia.ia AS no_ia,
-                                ia.deskripsi AS ia_deskripsi,
-                                ia.cost_ia AS cost_ia,
-                                data_user.nama AS pic_ia,
-                                ia.time_ia AS time_ia
-                                
-                                FROM plan_proposal   
-                               
-                                LEFT JOIN ia ON plan_proposal.id_prop = ia.id_prop
-                                LEFT JOIN depart ON plan_proposal.id_dep = depart.id_dep
-                                LEFT JOIN kategori_proposal  ON plan_proposal.id_kat = kategori_proposal.id_kat
-                                LEFT JOIN time_fiscal  ON plan_proposal.id_fis = time_fiscal.id_fis
-                                
-                                LEFT JOIN konversi_matauang ON plan_proposal.id_matauang = konversi_matauang.id_matauang
-                                LEFT JOIN data_user ON ia.pic_ia = data_user.username 
-                                
-                               
-                                
-                                WHERE depart.id_dep='$id_dept'AND time_fiscal.status= 'aktif' {$query_start} {$query_end}"
-                                )
-                                or die (mysqli_error($link_yics));
-                                $no=0;
-                                $nomor_urut=0;
-                                $nomor_urut_before =0;
-                                
-                                $no_prop=0;
-                                $id_before = '';
-
-                                // untuk memvalidasi apakah ada datanya
-                                if(mysqli_num_rows($proposal)>0){
-                                while($data = mysqli_fetch_assoc($proposal)){                                   
-                                    $id= $data['id_prop'];
-                                    
-
-                                    if($id_before == $data['id_prop']){
-                                        $no_prop += 1;     
-                                        $sembunyikan_nomor = "hidden";                                   
-                                    }else{
-                                        $no_prop = 1;
-                                        $no++;
-                                        $nomor_urut += 1;
-                                        $sembunyikan_nomor = ""; 
-                                        
-                                    }
-
-                                    if($id_before == $data['id_prop']){
-                                        $nomor_table = "";
-                                    }else{
-                                       
-                                        $nomor_table = $nomor_urut;
-                                    }
+if( $_SESSION['yics_level'] == "1"){
+$query_level = "AND proposal.username={$_SESSION['yics_user']}";
+}else{
+$query_level = "";
+}
 
 
-                                    if ($data['id_ia']>0){
-                                        $tombol_hidup="";
-                                    }else{
-                                        $tombol_hidup="disabledlink"; 
-                                    }
-                                    if((isset($data['no_ia']) && $no_prop == 1)){
-                                        $remainIDR = number_format (($data['cost']-$data['cost_ia']),0,',','.'); 
-                                       }else if((isset($data['no_ia']) && $no_prop != 1)) {
-                                        $remainIDR = number_format ((0-$data['cost_ia']),0,',','.'); 
-                                       }else{ $remainIDR ="";}
-                                    // $id_before = $data['id_prop'];
+$proposal = mysqli_query($link_yics ,"SELECT
+plan_proposal.id_prop AS id_prop,
+depart.id_dep AS id_dep,
+depart.depart AS depart,
+kategori_proposal.kategori AS kategori,
+time_fiscal.status AS `status`,
+plan_proposal.proposal AS proposal,                                                          
+plan_proposal.cost AS cost,
+konversi_matauang.dollar AS dollar,
+konversi_matauang.yen AS yen,
+ia.id_ia AS id_ia,
+ia.ia AS no_ia,
+ia.deskripsi AS ia_deskripsi,
+ia.cost_ia AS cost_ia,
+data_user.nama AS pic_ia,
 
-                                    if((isset($data['no_ia']) && $no_prop == 1)){
-                                        $remainyen = number_format ((($data['cost']-$data['cost_ia'])/$data['yen']),2,',','.'); 
-                                       }else if((isset($data['no_ia']) && $no_prop != 1)) {
-                                        $remainyen = number_format (((0-$data['cost_ia'])/$data['yen']),2,',','.'); 
-                                       }else{ $remainyen ="";}
-                                    if ($remainIDR<0){
-                                        $warnaremain="bg-red-100";
-                                    }else{
-                                        $warnaremain="";
-                                    }
-                                    ?>
+ia.time_ia AS time_ia
+
+FROM plan_proposal   
+
+LEFT JOIN ia ON plan_proposal.id_prop = ia.id_prop
+LEFT JOIN depart ON plan_proposal.id_dep = depart.id_dep
+LEFT JOIN kategori_proposal  ON plan_proposal.id_kat = kategori_proposal.id_kat
+LEFT JOIN time_fiscal  ON plan_proposal.id_fis = time_fiscal.id_fis                                                               
+LEFT JOIN konversi_matauang ON plan_proposal.id_matauang = konversi_matauang.id_matauang
+LEFT JOIN data_user ON ia.pic_ia = data_user.username 
+
+
+
+WHERE depart.id_dep='$id_dept'AND time_fiscal.status= 'aktif' {$query_start} {$query_end}   ORDER BY plan_proposal.proposal ASC   "
+)
+or die (mysqli_error($link_yics));
+$no=0;
+$nomor_urut=0;
+$nomor_urut_before =0;
+
+$no_prop=0;
+$id_before = '';
+
+// untuk memvalidasi apakah ada datanya
+if(mysqli_num_rows($proposal)>0){
+while($data = mysqli_fetch_assoc($proposal)){                                   
+$id= $data['id_prop'];                                   
+$cost_ia= $data['cost_ia'];                                   
+// $n0_ia=$data['no_ia'];                                   
+
+if($id_before == $data['id_prop']){
+$no_prop += 1;     
+$sembunyikan_nomor = "hidden";                                   
+}else{
+$no_prop = 1;
+$no++;
+$nomor_urut += 1;
+$sembunyikan_nomor = ""; 
+
+}
+
+if($id_before == $data['id_prop']){
+$nomor_table = "";
+}else{
+
+$nomor_table = $nomor_urut;
+}
+
+
+if ($data['id_ia']>0){
+$tombol_hidup="";
+}else{
+$tombol_hidup="disabledlink"; 
+}
+if((isset($data['no_ia']) && $no_prop == 1)){
+$remainIDR = number_format (($data['cost']-$data['cost_ia']),2,',','.'); 
+}else if((isset($data['no_ia']) && $no_prop != 1)) {
+$remainIDR = number_format ((0-$data['cost_ia']),2,',','.'); 
+}else{ $remainIDR ="";}
+// $id_before = $data['id_prop'];
+
+if((isset($data['no_ia']) && $no_prop == 1)){
+$remainyen = number_format ((($data['cost']-$data['cost_ia'])/$data['yen']),2,',','.'); 
+}else if((isset($data['no_ia']) && $no_prop != 1)) {
+$remainyen = number_format (((0-$data['cost_ia'])/$data['yen']),2,',','.'); 
+}else{ $remainyen ="";}
+
+if((isset($data['no_ia']) && $no_prop == 1)){
+$remainIDRx = number_format (($data['cost']-$data['cost_ia']),2,'.',''); 
+}else if((isset($data['no_ia']) && $no_prop != 1)) {
+$remainIDRx = number_format ((0-$data['cost_ia']),2,'.',''); 
+}else{ $remainIDRx ="0";}
+// $id_before = $data['id_prop'];
+
+if((isset($data['no_ia']) && $no_prop == 1)){
+$remainyenx = number_format ((($data['cost']-$data['cost_ia'])/$data['yen']),2,'.',''); 
+}else if((isset($data['no_ia']) && $no_prop != 1)) {
+$remainyenx = number_format (((0-$data['cost_ia'])/$data['yen']),2,'.',''); 
+}else{ $remainyenx ="0";}
+
+if ($remainIDR<0){
+$warnaremain="bg-red-100";
+}else{
+$warnaremain="";
+}
+?>
 
                                                         <tr
                                                             class="<?php if ($no%2==0){ echo "bg-blue-100"; } else{ echo ""; } ?> text-uppercase">
@@ -384,72 +399,94 @@ $id_dept = $_GET['dept'];
                                                             </td>
 
 
-                                                            <td> <?= (isset($data['no_ia']))? $no_prop: ""; ?>
+                                                            <td class="<?= ($cost_ia == 0)? "coret":""; ?>">
+                                                                <?= (isset($data['no_ia']))? $no_prop: ""; ?>
                                                             </td>
-                                                            <td><?= $data['no_ia'] ?></td>
+                                                            <td class="<?= ($cost_ia == 0)? "coret":""; ?>">
+                                                                <?= $data['no_ia'] ?></td>
                                                             <td></td>
-                                                            <td><?= $data['ia_deskripsi'] ?></td>
+                                                            <td class="<?= ($cost_ia == 0)? "coret":""; ?>">
+                                                                <?= $data['ia_deskripsi'] ?></td>
 
-
-
-
-
-                                                            <td><?= (isset($data['no_ia']))?date("d M Y", strtotime($data['time_ia'])): "";  ?>
+                                                            <td class="<?= ($cost_ia == 0)? "coret":""; ?>">
+                                                                <?= (isset($data['no_ia']))?date("d M Y", strtotime( $akhirf)): "";  ?>
                                                             </td>
-                                                            <td><?= (isset($data['no_ia']))?$data['pic_ia']: ""; ?></td>
+                                                            <td class="<?= ($cost_ia == 0)? "coret":""; ?>">
+                                                                <?= (isset($data['no_ia']))?$data['pic_ia']: ""; ?>
+                                                            </td>
                                                             <td class="align-middle text-center">
                                                                 <!-- query update progress -->
                                                                 <?php  
-                                                                
-                                                                ///menghitung baris pada progress
-                                                            $kol=mysqli_query($link_yics ,"SELECT id_prog FROM progress")or die (mysqli_error($link_yics));
-                                                            $kolom=mysqli_num_rows($kol);                         
+    
+    ///menghitung baris pada progress
+$kol=mysqli_query($link_yics ,"SELECT id_prog FROM progress")or die (mysqli_error($link_yics));
+$kolom=mysqli_num_rows($kol);                         
 
-                                                                $track_ia = mysqli_query($link_yics ,"SELECT
-                                                                tracking_ia.id_prog AS id_prog, 
-                                                                tracking_ia.approval AS id_approval,
-                                                                
-                                                                progress.step AS step,
-                                                                progress.nama_progress AS progress,
-                                                                approval.approval AS approval
-                                                                FROM tracking_ia   
-                                                                LEFT JOIN 
-                                                                
-                                                                    ( SELECT  progress.step, progress.id_prog, progress.nama_progress AS nama_progress 
-                                                                    FROM progress JOIN tracking_ia ON tracking_ia.id_prog = progress.id_prog 
-                                                                    WHERE tracking_ia.id_ia = '$data[id_ia]'
-                                                                    ORDER BY progress.step DESC) progress 
-                                                                ON tracking_ia.id_prog = progress.id_prog  
-                                                                LEFT JOIN approval ON tracking_ia.approval = approval.id_approval
-                                                                WHERE tracking_ia.id_ia = '$data[id_ia]' ORDER BY progress.step DESC LIMIT 6") or die (mysqli_error($link_yics));
-                                                                
-                                                                if(mysqli_num_rows($track_ia)>0){
-                                                                    $data_track = mysqli_fetch_assoc($track_ia); 
-                                                                    // mencatak angka persenan
-                                                                    
-                                                                    $persen = ($data_track['id_approval'] == 1 )?(ceil(($data_track['step']/$kolom)*100)):100;
-                                                                    if($data_track['id_approval'] == 1 ){
-                                                                        $text_progress = $persen."%";
-                                                                        $color_progress = "progress-bar-info";
-                                                                    }else{
-                                                                        $text_progress = "STOP";
-                                                                        $color_progress = "progress-bar-danger";
-                                                                    }
-                                                                    ?>
+    $track_ia = mysqli_query($link_yics ,"SELECT
+    tracking_ia.id_prog AS id_prog, 
+    tracking_ia.approval AS id_approval,                                                                
+    progress.step AS step,
+    progress.nama_progress AS progress,
+    approval.approval AS approval
+    FROM tracking_ia   
+    LEFT JOIN 
+    
+        ( SELECT  
+        progress.step, 
+        progress.id_prog,
+         progress.nama_progress AS nama_progress 
+        FROM progress 
+        JOIN tracking_ia ON tracking_ia.id_prog = progress.id_prog 
+        WHERE tracking_ia.id_ia = '$data[id_ia]'
+        ORDER BY progress.step DESC) progress 
+    ON tracking_ia.id_prog = progress.id_prog  
+    LEFT JOIN approval ON tracking_ia.approval = approval.id_approval
+    WHERE tracking_ia.id_ia = '$data[id_ia]' ORDER BY progress.step DESC LIMIT 6") or die (mysqli_error($link_yics));
+    
+    if(mysqli_num_rows($track_ia)>0){
+        $data_track = mysqli_fetch_assoc($track_ia); 
+        // mencatak angka persenan
+        
+        $persen = ($data_track['id_approval'] == 1 )?(ceil(($data_track['step']/$kolom)*100)):100;
+        if($data_track['id_approval'] == 1 ){
+            $text_progress = $persen."%";
+            $color_progress = "progress-bar-info";
+        }else{
+            $text_progress = "STOP";
+            $color_progress = "progress-bar-danger";
+        }
+        ?>
                                                                 <span
                                                                     class=" badge badge-round badge-success badge-lg"><?=$data_track['progress']?></span>
                                                                 <?php 
-                                                                    }else{
-                                                                        $persen = 0;
-                                                                        $color_progress = "";
-                                                                        $text_progress = "0%";
-                                                                    }
-                                                                    ?>
+        }else{
+            $persen = 0;
+            $color_progress = "";
+            $text_progress = "0%";
+        }
+
+          
+    $alasan=mysqli_query($link_yics,"SELECT * FROM notif_ia_rjct 
+    JOIN ia ON notif_ia_rjct.id_ia = ia.id_ia
+    WHERE notif_ia_rjct.id_ia = '$data[id_ia]' AND notif_ia_rjct.id_prop = '$id'  ")or die (mysqli_error($link_yics)); 
+    if(mysqli_num_rows($alasan)>0){     
+    $d_alsn=mysqli_fetch_assoc($alasan);
+    $no_iaf=$d_alsn['ia'];
+    $rea=$d_alsn['reason'];                                                                
+ }else{
+     $no_iaf="no ia anda";
+    $rea="ditolak";
+    
+ }
+        
+        ?>
 
                                                             </td>
 
-                                                            <td class="align-middle text-center">
 
+
+                                                            <td class="align-middle text-center <?= ($text_progress == "STOP")? "reason":""; ?>"
+                                                                data-reason="<?=$rea?> " data-noia="<?=$no_iaf?>">
                                                                 <div class="progress mt-20 text-center ">
                                                                     <div class="progress-bar progress-bar-striped  <?=$color_progress?> active"
                                                                         aria-valuenow="" aria-valuemin="0"
@@ -459,17 +496,7 @@ $id_dept = $_GET['dept'];
                                                                         <?=$text_progress?>
                                                                     </div>
                                                                 </div>
-                                                                <?php
-							
-							?>
                                                             </td>
-
-
-
-
-
-
-
 
 
                                                             <td>
@@ -479,16 +506,47 @@ $id_dept = $_GET['dept'];
                                                                         <i class="icon wb-eye" aria-hidden="true"></i>
                                                                     </button>
                                                                 </a>
+
+                                                                <?php if( $_SESSION['yics_level'] != "1"){ ?>
+
+                                                                <a href="formupdate_ia.php?id_ia=<?= $data['id_ia'] ?>"
+                                                                    class="<?= $tombol_hidup ?>">
+                                                                    <button type="button"
+                                                                        class="btn btn-icon btn-success">
+                                                                        <i class="icon wb-upload"
+                                                                            aria-hidden="true"></i>
+                                                                    </button>
+                                                                </a>
+
+                                                                <a href="formeditia_ctrl.php?id_ia=<?= $data['id_ia']?>"
+                                                                    class="<?= $tombol_hidup ?>">
+                                                                    <button type="button"
+                                                                        class="btn btn-icon btn-warning">
+                                                                        <i class="icon wb-edit" aria-hidden="true"></i>
+                                                                    </button>
+                                                                </a>
+                                                                <a href="../proses/ia/hapus_ia.php?del=<?= $data['id_ia']?>&page=<?= $data['id_dep']?>"
+                                                                    class="<?= $tombol_hidup ?> HapusData">
+                                                                    <button type="button"
+                                                                        class="btn btn-icon btn-danger">
+                                                                        <i class="icon oi-trashcan"
+                                                                            aria-hidden="true"></i>
+                                                                    </button>
+                                                                </a>
+
+                                                                <?php } ?>
+
                                                             </td>
                                                         </tr>
                                                         <?php 
 
-                                                        $id_before = $data['id_prop'];
-                                                        $nomor_urut_before = $nomor_urut;
-                                                        
-                                                      }
-                                                      }
-                                                       ?>
+$id_before = $data['id_prop'];
+$nomor_urut_before = $nomor_urut;
+
+}
+}
+?>
+
                                                     </tbody>
                                                 </table>
                                             </div>

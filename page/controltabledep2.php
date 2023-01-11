@@ -243,6 +243,23 @@ $judul = [
 
 <!-- Page -->
 <?php $_GET['dept'] ?>
+<?php 
+                                    $alokasi = mysqli_query($link_yics, "SELECT * FROM time_fiscal WHERE status='aktif'") or die(mysqli_error($link_yics));
+                                    if(mysqli_num_rows($alokasi)>0){                                    
+                                    $data = mysqli_fetch_assoc($alokasi);
+                                    $periode = $data['periode'];
+                                    $awa = $data['awal'];
+                                    $akhr = $data['akhir'];
+                                    $awalf = date("d M Y", strtotime($data['awal']));
+                                    $akhirf = date("d M Y", strtotime($data['akhir']));
+                                    }else{
+                                        $periode="Pilih periode aktif";
+                                        $awalf="Pilih tahun aktif";
+                                        $akhirf="Pilih tahun aktif";
+                                        $awa="Pilih tahun aktif";
+                                        $akhr="Pilih tahun aktif";
+                                    }
+                                        ?>
 
 <div class="">
     <div class="">
@@ -567,7 +584,7 @@ $warnaremain="";
                         <?php }?>
                     </td>
                     <td class="<?= ($cost_ia == 0)? "coret":""; ?>">
-                        <?= (isset($data['no_ia']))?date("d M Y", strtotime($data['time_ia'])): "";  ?>
+                        <?= (isset($data['no_ia']))?date("d M Y", strtotime($akhr)): "";  ?>
                     </td>
                     <td class="<?= ($cost_ia == 0)? "coret":""; ?>">
                         <?= (isset($data['no_ia']))?$data['pic_ia']: ""; ?>
