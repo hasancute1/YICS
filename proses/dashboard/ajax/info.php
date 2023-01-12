@@ -6,8 +6,9 @@ $id=$_POST['id'];
                             FROM proposal
                             JOIN depart ON proposal.id_dep = depart.id_dep
                             JOIN kategori_proposal  ON proposal.id_kat = kategori_proposal.id_kat
-                            JOIN time_fiscal  ON proposal.id_fis = time_fiscal.id_fis  
+                            JOIN time_fiscal  ON proposal.id_fis = time_fiscal.id_fis                                
                             JOIN data_user  ON data_user.username = proposal.username 
+                            JOIN area  ON data_user.id_area = area.id_area
                             WHERE proposal.id_prop='$id'")or die (mysqli_error($link_yics));
                             $no=1;                      
 						  // untuk data modal
@@ -79,7 +80,7 @@ $id=$_POST['id'];
         <label class="col-md-2 col-form-label text-left" style="color:black;">Nama</label>
         <div class="col-md-4">
             <div class="form-group">
-                <input type="text" class="form-control" readonly value="<?= $nama ?>">
+                <input type="text" class="form-control text-uppercase" readonly value="<?= $nama ?>">
             </div>
         </div>
         <label class="col-md-2 col-form-label text-left" style="color:black;">Npk</label>

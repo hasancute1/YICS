@@ -6,6 +6,7 @@ $ind=$_POST['ind'];
                             $isi_m = mysqli_query($link_yics ,"SELECT *
                             FROM plan_proposal
                             JOIN depart ON plan_proposal.id_dep = depart.id_dep
+                            JOIN area ON area.id_area = plan_proposal.id_area
                             JOIN kategori_proposal  ON plan_proposal.id_kat = kategori_proposal.id_kat
                             JOIN time_fiscal  ON plan_proposal.id_fis = time_fiscal.id_fis  
                             WHERE plan_proposal.id_prop='$id'")or die (mysqli_error($link_yics));
@@ -17,7 +18,8 @@ $ind=$_POST['ind'];
                             $periode_m=$isi_mo['periode'];
                             $id_prop_m=$isi_mo['id_prop'];
                             $depart_m=$isi_mo['depart'];
-                            $id_dep_m=$isi_mo['id_dep'];
+                            $id_dep=$isi_mo['id_dep'];
+                            $id_dep_m=$isi_mo['id_area'];
                             $area_m=$isi_mo['area'];
                             $kategori_m=$isi_mo['kategori'];
                             $id_kat_m=$isi_mo['id_kat'];
@@ -66,11 +68,12 @@ $ind=$_POST['ind'];
         <label class="col-md-2 col-form-label text-left" style="color:black;">Pic Area</label>
         <div class="col-md-4">
             <div class="form-group">
-                <select type="text" name="area_m" id="area" class="form-control">
+                <select type="text" name="area_m" id="area" class="form-control text-uppercase">
                     <?php  
-                                           $area = mysqli_query($link_yics,"SELECT * FROM data_user WHERE id_dep = '$id_dep_m'") or die (mysqli_error($link_yics));                                       
+                                           $area = mysqli_query($link_yics,"SELECT * FROM area WHERE id_dep ='$id_dep'") or die (mysqli_error($link_yics));                                       
                                             foreach ($area AS $are){
                                             $areab= $are['area'];   
+                                            $id_area= $are['id_area'];   
                                              // logic yang terpilih  
                                           if($area_m== $areab){
                                             $select_a ="selected";
@@ -79,7 +82,7 @@ $ind=$_POST['ind'];
                                           }
                                            // end logic yang terpilih                                                                                  
                                             ?>
-                    <option <?= $select_a ?> value="<?= $areab ?>"><?= $areab ?></option>
+                    <option <?= $select_a ?> value="<?= $id_area ?>"><?= $areab ?></option>
                     <?php
                                             }
                                             ?>

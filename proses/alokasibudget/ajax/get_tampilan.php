@@ -65,6 +65,7 @@ $index=$_GET['ind'];
             <?php  
                             $isi = mysqli_query($link_yics ,"SELECT *
                             FROM plan_proposal
+                            JOIN area ON area.id_area = plan_proposal.id_area
                             JOIN depart ON plan_proposal.id_dep = depart.id_dep
                             JOIN kategori_proposal  ON plan_proposal.id_kat = kategori_proposal.id_kat
                             JOIN time_fiscal  ON plan_proposal.id_fis = time_fiscal.id_fis  

@@ -117,7 +117,7 @@ include '../elemen/header.php';?>
                   //ambil data di url
                   $username=$_GET ["ubah"];
                   //query data mahasiswa berdasarkan id menghasilkan array numeric
-                  $ubah = mysqli_query($link_yics ,"SELECT * FROM data_user WHERE username = '$username'")or die (mysqli_error($link_yics));
+                  $ubah = mysqli_query($link_yics ,"SELECT * FROM data_user JOIN area on area.id_area = data_user.id_area WHERE username = '$username'")or die (mysqli_error($link_yics));
                   $data = mysqli_fetch_assoc($ubah)
                 ?>
 
@@ -145,8 +145,25 @@ include '../elemen/header.php';?>
                                                     <label class="col-md-2 col-form-label"
                                                         style="color:black;">Area</label>
                                                     <div class="col-md-10">
-                                                        <input type="text" class="form-control" name="area"
-                                                            autocomplete="off" value="<?= $data['area']; ?>" required>
+                                                        <select class="form-control" name="area" required>
+                                                            <?php 
+                                                            $role = mysqli_query($link_yics, "SELECT * FROM area") or die (mysqli_error($link_yics));
+                                                            if(mysqli_num_rows( $role)>0){
+                                                                while( $rows_role = mysqli_fetch_assoc($role)){
+                                                                if( $data['id_area'] == $rows_role['id_area']){
+                                                                    $selected = "selected";
+                                                                }else{
+                                                                    $selected = "";
+                                                                }
+                                                                ?>
+                                                            <option <?php echo $selected; ?>
+                                                                value="<?php echo $rows_role['id_area']; ?>">
+                                                                <?php echo $rows_role['area']; ?></option>
+                                                            <?php
+                            }
+                          }                                                
+                        ?>
+                                                        </select>
                                                     </div>
                                                 </div>
 

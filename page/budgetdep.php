@@ -212,7 +212,10 @@ $labelcos=json_encode($labelcos);
                     $labelX[]=$label_sx['proposal'];
                     $cost_t[]=$label_sx['cost'];
                      }
-                    }else {echo "DATA BELUM ADA";}                
+                    }else {
+                    $labelX[]="DATA BELUM ADA";
+                    $cost_t[]="DATA BELUM ADA";
+                    }
 // -------------------------------------------------------------- end query label x grafik bar-------------------------------------
                      $labelX=json_encode($labelX);  
                      $cost_t=json_encode($cost_t);  

@@ -96,7 +96,7 @@ include '../elemen/header.php';?>
                                                     <!-- Example Tabs Left -->
                                                     <div class="example-wrap">
                                                         <div class="nav-tabs-vertical" data-plugin="tabs">
-                                                            <ul class="nav nav-tabs mr-25" role="tablist">
+                                                            <ul class="nav nav-tabs mr-25 w-200" role="tablist">
                                                                 <h4 class="pull-left">ROLE USER</h4>
                                                                 <?php
                                 $s_role = mysqli_query($link_yics, "SELECT * FROM user_role ORDER BY 'id_role' ASC") or die(mysqli_error($link_yics));
@@ -150,13 +150,13 @@ include '../elemen/header.php';?>
                                                                         <div class="panel-body">
                                                                             <form id="wadahtabel" name="proses">
                                                                                 <table
-                                                                                    class=" text-uppercase table table-hover dataTable table-striped w-full"
-                                                                                    data-plugin="dataTable">
+                                                                                    class=" text-uppercase table table-hover dataTable table-striped w-full db">
                                                                                     <thead class="bg-info">
                                                                                         <tr>
                                                                                             <th>NO</th>
                                                                                             <th>USERNAME</th>
-                                                                                            <th>NAMA</th>
+                                                                                            <th>
+                                                                                                NAMA</th>
                                                                                             <th>AREA</th>
                                                                                             <th>ROLE</th>
                                                                                             <th>ACTION</th>
@@ -167,7 +167,10 @@ include '../elemen/header.php';?>
                                                                                     <tbody>
                                                                                         <?php
                                                                                             $name = $user_role['role_name'];
-                                                                                            $ur = mysqli_query($link_yics, "SELECT * FROM view_data_user WHERE role_name='$name'") or die(mysqli_error($link_yics));
+                                                                                            $ur = mysqli_query($link_yics, "SELECT * FROM data_user 
+                                                                                            JOIN area on area.id_area =  data_user.id_area  
+                                                                                            JOIN user_role on user_role.id_role =  data_user.id_level
+                                                                                            WHERE user_role.role_name='$name'") or die(mysqli_error($link_yics));
                                                                                             $no = 1;
                                                                                             while ($data = mysqli_fetch_array($ur)) {
                                                                                             ?>
@@ -175,9 +178,11 @@ include '../elemen/header.php';?>
                                                                                             <td><?= $no++; ?></td>
                                                                                             <td><?= $data['username']; ?>
                                                                                             </td>
-                                                                                            <td><?= $data['nama']; ?>
+                                                                                            <td style="width: 200px;">
+                                                                                                <?= $data['nama']; ?>
                                                                                             </td>
-                                                                                            <td><?= $data['area']; ?>
+                                                                                            <td style="width: 200px;">
+                                                                                                <?= $data['area']; ?>
                                                                                             </td>
                                                                                             <td><?= $data['role_name']; ?>
                                                                                             </td>
@@ -248,9 +253,6 @@ include '../elemen/header.php';?>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card-footer">
-
-                                    </div>
 
                                 </div>
                             </div>
@@ -283,33 +285,45 @@ include '../elemen/header.php';?>
                                 <h3 class="modal-title">Add User</h3>
                             </div><!-- end modal-header--------- -->
                             <div class="modal-body">
-                                <form action="../proses/usersetting/category.php" method="POST" id="tambahdata"
+                                <form action="../proses/usersetting/user.php" method="POST" id="tambahdata"
                                     class="needs-validation">
                                     <input type="hidden" name="add">
                                     <br>
                                     <div class="form-group row">
-                                        <label class="col-md-2 col-form-label" style="color:black;">Username</label>
+                                        <label class="col-md-2 col-form-label" style="color:black;">USERNAME</label>
                                         <div class="col-md-10">
                                             <input id="bodydivision" type="number" class="form-control text-uppercase"
                                                 name="user" placeholder="Silahkan isi npk" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-md-2 col-form-label" style="color:black;">Nama</label>
+                                        <label class="col-md-2 col-form-label" style="color:black;">NAMA</label>
                                         <div class="col-md-10">
                                             <input type="text" class="form-control text-uppercase" name="nama"
                                                 placeholder="Silahkan isi nama" autocomplete="off" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-md-2 col-form-label" style="color:black;">Area</label>
+                                        <label class="col-md-2 col-form-label" style="color:black;">AREA</label>
                                         <div class="col-md-10">
-                                            <input type="text" class="form-control text-uppercase" name="area"
-                                                placeholder="Silahkan isi area" autocomplete="off" required>
+                                            <select class="form-control text-uppercase" name="area" required>
+                                                <option value="">Pilih area</option>
+                                                <?php
+                                                $area = mysqli_query($link_yics, "SELECT * FROM area") or die(mysqli_error($link_yics));
+                                                if (mysqli_num_rows($area) > 0) {
+                                                while ($rows_area = mysqli_fetch_assoc($area)) { ?>
+                                                <option value="<?php echo $rows_area['id_area']; ?>">
+                                                    <?php echo $rows_area['area']; ?></option>
+                                                <?php
+                                                        }
+                                                        }
+                                                        ?>
+                                            </select>
+
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-md-2 col-form-label" style="color:black;">Role</label>
+                                        <label class="col-md-2 col-form-label" style="color:black;">ROLE</label>
                                         <div class="col-md-10">
                                             <select class="form-control text-uppercase" name="role" required="">
                                                 <option value="">Pilih role</option>
@@ -327,7 +341,7 @@ include '../elemen/header.php';?>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-md-2 col-form-label" style="color:black;">Password</label>
+                                        <label class="col-md-2 col-form-label" style="color:black;">PASSWORD</label>
                                         <div class="col-md-10">
                                             <input type="text" class="form-control text-uppercase" name="password"
                                                 placeholder="Silahkan isi password" autocomplete="off" required>
@@ -524,4 +538,15 @@ include '../elemen/header.php';?>
                             }
                         })
                     })
+                    </script>
+                    <script>
+                    $(document).ready(function() {
+                        var table = $('.db').DataTable({
+                            "columnDefs": [{
+                                "className": "dt-center",
+                                "targets": "_all"
+                            }],
+                            ordering: false,
+                        });
+                    });
                     </script>

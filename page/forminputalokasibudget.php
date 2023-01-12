@@ -252,18 +252,18 @@ include '../elemen/header.php';?>
 
                                                                                 <td>
                                                                                     <select name="area" type="text"
-                                                                                        class="form-control"
+                                                                                        class="form-control text-uppercase"
                                                                                         id="area<?= $i; ?>"
                                                                                         form="subForm<?= $i; ?>"
                                                                                         required>
                                                                                         <option value="">Pilih Area
                                                                                         </option>
                                                                                         <?php 
-                                                                            $area = mysqli_query($link_yics,"SELECT * FROM data_user WHERE id_dep = '$rows_depart[id_dep]'") or die (mysqli_error($link_yics));
+                                                                            $area = mysqli_query($link_yics,"SELECT * FROM area WHERE id_dep = '$rows_depart[id_dep]'") or die (mysqli_error($link_yics));
                                                                             if(mysqli_num_rows($area)>0){
                                                                             while( $rows_area= mysqli_fetch_assoc($area)){?>
                                                                                         <option
-                                                                                            value="<?php echo $rows_area['area'] ?>">
+                                                                                            value="<?php echo $rows_area['id_area'] ?>">
                                                                                             <?php echo $rows_area['area'] ?>
                                                                                         </option>
                                                                                         <?php 
@@ -278,7 +278,7 @@ include '../elemen/header.php';?>
                                                                                 </td>
                                                                                 <td>
                                                                                     <select name="kategori" type="text"
-                                                                                        class="form-control"
+                                                                                        class="form-control text-uppercase"
                                                                                         id="kategori<?= $i; ?>"
                                                                                         form="subForm<?= $i; ?>"
                                                                                         required>

@@ -23,7 +23,7 @@ if (isset ($_SESSION['yics_user'])){
             $_SESSION['pesan'] = "Data Berhasil Disimpan";
             header('location: ../../page/usersetting.php');
          }
-         $inputUser = "INSERT INTO data_user (`nama`,`username`,`area`,`pass`, `id_level`) VALUES ('$nama','$user','$area','$password','$role')"; 
+         $inputUser = "INSERT INTO data_user (`nama`,`username`,`id_area`,`pass`, `id_level`) VALUES ('$nama','$user','$area','$password','$role')"; 
          $sql = mysqli_query($link_yics, $inputUser)or die(mysqli_error($link_yics));
     // end logika pakai session
     // query insert boleh ngacak sesuai intonya
@@ -50,7 +50,7 @@ if (isset ($_SESSION['yics_user'])){
        $area=$_POST ['area'];
        $role=$_POST ['role'];
        $password=SHA1($_POST ['password']);
-       $UbahUser = "UPDATE data_user SET nama='$nama',username='$user',area='$area',pass='$password',id_level='$role' WHERE username = '$user'"; 
+       $UbahUser = "UPDATE data_user SET nama='$nama',username='$user',id_area='$area',pass='$password',id_level='$role' WHERE username = '$user'"; 
        echo $UbahUser;
        $sql = mysqli_query($link_yics, $UbahUser)or die(mysqli_error($link_yics));
     // logika pakai session

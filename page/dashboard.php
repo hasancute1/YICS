@@ -375,9 +375,7 @@ if(mysqli_num_rows($budget_reject)>0){
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4 col-md-4 ">
-                                                    <?php 
-                                                    $SessionArea= $_SESSION['area'];
-                                                   ?>
+
                                                     <div class="float-right">
                                                         <i href="" data-toggle="tooltip"
                                                             data-original-title="Tambah Data">
@@ -966,14 +964,14 @@ $json_morris = json_encode($array_donut_dept);
 
 
     <?php 
-$SessionArea= $_SESSION['area'];
+$SessionArea= $_SESSION['id_area'];
 $proposal = mysqli_query($link_yics ,
 "SELECT * FROM plan_proposal 
 JOIN depart ON plan_proposal.id_dep = depart.id_dep
 JOIN kategori_proposal  ON plan_proposal.id_kat = kategori_proposal.id_kat
 JOIN time_fiscal  ON plan_proposal.id_fis = time_fiscal.id_fis                             
-JOIN data_user  ON data_user.area = plan_proposal.area                          
-WHERE time_fiscal.id_fis = '$id_fis' AND plan_proposal.area= '$SessionArea'")or die (mysqli_error($link_yics));
+JOIN data_user  ON data_user.id_area = plan_proposal.id_area                          
+WHERE time_fiscal.id_fis = '$id_fis' AND plan_proposal.id_area= '$SessionArea'")or die (mysqli_error($link_yics));
 if(mysqli_num_rows($proposal)>0){   
     } ?>
 
