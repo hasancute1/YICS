@@ -81,10 +81,12 @@ include '../elemen/header.php';?>
                     time_fiscal.awal AS awal,
                     time_fiscal.akhir AS akhir,
                     budget.id_bud AS id_bud,
-                    plan_proposal.id_dep
+                    depart.id_dep AS id_dep
+                   
                    
                     FROM plan_proposal 
-                    LEFT JOIN depart ON plan_proposal.id_dep = depart.id_dep
+                    LEFT JOIN area ON plan_proposal.id_area = area.id_area
+                    LEFT JOIN depart ON area.id_dep = depart.id_dep
                     LEFT JOIN budget ON plan_proposal.id_fis = budget.id_fis
                     LEFT JOIN kategori_proposal  ON plan_proposal.id_kat = kategori_proposal.id_kat
                     LEFT JOIN konversi_matauang ON plan_proposal.id_matauang = konversi_matauang.id_matauang
@@ -105,8 +107,9 @@ include '../elemen/header.php';?>
 $budget_reject = mysqli_query($link_yics ,"SELECT sum(ia.cost_ia) AS cost_rjct FROM tracking_ia
 join ia on tracking_ia.id_ia = ia.id_ia
 join plan_proposal on ia.id_prop = plan_proposal.id_prop
-join depart on plan_proposal.id_dep = depart.id_dep                                           
-where plan_proposal.id_dep = {$id_dep} and plan_proposal.id_fis={$id_fis}
+JOIN area ON plan_proposal.id_area = area.id_area
+JOIN depart ON area.id_dep = depart.id_dep                                         
+where depart.id_dep = {$id_dep} and plan_proposal.id_fis={$id_fis}
  and approval = '0' GROUP BY approval = '0'")
 or die (mysqli_error($link_yics));                 
 if(mysqli_num_rows($budget_reject)>0){
@@ -149,8 +152,9 @@ if(mysqli_num_rows($budget_reject)>0){
 
                     $get_data_ia = single_query("SELECT sum(cost_ia) as cost_ia FROM ia 
                     JOIN plan_proposal on ia.id_prop = plan_proposal.id_prop
-                    join depart on plan_proposal.id_dep = depart.id_dep                   
-                    where plan_proposal.id_dep = {$id_dep} and plan_proposal.id_fis={$id_fis}");
+                    LEFT JOIN area ON plan_proposal.id_area = area.id_area
+                    LEFT JOIN depart ON area.id_dep = depart.id_dep                   
+                    where depart.id_dep = {$id_dep} and plan_proposal.id_fis={$id_fis}");
                     $consumtion_budget = $get_data_ia['cost_ia'];
                     
                     $get_data_budget1 = mysqli_query($link_yics ,"SELECT * FROM budget where id_dep='$id_dep' and id_fis='$id_fis'");
