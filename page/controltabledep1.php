@@ -296,11 +296,13 @@ ia.time_ia AS time_ia
 FROM plan_proposal   
 
 LEFT JOIN ia ON plan_proposal.id_prop = ia.id_prop
-LEFT JOIN depart ON plan_proposal.id_dep = depart.id_dep
+
 LEFT JOIN kategori_proposal  ON plan_proposal.id_kat = kategori_proposal.id_kat
 LEFT JOIN time_fiscal  ON plan_proposal.id_fis = time_fiscal.id_fis                                                               
 LEFT JOIN konversi_matauang ON plan_proposal.id_matauang = konversi_matauang.id_matauang
 LEFT JOIN data_user ON ia.pic_ia = data_user.username 
+LEFT JOIN area ON area.id_area = plan_proposal.id_area 
+                                LEFT JOIN depart ON depart.id_dep = area.id_dep
 
 
 

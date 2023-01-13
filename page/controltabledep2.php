@@ -344,137 +344,139 @@ $judul = [
 
                 <!-- query proposal control table -->
                 <?php 
-$IDR = "IDR";
+                                                        $IDR = "IDR";
 
-// where from request 
+                             // where from request 
 
-if(isset($_GET['start'])){
+                             if(isset($_GET['start'])){
 
-$query_start = "AND ia.time_ia >= '{$_GET['start']}'";
+                                $query_start = "AND ia.time_ia >= '{$_GET['start']}'";
 
-}else{
-$query_start = "";
-}
-
-
-if(isset($_GET['end'])){
-
-$query_end = "AND ia.time_ia <= '{$_GET['end']}'";
-
-}else{
-$query_end = "";
-}
+                             }else{
+                                $query_start = "";
+                             }
 
 
-if( $_SESSION['yics_level'] == "1"){
-$query_level = "AND proposal.username={$_SESSION['yics_user']}";
-}else{
-$query_level = "";
-}
+                             if(isset($_GET['end'])){
+
+                                $query_end = "AND ia.time_ia <= '{$_GET['end']}'";
+
+                             }else{
+                                $query_end = "";
+                             }
 
 
-$proposal = mysqli_query($link_yics ,"SELECT
-plan_proposal.id_prop AS id_prop,
-depart.id_dep AS id_dep,
-depart.depart AS depart,
-kategori_proposal.kategori AS kategori,
-time_fiscal.status AS `status`,
-plan_proposal.proposal AS proposal,                                                          
-plan_proposal.cost AS cost,
-konversi_matauang.dollar AS dollar,
-konversi_matauang.yen AS yen,
-ia.id_ia AS id_ia,
-ia.ia AS no_ia,
-ia.deskripsi AS ia_deskripsi,
-ia.cost_ia AS cost_ia,
-data_user.nama AS pic_ia,
-
-ia.time_ia AS time_ia
-
-FROM plan_proposal   
-
-LEFT JOIN ia ON plan_proposal.id_prop = ia.id_prop
-LEFT JOIN depart ON plan_proposal.id_dep = depart.id_dep
-LEFT JOIN kategori_proposal  ON plan_proposal.id_kat = kategori_proposal.id_kat
-LEFT JOIN time_fiscal  ON plan_proposal.id_fis = time_fiscal.id_fis                                                               
-LEFT JOIN konversi_matauang ON plan_proposal.id_matauang = konversi_matauang.id_matauang
-LEFT JOIN data_user ON ia.pic_ia = data_user.username 
+                             if( $_SESSION['yics_level'] == "1"){
+                                $query_level = "AND proposal.username={$_SESSION['yics_user']}";
+                             }else{
+                                $query_level = "";
+                             }
 
 
+                              $proposal = mysqli_query($link_yics ,"SELECT
+                                plan_proposal.id_prop AS id_prop,
+                                depart.id_dep AS id_dep,
+                                depart.depart AS depart,
+                                kategori_proposal.kategori AS kategori,
+                                time_fiscal.status AS `status`,
+                                plan_proposal.proposal AS proposal,                                                          
+                                plan_proposal.cost AS cost,
+                                konversi_matauang.dollar AS dollar,
+                                konversi_matauang.yen AS yen,
+                                ia.id_ia AS id_ia,
+                                ia.ia AS no_ia,
+                                ia.deskripsi AS ia_deskripsi,
+                                ia.cost_ia AS cost_ia,
+                                data_user.nama AS pic_ia,
+                               
+                                ia.time_ia AS time_ia
+                                
+                                FROM plan_proposal   
+                               
+                                LEFT JOIN ia ON plan_proposal.id_prop = ia.id_prop
+                                
+                                LEFT JOIN kategori_proposal  ON plan_proposal.id_kat = kategori_proposal.id_kat
+                                LEFT JOIN time_fiscal  ON plan_proposal.id_fis = time_fiscal.id_fis                                                               
+                                LEFT JOIN konversi_matauang ON plan_proposal.id_matauang = konversi_matauang.id_matauang
+                                LEFT JOIN data_user ON ia.pic_ia = data_user.username 
+                                LEFT JOIN area ON area.id_area = plan_proposal.id_area 
+                                LEFT JOIN depart ON depart.id_dep = area.id_dep
+                                
+                               
+                                
+                                WHERE depart.id_dep='$id_dept'AND time_fiscal.status= 'aktif' {$query_start} {$query_end}   ORDER BY plan_proposal.proposal ASC   "
+                                )
+                                or die (mysqli_error($link_yics));
+                                $no=0;
+                                $nomor_urut=0;
+                                $nomor_urut_before =0;
+                                
+                                $no_prop=0;
+                                $id_before = '';
 
-WHERE depart.id_dep='$id_dept'AND time_fiscal.status= 'aktif' {$query_start} {$query_end}   ORDER BY plan_proposal.proposal ASC   "
-)
-or die (mysqli_error($link_yics));
-$no=0;
-$nomor_urut=0;
-$nomor_urut_before =0;
+                                // untuk memvalidasi apakah ada datanya
+                                if(mysqli_num_rows($proposal)>0){
+                                while($data = mysqli_fetch_assoc($proposal)){                                   
+                                    $id= $data['id_prop'];                                   
+                                    $cost_ia= $data['cost_ia'];                                   
+                                    // $n0_ia=$data['no_ia'];                                   
 
-$no_prop=0;
-$id_before = '';
+                                    if($id_before == $data['id_prop']){
+                                        $no_prop += 1;     
+                                        $sembunyikan_nomor = "hidden";                                   
+                                    }else{
+                                        $no_prop = 1;
+                                        $no++;
+                                        $nomor_urut += 1;
+                                        $sembunyikan_nomor = ""; 
+                                        
+                                    }
 
-// untuk memvalidasi apakah ada datanya
-if(mysqli_num_rows($proposal)>0){
-while($data = mysqli_fetch_assoc($proposal)){                                   
-$id= $data['id_prop'];                                   
-$cost_ia= $data['cost_ia'];                                   
-// $n0_ia=$data['no_ia'];                                   
-
-if($id_before == $data['id_prop']){
-$no_prop += 1;     
-$sembunyikan_nomor = "hidden";                                   
-}else{
-$no_prop = 1;
-$no++;
-$nomor_urut += 1;
-$sembunyikan_nomor = ""; 
-
-}
-
-if($id_before == $data['id_prop']){
-$nomor_table = "";
-}else{
-
-$nomor_table = $nomor_urut;
-}
+                                    if($id_before == $data['id_prop']){
+                                        $nomor_table = "";
+                                    }else{
+                                       
+                                        $nomor_table = $nomor_urut;
+                                    }
 
 
-if ($data['id_ia']>0){
-$tombol_hidup="";
-}else{
-$tombol_hidup="disabledlink"; 
-}
-if((isset($data['no_ia']) && $no_prop == 1)){
-$remainIDR = number_format (($data['cost']-$data['cost_ia']),2,',','.'); 
-}else if((isset($data['no_ia']) && $no_prop != 1)) {
-$remainIDR = number_format ((0-$data['cost_ia']),2,',','.'); 
-}else{ $remainIDR ="";}
-// $id_before = $data['id_prop'];
+                                    if ($data['id_ia']>0){
+                                        $tombol_hidup="";
+                                    }else{
+                                        $tombol_hidup="disabledlink"; 
+                                    }
+                                    if((isset($data['no_ia']) && $no_prop == 1)){
+                                        $remainIDR = number_format (($data['cost']-$data['cost_ia']),2,',','.'); 
+                                       }else if((isset($data['no_ia']) && $no_prop != 1)) {
+                                        $remainIDR = number_format ((0-$data['cost_ia']),2,',','.'); 
+                                       }else{ $remainIDR ="";}
+                                    // $id_before = $data['id_prop'];
 
-if((isset($data['no_ia']) && $no_prop == 1)){
-$remainyen = number_format ((($data['cost']-$data['cost_ia'])/$data['yen']),2,',','.'); 
-}else if((isset($data['no_ia']) && $no_prop != 1)) {
-$remainyen = number_format (((0-$data['cost_ia'])/$data['yen']),2,',','.'); 
-}else{ $remainyen ="";}
+                                    if((isset($data['no_ia']) && $no_prop == 1)){
+                                        $remainyen = number_format ((($data['cost']-$data['cost_ia'])/$data['yen']),2,',','.'); 
+                                       }else if((isset($data['no_ia']) && $no_prop != 1)) {
+                                        $remainyen = number_format (((0-$data['cost_ia'])/$data['yen']),2,',','.'); 
+                                       }else{ $remainyen ="";}
 
-if((isset($data['no_ia']) && $no_prop == 1)){
-$remainIDRx = number_format (($data['cost']-$data['cost_ia']),2,'.',''); 
-}else if((isset($data['no_ia']) && $no_prop != 1)) {
-$remainIDRx = number_format ((0-$data['cost_ia']),2,'.',''); 
-}else{ $remainIDRx ="0";}
-// $id_before = $data['id_prop'];
+                                    if((isset($data['no_ia']) && $no_prop == 1)){
+                                        $remainIDRx = number_format (($data['cost']-$data['cost_ia']),2,'.',''); 
+                                       }else if((isset($data['no_ia']) && $no_prop != 1)) {
+                                        $remainIDRx = number_format ((0-$data['cost_ia']),2,'.',''); 
+                                       }else{ $remainIDRx ="0";}
+                                    // $id_before = $data['id_prop'];
 
-if((isset($data['no_ia']) && $no_prop == 1)){
-$remainyenx = number_format ((($data['cost']-$data['cost_ia'])/$data['yen']),2,'.',''); 
-}else if((isset($data['no_ia']) && $no_prop != 1)) {
-$remainyenx = number_format (((0-$data['cost_ia'])/$data['yen']),2,'.',''); 
-}else{ $remainyenx ="0";}
+                                    if((isset($data['no_ia']) && $no_prop == 1)){
+                                        $remainyenx = number_format ((($data['cost']-$data['cost_ia'])/$data['yen']),2,'.',''); 
+                                       }else if((isset($data['no_ia']) && $no_prop != 1)) {
+                                        $remainyenx = number_format (((0-$data['cost_ia'])/$data['yen']),2,'.',''); 
+                                       }else{ $remainyenx ="0";}
 
-if ($remainIDR<0){
-$warnaremain="bg-red-100";
-}else{
-$warnaremain="";
-}
-?>
+                                    if ($remainIDR<0){
+                                        $warnaremain="bg-red-100";
+                                    }else{
+                                        $warnaremain="";
+                                    }
+                                    ?>
 
                 <tr class="<?php if ($no%2==0){ echo "bg-blue-100"; } else{ echo ""; } ?> text-uppercase">
                     <td> <span class=""><?= $nomor_table ?></span>
@@ -549,20 +551,20 @@ $warnaremain="";
                         <?= (isset($data['no_ia']))?number_format ($data['cost_ia'],2,',','.'): ""; ?>
                     </td>
                     <td class="<?= ($cost_ia == 0)? "coret":""; ?>
-       <?=  (isset($data['no_ia']))?$warnaremain: ""; ?>">
+                                                                   <?=  (isset($data['no_ia']))?$warnaremain: ""; ?>">
 
                         <!-- ---------------------------------------------------------------------------------------angka untuk penjumlahan--------------------------------------------------------------------- -->
                         <span class="nilai5" hidden><?php 
-       if(isset($data['no_ia'])&&$cost_ia == 0){
-        echo 0;
-       }else{?>
+                                                                   if(isset($data['no_ia'])&&$cost_ia == 0){
+                                                                    echo 0;
+                                                                   }else{?>
                             <?= (isset($data['no_ia']))?$remainyenx: "0"; ?>
                             <?php }?></span>
                         <!-- ---------------------------------------------------------------------------------------end angka untuk penjumlahan--------------------------------------------------------------------- -->
                         <?php 
-       if(isset($data['no_ia'])&&$cost_ia == 0){
-        echo 0;
-       }else{?>
+                                                                   if(isset($data['no_ia'])&&$cost_ia == 0){
+                                                                    echo 0;
+                                                                   }else{?>
                         <?= (isset($data['no_ia']))?$remainyen: ""; ?>
                         <?php }?>
                     </td>
@@ -570,34 +572,35 @@ $warnaremain="";
                     <td class="<?= ($cost_ia == 0)? "coret":""; ?> <?=  (isset($data['no_ia']))?$warnaremain: ""; ?>">
                         <!-- ---------------------------------------------------------------------------------------angka untuk penjumlahan--------------------------------------------------------------------- -->
                         <span class="nilai6" hidden><?php 
-       if(isset($data['no_ia'])&&$cost_ia == 0){
-        echo 0;
-       }else{?>
+                                                                   if(isset($data['no_ia'])&&$cost_ia == 0){
+                                                                    echo 0;
+                                                                   }else{?>
                             <?= (isset($data['no_ia']))?$remainIDRx: "0"; ?>
                             <?php }?></span>
                         <!-- ---------------------------------------------------------------------------------------end angka untuk penjumlahan--------------------------------------------------------------------- -->
                         <?php 
-      if(isset($data['no_ia'])&&$cost_ia == 0){
-        echo 0;
-       }else{?>
+                                                                  if(isset($data['no_ia'])&&$cost_ia == 0){
+                                                                    echo 0;
+                                                                   }else{?>
                         <?= (isset($data['no_ia']))?$remainIDR: ""; ?>
                         <?php }?>
                     </td>
                     <td class="<?= ($cost_ia == 0)? "coret":""; ?>">
-                        <?= (isset($data['no_ia']))?date("d M Y", strtotime($akhr)): "";  ?>
+                        <?= (isset($data['no_ia']))?date("d M Y", strtotime( $akhirf)): "";  ?>
                     </td>
                     <td class="<?= ($cost_ia == 0)? "coret":""; ?>">
                         <?= (isset($data['no_ia']))?$data['pic_ia']: ""; ?>
                     </td>
+
                 </tr>
                 <?php 
 
-$id_before = $data['id_prop'];
-$nomor_urut_before = $nomor_urut;
-
-}
-}
-?>
+                                                        $id_before = $data['id_prop'];
+                                                        $nomor_urut_before = $nomor_urut;
+                                                        
+                                                      }
+                                                      }
+                                                       ?>
                 <tr class="align-middle text-center bg-green-200">
                     <td class="align-middle text-center bg-green-200">TOTAL
                     </td>
@@ -619,6 +622,7 @@ $nomor_urut_before = $nomor_urut;
                     <td class="align-middle text-center bg-green-200"><span class="hasil6"></span></td>
                     <td class="align-middle text-center bg-green-200"></td>
                     <td class="align-middle text-center bg-green-200"></td>
+
 
                 </tr>
             </tbody>
