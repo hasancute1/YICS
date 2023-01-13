@@ -171,108 +171,100 @@ $id_dept = $_GET['dept'];
 
                                 </div>
                                 <div class="col-lg-12 col-md-12">
-                                    <div class="card card-shadow">
-                                        <div class="card-header ">
-                                            <div class="row">
-                                                <div class="col-lg-12 col-md-12">
-                                                    <div class="row">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card-body card-shadow">
-                                                <div class=" table-responsive">
-                                                    <table
-                                                        class=" table tableproposal table-bordered text-nowrap text-center"
-                                                        width="100%">
-                                                        <thead class="table-info">
-                                                            <tr>
-                                                                <th class="judul align-middle text-center export-col"
-                                                                    colspan="6">
-                                                                    INVESTMENT PLANNING CONTROL TABLE</th>
+                                    <div class="card card-transparent">
 
-                                                                <th class="judul align-middle text-center export-col"
-                                                                    colspan="13">
-                                                                    IMPLEMENTATION CONTROL TABLE</th>
+                                        <div class=" table-responsive">
+                                            <table class=" table tableproposal table-bordered text-nowrap text-center"
+                                                width="100%">
+                                                <thead class="table-info">
+                                                    <tr>
+                                                        <th class="judul align-middle text-center export-col"
+                                                            colspan="6">
+                                                            INVESTMENT PLANNING CONTROL TABLE</th>
+
+                                                        <th class="judul align-middle text-center export-col"
+                                                            colspan="13">
+                                                            IMPLEMENTATION CONTROL TABLE</th>
 
 
-                                                                <th class="judul align-middle text-center able-info noexportar"
-                                                                    rowspan="3">
-                                                                    STATUS
-                                                                </th>
-                                                                <th class="judul align-middle text-center able-info noexportar"
-                                                                    rowspan="3">
-                                                                    PROGRESS
-                                                                </th>
-                                                                <th class="judul align-middle text-center table-danger noexportar"
-                                                                    rowspan="3">
-                                                                    ACTION
-                                                                </th>
+                                                        <th class="judul align-middle text-center able-info noexportar"
+                                                            rowspan="3">
+                                                            STATUS
+                                                        </th>
+                                                        <th class="judul align-middle text-center able-info noexportar"
+                                                            rowspan="3">
+                                                            PROGRESS
+                                                        </th>
+                                                        <th class="judul align-middle text-center table-danger noexportar"
+                                                            rowspan="3">
+                                                            ACTION
+                                                        </th>
 
-                                                            </tr>
-                                                            <tr>
-                                                                <th class="judul align-middle text-center" rowspan="2">
-                                                                    NO
-                                                                </th>
-                                                                <th class="judul align-middle text-center" rowspan="2">
-                                                                    DEPEARTMENT</th>
-                                                                <th class="judul align-middle text-center" rowspan="2">
-                                                                    CATEGORY</th>
-                                                                <th class="judul align-middle text-center" rowspan="2">
-                                                                    DESCRIPTION</th>
-                                                                <th class="judul align-middle text-center" rowspan="2">
-                                                                    TOTAL MILL JPY</th>
-                                                                <th class="judul align-middle text-center" rowspan="2">
-                                                                    TOTAL MILL IDR</th>
-                                                                <th class="judul align-middle text-center" rowspan="2">
-                                                                    No
-                                                                </th>
-                                                                <th class="judul align-middle text-center" colspan="2">
-                                                                    IA
-                                                                    No.</th>
-                                                                <th class="judul align-middle text-center" rowspan="2">
-                                                                    DESCRIPTION</th>
-                                                                <th class="judul align-middle text-center" colspan="3">
-                                                                    Original Currency</th>
-                                                                <th class="judul align-middle text-center" colspan="2">
-                                                                    Actual In</th>
-                                                                <th class="judul align-middle text-center" colspan="2">
-                                                                    Remaining</th>
-                                                                <th class="judul align-middle text-center" rowspan="2">
-                                                                    Valid Until</th>
-                                                                <th class="judul align-middle text-center">Remark</th>
-
-
-                                                            </tr>
-                                                            <tr>
-                                                                <th class="align-middle text-center">
-                                                                    Subject</th>
-                                                                <th class="align-middle text-center">
-                                                                    IO</th>
-                                                                <th class="align-middle text-center">
-                                                                    JPY</th>
-                                                                <th class="align-middle text-center">
-                                                                    IDR</th>
-                                                                <th class="align-middle text-center">
-                                                                    1000USD</th>
-                                                                <th class="align-middle text-center">
-                                                                    JPY</th>
-                                                                <th class="align-middle text-center">
-                                                                    IDR</th>
-                                                                <th class="align-middle text-center">
-                                                                    JPY</th>
-                                                                <th class="align-middle text-center">
-                                                                    IDR</th>
-                                                                <th class="align-middle text-center">
-                                                                    CT Updated</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="judul align-middle text-center" rowspan="2">
+                                                            NO
+                                                        </th>
+                                                        <th class="judul align-middle text-center" rowspan="2">
+                                                            DEPEARTMENT</th>
+                                                        <th class="judul align-middle text-center" rowspan="2">
+                                                            CATEGORY</th>
+                                                        <th class="judul align-middle text-center" rowspan="2">
+                                                            DESCRIPTION</th>
+                                                        <th class="judul align-middle text-center" rowspan="2">
+                                                            TOTAL MILL JPY</th>
+                                                        <th class="judul align-middle text-center" rowspan="2">
+                                                            TOTAL MILL IDR</th>
+                                                        <th class="judul align-middle text-center" rowspan="2">
+                                                            No
+                                                        </th>
+                                                        <th class="judul align-middle text-center" colspan="2">
+                                                            IA
+                                                            No.</th>
+                                                        <th class="judul align-middle text-center" rowspan="2">
+                                                            DESCRIPTION</th>
+                                                        <th class="judul align-middle text-center" colspan="3">
+                                                            Original Currency</th>
+                                                        <th class="judul align-middle text-center" colspan="2">
+                                                            Actual In</th>
+                                                        <th class="judul align-middle text-center" colspan="2">
+                                                            Remaining</th>
+                                                        <th class="judul align-middle text-center" rowspan="2">
+                                                            Valid Until</th>
+                                                        <th class="judul align-middle text-center">Remark</th>
 
 
-                                                            </tr>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="align-middle text-center">
+                                                            Subject</th>
+                                                        <th class="align-middle text-center">
+                                                            IO</th>
+                                                        <th class="align-middle text-center">
+                                                            JPY</th>
+                                                        <th class="align-middle text-center">
+                                                            IDR</th>
+                                                        <th class="align-middle text-center">
+                                                            1000USD</th>
+                                                        <th class="align-middle text-center">
+                                                            JPY</th>
+                                                        <th class="align-middle text-center">
+                                                            IDR</th>
+                                                        <th class="align-middle text-center">
+                                                            JPY</th>
+                                                        <th class="align-middle text-center">
+                                                            IDR</th>
+                                                        <th class="align-middle text-center">
+                                                            CT Updated</th>
 
-                                                        </thead>
-                                                        <tbody>
 
-                                                            <!-- query proposal control table -->
-                                                            <?php 
+                                                    </tr>
+
+                                                </thead>
+                                                <tbody>
+
+                                                    <!-- query proposal control table -->
+                                                    <?php 
                                                         $IDR = "IDR";
 
                              // where from request 
@@ -323,11 +315,13 @@ $id_dept = $_GET['dept'];
                                 FROM plan_proposal   
                                
                                 LEFT JOIN ia ON plan_proposal.id_prop = ia.id_prop
-                                LEFT JOIN depart ON plan_proposal.id_dep = depart.id_dep
+                                
                                 LEFT JOIN kategori_proposal  ON plan_proposal.id_kat = kategori_proposal.id_kat
                                 LEFT JOIN time_fiscal  ON plan_proposal.id_fis = time_fiscal.id_fis                                                               
                                 LEFT JOIN konversi_matauang ON plan_proposal.id_matauang = konversi_matauang.id_matauang
                                 LEFT JOIN data_user ON ia.pic_ia = data_user.username 
+                                LEFT JOIN area ON area.id_area = plan_proposal.id_area 
+                                LEFT JOIN depart ON depart.id_dep = area.id_dep
                                 
                                
                                 
@@ -405,125 +399,125 @@ $id_dept = $_GET['dept'];
                                     }
                                     ?>
 
-                                                            <tr
-                                                                class="<?php if ($no%2==0){ echo "bg-blue-100"; } else{ echo ""; } ?> text-uppercase">
-                                                                <td> <span class=""><?= $nomor_table ?></span>
-                                                                </td>
-                                                                <td>
-                                                                    <?= ($no_prop == 1)? $data['depart']:""; ?></td>
-                                                                <td>
-                                                                    <?= ($no_prop == 1)? $data['kategori']:""; ?></td>
+                                                    <tr
+                                                        class="<?php if ($no%2==0){ echo "bg-blue-100"; } else{ echo ""; } ?> text-uppercase">
+                                                        <td> <span class=""><?= $nomor_table ?></span>
+                                                        </td>
+                                                        <td>
+                                                            <?= ($no_prop == 1)? $data['depart']:""; ?></td>
+                                                        <td>
+                                                            <?= ($no_prop == 1)? $data['kategori']:""; ?></td>
 
-                                                                <td>
-                                                                    <?php if($_SESSION['yics_level'] != '2'){ ?>
+                                                        <td>
+                                                            <?php if($_SESSION['yics_level'] != '2'){ ?>
 
-                                                                    <?= ($no_prop == 1)? $data['proposal']:""; ?>
-                                                                    <?php  }else{?>
-                                                                    <a
-                                                                        href="formnambah_ia.php?add=<?php echo $data['id_prop']; ?>">
-                                                                        <?= ($no_prop == 1)? $data['proposal']:""; ?></a>
-                                                                    <?php } ?>
-                                                                </td>
+                                                            <?= ($no_prop == 1)? $data['proposal']:""; ?>
+                                                            <?php  }else{?>
+                                                            <a
+                                                                href="formnambah_ia.php?add=<?php echo $data['id_prop']; ?>">
+                                                                <?= ($no_prop == 1)? $data['proposal']:""; ?></a>
+                                                            <?php } ?>
+                                                        </td>
 
-                                                                <td>
-                                                                    <!-- ---------------------------------------------------------------------------------------angka untuk penjumlahan--------------------------------------------------------------------- -->
-                                                                    <span class="nilai"
-                                                                        hidden><?= ($no_prop == 1)?number_format($data['cost']/$data['yen'], 2, '.', ''):"0"; ?></span>
-                                                                    <!-- ---------------------------------------------------------------------------------------angka untuk penjumlahan--------------------------------------------------------------------- -->
-
-
-                                                                    <?= ($no_prop == 1)?number_format($data['cost']/$data['yen'], 2, ',', '.'):""; ?>
-                                                                </td>
-                                                                <td>
-                                                                    <!-- ---------------------------------------------------------------------------------------angka untuk penjumlahan--------------------------------------------------------------------- -->
-                                                                    <span class="nilai1"
-                                                                        hidden><?=($no_prop == 1)?number_format ($data['cost'], 2, '.', ''): "0"; ?></span>
-                                                                    <!-- ---------------------------------------------------------------------------------------angka untuk penjumlahan--------------------------------------------------------------------- -->
+                                                        <td>
+                                                            <!-- ---------------------------------------------------------------------------------------angka untuk penjumlahan--------------------------------------------------------------------- -->
+                                                            <span class="nilai"
+                                                                hidden><?= ($no_prop == 1)?number_format($data['cost']/$data['yen'], 2, '.', ''):"0"; ?></span>
+                                                            <!-- ---------------------------------------------------------------------------------------angka untuk penjumlahan--------------------------------------------------------------------- -->
 
 
+                                                            <?= ($no_prop == 1)?number_format($data['cost']/$data['yen'], 2, ',', '.'):""; ?>
+                                                        </td>
+                                                        <td>
+                                                            <!-- ---------------------------------------------------------------------------------------angka untuk penjumlahan--------------------------------------------------------------------- -->
+                                                            <span class="nilai1"
+                                                                hidden><?=($no_prop == 1)?number_format ($data['cost'], 2, '.', ''): "0"; ?></span>
+                                                            <!-- ---------------------------------------------------------------------------------------angka untuk penjumlahan--------------------------------------------------------------------- -->
 
-                                                                    <?=($no_prop == 1)?number_format ($data['cost'],2,',','.'): ""; ?>
-                                                                </td>
-                                                                <td class="<?= ($cost_ia == 0)? "coret":""; ?>">
-                                                                    <?= (isset($data['no_ia']))? $no_prop: ""; ?>
-                                                                </td>
-                                                                <td class="<?= ($cost_ia == 0)? "coret":""; ?>">
-                                                                    <?= $data['no_ia'] ?></td>
-                                                                <td></td>
-                                                                <td class="<?= ($cost_ia == 0)? "coret":""; ?>">
-                                                                    <?= $data['ia_deskripsi'] ?></td>
-                                                                <td></td>
-                                                                <td class="<?= ($cost_ia == 0)? "coret":""; ?>">
-                                                                    <!-- ---------------------------------------------------------------------------------------angka untuk penjumlahan--------------------------------------------------------------------- -->
-                                                                    <span class="nilai2"
-                                                                        hidden><?= (isset($data['no_ia']))?number_format ($data['cost_ia'],2,'.',''): "0"; ?></span>
-                                                                    <!-- ---------------------------------------------------------------------------------------angka untuk penjumlahan--------------------------------------------------------------------- -->
 
-                                                                    <?= (isset($data['no_ia']))?number_format ($data['cost_ia'],2,',','.'): ""; ?>
-                                                                </td>
-                                                                <td></td>
-                                                                <td class="<?= ($cost_ia == 0)? "coret":""; ?>">
-                                                                    <!-- ---------------------------------------------------------------------------------------angka untuk penjumlahan--------------------------------------------------------------------- -->
 
-                                                                    <span class="nilai3"
-                                                                        hidden><?= (isset($data['no_ia']))?number_format($data['cost_ia']/$data['yen'], 2, '.', ''): "0"; ?></span>
-                                                                    <!-- ---------------------------------------------------------------------------------------angka untuk penjumlahan--------------------------------------------------------------------- -->
+                                                            <?=($no_prop == 1)?number_format ($data['cost'],2,',','.'): ""; ?>
+                                                        </td>
+                                                        <td class="<?= ($cost_ia == 0)? "coret":""; ?>">
+                                                            <?= (isset($data['no_ia']))? $no_prop: ""; ?>
+                                                        </td>
+                                                        <td class="<?= ($cost_ia == 0)? "coret":""; ?>">
+                                                            <?= $data['no_ia'] ?></td>
+                                                        <td></td>
+                                                        <td class="<?= ($cost_ia == 0)? "coret":""; ?>">
+                                                            <?= $data['ia_deskripsi'] ?></td>
+                                                        <td></td>
+                                                        <td class="<?= ($cost_ia == 0)? "coret":""; ?>">
+                                                            <!-- ---------------------------------------------------------------------------------------angka untuk penjumlahan--------------------------------------------------------------------- -->
+                                                            <span class="nilai2"
+                                                                hidden><?= (isset($data['no_ia']))?number_format ($data['cost_ia'],2,'.',''): "0"; ?></span>
+                                                            <!-- ---------------------------------------------------------------------------------------angka untuk penjumlahan--------------------------------------------------------------------- -->
 
-                                                                    <?= (isset($data['no_ia']))?number_format($data['cost_ia']/$data['yen'], 2, ',', '.'): ""; ?>
-                                                                </td>
-                                                                <td class="<?= ($cost_ia == 0)? "coret":""; ?>">
-                                                                    <!-- ---------------------------------------------------------------------------------------angka untuk penjumlahan--------------------------------------------------------------------- -->
-                                                                    <span class="nilai4"
-                                                                        hidden><?= (isset($data['no_ia']))?number_format ($data['cost_ia'],2,'.',''): "0"; ?></span>
-                                                                    <!-- ---------------------------------------------------------------------------------------end angka untuk penjumlahan--------------------------------------------------------------------- -->
+                                                            <?= (isset($data['no_ia']))?number_format ($data['cost_ia'],2,',','.'): ""; ?>
+                                                        </td>
+                                                        <td></td>
+                                                        <td class="<?= ($cost_ia == 0)? "coret":""; ?>">
+                                                            <!-- ---------------------------------------------------------------------------------------angka untuk penjumlahan--------------------------------------------------------------------- -->
 
-                                                                    <?= (isset($data['no_ia']))?number_format ($data['cost_ia'],2,',','.'): ""; ?>
-                                                                </td>
-                                                                <td class="<?= ($cost_ia == 0)? "coret":""; ?>
+                                                            <span class="nilai3"
+                                                                hidden><?= (isset($data['no_ia']))?number_format($data['cost_ia']/$data['yen'], 2, '.', ''): "0"; ?></span>
+                                                            <!-- ---------------------------------------------------------------------------------------angka untuk penjumlahan--------------------------------------------------------------------- -->
+
+                                                            <?= (isset($data['no_ia']))?number_format($data['cost_ia']/$data['yen'], 2, ',', '.'): ""; ?>
+                                                        </td>
+                                                        <td class="<?= ($cost_ia == 0)? "coret":""; ?>">
+                                                            <!-- ---------------------------------------------------------------------------------------angka untuk penjumlahan--------------------------------------------------------------------- -->
+                                                            <span class="nilai4"
+                                                                hidden><?= (isset($data['no_ia']))?number_format ($data['cost_ia'],2,'.',''): "0"; ?></span>
+                                                            <!-- ---------------------------------------------------------------------------------------end angka untuk penjumlahan--------------------------------------------------------------------- -->
+
+                                                            <?= (isset($data['no_ia']))?number_format ($data['cost_ia'],2,',','.'): ""; ?>
+                                                        </td>
+                                                        <td class="<?= ($cost_ia == 0)? "coret":""; ?>
                                                                    <?=  (isset($data['no_ia']))?$warnaremain: ""; ?>">
 
-                                                                    <!-- ---------------------------------------------------------------------------------------angka untuk penjumlahan--------------------------------------------------------------------- -->
-                                                                    <span class="nilai5" hidden><?php 
+                                                            <!-- ---------------------------------------------------------------------------------------angka untuk penjumlahan--------------------------------------------------------------------- -->
+                                                            <span class="nilai5" hidden><?php 
                                                                    if(isset($data['no_ia'])&&$cost_ia == 0){
                                                                     echo 0;
                                                                    }else{?>
-                                                                        <?= (isset($data['no_ia']))?$remainyenx: "0"; ?>
-                                                                        <?php }?></span>
-                                                                    <!-- ---------------------------------------------------------------------------------------end angka untuk penjumlahan--------------------------------------------------------------------- -->
-                                                                    <?php 
+                                                                <?= (isset($data['no_ia']))?$remainyenx: "0"; ?>
+                                                                <?php }?></span>
+                                                            <!-- ---------------------------------------------------------------------------------------end angka untuk penjumlahan--------------------------------------------------------------------- -->
+                                                            <?php 
                                                                    if(isset($data['no_ia'])&&$cost_ia == 0){
                                                                     echo 0;
                                                                    }else{?>
-                                                                    <?= (isset($data['no_ia']))?$remainyen: ""; ?>
-                                                                    <?php }?>
-                                                                </td>
+                                                            <?= (isset($data['no_ia']))?$remainyen: ""; ?>
+                                                            <?php }?>
+                                                        </td>
 
-                                                                <td
-                                                                    class="<?= ($cost_ia == 0)? "coret":""; ?> <?=  (isset($data['no_ia']))?$warnaremain: ""; ?>">
-                                                                    <!-- ---------------------------------------------------------------------------------------angka untuk penjumlahan--------------------------------------------------------------------- -->
-                                                                    <span class="nilai6" hidden><?php 
+                                                        <td
+                                                            class="<?= ($cost_ia == 0)? "coret":""; ?> <?=  (isset($data['no_ia']))?$warnaremain: ""; ?>">
+                                                            <!-- ---------------------------------------------------------------------------------------angka untuk penjumlahan--------------------------------------------------------------------- -->
+                                                            <span class="nilai6" hidden><?php 
                                                                    if(isset($data['no_ia'])&&$cost_ia == 0){
                                                                     echo 0;
                                                                    }else{?>
-                                                                        <?= (isset($data['no_ia']))?$remainIDRx: "0"; ?>
-                                                                        <?php }?></span>
-                                                                    <!-- ---------------------------------------------------------------------------------------end angka untuk penjumlahan--------------------------------------------------------------------- -->
-                                                                    <?php 
+                                                                <?= (isset($data['no_ia']))?$remainIDRx: "0"; ?>
+                                                                <?php }?></span>
+                                                            <!-- ---------------------------------------------------------------------------------------end angka untuk penjumlahan--------------------------------------------------------------------- -->
+                                                            <?php 
                                                                   if(isset($data['no_ia'])&&$cost_ia == 0){
                                                                     echo 0;
                                                                    }else{?>
-                                                                    <?= (isset($data['no_ia']))?$remainIDR: ""; ?>
-                                                                    <?php }?>
-                                                                </td>
-                                                                <td class="<?= ($cost_ia == 0)? "coret":""; ?>">
-                                                                    <?= (isset($data['no_ia']))?date("d M Y", strtotime( $akhirf)): "";  ?>
-                                                                </td>
-                                                                <td class="<?= ($cost_ia == 0)? "coret":""; ?>">
-                                                                    <?= (isset($data['no_ia']))?$data['pic_ia']: ""; ?>
-                                                                </td>
-                                                                <td class="align-middle text-center">
-                                                                    <!-- query update progress -->
-                                                                    <?php  
+                                                            <?= (isset($data['no_ia']))?$remainIDR: ""; ?>
+                                                            <?php }?>
+                                                        </td>
+                                                        <td class="<?= ($cost_ia == 0)? "coret":""; ?>">
+                                                            <?= (isset($data['no_ia']))?date("d M Y", strtotime( $akhirf)): "";  ?>
+                                                        </td>
+                                                        <td class="<?= ($cost_ia == 0)? "coret":""; ?>">
+                                                            <?= (isset($data['no_ia']))?$data['pic_ia']: ""; ?>
+                                                        </td>
+                                                        <td class="align-middle text-center">
+                                                            <!-- query update progress -->
+                                                            <?php  
                                                                 
                                                                 ///menghitung baris pada progress
                                                             $kol=mysqli_query($link_yics ,"SELECT id_prog FROM progress")or die (mysqli_error($link_yics));
@@ -563,9 +557,9 @@ $id_dept = $_GET['dept'];
                                                                         $color_progress = "progress-bar-danger";
                                                                     }
                                                                     ?>
-                                                                    <span
-                                                                        class=" badge badge-round badge-success badge-lg"><?=$data_track['progress']?></span>
-                                                                    <?php 
+                                                            <span
+                                                                class=" badge badge-round badge-success badge-lg"><?=$data_track['progress']?></span>
+                                                            <?php 
                                                                     }else{
                                                                         $persen = 0;
                                                                         $color_progress = "";
@@ -588,67 +582,58 @@ $id_dept = $_GET['dept'];
                                                                     
                                                                     ?>
 
-                                                                </td>
+                                                        </td>
 
 
 
-                                                                <td class="align-middle text-center <?= ($text_progress == "STOP")? "reason":""; ?>"
-                                                                    data-reason="<?=$rea?> " data-noia="<?=$no_iaf?>">
-                                                                    <div class="progress mt-20 text-center ">
-                                                                        <div class="progress-bar progress-bar-striped  <?=$color_progress?> active"
-                                                                            aria-valuenow="" aria-valuemin="0"
-                                                                            aria-valuemax="100"
-                                                                            style="width: <?=$persen?>%;"
-                                                                            aria-valuemax="100" role="progressbar">
-                                                                            <?=$text_progress?>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
+                                                        <td class="align-middle text-center <?= ($text_progress == "STOP")? "reason":""; ?>"
+                                                            data-reason="<?=$rea?> " data-noia="<?=$no_iaf?>">
+                                                            <div class="progress mt-20 text-center ">
+                                                                <div class="progress-bar progress-bar-striped  <?=$color_progress?> active"
+                                                                    aria-valuenow="" aria-valuemin="0"
+                                                                    aria-valuemax="100" style="width: <?=$persen?>%;"
+                                                                    aria-valuemax="100" role="progressbar">
+                                                                    <?=$text_progress?>
+                                                                </div>
+                                                            </div>
+                                                        </td>
 
 
-                                                                <td>
-                                                                    <a href="Tracking.php?id_ia=<?= $data['id_ia'] ?>"
-                                                                        class="<?= $tombol_hidup ?>">
-                                                                        <button type="button"
-                                                                            class="btn btn-icon btn-info">
-                                                                            <i class="icon wb-eye"
-                                                                                aria-hidden="true"></i>
-                                                                        </button>
-                                                                    </a>
+                                                        <td>
+                                                            <a href="Tracking.php?id_ia=<?= $data['id_ia'] ?>"
+                                                                class="<?= $tombol_hidup ?>">
+                                                                <button type="button" class="btn btn-icon btn-info">
+                                                                    <i class="icon wb-eye" aria-hidden="true"></i>
+                                                                </button>
+                                                            </a>
 
-                                                                    <?php if( $_SESSION['yics_level'] != "1"){ ?>
+                                                            <?php if( $_SESSION['yics_level'] != "1"){ ?>
 
-                                                                    <a href="formupdate_ia.php?id_ia=<?= $data['id_ia'] ?>"
-                                                                        class="<?= $tombol_hidup ?>">
-                                                                        <button type="button"
-                                                                            class="btn btn-icon btn-success">
-                                                                            <i class="icon wb-upload"
-                                                                                aria-hidden="true"></i>
-                                                                        </button>
-                                                                    </a>
+                                                            <a href="formupdate_ia.php?id_ia=<?= $data['id_ia'] ?>"
+                                                                class="<?= $tombol_hidup ?>">
+                                                                <button type="button" class="btn btn-icon btn-success">
+                                                                    <i class="icon wb-upload" aria-hidden="true"></i>
+                                                                </button>
+                                                            </a>
 
-                                                                    <a href="formeditia_ctrl.php?id_ia=<?= $data['id_ia']?>"
-                                                                        class="<?= $tombol_hidup ?>">
-                                                                        <button type="button"
-                                                                            class="btn btn-icon btn-warning">
-                                                                            <i class="icon wb-edit"
-                                                                                aria-hidden="true"></i>
-                                                                        </button>
-                                                                    </a>
-                                                                    <a href="../proses/ia/hapus_ia.php?del=<?= $data['id_ia']?>&page=<?= $data['id_dep']?>"
-                                                                        class="<?= $tombol_hidup ?> HapusData">
-                                                                        <button type="button"
-                                                                            class="btn btn-icon btn-danger">
-                                                                            <i class="icon oi-trashcan"
-                                                                                aria-hidden="true"></i>
-                                                                        </button>
-                                                                    </a>
+                                                            <a href="formeditia_ctrl.php?id_ia=<?= $data['id_ia']?>"
+                                                                class="<?= $tombol_hidup ?>">
+                                                                <button type="button" class="btn btn-icon btn-warning">
+                                                                    <i class="icon wb-edit" aria-hidden="true"></i>
+                                                                </button>
+                                                            </a>
+                                                            <a href="../proses/ia/hapus_ia.php?del=<?= $data['id_ia']?>&page=<?= $data['id_dep']?>"
+                                                                class="<?= $tombol_hidup ?> HapusData">
+                                                                <button type="button" class="btn btn-icon btn-danger">
+                                                                    <i class="icon oi-trashcan" aria-hidden="true"></i>
+                                                                </button>
+                                                            </a>
 
-                                                                    <?php } ?>
+                                                            <?php } ?>
 
-                                                                </td>
-                                                            </tr>
-                                                            <?php 
+                                                        </td>
+                                                    </tr>
+                                                    <?php 
 
                                                         $id_before = $data['id_prop'];
                                                         $nomor_urut_before = $nomor_urut;
@@ -656,43 +641,42 @@ $id_dept = $_GET['dept'];
                                                       }
                                                       }
                                                        ?>
-                                                            <tr class="align-middle text-center bg-green-200">
-                                                                <td class="align-middle text-center bg-green-200">TOTAL
-                                                                </td>
-                                                                <td class="align-middle text-center bg-green-200"></td>
-                                                                <td class="align-middle text-center bg-green-200"></td>
-                                                                <td class="align-middle text-center bg-green-200"></td>
-                                                                <td class="align-middle text-center bg-green-200"><span
-                                                                        class="hasil"></span></td>
-                                                                <td class="align-middle text-center bg-green-200"><span
-                                                                        class="hasil1"></span></td>
-                                                                <td class="align-middle text-center bg-green-200"></td>
-                                                                <td class="align-middle text-center bg-green-200"></td>
-                                                                <td class="align-middle text-center bg-green-200"></td>
-                                                                <td class="align-middle text-center bg-green-200"></td>
-                                                                <td class="align-middle text-center bg-green-200"></td>
-                                                                <td class="align-middle text-center bg-green-200"><span
-                                                                        class="hasil2"></span></td>
-                                                                <td class="align-middle text-center bg-green-200"></td>
-                                                                <td class="align-middle text-center bg-green-200"><span
-                                                                        class="hasil3"></span></td>
-                                                                <td class="align-middle text-center bg-green-200"><span
-                                                                        class="hasil4"></span></td>
-                                                                <td class="align-middle text-center bg-green-200"><span
-                                                                        class="hasil5"></span></td>
-                                                                <td class="align-middle text-center bg-green-200"><span
-                                                                        class="hasil6"></span></td>
-                                                                <td class="align-middle text-center bg-green-200"></td>
-                                                                <td class="align-middle text-center bg-green-200"></td>
-                                                                <td class="align-middle text-center bg-green-200"></td>
-                                                                <td class="align-middle text-center bg-green-200"></td>
-                                                                <td class="align-middle text-center bg-green-200"></td>
+                                                    <tr class="align-middle text-center bg-green-200">
+                                                        <td class="align-middle text-center bg-green-200">TOTAL
+                                                        </td>
+                                                        <td class="align-middle text-center bg-green-200"></td>
+                                                        <td class="align-middle text-center bg-green-200"></td>
+                                                        <td class="align-middle text-center bg-green-200"></td>
+                                                        <td class="align-middle text-center bg-green-200"><span
+                                                                class="hasil"></span></td>
+                                                        <td class="align-middle text-center bg-green-200"><span
+                                                                class="hasil1"></span></td>
+                                                        <td class="align-middle text-center bg-green-200"></td>
+                                                        <td class="align-middle text-center bg-green-200"></td>
+                                                        <td class="align-middle text-center bg-green-200"></td>
+                                                        <td class="align-middle text-center bg-green-200"></td>
+                                                        <td class="align-middle text-center bg-green-200"></td>
+                                                        <td class="align-middle text-center bg-green-200"><span
+                                                                class="hasil2"></span></td>
+                                                        <td class="align-middle text-center bg-green-200"></td>
+                                                        <td class="align-middle text-center bg-green-200"><span
+                                                                class="hasil3"></span></td>
+                                                        <td class="align-middle text-center bg-green-200"><span
+                                                                class="hasil4"></span></td>
+                                                        <td class="align-middle text-center bg-green-200"><span
+                                                                class="hasil5"></span></td>
+                                                        <td class="align-middle text-center bg-green-200"><span
+                                                                class="hasil6"></span></td>
+                                                        <td class="align-middle text-center bg-green-200"></td>
+                                                        <td class="align-middle text-center bg-green-200"></td>
+                                                        <td class="align-middle text-center bg-green-200"></td>
+                                                        <td class="align-middle text-center bg-green-200"></td>
+                                                        <td class="align-middle text-center bg-green-200"></td>
 
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
                                         </div>
                                     </div>
                                 </div>

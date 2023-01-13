@@ -14,7 +14,7 @@ $cost_ia = str_replace(',' , '.' , $cost_ia);
 $time_ia = $_POST['time_ia'];
 $validuntil = $_POST['validuntil'];
 
-$data_prop = single_query("SELECT * from plan_proposal join data_user on data_user.area=plan_proposal.area where id_prop={$id_prop}");
+$data_prop = single_query("SELECT * from plan_proposal join data_user on data_user.id_area=plan_proposal.id_area where id_prop={$id_prop}");
 
 $notif = FALSE;
 

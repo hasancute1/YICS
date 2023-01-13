@@ -82,6 +82,7 @@ if (isset ($_SESSION['yics_user'])){
           header('location: ../../page/usersetting.php');
          }
       }else if(isset ($_GET['proses'])){
+         // echo "aaa";
       // echo ($_GET['proses']);
          foreach($_POST['check'] as $username){
             $deleteAll = "DELETE FROM data_user WHERE username='$username'";    

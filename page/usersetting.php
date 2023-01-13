@@ -124,19 +124,20 @@ include '../elemen/header.php';?>
                                 }
                                 ?>
                                                             </ul>
-                                                            <div class="tab-content py-15">
+                                                            <form class="tab-content py-15" id="proses" name="proses">
+
                                                                 <?php
-                                $user = mysqli_query($link_yics, "SELECT * FROM user_role ORDER BY 'id_role' ASC") or die(mysqli_error($link_yics));
-                                $x = 0;
-                                while ($user_role = mysqli_fetch_assoc($user)) {
-                                  //menampung id sebaga array tab
-                                  $isi[$x] = $user_role['id_role'];
-                                  $nama_role[$x] = $user_role['role_name'];
-                                  //membuat isi active terbuka untuk pertama kali
-                                  $setisi = (isset($_SESSION['isi'])) ? $_SESSION['isi'] : $isi[0];
-                                  $isi_active = ($setisi == $isi[$x]) ? "active show" : "";
-                                  $isi_select = ($setisi == $isi[$x]) ? "true" : "false";
-                                ?>
+                                                                $user = mysqli_query($link_yics, "SELECT * FROM user_role ORDER BY 'id_role' ASC") or die(mysqli_error($link_yics));
+                                                                $x = 0;
+                                                                while ($user_role = mysqli_fetch_assoc($user)) {
+                                                                //menampung id sebaga array tab
+                                                                $isi[$x] = $user_role['id_role'];
+                                                                $nama_role[$x] = $user_role['role_name'];
+                                                                //membuat isi active terbuka untuk pertama kali
+                                                                $setisi = (isset($_SESSION['isi'])) ? $_SESSION['isi'] : $isi[0];
+                                                                $isi_active = ($setisi == $isi[$x]) ? "active show" : "";
+                                                                $isi_select = ($setisi == $isi[$x]) ? "true" : "false";
+                                                                ?>
                                                                 <div class="tab-pane <?= $isi_active ?>"
                                                                     id="user<?= $user_role['id_role'] ?>"
                                                                     role="tabpanel">
@@ -148,24 +149,24 @@ include '../elemen/header.php';?>
                                                                                 <?= $user_role['role_name'] ?></h3>
                                                                         </header>
                                                                         <div class="panel-body">
-                                                                            <form id="wadahtabel" name="proses">
-                                                                                <table
-                                                                                    class=" text-uppercase table table-hover dataTable table-striped w-full db">
-                                                                                    <thead class="bg-info">
-                                                                                        <tr>
-                                                                                            <th>NO</th>
-                                                                                            <th>USERNAME</th>
-                                                                                            <th>
-                                                                                                NAMA</th>
-                                                                                            <th>AREA</th>
-                                                                                            <th>ROLE</th>
-                                                                                            <th>ACTION</th>
-                                                                                            <th><input type="checkbox"
-                                                                                                    id="checkAll"></th>
-                                                                                        </tr>
-                                                                                    </thead>
-                                                                                    <tbody>
-                                                                                        <?php
+
+                                                                            <table
+                                                                                class=" text-uppercase table table-hover  table-striped w-full db">
+                                                                                <thead class="bg-info">
+                                                                                    <tr>
+                                                                                        <th>NO</th>
+                                                                                        <th>USERNAME</th>
+                                                                                        <th>
+                                                                                            NAMA</th>
+                                                                                        <th>AREA</th>
+                                                                                        <th>ROLE</th>
+                                                                                        <th>ACTION</th>
+                                                                                        <th><input type="checkbox"
+                                                                                                id="checkAll"></th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <?php
                                                                                             $name = $user_role['role_name'];
                                                                                             $ur = mysqli_query($link_yics, "SELECT * FROM data_user 
                                                                                             JOIN area on area.id_area =  data_user.id_area  
@@ -174,50 +175,49 @@ include '../elemen/header.php';?>
                                                                                             $no = 1;
                                                                                             while ($data = mysqli_fetch_array($ur)) {
                                                                                             ?>
-                                                                                        <tr>
-                                                                                            <td><?= $no++; ?></td>
-                                                                                            <td><?= $data['username']; ?>
-                                                                                            </td>
-                                                                                            <td style="width: 200px;">
-                                                                                                <?= $data['nama']; ?>
-                                                                                            </td>
-                                                                                            <td style="width: 200px;">
-                                                                                                <?= $data['area']; ?>
-                                                                                            </td>
-                                                                                            <td><?= $data['role_name']; ?>
-                                                                                            </td>
-                                                                                            <td>
-                                                                                                <i href=""
-                                                                                                    data-toggle="tooltip"
-                                                                                                    data-original-title="Edit">
-                                                                                                    <a href="formubahusersetting.php?ubah=<?php echo $data['username']; ?>"
-                                                                                                        class="btn btn-success btn-icon btn-outline btn-xs">
-                                                                                                        <i class="icon wb-edit"
-                                                                                                            aria-hidden="true"></i>
-                                                                                                    </a>
-                                                                                                </i>
-                                                                                                <i href="javascript:void(0)"
-                                                                                                    data-toggle="tooltip"
-                                                                                                    data-original-title="Hapus">
-                                                                                                    <a href="../proses/usersetting/user.php?del=<?php echo $data['username']; ?>"
-                                                                                                        class="btn btn-icon btn-danger btn-icon btn-outline btn-xs HapusData">
-                                                                                                        <i class="icon oi-trashcan"
-                                                                                                            aria-hidden="true"></i>
-                                                                                                    </a>
-                                                                                                </i>
-                                                                                            </td>
-                                                                                            <td>
-                                                                                                <input name="check[]"
-                                                                                                    value="<?= $data['username']; ?>"
-                                                                                                    type="checkbox"
-                                                                                                    class="check">
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                        <?php
-                                              } ?>
-                                                                                    </tbody>
-                                                                                </table>
-                                                                            </form>
+                                                                                    <tr>
+                                                                                        <td><?= $no++; ?></td>
+                                                                                        <td><?= $data['username']; ?>
+                                                                                        </td>
+                                                                                        <td style="width: 200px;">
+                                                                                            <?= $data['nama']; ?>
+                                                                                        </td>
+                                                                                        <td style="width: 200px;">
+                                                                                            <?= $data['area']; ?>
+                                                                                        </td>
+                                                                                        <td><?= $data['role_name']; ?>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <i href=""
+                                                                                                data-toggle="tooltip"
+                                                                                                data-original-title="Edit">
+                                                                                                <a href="formubahusersetting.php?ubah=<?php echo $data['username']; ?>"
+                                                                                                    class="btn btn-success btn-icon btn-outline btn-xs">
+                                                                                                    <i class="icon wb-edit"
+                                                                                                        aria-hidden="true"></i>
+                                                                                                </a>
+                                                                                            </i>
+                                                                                            <i href="javascript:void(0)"
+                                                                                                data-toggle="tooltip"
+                                                                                                data-original-title="Hapus">
+                                                                                                <a href="../proses/usersetting/user.php?del=<?php echo $data['username']; ?>"
+                                                                                                    class="btn btn-icon btn-danger btn-icon btn-outline btn-xs HapusData">
+                                                                                                    <i class="icon oi-trashcan"
+                                                                                                        aria-hidden="true"></i>
+                                                                                                </a>
+                                                                                            </i>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <input name="check[]"
+                                                                                                value="<?= $data['username']; ?>"
+                                                                                                type="checkbox"
+                                                                                                class="check">
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <?php
+                                                                                        } ?>
+                                                                                </tbody>
+                                                                            </table>
                                                                             <div class="row">
                                                                                 <div class="col-lg-6">
                                                                                 </div>
@@ -245,7 +245,7 @@ include '../elemen/header.php';?>
                                   $x++;
                                 }
                                 ?>
-                                                            </div>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                     <!-- End Example Tabs Left -->
@@ -449,9 +449,9 @@ include '../elemen/header.php';?>
                         $('.HapusAll').click(function(a) {
                             a.preventDefault()
                             var getLink = '../proses/usersetting/user.php?proses='
-                            document.proses.method = "GET";
+                            document.proses.method = "POST";
                             document.proses.action = getLink;
-                            console.log(getLink);
+                            // console.log(getLink);
                             Swal.fire({
                                 title: 'Apakah yakin?',
                                 text: "Data ini akan dihapus selamanya!",
@@ -462,7 +462,13 @@ include '../elemen/header.php';?>
                                 confirmButtonText: 'Yes, delete it!'
                             }).then((result) => {
                                 if (result.isConfirmed) {
+                                    // window.alert("ddd")
+
                                     document.proses.submit();
+                                    // proses.proses.submit()
+                                    // $('#proses').submit();
+                                    // proses.submit();
+                                    console.log(document.proses.action)
                                 }
                             })
                         })
@@ -472,47 +478,47 @@ include '../elemen/header.php';?>
 
 
 
-                    <script>
-                    $(document).ready(function() {
-                        function load_data(hal) {
-                            var id = $('.tab-active').attr('id');
-                            var name = $('.tab-active').attr('data-name');
-                            var cari = $('.cari').val();
-                            // console.log(name);
-                            $('.content-title').text(name);
-                            $.ajax({
-                                url: 'ajax/index.php',
-                                method: 'GET',
-                                data: {
-                                    page: hal,
-                                    id: id,
-                                    cari: cari
-                                },
-                                success: function(msg) {
-                                    $('.data-view').fadeOut('fast', function() {
-                                        $(this).html(msg).fadeIn('fast');
+                    <!-- <script>
+                $(document).ready(function() {
+                    function load_data(hal) {
+                        var id = $('.tab-active').attr('id');
+                        var name = $('.tab-active').attr('data-name');
+                        var cari = $('.cari').val();
+                        // console.log(name);
+                        $('.content-title').text(name);
+                        $.ajax({
+                            url: 'ajax/index.php',
+                            method: 'GET',
+                            data: {
+                                page: hal,
+                                id: id,
+                                cari: cari
+                            },
+                            success: function(msg) {
+                                $('.data-view').fadeOut('fast', function() {
+                                    $(this).html(msg).fadeIn('fast');
 
-                                    });
-                                }
-                            });
-                        }
-                        load_data();
-                        $('.cari').keyup(function() {
-                            load_data();
-                        })
-                        $('.list-tab').click(function() {
-                            var id = $(this).attr('id');
-                            $('.list-tab').removeClass('tab-active');
-                            $(this).addClass('tab-active');
-                            load_data();
+                                });
+                            }
                         });
-                        $(document).on('click', '.halaman', function() {
-                            var hal = $(this).attr("id");
-                            load_data(hal);
-                        });
+                    }
+                    load_data();
+                    $('.cari').keyup(function() {
                         load_data();
                     })
-                    </script>
+                    $('.list-tab').click(function() {
+                        var id = $(this).attr('id');
+                        $('.list-tab').removeClass('tab-active');
+                        $(this).addClass('tab-active');
+                        load_data();
+                    });
+                    $(document).on('click', '.halaman', function() {
+                        var hal = $(this).attr("id");
+                        load_data(hal);
+                    });
+                    load_data();
+                })
+                </script> -->
 
                     <!-- CHECK BOX -->
                     <script>

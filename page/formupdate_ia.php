@@ -78,7 +78,9 @@ include '../elemen/header.php';?>
                                             
                                             $data_ia = single_query("SELECT * FROM ia 
                                             JOIN plan_proposal on ia.id_prop = plan_proposal.id_prop
-                                            JOIN depart on plan_proposal.id_dep = depart.id_dep
+                                            JOIN area on area.id_area = plan_proposal.id_area
+                                            JOIN data_user on plan_proposal.id_area = area.id_area                                            
+                                            JOIN depart on area.id_dep = depart.id_dep
                                             JOIN time_fiscal on plan_proposal.id_fis = time_fiscal.id_fis                                           
                                             JOIN kategori_proposal on plan_proposal.id_kat = kategori_proposal.id_kat
                                             where id_ia='".$id_ia."'");    

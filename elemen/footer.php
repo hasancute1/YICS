@@ -22,24 +22,22 @@
     <script src="../global/vendor/switchery/switchery.js"></script>
     <script src="../global/vendor/intro-js/intro.js"></script>
     <script src="../global/vendor/screenfull/screenfull.js"></script>
-    <script src="../global/vendor/slidepanel/jquery-slidePanel.js"></script>
+
     <script src="../global/vendor/chart-js/Chart.js"></script>
     <script src="../global/vendor/webui-popover/jquery.webui-popover.min.js"></script>
     <script src="../global/vendor/toolbar/jquery.toolbar.js"></script>
     <script src="../global/vendor/bootbox/bootbox.js"></script>
     <script src="../global/vendor/bootstrap-sweetalert/sweetalert.js"></script>
     <script src="../global/vendor/toastr/toastr.js"></script>
-    <script src="../global/js/Plugin/asscrollable.js"></script>
+
     <script src="../global/vendor/jquery-placeholder/jquery.placeholder.js"></script>
     <script src="../global/vendor/aspieprogress/jquery-asPieProgress.js"></script>
-    <script src="../global/js/Plugin/jquery-appear.js"></script>
-    <script src="../global/js/Plugin/nprogress.js"></script>
 
 
-    <script src="../base/assets/examples/js/advanced/animation.js"></script> <!-- navbar -->
-    <script src="../global/js/Plugin/responsive-tabs.js"></script>
-    <script src="../global/js/Plugin/closeable-tabs.js"></script>
-    <script src="../global/js/Plugin/tabs.js"></script>
+
+    <!-- navbar -->
+
+
     <script src="../global/vendor/matchheight/jquery.matchHeight-min.js"></script>
 
 
@@ -55,10 +53,10 @@
     <script src="../global/vendor/blueimp-tmpl/tmpl.js"></script>
 
 
-    <script src="../global/js/Plugin/dropify.js"></script>
+
     <script src="../global/vendor/jquery-placeholder/jquery.placeholder.js"></script>
 
-    <script src="../base/assets/examples/js/forms/validation.js"></script>
+
 
 
 
@@ -95,11 +93,10 @@ Config.set('assets', '../base/assets');
 
     <!-- Page -->
     <script src="../base/assets/js/Site.js"></script>
-    <script src="../global/js/Plugin/asscrollable.js"></script>
-    <script src="../global/js/Plugin/slidepanel.js"></script>
+
     <script src="../global/js/Plugin/switchery.js"></script>
     <!-- <script src="grafikbar.js"></script> -->
-    <script src="modal.js"></script>
+
     <script src="../global/js/Plugin/jquery-placeholder.js"></script>
     <script src="../global/js/Plugin/material.js"></script>
     <script src="../global/js/Plugin/jquery-placeholder.js"></script>
@@ -108,12 +105,12 @@ Config.set('assets', '../base/assets');
 
 
     <!-- <script src="../base/assets/examples/js/charts/chartjs.js"></script> -->
-    <script src="../base/assets/examples/js/dashboard/ecommerce.js"></script>
+
     <script src="../global/js/Plugin/aspieprogress.js"></script>
     <script src="../global/js/Plugin/webui-popover.js"></script>
     <script src="../global/js/Plugin/toolbar.js"></script>
     <script src="../base/assets/examples/js/uikit/tooltip-popover.js"></script>
-    <script src="../base/assets/examples/css/charts/chartjs.css"></script>
+
     <script src="../base/assets/sweetalert2/dist/sweetalert2.all.min.js"></script>
     <script src="../base/js/controltable.js"></script>
     <script src="../global/js/Plugin/datatables.js"></script>

@@ -143,7 +143,7 @@ if (!isset($_SESSION['yics_user'])) {
 
                                 <!-- First Row -->
                                 <div class="col-lg-4">
-                                    <div class="card card-shadow">
+                                    <div class="card card-shadow ">
                                         <div class="card-header card-header-transparent bg-dark">
                                             <div class="row">
                                                 <div class="col-lg-8 col-md-8">
@@ -228,7 +228,8 @@ if (!isset($_SESSION['yics_user'])) {
 
                                     $consumtion_budget = query("SELECT depart.id_dep , sum(cost_ia) as cost FROM ia
                                         join plan_proposal on ia.id_prop = plan_proposal.id_prop
-                                        join depart on plan_proposal.id_dep = depart.id_dep
+                                        join area on area.id_area = plan_proposal.id_area
+  join depart on area.id_dep = depart.id_dep
                                         where plan_proposal.id_fis={$id_fis} {$where_time}
                                         group by depart
                                     ");  
@@ -243,7 +244,7 @@ if (!isset($_SESSION['yics_user'])) {
                                 ?>
 
                                 <div class="col-lg-3 col-md-6 info-panel">
-                                    <div class="card card-shadow">
+                                    <div class="card  card-transparent">
                                         <div class="card-block bg-blue-800 p-20"
                                             style="border-radius: 15px;height:180px;">
                                             <button type="button" class="btn btn-floating btn-sm btn-success">
@@ -262,7 +263,8 @@ if (!isset($_SESSION['yics_user'])) {
 $budget_reject = mysqli_query($link_yics ,"SELECT sum(ia.cost_ia) AS cost_rjct FROM tracking_ia
 join ia on tracking_ia.id_ia = ia.id_ia
 join plan_proposal on ia.id_prop = plan_proposal.id_prop
-join depart on plan_proposal.id_dep = depart.id_dep                                           
+join area on area.id_area = plan_proposal.id_area
+  join depart on area.id_dep = depart.id_dep                                          
 where  plan_proposal.id_fis={$id_fis}
  and approval = '0' GROUP BY approval = '0'")
 or die (mysqli_error($link_yics));                 
@@ -295,6 +297,17 @@ if(mysqli_num_rows($budget_reject)>0){
                                         </div>
                                     </div>
                                 </div>
+                                <div class="card card-block p-30 bg-red-600">
+                                    <div class="card-watermark darker font-size-80 m-15"><i class="icon wb-users"
+                                            aria-hidden="true"></i></div>
+                                    <div class="counter counter-md counter-inverse text-left">
+                                        <div class="counter-number-group">
+                                            <span class="counter-number">42</span>
+                                            <span class="counter-number-related text-capitalize">pepele</span>
+                                        </div>
+                                        <div class="counter-label text-capitalize">in room</div>
+                                    </div>
+                                </div>
                                 <?php                
                       
                     
@@ -303,8 +316,14 @@ if(mysqli_num_rows($budget_reject)>0){
                         foreach( $depart as $row_card){?>
 
                                 <div class="col-lg-3 col-md-6 info-panel">
+                                    <div class="counter counter-md">
+                                        <div class="counter-number-group">
+                                            <a href="budgetdep.php?dep=<?= $row_card['id_dep'] ?>"
+                                                class="counter-number">
+                                        </div>
+                                    </div>
                                     <a href="budgetdep.php?dep=<?= $row_card['id_dep'] ?>">
-                                        <div class="card card-shadow">
+                                        <div class="card  card-transparent">
                                             <div class="card-block warnadep<?=$i?>"
                                                 style="border-radius: 15px;height:180px;">
                                                 <button type="button" class="btn btn-floating btn-sm btn-success">
@@ -319,8 +338,9 @@ if(mysqli_num_rows($budget_reject)>0){
 $budget_reject = mysqli_query($link_yics ,"SELECT sum(ia.cost_ia) AS cost_rjct FROM tracking_ia
 join ia on tracking_ia.id_ia = ia.id_ia
 join plan_proposal on ia.id_prop = plan_proposal.id_prop
-join depart on plan_proposal.id_dep = depart.id_dep                                           
-where plan_proposal.id_dep = {$row_card['id_dep']} and plan_proposal.id_fis={$id_fis}
+join area on area.id_area = plan_proposal.id_area
+  join depart on area.id_dep = depart.id_dep                                        
+where depart.id_dep = {$row_card['id_dep']} and plan_proposal.id_fis={$id_fis}
  and approval = '0' GROUP BY approval = '0'")
 or die (mysqli_error($link_yics));                 
 if(mysqli_num_rows($budget_reject)>0){
@@ -338,8 +358,9 @@ if(mysqli_num_rows($budget_reject)>0){
 
                                                 $consumtion_budget = single_query("SELECT sum(cost_ia) as cost , count(*) as qty FROM ia
                                                 join plan_proposal on ia.id_prop = plan_proposal.id_prop
-                                                join depart on plan_proposal.id_dep = depart.id_dep
-                                                where plan_proposal.id_dep = {$row_card['id_dep']} and plan_proposal.id_fis={$id_fis} {$where_time}
+                                                join area on area.id_area = plan_proposal.id_area
+  join depart on area.id_dep = depart.id_dep
+                                                where depart.id_dep = {$row_card['id_dep']} and plan_proposal.id_fis={$id_fis} {$where_time}
                                                 ");
                                                 $sisa_budget = ($row_card['budget'] - $consumtion_budget['cost']    )+$brjct; ?>
                                                 <div class="content-text text-center mb-0">
@@ -362,6 +383,7 @@ if(mysqli_num_rows($budget_reject)>0){
                         }
                     } 
                 ?>
+
                                 <!-- End Second Row -->
                                 <!-- Third Row -->
                                 <!-- Third Left -->
@@ -626,7 +648,7 @@ if(mysqli_num_rows($budget_reject)>0){
 include '../elemen/footer.php';?>
 
     <!-- #################################################################################### -->
-    <script src="caripp.js"> </script>
+
 
 
 
@@ -967,7 +989,8 @@ $json_morris = json_encode($array_donut_dept);
 $SessionArea= $_SESSION['id_area'];
 $proposal = mysqli_query($link_yics ,
 "SELECT * FROM plan_proposal 
-JOIN depart ON plan_proposal.id_dep = depart.id_dep
+join area on area.id_area = plan_proposal.id_area
+  join depart on area.id_dep = depart.id_dep
 JOIN kategori_proposal  ON plan_proposal.id_kat = kategori_proposal.id_kat
 JOIN time_fiscal  ON plan_proposal.id_fis = time_fiscal.id_fis                             
 JOIN data_user  ON data_user.id_area = plan_proposal.id_area                          

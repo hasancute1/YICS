@@ -134,7 +134,7 @@
     <link rel="stylesheet" href="../global/vendor/asscrollable/asScrollable.css">
     <link rel="stylesheet" href="../global/vendor/switchery/switchery.css">
     <link rel="stylesheet" href="../global/vendor/intro-js/introjs.css">
-    <link rel="stylesheet" href="../global/vendor/slidepanel/slidePanelS.css">
+
     <link rel="stylesheet" href="../global/vendor/flag-icon-css/flag-icon.css">
     <link rel="stylesheet" href="../base/assets/examples/css/charts/chartjs.css">
     <link rel="stylesheet" href="../global/vendor/webui-popover/webui-popover.css">

@@ -95,7 +95,7 @@ include '../elemen/header.php';?>
                     JOIN time_fiscal  ON plan_proposal.id_fis = time_fiscal.id_fis
                     LEFT JOIN konversi_matauang ON plan_proposal.id_matauang = konversi_matauang.id_matauang
                     WHERE id_ia='$id'"); 
-
+                        $cst = $data_ia['cost_ia'];
                         $id_fis = $data_ia['id_fis'];
                         $id_dep = $data_ia['id_dep'];
                         $dep = $data_ia['depart'];
@@ -153,16 +153,11 @@ JOIN plan_proposal on ia.id_prop = plan_proposal.id_prop
 join depart on plan_proposal.id_dep = depart.id_dep
 
 where plan_proposal.id_dep = {$id_dep} and plan_proposal.id_fis={$id_fis}");
-                    $consumtion_budget = $get_data_ia['cost_ia']-$brjct;
+                    $consumtion_budget = $get_data_ia['cost_ia'];
 
                     $get_data_budget1 = mysqli_query($link_yics ,"SELECT * FROM budget where id_dep='$id_dep' and id_fis='$id_fis'");
                     $get_data_budget = mysqli_fetch_assoc($get_data_budget1);
-                    $sisa_budget = $get_data_budget['budget'] - $consumtion_budget;
-
-                       
-
-                  
-
+                    $sisa_budget = ($get_data_budget['budget'] - $consumtion_budget)+$cst;                   
                     ?>
                     <!-- Page -->
 

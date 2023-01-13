@@ -315,7 +315,7 @@ include '../elemen/header.php';?>
                 <!-- Footer -->
                 <?php
 include '../elemen/footer.php';?>
-                <script src="cariuser.js"> </script>
+
 
                 <!-- Modal tambah data fiscalsetting -->
                 <div class="modal fade modal-info" id="ModalAlokasiBudget" aria-hidden="true"
@@ -471,47 +471,7 @@ include '../elemen/footer.php';?>
                 })
                 </script>
                 <!-- end query java script hapus data -->
-                <script>
-                $(document).ready(function() {
-                    function load_data(hal) {
-                        var id = $('.tab-active').attr('id');
-                        var name = $('.tab-active').attr('data-name');
-                        var cari = $('.cari').val();
-                        // console.log(name);
-                        $('.content-title').text(name);
-                        $.ajax({
-                            url: 'ajax/index.php',
-                            method: 'GET',
-                            data: {
-                                page: hal,
-                                id: id,
-                                cari: cari
-                            },
-                            success: function(msg) {
-                                $('.data-view').fadeOut('fast', function() {
-                                    $(this).html(msg).fadeIn('fast');
 
-                                });
-                            }
-                        });
-                    }
-                    load_data();
-                    $('.cari').keyup(function() {
-                        load_data();
-                    })
-                    $('.list-tab').click(function() {
-                        var id = $(this).attr('id');
-                        $('.list-tab').removeClass('tab-active');
-                        $(this).addClass('tab-active');
-                        load_data();
-                    });
-                    $(document).on('click', '.halaman', function() {
-                        var hal = $(this).attr("id");
-                        load_data(hal);
-                    });
-                    load_data();
-                })
-                </script>
 
                 <!-- CHECK BOX -->
                 <script>

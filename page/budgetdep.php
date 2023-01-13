@@ -179,10 +179,11 @@ include '../elemen/header.php';?>
 
 // -------------------------------------------------------------end json label x  dan nilaigrafik bar-------------------------------------
 // --------------------------------------------------------------quuery label cost actual grafik bar-------------------------------------
-$label_c = mysqli_query($link_yics ,"SELECT sum(cost_ia) as costia FROM ia
-JOIN plan_proposal ON ia.id_prop = plan_proposal.id_prop
-JOIN depart ON plan_proposal.id_dep = depart.id_dep
-where plan_proposal.id_dep={$id_dep} and id_fis={$id_fis}  GROUp BY ia.id_prop ORDER BY plan_proposal.cost ASC")
+$label_c = mysqli_query($link_yics ,"SELECT cost_ia as costia FROM plan_proposal 
+LEFT JOIN ( SELECT sum(cost_ia) AS cost_ia, id_prop AS id_prop  FROM ia  GROUp BY ia.id_prop ) AS ia ON ia.id_prop = plan_proposal.id_prop
+join area on area.id_area = plan_proposal.id_area
+  join depart on area.id_dep = depart.id_dep
+where depart.id_dep = {$id_dep} and id_fis = {$id_fis} ORDER BY plan_proposal.cost ASC")
 or die (mysqli_error($link_yics));                 
 if(mysqli_num_rows($label_c)>0){
 while($label_cx = mysqli_fetch_assoc($label_c))
@@ -203,8 +204,9 @@ $labelcos=json_encode($labelcos);
 
 // --------------------------------------------------------------quuery label x grafik bar-------------------------------------
                     $label_x = mysqli_query($link_yics ,"SELECT * FROM plan_proposal
-                    JOIN depart on plan_proposal.id_dep = depart.id_dep
-                    where plan_proposal.id_dep={$id_dep} and id_fis={$id_fis} ORDER BY cost ASC ")
+                    join area on area.id_area = plan_proposal.id_area
+  join depart on area.id_dep = depart.id_dep
+                    where depart.id_dep={$id_dep} and id_fis={$id_fis} ORDER BY cost ASC ")
                     or die (mysqli_error($link_yics));                 
                     if(mysqli_num_rows($label_x)>0){
                     while($label_sx = mysqli_fetch_assoc($label_x))
@@ -230,8 +232,9 @@ $labelcos=json_encode($labelcos);
                      } 
                     $consumtion_budget = single_query("SELECT sum(cost_ia) as cost , count(*) as qty , max(ia.time_ia) as last_month FROM ia
                         join plan_proposal on ia.id_prop = plan_proposal.id_prop
-                        join depart on plan_proposal.id_dep = depart.id_dep
-                        where plan_proposal.id_dep = {$id_dep} and plan_proposal.id_fis={$id_fis} {$where_time}
+                        join area on area.id_area = plan_proposal.id_area
+  join depart on area.id_dep = depart.id_dep
+                        where depart.id_dep = {$id_dep} and plan_proposal.id_fis={$id_fis} {$where_time}
                     ");  
 
                     // bulan terakhir consumtion budget
@@ -240,8 +243,9 @@ $labelcos=json_encode($labelcos);
                     
                     $consumtion_budget_data = query("SELECT MONTH(ia.time_ia) AS bulan, sum(ia.cost_ia) as cost FROM ia
                     join plan_proposal on ia.id_prop = plan_proposal.id_prop
-                    join depart on plan_proposal.id_dep = depart.id_dep
-                    where plan_proposal.id_dep = {$id_dep} and plan_proposal.id_fis={$id_fis} {$where_time}
+                    join area on area.id_area = plan_proposal.id_area
+  join depart on area.id_dep = depart.id_dep
+                    where depart.id_dep = {$id_dep} and plan_proposal.id_fis={$id_fis} {$where_time}
                     GROUP BY bulan
                     ");  
 
@@ -265,9 +269,10 @@ $labelcos=json_encode($labelcos);
                     $data_ia = query("SELECT * from tracking_ia
                         join ia on tracking_ia.id_ia = ia.id_ia
                         join plan_proposal on ia.id_prop = plan_proposal.id_prop
-                        join depart on plan_proposal.id_dep = depart.id_dep
+                        join area on area.id_area = plan_proposal.id_area
+  join depart on area.id_dep = depart.id_dep
                         join kategori_proposal on plan_proposal.id_kat = kategori_proposal.id_kat                      
-                        where plan_proposal.id_dep = {$id_dep} and plan_proposal.id_fis={$id_fis}
+                        where depart.id_dep = {$id_dep} and plan_proposal.id_fis={$id_fis}
                         and id_prog = 25 {$where_time} and approval = '1'
                     ");              
 
@@ -309,7 +314,7 @@ $labelcos=json_encode($labelcos);
                                         <!-- <a href="javascript: w=window.open(''); w.print(); w.close(); ">​​​​​​​​​​​​​​​​​print
                                                 pdf</a> -->
 
-                                        <button class="btn bg-dark btn-sm">
+                                        <button class="btn bg-dark btn-sm d-none">
                                             <i class="icon wb-print"></i>
                                         </button>
                                     </a>
@@ -570,9 +575,7 @@ $labelcos=json_encode($labelcos);
                                                             <th class="align-middle text-center" height="10px"
                                                                 rowspan="2">
                                                                 DESCRIPTION</th>
-                                                            <th class="align-middle text-center" height="10px"
-                                                                rowspan="2">
-                                                                BENEFIT</th>
+
                                                             <th class="align-middle text-center" height="10px"
                                                                 rowspan="2">
                                                                 DATE</th>
@@ -597,7 +600,7 @@ $labelcos=json_encode($labelcos);
                                                             <td class="align-middle text-center">
                                                                 <?= $row['deskripsi'] ?>
                                                             </td>
-                                                            <td class="align-middle text-center"><?= $row['benefit'] ?>
+
                                                             </td>
                                                             <td class="align-middle text-center">
                                                                 <?= date('d M Y' , strtotime($row['time_ia']))  ?></td>

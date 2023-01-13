@@ -114,8 +114,10 @@ function get_comsumtion_budget($id){
         MONTH(ia.time_ia) AS bulan, 
         SUM(ia.cost_ia) AS cost
         FROM ia 
-        JOIN plan_proposal on ia.id_prop = plan_proposal.id_prop       
-        AND plan_proposal.id_dep = ".$id."
+        JOIN plan_proposal on ia.id_prop = plan_proposal.id_prop    
+        join area on area.id_area = plan_proposal.id_area
+        join depart on area.id_dep = depart.id_dep   
+        AND depart.id_dep = ".$id."
         AND plan_proposal.id_fis = '".$fis_aktif['id_fis']."'
         GROUP BY  bulan
         ");       

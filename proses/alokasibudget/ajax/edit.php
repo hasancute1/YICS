@@ -5,8 +5,9 @@ $idDept=$_POST['idDept'];
 $ind=$_POST['ind'];
                             $isi_m = mysqli_query($link_yics ,"SELECT *
                             FROM plan_proposal
-                            JOIN depart ON plan_proposal.id_dep = depart.id_dep
-                            JOIN area ON area.id_area = plan_proposal.id_area
+                            
+                            join area on area.id_area = plan_proposal.id_area
+                            join depart on area.id_dep = depart.id_dep
                             JOIN kategori_proposal  ON plan_proposal.id_kat = kategori_proposal.id_kat
                             JOIN time_fiscal  ON plan_proposal.id_fis = time_fiscal.id_fis  
                             WHERE plan_proposal.id_prop='$id'")or die (mysqli_error($link_yics));

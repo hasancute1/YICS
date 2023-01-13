@@ -9,7 +9,8 @@ $index=$_GET['ind'];
 <?php 
                            $bdget_a = mysqli_query($link_yics ,"SELECT sum(cost) AS cost_dep
                             FROM plan_proposal 
-                            JOIN depart ON plan_proposal.id_dep = depart.id_dep                           
+                            join area on area.id_area = plan_proposal.id_area
+  join depart on area.id_dep = depart.id_dep                       
                             JOIN time_fiscal  ON plan_proposal.id_fis = time_fiscal.id_fis  
                             WHERE time_fiscal.id_fis= '$id'")or die (mysqli_error($link_yics));
                                            
@@ -24,7 +25,8 @@ $index=$_GET['ind'];
                            
                           $bdget_d = mysqli_query($link_yics ,"SELECT sum(cost) AS cost_dep
                            FROM plan_proposal 
-                           JOIN depart ON plan_proposal.id_dep = depart.id_dep                           
+                           join area on area.id_area = plan_proposal.id_area
+  join depart on area.id_dep = depart.id_dep                           
                            JOIN time_fiscal  ON plan_proposal.id_fis = time_fiscal.id_fis  
                            WHERE time_fiscal.id_fis= '$id' AND depart.id_dep='$dep'")or die (mysqli_error($link_yics));
                                           
@@ -65,8 +67,8 @@ $index=$_GET['ind'];
             <?php  
                             $isi = mysqli_query($link_yics ,"SELECT *
                             FROM plan_proposal
-                            JOIN area ON area.id_area = plan_proposal.id_area
-                            JOIN depart ON plan_proposal.id_dep = depart.id_dep
+                            join area on area.id_area = plan_proposal.id_area
+                             join depart on area.id_dep = depart.id_dep
                             JOIN kategori_proposal  ON plan_proposal.id_kat = kategori_proposal.id_kat
                             JOIN time_fiscal  ON plan_proposal.id_fis = time_fiscal.id_fis  
                             WHERE time_fiscal.id_fis= '$id' AND depart.id_dep='$dep' ORDER BY plan_proposal.proposal ASC")or die (mysqli_error($link_yics));

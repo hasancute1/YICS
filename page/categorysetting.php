@@ -305,7 +305,7 @@ include '../elemen/header.php';?>
                 <!-- Footer -->
                 <?php
 include '../elemen/footer.php';?>
-                <script src="cariuser.js"> </script>
+
 
                 <!-- Modal tambah data Alokasi Budget -->
                 <div class="modal fade modal-info" id="ModalAlokasiBudget" aria-hidden="true"
@@ -420,7 +420,7 @@ include '../elemen/footer.php';?>
                 })
                 </script>
                 <!-- end query java script hapus data -->
-                <script>
+                <!-- <script>
                 $(document).ready(function() {
                     function load_data(hal) {
                         var id = $('.tab-active').attr('id');
@@ -460,7 +460,7 @@ include '../elemen/footer.php';?>
                     });
                     load_data();
                 })
-                </script>
+                </script> -->
 
                 <!-- CHECK BOX -->
                 <script>
