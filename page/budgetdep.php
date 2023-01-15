@@ -295,14 +295,21 @@ $labelcos=json_encode($labelcos);
                        
                     }
                     $data_grafik_con_budget = json_encode($data_grafik_con_budget);
-                    
-                    ?>
+                                                                          
+                                                            $total_budget = $get_data_budget['budget'];
+                                                            $consumtion_budget_cost = $consumtion_budget['cost'];
+
+                                                            $sisa_budget = $total_budget - $consumtion_budget_cost;
+
+                                                        ?>
+
+
 
                     <!-- Page -->
                     <div class="page col-print-12">
                         <div class="page-header">
                             <div class="row">
-                                <div class="col-lg-10 col-md-10 ">
+                                <div class="col-lg-12 col-md-12 ">
                                     <h1 class="page-title font-size-26 font-weight-600">Budget
                                         <?= $get_data_budget['depart']?>
                                         Overview (x Million)
@@ -321,8 +328,18 @@ $labelcos=json_encode($labelcos);
 
                                 </div>
                             </div>
-
-                            <div class="page-content container-fluid">
+                            <?php
+                            if ($_GET['dep']==1){
+                                $warna= "yellow";
+                            }else if($_GET['dep']==2)
+                            {
+                                $warna= "red";
+                            }else{
+                                $warna= "purple";
+                            }
+                            ?>
+                            <br>
+                            <div class="">
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6  mb-2">
                                         <?php 
@@ -397,36 +414,26 @@ $labelcos=json_encode($labelcos);
                                     <div class="col-lg-12 col-md-6">
                                         <div class="row">
                                             <div class="col-lg-4 col-md-6 ">
-                                                <div class="card card-shadow" style="border-radius: 15px;height:200px;">
-                                                    <div class="card-block warnadep<?=$id_dep?>"
-                                                        style="border-radius: 15px;height:200px;">
-                                                        <button type="button"
-                                                            class="btn btn-floating btn-sm btn-success">
-                                                            <i class="icon fa-dollar"></i>
-                                                        </button>
-                                                        <span
-                                                            class="white font-weight-400 font-size-20"><?= $get_data_budget['depart']?></span>
-                                                        <div class="content-text text-center mb-0">
-
-                                                            <?php                                                          
-                                                            $total_budget = $get_data_budget['budget'];
-                                                            $consumtion_budget_cost = $consumtion_budget['cost'];
-
-                                                            $sisa_budget = $total_budget - $consumtion_budget_cost;
-
-                                                        ?>
-
-                                                            <span>
-                                                                <P class="white font-size-30 font-weight-100 mt-20">
-                                                                    IDR
-                                                                    <?= number_format($sisa_budget,2,',','.')." "."Million" ?>
-                                                                </P>
-
-                                                                <p class="white font-weight-100 font-size-20 mt-10">
-                                                                    "Budget IDR
-                                                                    <?= number_format($get_data_budget['budget'],2,',','.')." "."Million"  ?>"
-                                                                </p>
-                                                            </span>
+                                                <div class="card " style="border-radius: 15px;height:200px;">
+                                                    <div class="card-header bg-<?= $warna; ?>-900 white px-30 py-10">
+                                                        <i class="icon fa-bank mr-5" aria-hidden="true"></i>
+                                                        <span><?= $get_data_budget['depart']?></span>
+                                                    </div>
+                                                    <div class=" card-body card-block p-30 bg-<?= $warna; ?>-600">
+                                                        <div class="card-watermark darker font-size-60 m-2">
+                                                            <i class="iicon fa-database" aria-hidden="true"></i>
+                                                        </div>
+                                                        <div class="counter counter-md counter-inverse text-left">
+                                                            <div class="counter-label text-capitalize">SISA BUDGET</div>
+                                                            <span style="font-size:25px;">IDR
+                                                                <?= number_format($sisa_budget,2,',','.')." "; ?></span>
+                                                            <div class=" counter-label text-capitalize line-height">
+                                                                ( MILLION )
+                                                            </div>
+                                                            <!-- <div class="counter-label text-capitalize line-height">
+                                                            "Budget IDR
+                                                            <?= number_format($get_data_budget['budget'],2,',','.')." "."Million"  ?>"
+                                                        </div> -->
                                                         </div>
                                                     </div>
                                                 </div>
@@ -497,7 +504,8 @@ $labelcos=json_encode($labelcos);
                                                                 }
                                                             ?>
 
-                                                                <div class="pie-progress " data-plugin="pieProgress"
+                                                                <div class="pie-progress mt-15"
+                                                                    data-plugin="pieProgress"
                                                                     data-barcolor="<?= $warna ?>" data-size="100"
                                                                     data-barsize="8" data-goal="40"
                                                                     aria-valuenow=" <?= $persentase_budget ?>"
@@ -510,17 +518,25 @@ $labelcos=json_encode($labelcos);
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6  mt-30" style="line-height: 15px;">
+                                                        <div class="col-lg-6  mt-10" style="line-height: 15px;">
                                                             <h4>e-Wallet:</h4>
-                                                            <p style="font-size: 20px; color:green;font-weight: bold;">
+                                                            <p style="font-size: 15px; color:green;font-weight: bold;">
                                                                 IDR
-                                                                <?= number_format($get_data_budget['budget'],2,',','.')." "."Million" ?>
+                                                                <?= number_format($get_data_budget['budget'],2,',','.') ?>
                                                             </p>
+                                                            <div class=" counter-label text-capitalize line-height"
+                                                                style=" color:green;font-weight: bold;">
+                                                                ( MILLION )
+                                                            </div>
                                                             <h4>Consummed:</h4>
-                                                            <p style="font-size: 20px; color:blue;font-weight: bold;">
+                                                            <p style="font-size: 15px; color:blue;font-weight: bold;">
                                                                 IDR
-                                                                <?= number_format($consumtion_budget_cost ,2, ',','.')." "."Million"  ?>
+                                                                <?= number_format($consumtion_budget_cost ,2, ',','.')  ?>
                                                             </p>
+                                                            <div class=" counter-label text-capitalize line-height"
+                                                                style=" color:blue;font-weight: bold;">
+                                                                ( MILLION )
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -541,12 +557,6 @@ $labelcos=json_encode($labelcos);
                                                         <div class="float-right">
                                                             <i href="" data-toggle="tooltip"
                                                                 data-original-title="Tambah Data">
-                                                                <button type="button"
-                                                                    class="btn btn-icon btn-outline btn-info btn-xs"
-                                                                    data-toggle="modal"
-                                                                    data-target="#TambahPlaningProposal">
-                                                                    <i class="icon wb-plus" aria-hidden="true"></i>
-                                                                </button>
                                                             </i>
                                                         </div>
                                                     </div>

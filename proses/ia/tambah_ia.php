@@ -61,7 +61,7 @@ $qry = mysqli_query($link_yics, "SELECT ia FROM ia WHERE ia = '$ia' ")or die(mys
 
     $get_data_ia = single_query("SELECT * from ia 
     join plan_proposal on ia.id_prop = plan_proposal.id_prop 
-    join data_user on data_user.area= plan_proposal.area 
+    join data_user on data_user.id_area= plan_proposal.id_area 
     where ia.id_ia = {$id}");
 
 

@@ -237,7 +237,7 @@ where depart.id_dep = {$id_dep} and plan_proposal.id_fis={$id_fis}");
                                                                 <span
                                                                     style="color:red;font-size: 13px;font-style: italic;"
                                                                     class="cek">
-                                                                    <?= number_format($sisa_budget,2,',','.')  ?></span>
+                                                                    <?= number_format($sisa_budget,2,',','')  ?></span>
                                                                 <span
                                                                     style="color:red;font-size: 13px;font-style: italic;"
                                                                     class="cek2 d-none">

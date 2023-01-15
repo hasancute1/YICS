@@ -9,7 +9,7 @@ include("../../../config/config.php");
         $cost_request=$_POST ['cost_m'];
         $cost = str_replace(',','.' ,$cost_request);     
        
-        $sql = mysqli_query ($link_yics,"UPDATE  plan_proposal SET area='$area',proposal='$proposal',cost='$cost',id_kat='$id_kateg' WHERE id_prop = '$id'"); 
+        $sql = mysqli_query ($link_yics,"UPDATE  plan_proposal SET id_area='$area',proposal='$proposal',cost='$cost',id_kat='$id_kateg' WHERE id_prop = '$id'"); 
         echo $sql;
 if($sql){
     ?>

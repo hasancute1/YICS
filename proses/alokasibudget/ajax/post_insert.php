@@ -1,7 +1,7 @@
 <?php 
 include("../../../config/config.php");
 
-        $depart=$_POST['depart']; 
+         
         $kategori=$_POST['kategori'];
         $proposal=$_POST ['proposal'];                              
         $id_matauang=$_POST ['mata_uang'];              
@@ -14,7 +14,7 @@ include("../../../config/config.php");
 
 
 
-        $sql =mysqli_query ($link_yics,"INSERT INTO plan_proposal (`id_area`,`id_dep`,`id_kat`,`proposal`,`cost`,`id_fis`,`id_matauang`) VALUES ('$area','$depart','$kategori','$proposal','$cost','$id_fis','$id_matauang')"); 
+        $sql =mysqli_query ($link_yics,"INSERT INTO plan_proposal (`id_area`,`id_kat`,`proposal`,`cost`,`id_fis`,`id_matauang`) VALUES ('$area','$kategori','$proposal','$cost','$id_fis','$id_matauang')"); 
        
 if($sql){
     ?>

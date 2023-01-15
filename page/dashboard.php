@@ -154,16 +154,6 @@ if (!isset($_SESSION['yics_user'])) {
                                                 <?php if($_SESSION['yics_level'] == '2'){ ?>
                                                 <div class="col-lg-4 col-md-4">
                                                     <div class="text-right">
-                                                        <!-- <i href="" data-toggle="tooltip"
-                                                            data-original-title="Tambah Data">
-                                                            <button type="button" id="TambahAlokasiBudget"
-                                                                class="btn btn-icon btn-outline btn-info btn-xs"
-                                                                data-toggle="modal" data-target="#ModalAlokasiBudget">
-                                                                <i class="icon wb-plus" aria-hidden="true"></i>
-                                                            </button>
-                                                        </i> -->
-
-                                                        <!--query edit data  -->
                                                         <?php 
                                                         $editalokasi = mysqli_query($link_yics, "SELECT * FROM time_fiscal WHERE status='aktif'") or die(mysqli_error($link_yics));
                                                         if(mysqli_num_rows($editalokasi)>0){$rows_editalokasi = mysqli_fetch_assoc($editalokasi)?>
@@ -239,150 +229,136 @@ if (!isset($_SESSION['yics_user'])) {
                                     foreach($consumtion_budget as $row){
 
                                         $total_consumtion_budget += $row['cost'];
-                                    }                                    
+                                    }                                   
 
-                                ?>
+                                $card1 = mysqli_query($link_yics, "SELECT * FROM division") or die (mysqli_error($link_yics));
+                                $row_card1 = mysqli_fetch_assoc($card1);
 
-                                <div class="col-lg-3 col-md-6 info-panel">
-                                    <div class="card  card-transparent">
-                                        <div class="card-block bg-blue-800 p-20"
-                                            style="border-radius: 15px;height:180px;">
-                                            <button type="button" class="btn btn-floating btn-sm btn-success">
-                                                <i class="icon wb-payment"></i>
-                                            </button>
-                                            <?php 
-                                                $card1 = mysqli_query($link_yics, "SELECT * FROM division") or die (mysqli_error($link_yics));
-                                                $row_card1 = mysqli_fetch_assoc($card1);
-
-                                                $card=mysqli_fetch_array(mysqli_query($link_yics,"SELECT sum(budget) 
-                                                        AS total FROM view_alokasi_budget WHERE status='aktif'")) or die (mysqli_error($link_yics));
-                                                
-
-                                                // ------------------------------------------akumulasi budget yang direject----------------------------
-
-$budget_reject = mysqli_query($link_yics ,"SELECT sum(ia.cost_ia) AS cost_rjct FROM tracking_ia
-join ia on tracking_ia.id_ia = ia.id_ia
-join plan_proposal on ia.id_prop = plan_proposal.id_prop
-join area on area.id_area = plan_proposal.id_area
-  join depart on area.id_dep = depart.id_dep                                          
-where  plan_proposal.id_fis={$id_fis}
- and approval = '0' GROUP BY approval = '0'")
-or die (mysqli_error($link_yics));                 
-if(mysqli_num_rows($budget_reject)>0){
-    $budget_reject1 = mysqli_fetch_assoc($budget_reject);
-    if(isset($budget_reject1['cost_rjct'])){
-       $brjct =$budget_reject1['cost_rjct'];
-   }else{
-       $brjct=0;
-     }                       
- }else{
-   $brjct=0;
- }
-
-
-
-                                                ?>
-                                            <span
-                                                class="white font-weight-400"><?php echo $row_card1 ['divisi']; ?></span>
-                                            <div class=" white content-text text-center mb-0">
-                                                <span>
-                                                    <p class="font-size-30 font-weight-100 mt-10"> IDR
-                                                        <?= number_format(($card['total'] -  $total_consumtion_budget)+$brjct,2,',','.')." "."Million"; ?>
-                                                    </p>
-                                                    <p class="white font-weight-100 m-0 font-size-20"><u>"Budget IDR
-                                                            <?php echo number_format ($card['total'],2,',','.')." "."Million";  ?>"</u>
-                                                    </p>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card card-block p-30 bg-red-600">
-                                    <div class="card-watermark darker font-size-80 m-15"><i class="icon wb-users"
-                                            aria-hidden="true"></i></div>
-                                    <div class="counter counter-md counter-inverse text-left">
-                                        <div class="counter-number-group">
-                                            <span class="counter-number">42</span>
-                                            <span class="counter-number-related text-capitalize">pepele</span>
-                                        </div>
-                                        <div class="counter-label text-capitalize">in room</div>
-                                    </div>
-                                </div>
-                                <?php                
-                      
-                    
-                    if(count( $depart)>0){
-                        $i = 1;
-                        foreach( $depart as $row_card){?>
-
-                                <div class="col-lg-3 col-md-6 info-panel">
-                                    <div class="counter counter-md">
-                                        <div class="counter-number-group">
-                                            <a href="budgetdep.php?dep=<?= $row_card['id_dep'] ?>"
-                                                class="counter-number">
-                                        </div>
-                                    </div>
-                                    <a href="budgetdep.php?dep=<?= $row_card['id_dep'] ?>">
-                                        <div class="card  card-transparent">
-                                            <div class="card-block warnadep<?=$i?>"
-                                                style="border-radius: 15px;height:180px;">
-                                                <button type="button" class="btn btn-floating btn-sm btn-success">
-                                                    <i class="icon fa-dollar"></i>
-                                                </button>
-                                                <span
-                                                    class="white font-weight-400 "><?php echo $row_card['depart']; ?></span>
-                                                <?php 
-
-// ------------------------------------------akumulasi budget yang direject----------------------------
-
-$budget_reject = mysqli_query($link_yics ,"SELECT sum(ia.cost_ia) AS cost_rjct FROM tracking_ia
-join ia on tracking_ia.id_ia = ia.id_ia
-join plan_proposal on ia.id_prop = plan_proposal.id_prop
-join area on area.id_area = plan_proposal.id_area
-  join depart on area.id_dep = depart.id_dep                                        
-where depart.id_dep = {$row_card['id_dep']} and plan_proposal.id_fis={$id_fis}
- and approval = '0' GROUP BY approval = '0'")
-or die (mysqli_error($link_yics));                 
-if(mysqli_num_rows($budget_reject)>0){
-    $budget_reject1 = mysqli_fetch_assoc($budget_reject);
-    if(isset($budget_reject1['cost_rjct'])){
-       $brjct =$budget_reject1['cost_rjct'];
-   }else{
-       $brjct=0;
-     }                       
- }else{
-   $brjct=0;
- }
-
-
-
-                                                $consumtion_budget = single_query("SELECT sum(cost_ia) as cost , count(*) as qty FROM ia
-                                                join plan_proposal on ia.id_prop = plan_proposal.id_prop
-                                                join area on area.id_area = plan_proposal.id_area
-  join depart on area.id_dep = depart.id_dep
-                                                where depart.id_dep = {$row_card['id_dep']} and plan_proposal.id_fis={$id_fis} {$where_time}
-                                                ");
-                                                $sisa_budget = ($row_card['budget'] - $consumtion_budget['cost']    )+$brjct; ?>
-                                                <div class="content-text text-center mb-0">
-                                                    <span>
-                                                        <p class="white font-size-30 font-weight-100 mt-10">
-                                                            IDR <?= number_format($sisa_budget,2,',','.')." "; ?>Million
-                                                        </p>
-                                                        <p class="white font-weight-100 m-0 font-size-18">"Budget IDR
-                                                            <?php echo number_format ($row_card['budget'],2,',','.')." "; ?>Million"
-                                                        </p>
-                                                        <p class="white font-weight-100 m-0"> Lihat Detail >></p>
-                                                    </span>
+                                $card=mysqli_fetch_array(mysqli_query($link_yics,"SELECT sum(budget) 
+                                        AS total FROM view_alokasi_budget WHERE status='aktif'")) or die (mysqli_error($link_yics));                                              
+                           ?>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-6">
+                                            <div class="card " style="border-radius: 15px;">
+                                                <div class="card-header bg-blue-900 white px-30 py-10">
+                                                    <i class="icon fa-bank mr-5" aria-hidden="true"></i>
+                                                    <span><?= $row_card1 ['divisi']; ?></span>
+                                                </div>
+                                                <div class=" card-body card-block p-30 bg-blue-600">
+                                                    <div class="card-watermark darker font-size-60 m-2">
+                                                        <i class="iicon fa-database" aria-hidden="true"></i>
+                                                    </div>
+                                                    <div class="counter counter-md counter-inverse text-left">
+                                                        <div class="counter-label text-capitalize">SISA BUDGET</div>
+                                                        <span style="font-size:25px;">IDR
+                                                            <?= number_format(($card['total'] -  $total_consumtion_budget),2,',','.')?></span>
+                                                        <div class=" counter-label text-capitalize line-height">
+                                                            ( MILLION )
+                                                        </div>
+                                                        <!-- <div class="counter-label text-capitalize line-height">
+                                                            "Budget IDR
+                                                            <?php echo number_format ($card['total'],2,',','.')." "."Million"; ?>"
+                                                        </div> -->
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </a>
-                                </div>
-                                <?php  
+
+
+
+
+                                        <?php   
+                                            
+                    if(count( $depart)>0){                        
+                        
+                       
+                       
+                     
+                        $i = 1;
+                        foreach( $depart as $row_card){   
+                            if ($i==1){
+                                $warna= "yellow";
+                            }else if($i==2)
+                            {
+                                $warna= "red";
+                            }else{
+                                $warna= "purple";
+                            }
+                                                  
+                        $consumtion_budget = single_query("SELECT sum(cost_ia) as cost , count(*) as qty FROM ia
+                        join plan_proposal on ia.id_prop = plan_proposal.id_prop
+                        join area on area.id_area = plan_proposal.id_area
+                            join depart on area.id_dep = depart.id_dep
+                        where depart.id_dep = {$row_card['id_dep']} and plan_proposal.id_fis={$id_fis} {$where_time}
+                        ");
+                        $sisa_budget = ($row_card['budget'] - $consumtion_budget['cost']) ?>
+
+
+
+                                        <div class="col-md-3 col-sm-6">
+                                            <a href="budgetdep.php?dep=<?= $i ?>">
+                                                <div class="card h-100" style="border-radius: 15px;">
+                                                    <div class="card-header bg-<?= $warna; ?>-900 white px-30 py-10">
+                                                        <i class="icon fa-bank mr-5" aria-hidden="true"></i>
+                                                        <span><?= $row_card['depart']; ?></span>
+                                                    </div>
+                                                    <div class=" card-body card-block p-30 bg-<?= $warna; ?>-600">
+                                                        <div class="card-watermark darker font-size-60 m-2">
+                                                            <i class="iicon fa-database" aria-hidden="true"></i>
+                                                        </div>
+                                                        <div class="counter counter-md counter-inverse text-left">
+                                                            <div class="counter-label text-capitalize">SISA BUDGET</div>
+                                                            <span style="font-size:25px;">IDR
+                                                                <?= number_format($sisa_budget,2,',','.')." "; ?></span>
+                                                            <div class=" counter-label text-capitalize line-height">
+                                                                ( MILLION )
+                                                            </div>
+                                                            <!-- <div class="counter-label text-capitalize line-height">
+                                                            "Budget IDR
+                                                            <?php echo number_format ($row_card['budget'],2,',','.')." "; ?>"
+                                                        </div> -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+
+                                        <!-- <div class="col-md-3 col-sm-6">
+                                            <div class="card card-block p-30 bg-<?= $warna; ?>-600"
+                                                style="border-radius: 15px;height:180px;">
+                                                <div class="card-watermark darker font-size-60 m-2">
+                                                    <i class="icon fa-database" aria-hidden="true"></i>
+                                                </div>
+                                                <div class="counter counter-md counter-inverse text-left">
+                                                    <div class="counter-label text-capitalize"> <button type="button"
+                                                            class="btn btn-floating btn-sm btn-success"> <i
+                                                                class="icon fa-bank" aria-hidden="true"></i></button>
+                                                        <?= $row_card['depart']; ?>
+                                                    </div>
+                                                    <div class="counter-number-group">
+                                                        <span class="counter-number-related text-capitalize">IDR</span>
+                                                        <span
+                                                            class="counter-number"><?= number_format($sisa_budget,2,',','.')." "; ?></span>
+                                                        <span
+                                                            class="counter-number-related text-capitalize">Million</span>
+                                                    </div>
+                                                    <div class="counter-label text-capitalize"
+                                                        style="responsive-font-size:4 rem">"Budget IDR
+                                                        <?php echo number_format ($row_card['budget'],2,',','.')." "; ?>
+                                                        Million"</div>
+                                                    <div class="counter-label text-capitalize  ">Lihat Detail >> </div>
+                                                </div>
+                                            </div>
+                                        </div> -->
+
+                                        <?php  
                             $i++;
                         }
                     } 
                 ?>
+                                    </div>
+                                </div>
 
                                 <!-- End Second Row -->
                                 <!-- Third Row -->
@@ -986,7 +962,7 @@ $json_morris = json_encode($array_donut_dept);
 
 
     <?php 
-$SessionArea= $_SESSION['id_area'];
+$SessionArea= $_SESSION['area'];
 $proposal = mysqli_query($link_yics ,
 "SELECT * FROM plan_proposal 
 join area on area.id_area = plan_proposal.id_area
@@ -1293,4 +1269,23 @@ if(mysqli_num_rows($proposal)>0){
             cancelButtonAriaLabel: 'Close'
         })
     })
+    </script>
+    <script>
+    $(document).ready(function() {
+        var owl = $('.owl-carousel');
+        owl.owlCarousel({
+            items: 1,
+            loop: true,
+            margin: 10,
+            autoplay: true,
+            autoplayTimeout: 3000,
+            autoplayHoverPause: true
+        });
+        $('.play').on('click', function() {
+            owl.trigger('play.owl.autoplay', [1000])
+        })
+        $('.stop').on('click', function() {
+            owl.trigger('stop.owl.autoplay')
+        })
+    });
     </script>
