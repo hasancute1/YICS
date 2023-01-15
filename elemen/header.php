@@ -116,7 +116,16 @@
         color: white;
         margin: 10px;
     }
+
+    /* .anim {
+        width: 300px;
+        height: 200px;
+        background-color: blue;
+        position: relative;
+        animation: slide-left 1s infinite;
+    } */
     </style>
+
 
 
 
