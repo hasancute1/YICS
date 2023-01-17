@@ -140,15 +140,15 @@ include '../elemen/header.php';?>
                                                         <table class=" w-full">
                                                             <thead class="text-center">
                                                                 <tr class="bg-info align-" height="10px">
-                                                                    <th class="align-middle text-center" height="10px">
+                                                                    <th style="color:white;">
                                                                         NO</th>
-                                                                    <th class="align-middle text-center" height="10px">
+                                                                    <th style="color:white;">
                                                                         CATEGORY</th>
-                                                                    <th class="align-middle text-center" height="10px">
+                                                                    <th style="color:white;">
                                                                         KODE CATEGORY</th>
-                                                                    <th class="align-middle text-center" height="10px">
+                                                                    <th style="color:white;">
                                                                         ACTION</th>
-                                                                    <th class="align-middle text-center" height="10px">
+                                                                    <th style="color:white;">
                                                                         <input type="checkbox" id="checkAll">
                                                                     </th>
                                                                 </tr>

@@ -667,6 +667,12 @@ include '../elemen/footer.php';?>
                                     id: 'A',
                                     type: 'linear',
                                     position: 'left',
+                                    ticks: {
+                                        beginAtZero: true,
+                                        steps: 10,
+                                        stepValue: 5,
+                                        min: 0
+                                    },
                                     scaleLabel: {
                                         display: true,
                                         labelString: 'M I L L I O N'

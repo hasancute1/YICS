@@ -45,7 +45,8 @@ if (isset ($_SESSION['yics_user'])){
         // masukan data post ke variabel 
         $area=$_POST['area'];
         $id=$_POST ['id_dep'];
-       $UbahKategory = "UPDATE  area SET area='$area',id_dep='$id'WHERE id_area = '$id'"; 
+        $id_area=$_POST ['id_area'];
+       $UbahKategory ="UPDATE area SET area='$area',id_dep='$id'WHERE id_area = '$id_area'"; 
        echo $UbahKategory;
        $sql = mysqli_query($link_yics, $UbahKategory)or die(mysqli_error($link_yics));
     // logika pakai session

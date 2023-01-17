@@ -16,7 +16,7 @@ if (isset ($_SESSION['yics_user'])){
     // logika pakai session
         if(mysqli_num_rows($qry)>0){
             $_SESSION['info'] = "Gagal Disimpan";
-            $_SESSION['pesan'] = "Data User Sudah Ada di Database";
+            $_SESSION['pesan'] = "Data Area Sudah Ada di Database";
             header('location: ../../page/usersetting.php');
         }else{
             $_SESSION['info'] = "Disimpan";
@@ -24,7 +24,8 @@ if (isset ($_SESSION['yics_user'])){
             header('location: ../../page/usersetting.php');
          }
          $inputUser = "INSERT INTO data_user (`nama`,`username`,`id_area`,`pass`, `id_level`) VALUES ('$nama','$user','$area','$password','$role')"; 
-         $sql = mysqli_query($link_yics, $inputUser)or die(mysqli_error($link_yics));
+         $sqdl = mysqli_query($link_yics, $inputUser)or die(mysqli_error($link_yics));
+        
     // end logika pakai session
     // query insert boleh ngacak sesuai intonya
             

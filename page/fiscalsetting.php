@@ -140,20 +140,20 @@ include '../elemen/header.php';?>
                                                         name="proses">
                                                         <table class=" w-full">
                                                             <thead class="text-center">
-                                                                <tr class="bg-info align-" height="10px">
-                                                                    <th class="align-middle text-center" height="10px">
+                                                                <tr class="bg-info align-">
+                                                                    <th style="color:white;">
                                                                         NO</th>
-                                                                    <th class="align-middle text-center" height="10px">
+                                                                    <th style="color:white;">
                                                                         PERIODE</th>
-                                                                    <th class="align-middle text-center" height="10px">
+                                                                    <th style="color:white;">
                                                                         START FISCAL</th>
-                                                                    <th class="align-middle text-center" height="10px">
+                                                                    <th style="color:white;">
                                                                         END FISCAL</th>
-                                                                    <th class="align-middle text-center" height="10px">
+                                                                    <th style="color:white;">
                                                                         STATUS</th>
-                                                                    <th class="align-middle text-center" height="10px">
+                                                                    <th style="color:white;">
                                                                         ACTION</th>
-                                                                    <th class="align-middle text-center" height="10px">
+                                                                    <th style="color:white;">
                                                                         <input type="checkbox" id="checkAll">
                                                                     </th>
                                                                 </tr>

@@ -94,6 +94,7 @@ include '../elemen/header.php';?>
                                             <form action="../proses/usersetting/area.php" method="POST"
                                                 class="needs-validation" novalidate="">
                                                 <input type="hidden" name="ubah">
+                                                <input type="hidden" name="id_area" value="<?= $id ?>">
                                                 <div class="form-group row">
                                                     <label class="col-md-2 col-form-label"
                                                         style="color:black;">Department</label>
@@ -119,7 +120,7 @@ include '../elemen/header.php';?>
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <a href="../page/categorysetting.php" type="reset"
+                                                    <a href="../page/areasetting.php" type="reset"
                                                         class="btn btn-danger">Kembali</a>
                                                     <button type="submit" class="btn btn-primary">Save</button>
                                                 </div>

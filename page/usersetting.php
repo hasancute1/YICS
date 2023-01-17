@@ -96,7 +96,7 @@ include '../elemen/header.php';?>
                                                     <!-- Example Tabs Left -->
                                                     <div class="example-wrap">
                                                         <div class="nav-tabs-vertical" data-plugin="tabs">
-                                                            <ul class="nav nav-tabs mr-25 w-200" role="tablist">
+                                                            <ul class="nav nav-tabs mr-25 w-150" role="tablist">
                                                                 <h4 class="pull-left">ROLE USER</h4>
                                                                 <?php
                                 $s_role = mysqli_query($link_yics, "SELECT * FROM user_role ORDER BY 'id_role' ASC") or die(mysqli_error($link_yics));
@@ -154,13 +154,18 @@ include '../elemen/header.php';?>
                                                                                 class=" text-uppercase table table-hover  table-striped w-full db">
                                                                                 <thead class="bg-info">
                                                                                     <tr>
-                                                                                        <th>NO</th>
-                                                                                        <th>USERNAME</th>
-                                                                                        <th>
+                                                                                        <th style="color:white;">
+                                                                                            NO</th>
+                                                                                        <th style="color:white;">
+                                                                                            USERNAME</th>
+                                                                                        <th style="color:white;">
                                                                                             NAMA</th>
-                                                                                        <th>AREA</th>
-                                                                                        <th>ROLE</th>
-                                                                                        <th>ACTION</th>
+                                                                                        <th style="color:white;">AREA
+                                                                                        </th>
+                                                                                        <th style="color:white;">ROLE
+                                                                                        </th>
+                                                                                        <th style="color:white;">ACTION
+                                                                                        </th>
                                                                                         <th><input type="checkbox"
                                                                                                 id="checkAll"></th>
                                                                                     </tr>

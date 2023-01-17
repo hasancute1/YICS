@@ -96,7 +96,7 @@ include '../elemen/header.php';?>
                                                     <!-- Example Tabs Left -->
                                                     <div class="example-wrap">
                                                         <div class="nav-tabs-vertical" data-plugin="tabs">
-                                                            <ul class="nav nav-tabs mr-25 w-300" role="tablist">
+                                                            <ul class="nav nav-tabs mr-25 w-150" role="tablist">
                                                                 <h4 class="pull-left">DEPARTMENT</h4>
                                                                 <?php
                                                                         $s_role = mysqli_query($link_yics, "SELECT * FROM depart ORDER BY 'id_dep' ASC") or die(mysqli_error($link_yics));
@@ -154,10 +154,13 @@ include '../elemen/header.php';?>
                                                                                     <thead class="bg-info">
                                                                                         <tr>
                                                                                             <th hidden>id area</th>
-                                                                                            <th>NO </th>
-                                                                                            <th>DEPARTMENT</th>
-                                                                                            <th>AREA</th>
-                                                                                            <th>
+                                                                                            <th style="color:white;">NO
+                                                                                            </th>
+                                                                                            <th style="color:white;">
+                                                                                                DEPARTMENT</th>
+                                                                                            <th style="color:white;">
+                                                                                                AREA</th>
+                                                                                            <th style="color:white;">
                                                                                                 ACTION</th>
                                                                                             <!-- <th>
                                                                                                 <input type="checkbox"
@@ -179,7 +182,7 @@ include '../elemen/header.php';?>
                                                                                                   
                                                                                                 }
                                                                                             ?>
-                                                                                        ?>
+
                                                                                         <tr>
                                                                                             <td hidden>
                                                                                                 <?= $data['id_area']; ?>
