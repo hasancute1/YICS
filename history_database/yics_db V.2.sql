@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.3
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 07 Okt 2022 pada 10.09
--- Versi server: 10.4.14-MariaDB
--- Versi PHP: 7.3.23
+-- Waktu pembuatan: 16 Jan 2023 pada 09.59
+-- Versi server: 10.4.25-MariaDB
+-- Versi PHP: 7.4.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -43,30 +43,27 @@ INSERT INTO `approval` (`id_approval`, `approval`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `area`
+--
+
+CREATE TABLE `area` (
+  `id_area` int(10) NOT NULL,
+  `id_dep` int(10) NOT NULL,
+  `area` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `budget`
 --
 
 CREATE TABLE `budget` (
   `id_bud` int(10) NOT NULL,
   `id_dep` int(10) NOT NULL,
-  `budget` int(30) NOT NULL,
+  `budget` decimal(30,2) NOT NULL,
   `id_fis` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `budget`
---
-
-INSERT INTO `budget` (`id_bud`, `id_dep`, `budget`, `id_fis`) VALUES
-(45, 1, 1000, 16),
-(46, 2, 2000, 16),
-(47, 3, 5000, 16),
-(48, 1, 1000, 17),
-(49, 2, 2000, 17),
-(50, 3, 3000, 17),
-(51, 1, 2000, 18),
-(52, 2, 2000, 18),
-(53, 3, 3000, 18);
 
 -- --------------------------------------------------------
 
@@ -77,17 +74,10 @@ INSERT INTO `budget` (`id_bud`, `id_dep`, `budget`, `id_fis`) VALUES
 CREATE TABLE `data_user` (
   `username` varchar(50) NOT NULL,
   `nama` varchar(50) NOT NULL,
+  `id_area` int(10) NOT NULL,
   `pass` char(40) NOT NULL,
   `id_level` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `data_user`
---
-
-INSERT INTO `data_user` (`username`, `nama`, `pass`, `id_level`) VALUES
-('1234', 'HASAN', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 1),
-('37932', 'M.EFENDI', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 2);
 
 -- --------------------------------------------------------
 
@@ -138,18 +128,13 @@ INSERT INTO `division` (`id_div`, `divisi`, `id_company`) VALUES
 CREATE TABLE `ia` (
   `id_ia` int(10) NOT NULL,
   `id_prop` int(10) NOT NULL,
-  `ia` varchar(50) NOT NULL
+  `ia` varchar(50) NOT NULL,
+  `deskripsi` varchar(100) NOT NULL,
+  `cost_ia` decimal(30,2) NOT NULL,
+  `pic_ia` varchar(50) NOT NULL,
+  `time_ia` date NOT NULL DEFAULT current_timestamp(),
+  `validuntil` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `ia`
---
-
-INSERT INTO `ia` (`id_ia`, `id_prop`, `ia`) VALUES
-(1, 1, 'P4/BDY/IP/07/21/I.4 .04.C-00005'),
-(2, 1, 'P4/BDY/IP/07/21/I.4 .04.C-00006'),
-(3, 2, 'P4/BDY/IP/07/21/I.4 .04.C-00007'),
-(4, 3, 'P4/BDY/IP/07/21/I.4 .04.C-00008');
 
 -- --------------------------------------------------------
 
@@ -188,29 +173,89 @@ CREATE TABLE `keterangan_progress` (
 --
 
 INSERT INTO `keterangan_progress` (`id_ket`, `keterangan`, `step`) VALUES
-(1, 'PLANNING', 1),
-(2, 'RSS', 2),
-(3, 'BP', 3),
-(4, 'PR', 4),
+(1, 'RSS / RFN', 1),
+(2, 'BPE', 2),
+(3, 'PR', 3),
+(4, 'PO', 4),
 (5, 'GR', 5);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pic`
+-- Struktur dari tabel `konversi_matauang`
 --
 
-CREATE TABLE `pic` (
-  `id_pic` int(10) NOT NULL,
-  `pic` varchar(50) NOT NULL
+CREATE TABLE `konversi_matauang` (
+  `id_matauang` int(10) NOT NULL,
+  `rupiah` int(10) NOT NULL,
+  `yen` varchar(50) NOT NULL,
+  `dollar` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `pic`
+-- Dumping data untuk tabel `konversi_matauang`
 --
 
-INSERT INTO `pic` (`id_pic`, `pic`) VALUES
-(1, 'M.EFFENDI');
+INSERT INTO `konversi_matauang` (`id_matauang`, `rupiah`, `yen`, `dollar`) VALUES
+(1, 1, '105', '15500');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `notifications`
+--
+
+CREATE TABLE `notifications` (
+  `id_notif` int(11) NOT NULL,
+  `sender` varchar(30) NOT NULL,
+  `dest` varchar(30) NOT NULL,
+  `type` varchar(20) NOT NULL,
+  `id_type` int(11) DEFAULT NULL,
+  `status` varchar(20) NOT NULL,
+  `message` varchar(200) DEFAULT NULL,
+  `date` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `notif_ia_rjct`
+--
+
+CREATE TABLE `notif_ia_rjct` (
+  `id` int(10) NOT NULL,
+  `id_prop` int(10) NOT NULL,
+  `id_ia` int(10) NOT NULL,
+  `reason` varchar(250) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `notif_prop_rjct`
+--
+
+CREATE TABLE `notif_prop_rjct` (
+  `id` int(10) NOT NULL,
+  `id_prop` int(10) NOT NULL,
+  `reason` varchar(250) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `plan_proposal`
+--
+
+CREATE TABLE `plan_proposal` (
+  `id_prop` int(10) NOT NULL,
+  `id_area` int(10) NOT NULL,
+  `id_kat` int(10) NOT NULL,
+  `proposal` varchar(100) NOT NULL,
+  `cost` decimal(30,2) NOT NULL,
+  `id_fis` int(10) NOT NULL,
+  `id_matauang` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -235,31 +280,26 @@ INSERT INTO `progress` (`id_prog`, `nama_progress`, `step`, `id_ket`) VALUES
 (3, 'REQUEST FOR NEGOISASI', 3, 1),
 (4, 'PRICE CONFIRMATION', 4, 1),
 (5, 'BUDGET PLANNING', 5, 1),
-(6, ' PIC', 6, 2),
-(7, 'SECT HEAD', 7, 2),
-(8, 'DEPT.HEAD', 8, 2),
-(9, 'DIV HEAD', 9, 2),
-(10, 'CREATE', 10, 2),
-(11, 'DEPT HEAD', 11, 3),
-(12, 'TAGGING', 12, 3),
-(13, 'MAXIMO', 13, 3),
-(14, 'FAM', 14, 3),
-(15, 'DIV HEAD', 15, 3),
-(16, ' DIR (I)', 16, 3),
-(17, 'DIR (J)', 17, 3),
-(18, 'FIN (I)', 18, 3),
-(19, 'FIN (J)', 19, 3),
-(20, ' VPD', 20, 3),
-(21, 'PD', 21, 3),
-(22, 'BUDGET (I)', 22, 3),
-(23, 'BUDGET (J)', 23, 3),
-(24, ' IO', 24, 3),
-(25, 'AMCF', 25, 3),
-(26, ' PR ', 26, 3),
-(27, ' PO', 27, 3),
-(28, ' SEND PO', 28, 3),
-(29, 'PUD', 29, 4),
-(30, ' GOOD RECEIVE', 30, 5);
+(6, 'PIC', 6, 2),
+(7, 'DEPT HEAD', 7, 2),
+(8, 'TAGGING', 8, 2),
+(9, 'MAXIMO', 9, 2),
+(10, 'DIV HEAD (INA)', 10, 2),
+(11, 'DIV HEAD (JPN)', 11, 2),
+(12, 'DIR (INA)', 12, 2),
+(13, 'DIR (JPN)', 13, 2),
+(14, 'BUDGET (INA)', 14, 2),
+(15, 'BUDGET (JPN)', 15, 2),
+(16, 'FIN (INA)', 16, 2),
+(17, 'FIN  (JPN)', 17, 2),
+(18, 'VPD', 18, 2),
+(19, 'PD', 19, 2),
+(20, 'IO', 20, 2),
+(21, 'AMCF', 21, 3),
+(22, 'PR', 22, 3),
+(23, 'PO', 23, 4),
+(24, 'SEND PO', 24, 4),
+(25, 'GR', 25, 5);
 
 -- --------------------------------------------------------
 
@@ -269,21 +309,17 @@ INSERT INTO `progress` (`id_prog`, `nama_progress`, `step`, `id_ket`) VALUES
 
 CREATE TABLE `proposal` (
   `id_prop` int(10) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `hp` varchar(15) NOT NULL,
   `id_dep` int(10) NOT NULL,
   `id_kat` int(10) NOT NULL,
   `proposal` varchar(100) NOT NULL,
-  `cost` int(30) NOT NULL,
-  `id_fis` int(10) NOT NULL
+  `benefit` varchar(1000) NOT NULL,
+  `cost` decimal(30,2) NOT NULL,
+  `id_fis` int(10) NOT NULL,
+  `lampiran` varchar(255) NOT NULL,
+  `id_matauang` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `proposal`
---
-
-INSERT INTO `proposal` (`id_prop`, `id_dep`, `id_kat`, `proposal`, `cost`, `id_fis`) VALUES
-(12, 2, 3, 'MEMBELI LAPTOP HP', 2000, 17),
-(24, 1, 1, 'KASLDLD', 5000, 17),
-(26, 3, 2, 'vzv', 22222, 17);
 
 -- --------------------------------------------------------
 
@@ -323,8 +359,7 @@ CREATE TABLE `time_fiscal` (
 --
 
 INSERT INTO `time_fiscal` (`id_fis`, `periode`, `awal`, `akhir`, `status`) VALUES
-(17, 2022, '2022-04-01', '2023-03-31', 'aktif'),
-(18, 2023, '2023-04-01', '2024-03-31', 'tidak aktif');
+(21, 2023, '2023-04-01', '2024-03-31', 'AKTIF');
 
 -- --------------------------------------------------------
 
@@ -337,17 +372,9 @@ CREATE TABLE `tracking_ia` (
   `id_ia` int(10) NOT NULL,
   `id_prog` int(10) NOT NULL,
   `approval` int(10) NOT NULL,
+  `username` varchar(50) NOT NULL,
   `time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `tracking_ia`
---
-
-INSERT INTO `tracking_ia` (`id_trackia`, `id_ia`, `id_prog`, `approval`, `time`) VALUES
-(1, 1, 5, 1, '2022-09-09 02:17:07'),
-(2, 1, 6, 1, '2022-09-09 02:17:09'),
-(3, 1, 7, 0, '2022-09-09 02:46:15');
 
 -- --------------------------------------------------------
 
@@ -363,18 +390,6 @@ CREATE TABLE `tracking_prop` (
   `username` varchar(50) NOT NULL,
   `time` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `tracking_prop`
---
-
-INSERT INTO `tracking_prop` (`id_trackprop`, `id_prop`, `id_prog`, `id_approval`, `username`, `time`) VALUES
-(24, 12, 1, 1, '1234', '2022-10-11 16:24:00'),
-(25, 23, 1, 0, '1234', '2022-10-19 16:24:00'),
-(26, 24, 1, 1, '1234', '2022-10-14 16:24:00'),
-(27, 24, 2, 1, '1234', '2022-10-19 16:25:00'),
-(28, 26, 1, 1, '37932', '2022-10-07 13:38:00'),
-(29, 26, 2, 1, '37932', '2022-10-07 15:39:00');
 
 -- --------------------------------------------------------
 
@@ -408,7 +423,7 @@ CREATE TABLE `view_alokasi_budget` (
 ,`awal` date
 ,`akhir` date
 ,`depart` varchar(50)
-,`budget` int(30)
+,`budget` decimal(30,2)
 ,`status` varchar(20)
 );
 
@@ -419,10 +434,6 @@ CREATE TABLE `view_alokasi_budget` (
 -- (Lihat di bawah untuk tampilan aktual)
 --
 CREATE TABLE `view_data_user` (
-`nama` varchar(50)
-,`username` varchar(50)
-,`pass` char(40)
-,`role_name` varchar(50)
 );
 
 -- --------------------------------------------------------
@@ -432,7 +443,7 @@ CREATE TABLE `view_data_user` (
 --
 DROP TABLE IF EXISTS `view_alokasi_budget`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_alokasi_budget`  AS SELECT `budget`.`id_bud` AS `id_bud`, `time_fiscal`.`periode` AS `periode`, `time_fiscal`.`awal` AS `awal`, `time_fiscal`.`akhir` AS `akhir`, `depart`.`depart` AS `depart`, `budget`.`budget` AS `budget`, `time_fiscal`.`status` AS `status` FROM ((`budget` left join `depart` on(`budget`.`id_dep` = `depart`.`id_dep`)) left join `time_fiscal` on(`budget`.`id_fis` = `time_fiscal`.`id_fis`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_alokasi_budget`  AS SELECT `budget`.`id_bud` AS `id_bud`, `time_fiscal`.`periode` AS `periode`, `time_fiscal`.`awal` AS `awal`, `time_fiscal`.`akhir` AS `akhir`, `depart`.`depart` AS `depart`, `budget`.`budget` AS `budget`, `time_fiscal`.`status` AS `status` FROM ((`budget` left join `depart` on(`budget`.`id_dep` = `depart`.`id_dep`)) left join `time_fiscal` on(`budget`.`id_fis` = `time_fiscal`.`id_fis`))  ;
 
 -- --------------------------------------------------------
 
@@ -441,7 +452,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `view_data_user`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_data_user`  AS SELECT `data_user`.`nama` AS `nama`, `data_user`.`username` AS `username`, `data_user`.`pass` AS `pass`, `user_role`.`role_name` AS `role_name` FROM (`data_user` join `user_role` on(`data_user`.`id_level` = `user_role`.`id_role`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_data_user`  AS SELECT `data_user`.`nama` AS `nama`, `data_user`.`username` AS `username`, `data_user`.`area` AS `area`, `data_user`.`pass` AS `pass`, `user_role`.`role_name` AS `role_name` FROM (`data_user` join `user_role` on(`data_user`.`id_level` = `user_role`.`id_role`))  ;
 
 --
 -- Indexes for dumped tables
@@ -452,6 +463,12 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 ALTER TABLE `approval`
   ADD PRIMARY KEY (`id_approval`);
+
+--
+-- Indeks untuk tabel `area`
+--
+ALTER TABLE `area`
+  ADD PRIMARY KEY (`id_area`);
 
 --
 -- Indeks untuk tabel `budget`
@@ -496,10 +513,34 @@ ALTER TABLE `keterangan_progress`
   ADD PRIMARY KEY (`id_ket`);
 
 --
--- Indeks untuk tabel `pic`
+-- Indeks untuk tabel `konversi_matauang`
 --
-ALTER TABLE `pic`
-  ADD PRIMARY KEY (`id_pic`);
+ALTER TABLE `konversi_matauang`
+  ADD PRIMARY KEY (`id_matauang`);
+
+--
+-- Indeks untuk tabel `notifications`
+--
+ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`id_notif`);
+
+--
+-- Indeks untuk tabel `notif_ia_rjct`
+--
+ALTER TABLE `notif_ia_rjct`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `notif_prop_rjct`
+--
+ALTER TABLE `notif_prop_rjct`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `plan_proposal`
+--
+ALTER TABLE `plan_proposal`
+  ADD PRIMARY KEY (`id_prop`);
 
 --
 -- Indeks untuk tabel `progress`
@@ -554,10 +595,16 @@ ALTER TABLE `approval`
   MODIFY `id_approval` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT untuk tabel `area`
+--
+ALTER TABLE `area`
+  MODIFY `id_area` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT untuk tabel `budget`
 --
 ALTER TABLE `budget`
-  MODIFY `id_bud` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id_bud` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `depart`
@@ -575,25 +622,49 @@ ALTER TABLE `division`
 -- AUTO_INCREMENT untuk tabel `ia`
 --
 ALTER TABLE `ia`
-  MODIFY `id_ia` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_ia` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT untuk tabel `kategori_proposal`
 --
 ALTER TABLE `kategori_proposal`
-  MODIFY `id_kat` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_kat` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT untuk tabel `keterangan_progress`
 --
 ALTER TABLE `keterangan_progress`
-  MODIFY `id_ket` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_ket` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT untuk tabel `pic`
+-- AUTO_INCREMENT untuk tabel `konversi_matauang`
 --
-ALTER TABLE `pic`
-  MODIFY `id_pic` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `konversi_matauang`
+  MODIFY `id_matauang` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT untuk tabel `notifications`
+--
+ALTER TABLE `notifications`
+  MODIFY `id_notif` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT untuk tabel `notif_ia_rjct`
+--
+ALTER TABLE `notif_ia_rjct`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT untuk tabel `notif_prop_rjct`
+--
+ALTER TABLE `notif_prop_rjct`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT untuk tabel `plan_proposal`
+--
+ALTER TABLE `plan_proposal`
+  MODIFY `id_prop` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT untuk tabel `progress`
@@ -605,7 +676,7 @@ ALTER TABLE `progress`
 -- AUTO_INCREMENT untuk tabel `proposal`
 --
 ALTER TABLE `proposal`
-  MODIFY `id_prop` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id_prop` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT untuk tabel `status`
@@ -617,19 +688,19 @@ ALTER TABLE `status`
 -- AUTO_INCREMENT untuk tabel `time_fiscal`
 --
 ALTER TABLE `time_fiscal`
-  MODIFY `id_fis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_fis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT untuk tabel `tracking_ia`
 --
 ALTER TABLE `tracking_ia`
-  MODIFY `id_trackia` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_trackia` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `tracking_prop`
 --
 ALTER TABLE `tracking_prop`
-  MODIFY `id_trackprop` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id_trackprop` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `user_role`

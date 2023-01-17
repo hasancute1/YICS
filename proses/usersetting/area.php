@@ -6,20 +6,21 @@ if (isset ($_SESSION['yics_user'])){
          // masukan data post ke variabel 
          $id_dep=$_POST['id_dep']; 
          $area=$_POST['area']; 
-         $sql =mysqli_query ($link_yics,"INSERT INTO area (`id_dep`,`area`) VALUES ('$id_dep','$area')");  
+         $sql = mysqli_query ($link_yics,"INSERT INTO area (`id_dep`,`area`) VALUES ('$id_dep','$area')")or die (mysqli_error($link_yics));  
      
        
 
       
     // logika pakai session
-        if(mysqli_num_rows($sql)>0){
+        if($sql){
+         $_SESSION['info'] = "Disimpan";
+         $_SESSION['pesan'] = "Data Berhasil Disimpan";
+         header('location: ../../page/areasetting.php');
+        }else{
             $_SESSION['info'] = "Gagal Disimpan";
             $_SESSION['pesan'] = "Data User Sudah Ada di Database";
             header('location: ../../page/areasetting.php');
-        }else{
-            $_SESSION['info'] = "Disimpan";
-            $_SESSION['pesan'] = "Data Berhasil Disimpan";
-            header('location: ../../page/areasetting.php');
+           
          }
         
     // end logika pakai session

@@ -90,8 +90,17 @@ include '../elemen/header.php';?>
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-2 col-md-2">
-
+                                                <div class="col-lg-4 col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="area">
+                                                            <h4>AREA</h4>
+                                                        </label>
+                                                        <select class="form-control" name="area" id="area">
+                                                            <option>Pilih Area</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4">
                                                     <div class="form-group">
                                                         <label for="cost_type">
                                                             <h4>Category</h4>
@@ -102,7 +111,7 @@ include '../elemen/header.php';?>
                                                     </div>
 
                                                 </div>
-                                                <div class="col-lg-3 col-md-3">
+                                                <div class="col-lg-6 col-md-6">
                                                     <div class="form-group">
                                                         <label for="cost_type">
                                                             <h4>PROPOSAL</h4>
@@ -113,7 +122,7 @@ include '../elemen/header.php';?>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-lg-3 col-md-3">
+                                                <div class="col-lg-6 col-md-6">
 
                                                     <div class="form-group">
                                                         <label for="cost_type">
@@ -184,16 +193,31 @@ include '../elemen/header.php';?>
                                     });
                                 }
 
+                                function getArea() {
+                                    var data_formulir = $('#formulir').serialize();
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: "../proses/Search2/area.php",
+                                        data: data_formulir,
+                                        cache: false,
+                                        success: function(msg) {
+                                            $("#area").html(msg);
+                                        }
+                                    });
+                                }
+
                                 function getCostType() {
                                     var dept = $("#depart").val();
                                     var prd = $("#periode").val();
+                                    var are = $("#area").val();
                                     // console.log(depart);
                                     $.ajax({
                                         type: 'GET',
                                         url: "../proses/Search2/cost_type.php",
                                         data: {
                                             depart: dept,
-                                            periode: prd
+                                            periode: prd,
+                                            area: are
                                         },
                                         cache: false,
                                         success: function(msg) {
@@ -203,14 +227,14 @@ include '../elemen/header.php';?>
                                 }
 
                                 function getProp() {
-                                    var dept = $("#depart").val();
+                                    var are = $("#area").val();
                                     var prd = $("#periode").val();
                                     var cost = $("#cost_type").val();
                                     $.ajax({
                                         type: 'GET',
                                         url: "../proses/Search2/get_proposal.php",
                                         data: {
-                                            depart: dept,
+                                            area: are,
                                             periode: prd,
                                             cost_type: cost
                                         },
@@ -238,12 +262,20 @@ include '../elemen/header.php';?>
                                 }
                                 $("#periode").change(function() {
                                     getDepart()
+                                    getArea()
                                     getCostType()
                                     getProp()
                                     getIA()
                                 });
 
                                 $("#depart").change(function() {
+                                    getArea()
+                                    getCostType()
+                                    getProp()
+                                    getIA()
+                                });
+
+                                $("#area").change(function() {
                                     getCostType()
                                     getProp()
                                     getIA()

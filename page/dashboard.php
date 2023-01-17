@@ -142,17 +142,24 @@ if (!isset($_SESSION['yics_user'])) {
                                 </div>
 
                                 <!-- First Row -->
+                                <div class="col-md-12">
+                                    <div class="card-deck">
+                                        <div class="row">
+
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-lg-4">
                                     <div class="card card-shadow ">
                                         <div class="card-header card-header-transparent bg-dark">
                                             <div class="row">
-                                                <div class="col-lg-8 col-md-8">
+                                                <div class="col-lg-10 col-md-10">
                                                     <div class="float-left">
                                                         <span class="font-size-20 bold">Allocation Budget</span>
                                                     </div>
                                                 </div>
                                                 <?php if($_SESSION['yics_level'] == '2'){ ?>
-                                                <div class="col-lg-4 col-md-4">
+                                                <div class="col-lg-2 col-md-2">
                                                     <div class="text-right">
                                                         <?php 
                                                         $editalokasi = mysqli_query($link_yics, "SELECT * FROM time_fiscal WHERE status='aktif'") or die(mysqli_error($link_yics));
@@ -181,27 +188,17 @@ if (!isset($_SESSION['yics_user'])) {
                                 <div class="col-lg-8 col-md-8">
                                     <div class="card card-shadow">
                                         <div class="card-header card-header-transparent bg-dark">
-                                            <div class="row">
-                                                <div class="col-lg-12 col-md-12">
-                                                    <div class="float-left">
-                                                        <span class="font-size-20 bold">Consumtion Budget Yearly
-                                                            Investmment</span>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <span class="font-size-20 bold">Consumtion Budget Yearly
+                                                Investmment</span>
                                         </div>
                                         <div class="card-body  card-shadow">
                                             <canvas id="myBar2" height="47" width="100%"></canvas>
                                         </div>
-
                                     </div>
-
                                 </div>
                                 <!-- End First Row -->
                                 <!-- Second Row -->
-
                                 <?php 
-
                                      if(isset($_GET['start']) || isset($_GET['end']) ){
 
                                         $where_time = "AND time_ia > '{$_GET['start']}' AND time_ia <= '{$_GET['end']}' ";
@@ -219,7 +216,7 @@ if (!isset($_SESSION['yics_user'])) {
                                     $consumtion_budget = query("SELECT depart.id_dep , sum(cost_ia) as cost FROM ia
                                         join plan_proposal on ia.id_prop = plan_proposal.id_prop
                                         join area on area.id_area = plan_proposal.id_area
-  join depart on area.id_dep = depart.id_dep
+                                        join depart on area.id_dep = depart.id_dep
                                         where plan_proposal.id_fis={$id_fis} {$where_time}
                                         group by depart
                                     ");  
@@ -391,22 +388,23 @@ if (!isset($_SESSION['yics_user'])) {
                                             class="card-body card-shadow table-responsive table-hover table-bordered text-nowrap">
                                             <table class="table   w-full display  example0">
                                                 <thead class="text-center">
-                                                    <tr class="bg-info align-" height="10px">
+                                                    <tr class="bg-info">
                                                         <th class="align-middle text-center" hidden>ID DEP
                                                         </th>
-                                                        <th class="align-middle text-center">N0
+                                                        <th class="align-middle text-center" style="color:white;">N0
                                                         </th>
-                                                        <th class="align-middle text-center">
+                                                        <th class="align-middle text-center" style="color:white;">
                                                             DEPART.</th>
-                                                        <th class="align-middle text-center">
+                                                        <th class="align-middle text-center" style="color:white;">
                                                             CATEGORY</th>
-                                                        <th class="align-middle text-center">
+                                                        <th class="align-middle text-center"
+                                                            style="color:white;width:800px;">
                                                             PROPOSAL</th>
-                                                        <th class="align-middle text-center">
+                                                        <th class="align-middle text-center" style="color:white;">
                                                             STATUS</th>
-                                                        <th class="align-middle text-center">
+                                                        <th class="align-middle text-center" style="color:white;">
                                                             PROGRESS</th>
-                                                        <th class="align-middle text-center">
+                                                        <th class="text-center" style="color:white;width:20px;">
                                                             ACTION</th>
 
                                                     </tr>
@@ -539,7 +537,7 @@ if (!isset($_SESSION['yics_user'])) {
                                                         <td class="align-middle text-center <?= ($text_progress == "STOP")? "reason":""; ?>"
                                                             data-reason="<?=$rea?> " data-noia="<?=$no_iaf?>">
 
-                                                            <div class="progress mt-20 text-center ">
+                                                            <div class="progress my-0 text-center ">
                                                                 <div class="progress-bar progress-bar-striped  <?=$color_progress?> active"
                                                                     aria-valuenow="" aria-valuemin="0"
                                                                     aria-valuemax="100" style="width: <?=$persen?>%;"
@@ -551,38 +549,27 @@ if (!isset($_SESSION['yics_user'])) {
 							
 							?>
                                                         </td>
-                                                        <td class="align-middle text-center">
-                                                            <a href="viewplan.php?ubah=<?php echo $data['id_prop']; ?>">
-                                                                <button type="button" class="btn btn-icon btn-info  ">
-                                                                    <i class="icon wb-eye" aria-hidden="true"></i>
-                                                                </button>
+                                                        <td class=" text-center ">
+                                                            <a class="btn btn-icon btn-info btn-xs"
+                                                                href="viewplan.php?ubah=<?php echo $data['id_prop']; ?>">
+                                                                <i class="icon wb-eye" aria-hidden="true"></i>
                                                             </a>
                                                             <?php if($_SESSION['yics_level'] == '2'){ ?>
-                                                            <a
+                                                            <a class="btn btn-icon btn-success edit_proposal btn-xs"
                                                                 href="formupdate.php?ubah=<?php echo $data['id_prop']; ?>">
-                                                                <button type="button"
-                                                                    class="btn btn-icon btn-success edit_proposal"
-                                                                    data-toggle="modal"
-                                                                    data-target="#EditPlaningProposal2">
-                                                                    <i class="icon wb-upload" aria-hidden="true"></i>
-                                                                </button>
+                                                                <i class="icon wb-upload" aria-hidden="true"></i>
+                                                            </a>
+                                                            <a href="formedit.php?edit=<?php echo $data['id_prop']; ?>"
+                                                                class="btn btn-icon btn-warning edit_proposal btn-xs">
+                                                                <i class=" icon wb-edit" aria-hidden="true"></i>
                                                             </a>
 
-                                                            <a href="formedit.php?edit=<?php echo $data['id_prop']; ?>">
-                                                                <button type="button"
-                                                                    class="btn btn-icon btn-warning  edit_proposal"
-                                                                    data-toggle="modal" data-target="#">
-                                                                    <i class="icon wb-edit" aria-hidden="true"></i>
-                                                                </button>
+                                                            <a class="HapusData1 btn btn-icon btn-danger btn-xs "
+                                                                href="../proses/dashboard/tambahplanning.php?del=<?php echo $data['id_prop']; ?>">
+                                                                <i class="icon oi-trashcan" aria-hidden="true"></i>
                                                             </a>
-
-                                                            <a href="../proses/dashboard/tambahplanning.php?del=<?php echo $data['id_prop']; ?>"
-                                                                class="HapusData1">
-                                                                <button type="button" class="btn btn-icon btn-danger">
-                                                                    <i class="icon oi-trashcan" aria-hidden="true"></i>
-                                                                </button>
-                                                            </a>
-                                                            <button type="button" class="btn btn-icon btn-danger kontak"
+                                                            <button type="button"
+                                                                class="btn btn-icon btn-danger kontak btn-xs"
                                                                 data-id="<?php echo $data['id_prop']; ?>">
                                                                 <i class="icon fa-address-card" aria-hidden="true"></i>
                                                             </button>

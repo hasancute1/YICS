@@ -174,6 +174,15 @@ include '../elemen/header.php';?>
                                                                                             WHERE user_role.role_name='$name'") or die(mysqli_error($link_yics));
                                                                                             $no = 1;
                                                                                             while ($data = mysqli_fetch_array($ur)) {
+
+
+                                                                                                if ($data['username']==$_SESSION['yics_user']){
+                                                                                                    $tombol_hidup="disabledlink";
+                                                                                                    $unchek="disabled";
+                                                                                                }else{
+                                                                                                    $tombol_hidup=""; 
+                                                                                                    $unchek="";
+                                                                                                }
                                                                                             ?>
                                                                                     <tr>
                                                                                         <td><?= $no++; ?></td>
@@ -201,7 +210,7 @@ include '../elemen/header.php';?>
                                                                                                 data-toggle="tooltip"
                                                                                                 data-original-title="Hapus">
                                                                                                 <a href="../proses/usersetting/user.php?del=<?php echo $data['username']; ?>"
-                                                                                                    class="btn btn-icon btn-danger btn-icon btn-outline btn-xs HapusData">
+                                                                                                    class="btn btn-icon btn-danger btn-icon btn-outline btn-xs HapusData <?= $tombol_hidup ?>">
                                                                                                     <i class="icon oi-trashcan"
                                                                                                         aria-hidden="true"></i>
                                                                                                 </a>
@@ -211,6 +220,7 @@ include '../elemen/header.php';?>
                                                                                             <input name="check[]"
                                                                                                 value="<?= $data['username']; ?>"
                                                                                                 type="checkbox"
+                                                                                                <?= $unchek ?>
                                                                                                 class="check">
                                                                                         </td>
                                                                                     </tr>

@@ -117,6 +117,10 @@
         margin: 10px;
     }
 
+    th {
+        color: white;
+    }
+
     /* .anim {
         width: 300px;
         height: 200px;

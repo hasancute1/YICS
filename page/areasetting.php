@@ -171,7 +171,15 @@ include '../elemen/header.php';?>
                                                                                             $ur = mysqli_query($link_yics, "SELECT * FROM area JOIN depart ON area.id_dep = depart.id_dep WHERE area.id_dep='$name'") or die(mysqli_error($link_yics));
                                                                                             $no = 1;
                                                                                             while ($data = mysqli_fetch_array($ur)) {
+                                                                                                if ($data['id_area']==$_SESSION['area']){
+                                                                                                    $tombol_hidup="disabledlink";
+                                                                                                   
+                                                                                                }else{
+                                                                                                    $tombol_hidup=""; 
+                                                                                                  
+                                                                                                }
                                                                                             ?>
+                                                                                        ?>
                                                                                         <tr>
                                                                                             <td hidden>
                                                                                                 <?= $data['id_area']; ?>
@@ -197,7 +205,7 @@ include '../elemen/header.php';?>
                                                                                                     data-toggle="tooltip"
                                                                                                     data-original-title="Hapus">
                                                                                                     <a href="../proses/usersetting/area.php?del=<?php echo $data['id_area']; ?>"
-                                                                                                        class="btn btn-icon btn-danger btn-icon btn-outline btn-xs HapusData">
+                                                                                                        class="btn btn-icon btn-danger btn-icon btn-outline btn-xs HapusData <?= $tombol_hidup ?>">
                                                                                                         <i class="icon oi-trashcan"
                                                                                                             aria-hidden="true"></i>
                                                                                                     </a>

@@ -205,7 +205,7 @@ $labelcos=json_encode($labelcos);
 // --------------------------------------------------------------quuery label x grafik bar-------------------------------------
                     $label_x = mysqli_query($link_yics ,"SELECT * FROM plan_proposal
                     join area on area.id_area = plan_proposal.id_area
-  join depart on area.id_dep = depart.id_dep
+                    join depart on area.id_dep = depart.id_dep
                     where depart.id_dep={$id_dep} and id_fis={$id_fis} ORDER BY cost ASC ")
                     or die (mysqli_error($link_yics));                 
                     if(mysqli_num_rows($label_x)>0){
@@ -567,33 +567,32 @@ $labelcos=json_encode($labelcos);
 
                                             </div>
 
-
-
-                                            <div class="table table-responsive table-bordered 10px text-nowrap">
-                                                <table width="100%" class="table-striped">
+                                            <br>
+                                            <br>
+                                            <div class="table-responsive text-nowrap">
+                                                <table class="table   w-full display table-bordered  example0">
                                                     <thead class="text-center">
-                                                        <tr class="bg-info align-" height="10px">
-                                                            <th class="align-middle text-center" height="10px"
-                                                                rowspan="2">
+                                                        <tr class="bg-info align-">
+                                                            <th class="align-middle text-center" style="color: white;">
                                                                 N0</th>
                                                             <th class="align-middle text-center" height="10px"
-                                                                rowspan="2">
+                                                                style="color: white;">
                                                                 CATEGORY</th>
                                                             <th class="align-middle text-center" height="10px"
-                                                                rowspan="2">
+                                                                style="color: white;">
                                                                 NO. IA</th>
                                                             <th class="align-middle text-center" height="10px"
-                                                                rowspan="2">
+                                                                style="color: white;">
                                                                 DESCRIPTION</th>
 
                                                             <th class="align-middle text-center" height="10px"
-                                                                rowspan="2">
+                                                                style="color: white;">
                                                                 DATE</th>
                                                             <th class="align-middle text-center" height="10px"
-                                                                rowspan="2">
+                                                                style="color: white;">
                                                                 TOTAL TRANSC</th>
                                                             <th class="align-middle text-center" height="10px"
-                                                                rowspan="2">
+                                                                style="color: white;">
                                                                 STATUS</th>
                                                         </tr>
                                                     </thead>
@@ -611,7 +610,7 @@ $labelcos=json_encode($labelcos);
                                                                 <?= $row['deskripsi'] ?>
                                                             </td>
 
-                                                            </td>
+
                                                             <td class="align-middle text-center">
                                                                 <?= date('d M Y' , strtotime($row['time_ia']))  ?></td>
                                                             <td class="align-middle text-center">IDR

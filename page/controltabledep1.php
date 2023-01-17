@@ -185,57 +185,66 @@ $id_dept = $_GET['dept'];
                                                     <thead class="table-info">
                                                         <tr>
                                                             <th class="judul align-middle text-center export-col"
-                                                                colspan="4">
+                                                                colspan="4" style="color: white;">
                                                                 INVESTMENT PLANNING CONTROL TABLE</th>
 
                                                             <th class="judul align-middle text-center export-col"
-                                                                colspan="6">
+                                                                colspan="6" style="color: white;">
                                                                 IMPLEMENTATION CONTROL TABLE</th>
 
                                                             <th class="judul align-middle text-center table-info noexportar"
-                                                                rowspan="3">
+                                                                rowspan="3" style="color: white;">
                                                                 STATUS
                                                             </th>
                                                             <th class="judul align-middle text-center able-info noexportar"
-                                                                rowspan="3">
+                                                                rowspan="3" style="color: white;">
                                                                 PROGRESS
                                                             </th>
                                                             <th class="judul align-middle text-center table-danger noexportar"
-                                                                rowspan="3">
+                                                                rowspan="3" style="color: white;">
                                                                 ACTION
                                                             </th>
 
                                                         </tr>
                                                         <tr>
-                                                            <th class="judul align-middle text-center" rowspan="2">NO
+                                                            <th class="judul align-middle text-center" rowspan="2"
+                                                                style="color: white;">NO
                                                             </th>
-                                                            <th class="judul align-middle text-center" rowspan="2">
+                                                            <th class="judul align-middle text-center" rowspan="2"
+                                                                style="color: white;">
                                                                 DEPEARTMENT</th>
-                                                            <th class="judul align-middle text-center" rowspan="2">
+                                                            <th class="judul align-middle text-center" rowspan="2"
+                                                                style="color: white;">
                                                                 CATEGORY</th>
-                                                            <th class="judul align-middle text-center" rowspan="2">
+                                                            <th class="judul align-middle text-center" rowspan="2"
+                                                                style="color: white;">
                                                                 DESCRIPTION</th>
 
-                                                            <th class="judul align-middle text-center" rowspan="2">No
+                                                            <th class="judul align-middle text-center" rowspan="2"
+                                                                style="color: white;">No
                                                             </th>
-                                                            <th class="judul align-middle text-center" colspan="2">IA
+                                                            <th class="judul align-middle text-center" colspan="2"
+                                                                style="color: white;">IA
                                                                 No.</th>
-                                                            <th class="judul align-middle text-center" rowspan="2">
+                                                            <th class="judul align-middle text-center" rowspan="2"
+                                                                style="color: white;">
                                                                 DESCRIPTION</th>
 
-                                                            <th class="judul align-middle text-center" rowspan="2">
+                                                            <th class="judul align-middle text-center" rowspan="2"
+                                                                style="color: white;">
                                                                 Valid Until</th>
-                                                            <th class="judul align-middle text-center">Remark</th>
+                                                            <th class="judul align-middle text-center"
+                                                                style="color: white;">Remark</th>
 
 
                                                         </tr>
                                                         <tr>
-                                                            <th class="align-middle text-center">
+                                                            <th class="align-middle text-center" style="color: white;">
                                                                 Subject</th>
-                                                            <th class="align-middle text-center">
+                                                            <th class="align-middle text-center" style="color: white;">
                                                                 IO</th>
 
-                                                            <th class="align-middle text-center">
+                                                            <th class="align-middle text-center" style="color: white;">
                                                                 CT Updated</th>
 
 

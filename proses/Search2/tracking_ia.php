@@ -23,7 +23,8 @@ if($id_ia == 0){
         
         $data =("SELECT * FROM ia
         JOIN plan_proposal ON ia.id_prop = plan_proposal.id_prop 
-        JOIN depart ON plan_proposal.id_dep = depart.id_dep
+        join area on area.id_area = plan_proposal.id_area
+    	join depart on area.id_dep = depart.id_dep
         JOIN kategori_proposal  ON plan_proposal.id_kat = kategori_proposal.id_kat
         where id_ia='$id_ia'"); 
             $data = mysqli_query($link_yics, $data)or die (mysqli_error($link_yics));
