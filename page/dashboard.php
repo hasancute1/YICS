@@ -147,7 +147,7 @@ if (!isset($_SESSION['yics_user'])) {
 
 
                                 <div class="col-lg-4">
-                                    <div class="card">
+                                    <div class="card ">
                                         <div class="card-header bg-dark">
                                             <div class="row">
                                                 <div class="col-lg-10 col-md-10">
@@ -176,7 +176,8 @@ if (!isset($_SESSION['yics_user'])) {
                                             } ?>
                                             </div>
                                         </div>
-                                        <div class="card-body ">
+                                        <div class="card-body card-transparent  " style="background-color: rgba(245, 245, 245, 1);  opacity: 4;
+">
                                             <div id="graph" style="height: 350px;"></div>
                                         </div>
 
