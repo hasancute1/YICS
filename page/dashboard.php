@@ -142,16 +142,13 @@ if (!isset($_SESSION['yics_user'])) {
                                 </div>
 
                                 <!-- First Row -->
-                                <div class="col-md-12">
-                                    <div class="card-deck">
-                                        <div class="row">
 
-                                        </div>
-                                    </div>
-                                </div>
+
+
+
                                 <div class="col-lg-4">
-                                    <div class="card card-shadow ">
-                                        <div class="card-header card-header-transparent bg-dark">
+                                    <div class="card">
+                                        <div class="card-header bg-dark">
                                             <div class="row">
                                                 <div class="col-lg-10 col-md-10">
                                                     <div class="float-left">
@@ -179,19 +176,19 @@ if (!isset($_SESSION['yics_user'])) {
                                             } ?>
                                             </div>
                                         </div>
-                                        <div class="card-body card-shadow">
+                                        <div class="card-body ">
                                             <div id="graph" style="height: 350px;"></div>
                                         </div>
 
                                     </div>
                                 </div>
                                 <div class="col-lg-8 col-md-8">
-                                    <div class="card card-shadow">
-                                        <div class="card-header card-header-transparent bg-dark">
+                                    <div class="card ">
+                                        <div class="card-header bg-dark">
                                             <span class="font-size-20 bold">Consumtion Budget Yearly
                                                 Investmment</span>
                                         </div>
-                                        <div class="card-body  card-shadow">
+                                        <div class="card-body">
                                             <canvas id="myBar2" height="47" width="100%"></canvas>
                                         </div>
                                     </div>
@@ -305,7 +302,8 @@ if (!isset($_SESSION['yics_user'])) {
                                                             <i class="iicon fa-database" aria-hidden="true"></i>
                                                         </div>
                                                         <div class="counter counter-md counter-inverse text-left">
-                                                            <div class="counter-label text-capitalize">SISA BUDGET</div>
+                                                            <div class="counter-label text-capitalize">SISA BUDGET
+                                                            </div>
                                                             <span style="font-size:25px;">IDR
                                                                 <?= number_format($sisa_budget,2,',','.')." "; ?></span>
                                                             <div class=" counter-label text-capitalize line-height">
@@ -356,6 +354,7 @@ if (!isset($_SESSION['yics_user'])) {
                 ?>
                                     </div>
                                 </div>
+
 
                                 <!-- End Second Row -->
                                 <!-- Third Row -->
@@ -863,9 +862,10 @@ $json_morris = json_encode($array_donut_dept);
                             <label class="col-md-2 col-form-label" style="color:black;">Periode tahun</label>
                             <div class="col-md-10">
                                 <div class="input-group">
-                                    <?php 
-                                                $tambahalok = mysqli_query($link_yics ,"SELECT id_fis,periode FROM time_fiscal WHERE status= 'aktif'")or die (mysqli_error($link_yics));
-                                                $data = mysqli_fetch_assoc($tambahalok)
+                                    <?php                               
+                                    $tambahalok = mysqli_query($link_yics ,"SELECT id_fis,periode FROM time_fiscal WHERE status= 'aktif'")or die (mysqli_error($link_yics));
+                                    $data = mysqli_fetch_assoc($tambahalok)
+                                    
                                             ?>
                                     <input type="text" value="<?php echo $data['periode']; ?>" class="form-control"
                                         readonly>
@@ -963,6 +963,18 @@ if(mysqli_num_rows($proposal)>0){
 
 
     <!-- Modal tambah plannning proposal -->
+    <?php 
+                        $user_m=$_SESSION['yics_user'] ;
+                                    $datauser= single_query("SELECT * FROM data_user 
+                                    JOIN area ON area.id_area = data_user.id_area                                                
+                                    JOIN depart ON area.id_dep = depart.id_dep                                               
+                                    where username='$user_m'");
+                                    $nama = $datauser['nama'];
+                                    $npk = $datauser['username'];
+                                    $depart = $datauser['depart'];
+                                    $area = $datauser['area'];
+                                    $id_area = $datauser['id_area'];
+                        //             ?>
     <div class="modal fade modal-info " id="TambahPlaningProposal" aria-hidden="true"
         aria-labelledby="TambahPlaningProposal" role="dialog" tabindex="-1">
         <div class="modal-dialog modal-simple modal-center modal-lg">
@@ -983,8 +995,10 @@ if(mysqli_num_rows($proposal)>0){
                         <div class="form-group row">
                             <h4 class="col-md-12 modal-title text-left" style="color:black;">SUBJECT</h4>
                         </div>
+
                         <div class="form-group row">
-                            <label class="col-md-2 col-form-label" style="color:black;">Periode tahun</label>
+                            <label class="col-md-2 col-form-label" style="color:black;">Periode tahun
+                            </label>
                             <div class="col-md-10">
                                 <div class="form-group">
                                     <input type="text" name="id_fis" class="form-control" required
@@ -997,8 +1011,8 @@ if(mysqli_num_rows($proposal)>0){
                         <div class="form-group row">
                             <label class="col-md-2 col-form-label text-left" style="color:black;">Department</label>
                             <div class="col-md-4">
+                                <!-- <input type="text" class="form-control " value="<?= $depart ?>" required readonly> -->
                                 <div class="form-group">
-
                                     <select name="depart" class="form-control" required>
                                         <option value="">Pilih Departement</option>
                                         <?php 
@@ -1014,6 +1028,23 @@ if(mysqli_num_rows($proposal)>0){
                                     </select>
                                 </div>
                             </div>
+                            <!-- <label class="col-md-2 col-form-label text-left" style="color:black;">Area</label>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control " value="<?= $area ?>" required readonly>
+                                <input type="text" class="form-control " name="id_area" value="<?= $id_area ?>" required
+                                    hidden>
+                            </div> -->
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label text-left" style="color:black;">Proposal</label>
+                            <div class="col-md-10">
+
+                                <input type="text" class="form-control " name="proposal"
+                                    placeholder="Isi judul Proposal..." required>
+
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label class="col-md-2 col-form-label text-left" style="color:black;">Category</label>
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -1032,26 +1063,15 @@ if(mysqli_num_rows($proposal)>0){
                                     </select>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-2 col-form-label text-left" style="color:black;">Proposal</label>
-                            <div class="col-md-10">
-
-                                <input type="text" class="form-control " name="proposal"
-                                    placeholder="Isi judul Proposal..." required>
-
-                            </div>
-                        </div>
-                        <div class="form-group row">
                             <label class="col-md-2 col-form-label" style="color:black;">Cost</label>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">IDR</span>
                                     </div>
 
                                     <input required name="cost" type="text" class="form-control" id="rupiah"
-                                        placeholder="Isi Cost Proposal...">
+                                        placeholder="Isi Cost..">
                                     <div class="input-group-prepend ">
                                         <span class="input-group-text bg-yellow-100">MILLION</span>
                                     </div>

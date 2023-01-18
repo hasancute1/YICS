@@ -17,7 +17,7 @@ $get_data_budget1 = mysqli_query($link_yics ,"SELECT * FROM budget JOIN depart o
 
 ?>
 <ul class="site-menu" data-plugin="menu">
-    <li class="site-menu-item has-sub <?= ($url_aktive == "my_order")? "active": ""; ?>">
+    <li class="site-menu-item has-sub <?= ($url_aktive == "my_order")? "active": ""; ?>" hidden>
         <a href="my_order.php" class="animsition-link">
             <i class="site-menu-icon wb-order" aria-hidden="true"></i>
             <span class="site-menu-title">MY ORDERS</span>

@@ -178,7 +178,8 @@ include '../elemen/header.php';?>
                                                         <input type="text"
                                                             class="form-control bg-grey-200 text-uppercase"
                                                             name="proposal" placeholder=" Judul Proposal"
-                                                            autocomplete="off" value="<?php echo $data['proposal']; ?>">
+                                                            autocomplete="off" value="<?php echo $data['proposal']; ?>"
+                                                            required>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -189,7 +190,7 @@ include '../elemen/header.php';?>
                                                             <input type="number"
                                                                 class="form-control bg-grey-200 text-uppercase"
                                                                 name="cost" autocomplete="off"
-                                                                value="<?php echo $data['cost']; ?>">
+                                                                value="<?php echo $data['cost']; ?>" required>
                                                             <div class="input-group-prepend ">
                                                                 <span
                                                                     class="input-group-text bg-yellow-100">MILLION</span>
@@ -201,14 +202,16 @@ include '../elemen/header.php';?>
                                                     <div class="col-md-4">
                                                         <div class="input-group input-group-file"
                                                             data-plugin="inputGroupFile">
-                                                            <input type="text" class="form-control" readonly=""
-                                                                value="<?= $data['lampiran']?>" name="file_dulu">
+                                                            <input type="text" class="form-control bg-grey-200" readonly
+                                                                value="<?= $data['lampiran']?>">
+                                                            <input type="text" class="form-control" readonly value=""
+                                                                name="file_dulu" hidden>
                                                             <div class="input-group-append">
                                                                 <span class="btn btn-success btn-file">
                                                                     <i class="icon wb-upload" aria-hidden="true"></i>
 
                                                                     <input class="form-control-file" type="file"
-                                                                        name="lampiran" required>
+                                                                        name="lampiran">
 
                                                                 </span>
                                                             </div>
@@ -223,7 +226,7 @@ include '../elemen/header.php';?>
                                                         <input type="text"
                                                             class="form-control bg-grey-200 text-uppercase"
                                                             name="benefit" autocomplete="off"
-                                                            value="<?php echo $data['benefit']; ?>">
+                                                            value="<?php echo $data['benefit']; ?>" required>
                                                     </div>
 
                                                 </div>

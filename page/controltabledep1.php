@@ -171,17 +171,12 @@ $id_dept = $_GET['dept'];
 
                                 </div>
                                 <div class="col-lg-12 col-md-12">
-                                    <div class="card card-shadow">
-                                        <div class="card-header ">
-                                            <div class="row">
-                                                <div class="col-lg-12 col-md-12">
-                                                    <div class="row">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class=" card-body card-shadow  table-responsive table-bordered text-center 10px table-striped text-nowrap"
-                                                id="area">
-                                                <table class=" table tableproposal table-hover" width="100%">
+                                    <div class="card card-transparent">
+                                        <div class=" ">
+
+                                            <div
+                                                class="table-bordered table-responsive  text-center 10px table-striped text-nowrap">
+                                                <table class=" table tableproposal table-hover " width="100%">
                                                     <thead class="table-info">
                                                         <tr>
                                                             <th class="judul align-middle text-center export-col"
@@ -512,37 +507,32 @@ $kolom=mysqli_num_rows($kol);
 
                                                             <td>
                                                                 <a href="Tracking.php?id_ia=<?= $data['id_ia'] ?>"
-                                                                    class="<?= $tombol_hidup ?>">
-                                                                    <button type="button" class="btn btn-icon btn-info">
-                                                                        <i class="icon wb-eye" aria-hidden="true"></i>
-                                                                    </button>
+                                                                    class="<?= $tombol_hidup ?> btn btn-icon btn-info">
+
+                                                                    <i class="icon wb-eye" aria-hidden="true"></i>
+
                                                                 </a>
 
                                                                 <?php if( $_SESSION['yics_level'] != "1"){ ?>
 
                                                                 <a href="formupdate_ia.php?id_ia=<?= $data['id_ia'] ?>"
-                                                                    class="<?= $tombol_hidup ?>">
-                                                                    <button type="button"
-                                                                        class="btn btn-icon btn-success">
-                                                                        <i class="icon wb-upload"
-                                                                            aria-hidden="true"></i>
-                                                                    </button>
+                                                                    class="<?= $tombol_hidup ?> btn btn-icon btn-success">
+
+                                                                    <i class="icon wb-upload" aria-hidden="true"></i>
+
                                                                 </a>
 
                                                                 <a href="formeditia_ctrl.php?id_ia=<?= $data['id_ia']?>"
-                                                                    class="<?= $tombol_hidup ?>">
-                                                                    <button type="button"
-                                                                        class="btn btn-icon btn-warning">
-                                                                        <i class="icon wb-edit" aria-hidden="true"></i>
-                                                                    </button>
+                                                                    class="<?= $tombol_hidup ?> btn btn-icon btn-warning">
+
+                                                                    <i class="icon wb-edit" aria-hidden="true"></i>
+
                                                                 </a>
                                                                 <a href="../proses/ia/hapus_ia.php?del=<?= $data['id_ia']?>&page=<?= $data['id_dep']?>"
-                                                                    class="<?= $tombol_hidup ?> HapusData">
-                                                                    <button type="button"
-                                                                        class="btn btn-icon btn-danger">
-                                                                        <i class="icon oi-trashcan"
-                                                                            aria-hidden="true"></i>
-                                                                    </button>
+                                                                    class="<?= $tombol_hidup ?> HapusData btn btn-icon btn-danger">
+
+                                                                    <i class="icon oi-trashcan" aria-hidden="true"></i>
+
                                                                 </a>
 
                                                                 <?php } ?>
@@ -607,6 +597,21 @@ $nomor_urut_before = $nomor_urut;
                             if (result.isConfirmed) {
                                 window.location.href = getLink;
                             }
+                        })
+                    })
+
+
+                    $('.reason').click(function() {
+                        var reason = $(this).attr('data-reason');
+                        var noia = $(this).attr('data-noia');
+                        Swal.fire({
+                            title: '<strong></strong>' + noia,
+                            icon: 'info',
+                            html: '' + reason,
+                            showCloseButton: true,
+                            focusConfirm: false,
+                            confirmButtonText: '<i">Laporan Diterima !!</i>',
+                            cancelButtonAriaLabel: 'Close'
                         })
                     })
                 })

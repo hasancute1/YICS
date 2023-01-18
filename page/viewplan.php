@@ -61,12 +61,39 @@ include '../elemen/header.php';?>
                     <!-- Page -->
                     <div class="page">
                         <div class="page-header">
-                            <h1 class="page-title font-size-26 font-weight-600">TRACKING PLANNING PROPOSAL</h1>
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h1 class="page-title font-size-26 font-weight-600">TRACKING PLANNING PROPOSAL
+                                        </h1>
+                                    </div>
+                                    <div class="col-md-4 text-right">
+                                        <a href="dashboard.php" class="btn btn-icon btn-info">
+                                            <span class="page-title font-size-20 font-weight-600">
+                                                << BACK </span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <?php 
                   //ambil data di url
                   $id=$_GET ["ubah"];
                   //query data mahasiswa berdasarkan id menghasilkan array numeric
+                 
+                   
+                        $proposal = mysqli_query($link_yics,"SELECT * FROM proposal 
+                        join kategori_proposal  ON proposal.id_kat = kategori_proposal.id_kat
+                        join data_user  ON data_user.username = proposal.username 
+                        join area  ON data_user.id_area = area.id_area                                               
+                        join depart  ON depart.id_dep = area.id_dep
+                         WHERE id_prop='$id'")or die(mysqli_error($link_yics)); 
+                        $rows_proposal = mysqli_fetch_assoc($proposal);
+                        $proposal =  $rows_proposal['proposal'];
+                        $kategori =  $rows_proposal['kategori'];
+                        $cost =  $rows_proposal['cost'];
+                        $depart =  $rows_proposal['depart'];
+                        $id_dep =  $rows_proposal['id_dep'];
                  
                 ?>
 
@@ -75,22 +102,51 @@ include '../elemen/header.php';?>
                                 <!-- Second Row -->
                                 <div class="col-lg-12 col-md-12">
                                     <div class="card card-shadow">
-                                        <div class="card-header card-header-transparent bg-dark">
+                                        <div class="card-header card-header-transparent ">
                                             <div class="row">
                                                 <div class="col-lg-12 col-md-12">
-                                                    <div class="float-left">
-                                                        <?php 
-                        $proposal = mysqli_query($link_yics,"SELECT proposal FROM proposal WHERE id_prop='$id'")or die(mysqli_error($link_yics)); 
-                        $rows_proposal = mysqli_fetch_assoc($proposal);?>
-                                                        <span
-                                                            class="font-size-20 bold"><?php echo $rows_proposal['proposal']; ?></span>
-                                                    </div>
+                                                    <table class=" table ">
+                                                        <tr>
+                                                            <td class="judul align-middle text-center " rowspan="3"
+                                                                width="200px">
+                                                                <img src="../base/assets/images/adm3.png"
+                                                                    style="width:200px;">
+                                                            </td>
+                                                            <td class="judul align-middle text-center text-uppercase"
+                                                                width="700px" rowspan="3">
+                                                                <h4>NAMA PROPOSAL :</h4>
+                                                                <h3> "<?= $proposal; ?>"</h3>
+                                                            </td>
+                                                            <td class="text-left" style="color:black;">
+                                                                Departement</td>
+                                                            <td> &nbsp;:&nbsp;</td>
+                                                            <td><?= $depart; ?></td>
+                                                        </tr>
+
+                                                        <tr>
+
+                                                            <td class="text-left" style="color:black;" width="200px">
+                                                                Category
+                                                            <td width="30px"> &nbsp;:&nbsp;</td>
+                                                            <td><?= $kategori; ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-left" style="color:black;">Cost
+                                                                Proposal</td>
+                                                            <td> &nbsp;:&nbsp;</td>
+                                                            <td><?= 'IDR'." ". number_format($cost, 2, ',', '.');?>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan='5'></td>
+                                                        </tr>
+                                                    </table>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-body bg-white">
+                                        <div class="card-body">
 
-                                            <div class="page-content container">
+                                            <div class="">
 
                                                 <!-- Timeline -->
                                                 <ul class="timeline timeline-icon">
@@ -162,8 +218,12 @@ include '../elemen/header.php';?>
 			if(max($array_selamat) == 5 && $approve == 1){
 				?>
                                                     <li class="timeline-period card-block bg-orange-300 mb-30"
-                                                        style="border-radius: 15px; height:90px; color:black;">
-                                                        Selamat proposal sedang pembuatan NO.IA
+                                                        style="border-radius: 15px; height:120px; color:black;">
+                                                        <p>Selamat proposal sedang pembuatan NO.IA</p>
+                                                        <p style="font-size:12px;">silahkan cek di control
+                                                            table department masing-masing <a
+                                                                href="controltabledep.php?dept=<?= $id_dep ?>">klik
+                                                                disini</a></p>
                                                     </li>
                                                     <li class="timeline-item">
                                                         <div class="timeline-dot bg-orange-500">

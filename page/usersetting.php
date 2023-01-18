@@ -151,10 +151,11 @@ include '../elemen/header.php';?>
                                                                         <div class="panel-body">
 
                                                                             <table
-                                                                                class=" text-uppercase table table-hover  table-striped w-full db">
+                                                                                class=" text-uppercase table table-hover  table-striped w-full db align-middle ">
                                                                                 <thead class="bg-info">
                                                                                     <tr>
-                                                                                        <th style="color:white;">
+                                                                                        <th style="color:white;"
+                                                                                            class="align-middle">
                                                                                             NO</th>
                                                                                         <th style="color:white;">
                                                                                             USERNAME</th>
@@ -189,19 +190,24 @@ include '../elemen/header.php';?>
                                                                                                     $unchek="";
                                                                                                 }
                                                                                             ?>
-                                                                                    <tr>
-                                                                                        <td><?= $no++; ?></td>
-                                                                                        <td><?= $data['username']; ?>
+                                                                                    <tr class="align-middle">
+                                                                                        <td class="align-middle">
+                                                                                            <?= $no++; ?></td>
+                                                                                        <td class="align-middle">
+                                                                                            <?= $data['username']; ?>
                                                                                         </td>
-                                                                                        <td style="width: 200px;">
+                                                                                        <td style="width: 200px;"
+                                                                                            class="align-middle">
                                                                                             <?= $data['nama']; ?>
                                                                                         </td>
-                                                                                        <td style="width: 200px;">
+                                                                                        <td style="width: 200px;"
+                                                                                            class="align-middle">
                                                                                             <?= $data['area']; ?>
                                                                                         </td>
-                                                                                        <td><?= $data['role_name']; ?>
+                                                                                        <td class="align-middle">
+                                                                                            <?= $data['role_name']; ?>
                                                                                         </td>
-                                                                                        <td>
+                                                                                        <td class="align-middle">
                                                                                             <i href=""
                                                                                                 data-toggle="tooltip"
                                                                                                 data-original-title="Edit">
@@ -221,7 +227,7 @@ include '../elemen/header.php';?>
                                                                                                 </a>
                                                                                             </i>
                                                                                         </td>
-                                                                                        <td>
+                                                                                        <td class="align-middle">
                                                                                             <input name="check[]"
                                                                                                 value="<?= $data['username']; ?>"
                                                                                                 type="checkbox"
@@ -358,7 +364,7 @@ include '../elemen/header.php';?>
                                     <div class="form-group row">
                                         <label class="col-md-2 col-form-label" style="color:black;">PASSWORD</label>
                                         <div class="col-md-10">
-                                            <input type="text" class="form-control text-uppercase" name="password"
+                                            <input type="text" class="form-control" name="password"
                                                 placeholder="Silahkan isi password" autocomplete="off" required>
                                         </div>
                                     </div>

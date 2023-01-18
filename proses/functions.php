@@ -67,9 +67,10 @@ function get_notif_pending(){
 
     $notif_proposal = query("SELECT notif.*, proposal.proposal as judul_prop  FROM notifications as notif join proposal on id_type = proposal.id_prop WHERE dest='".$_SESSION['yics_user']."' and status='Pending' and type='proposal' ORDER BY id_notif DESC");
 
-    $notif_ia = query("SELECT notif.*, plan_proposal.proposal as judul_prop  FROM notifications as notif 
+    $notif_ia = query("SELECT notif.*, plan_proposal.proposal as judul_prop  FROM notifications as notif
     join ia on id_type = ia.id_ia
     join plan_proposal on ia.id_prop = plan_proposal.id_prop 
+    join data_user on data_user.id_area = plan_proposal.id_area
     WHERE dest='".$_SESSION['yics_user']."' and status='Pending' and type='ia' ORDER BY id_notif DESC");
 
     $data = array_merge($notif_proposal , $notif_ia);

@@ -86,6 +86,7 @@ include '../elemen/header.php';?>
                                             where id_ia='".$id_ia."'");    
                                              $cost_ia  = $data_ia['cost_ia'];
                                              $depart  = $data_ia['depart'];
+                                             $id_depback  = $data_ia['id_dep'];
                                              $awal  = $data_ia['awal'];
                                              $akhir  = $data_ia['akhir'];
                                             
@@ -121,11 +122,16 @@ include '../elemen/header.php';?>
 
                                 <div class="col-lg-12 col-md-12">
                                     <div class="row">
-                                        <div class="col-lg-12 col-md-12">
-                                            <div class="float-left">
-                                                <h1 class="bold text-uppercase page-title">FORM
-                                                    UPDATE PROGRESS NO IA : <?= $depart ?></h1>
-                                            </div>
+                                        <div class="col-md-8">
+                                            <h1 class="page-title font-size-26 font-weight-600">FORM UPDATE PROGRESS
+                                            </h1>
+                                        </div>
+                                        <div class="col-md-4 text-right">
+                                            <a href="controltabledep.php?dept=<?= $id_depback ?>"
+                                                class="btn btn-icon btn-info">
+                                                <span class="page-title font-size-20 font-weight-600">
+                                                    << KEMBALI </span>
+                                            </a>
                                         </div>
                                     </div>
                                     <br>

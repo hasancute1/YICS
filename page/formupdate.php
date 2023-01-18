@@ -66,31 +66,13 @@ include '../elemen/header.php';?>
                     <!-- sidebar back -->
                     <?php include '../elemen/sidebarback.php';?>
                     <!-- end sidebar back -->
-
-                    <!-- Page -->
-                    <div class="page">
-                        <div class="page-content container-fluid">
-                            <div class="row">
-                                <!-- Second Row -->
-                                <div class="col-lg-12 col-md-12">
-                                    <div class="card card-shadow">
-                                        <div class="card-header card-header-transparent bg-dark">
-                                            <div class="row">
-                                                <div class="col-lg-12 col-md-12">
-                                                    <div class="float-left">
-                                                        <span class="font-size-20 bold">Form Update Progress</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-body bg-white">
-
-                                            <?php 
+                    <?php 
                   //ambil data di url
                   $id=$_GET ["ubah"];
                   //query data loopingan tracking proposal base on id proposal
                   $proposal = mysqli_query($link_yics ,"SELECT 
                   proposal.id_prop AS id_prop,
+                  proposal.cost AS cost,
                   depart.depart AS depart,
                   time_fiscal.awal AS awal,
                   time_fiscal.akhir AS akhir,
@@ -104,7 +86,76 @@ include '../elemen/header.php';?>
                   $data = mysqli_fetch_assoc($proposal);
                   $awal  = $data['awal'];
                   $akhir  = $data['akhir'];
+                  $cost =    $data['cost'];
                 ?>
+                    <!-- Page -->
+                    <div class="page">
+                        <div class="page-header">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h1 class="page-title font-size-26 font-weight-600">TRACKING PLANNING PROPOSAL
+                                        </h1>
+                                    </div>
+                                    <div class="col-md-4 text-right">
+                                        <a href="dashboard.php" class="btn btn-icon btn-info">
+                                            <span class="page-title font-size-20 font-weight-600">
+                                                << BACK </span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page-content container-fluid">
+                            <div class="row">
+                                <!-- Second Row -->
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="card card-shadow">
+                                        <div class="card-header card-header-transparent ">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12">
+                                                    <table class=" table ">
+                                                        <tr>
+                                                            <td class="judul align-middle text-center " rowspan="3"
+                                                                width="200px">
+                                                                <img src="../base/assets/images/adm3.png"
+                                                                    style="width:200px;">
+                                                            </td>
+                                                            <td class="judul align-middle text-center text-uppercase"
+                                                                width="700px" rowspan="3">
+                                                                <h4>NAMA PROPOSAL :</h4>
+                                                                <h3> "<?= $data['proposal']; ?>"</h3>
+                                                            </td>
+                                                            <td class="text-left" style="color:black;">
+                                                                Departement</td>
+                                                            <td> &nbsp;:&nbsp;</td>
+                                                            <td><?= $data['depart']; ?></td>
+                                                        </tr>
+
+                                                        <tr>
+
+                                                            <td class="text-left" style="color:black;" width="200px">
+                                                                Category
+                                                            <td width="30px"> &nbsp;:&nbsp;</td>
+                                                            <td><?= $data['kategori']; ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-left" style="color:black;">Cost
+                                                                Proposal</td>
+                                                            <td> &nbsp;:&nbsp;</td>
+                                                            <td><?= 'IDR'." ". number_format($cost, 2, ',', '.');?>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan='5'></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body bg-white">
+
+
 
                                             <form method="POST" action="../proses/dashboard/tes2.php">
                                                 <input type="hidden" name="add">

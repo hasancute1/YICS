@@ -128,14 +128,14 @@ $notif_pending = get_notif_pending();
         <div style="width: 0px; height: 20px; border: 1px #000 solid;" class="bg-dark"></div>
     </li>
     <li class="nav-link">
-        Hi, <?= $_SESSION['yics_nama']; ?>/ <?php echo $_SESSION ["yics_user"]; ?>
+        Hi, <?= $_SESSION['yics_nama']; ?> / <?php echo $_SESSION ["yics_user"]; ?>
     </li>
 
     <li class="nav-item dropdown">
         <a class="nav-link navbar-avatar" data-toggle="dropdown" href="#" aria-expanded="false"
             data-animation="scale-up" role="button">
             <span class="avatar avatar-online">
-                <img src="../global/portraits/<?php echo $_SESSION ["yics_user"]; ?>.jpg" alt="...">
+                <img src="../global/portraits/unfoto.png" alt="...">
                 <i></i>
             </span>
         </a>

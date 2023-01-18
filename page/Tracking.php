@@ -63,12 +63,13 @@ include '../elemen/header.php';?>
                                         $data =("SELECT * FROM ia
                                         JOIN plan_proposal ON ia.id_prop = plan_proposal.id_prop 
                                         join area on area.id_area = plan_proposal.id_area
-  join depart on area.id_dep = depart.id_dep
+                                        join depart on area.id_dep = depart.id_dep
                                         JOIN kategori_proposal  ON plan_proposal.id_kat = kategori_proposal.id_kat
                                         where id_ia='$id_ia'"); 
                                          $data = mysqli_query($link_yics, $data)or die (mysqli_error($link_yics));
                                         if(mysqli_num_rows($data)>0){
-                                            $data_ia = mysqli_fetch_assoc($data);         
+                                            $data_ia = mysqli_fetch_assoc($data); 
+                                            $id_depback=$data_ia['id_dep']; 
                                         }
 // <!-- end dquery buat ngambil data di proposal....................................... -->
 
@@ -136,7 +137,21 @@ include '../elemen/header.php';?>
                     <!-- Page -->
                     <div class="page">
                         <div class="page-header">
-                            <h1 class="page-title font-size-26 font-weight-600">TRACKING DOCUMENT IA</h1>
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h1 class="page-title font-size-26 font-weight-600">TRACKING DOCUMENT IA
+                                        </h1>
+                                    </div>
+                                    <div class="col-md-4 text-right">
+                                        <a href="controltabledep.php?dept=<?= $id_depback ?>"
+                                            class="btn btn-icon btn-info">
+                                            <span class="page-title font-size-20 font-weight-600">
+                                                << KEMBALI </span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
 
@@ -398,8 +413,6 @@ include '../elemen/header.php';?>
 
                                                         <div
                                                             class="list-group bg-blue-grey-100 bg-inherit text-left w-250 ml-3">
-
-
                                                         </div>
                                                     </div>
 
@@ -574,8 +587,10 @@ include '../elemen/header.php';?>
 
                                                         </div>
                                                     </div>
+
                                                 </div>
                                             </div>
+
                                         </div>
                                         <!-- //  QUERY TRACKING_PROPOSAL................................ -->
                                         <?php
@@ -639,14 +654,35 @@ include '../elemen/header.php';?>
 
                                                 </div>
                                             </div>
+
                                             <div class="col-md-1"></div>
                                         </div>
+                                        <div class="col-md-12 col-lg-12">
+                                            <h5 class="font-black">*) Untuk IA dengan budget <mark>kurang dari 50
+                                                    juta</mark> tidak membutuhkan
+                                                approval :
+                                                <span style="font-style: italic;"> DIR (INA), DIR (JPN), FIN (INA), FIN
+                                                    (JPN), VPD & PD </span>
+                                            </h5>
+                                            <h5 class="font-black">*) Untuk IA dengan budget <mark>diantara 50
+                                                    juta - 500 juta</mark> tidak membutuhkan
+                                                approval : <span style="font-style: italic;">VPD & PD </span>
+                                            </h5>
+                                            <h5 class="font-black">*) Untuk IA dengan budget <mark>lebih dari 500
+                                                    juta</mark> membutuhkan
+                                                approval :<span style="font-style: italic;">
+                                                    DIR (INA), DIR (JPN), FIN (INA), FIN (JPN), VPD & PD </span></h5>
+                                        </div>
+
                                     </div>
+
                                 </div>
                                 <!-- End second -->
+
                             </div>
 
                         </div>
+
                     </div>
 
 

@@ -64,11 +64,11 @@ if (isset ($_SESSION['yics_user'])){
     // query insert boleh ngacak sesuai intonya
 
    //  Jika yang membuat proposal bukan Admin kirim notifikasi ke Admin
-    if($_SESSION['yics_user'] != '37932'){
+    if($_SESSION['yics_user'] != '35953'){
 
       // kirim notifikasi
       kirim_notif([         
-         'dest' => '37932',
+         'dest' => '35953',
          'message' => "Telah Ditambahkan",
          'type' => "proposal",
          'id_type' => $last_id          
@@ -119,6 +119,7 @@ if (isset ($_SESSION['yics_user'])){
         $cost = str_replace(',','.' ,$cost_request);
 
       //   hapus file lama
+      if($_POST ['file_dulu']!=""){
          $file_dulu=$_POST ['file_dulu']; 
          $target_dir_file = "../../image/uploads/";          
          $target_file = $target_dir_file . $file_dulu;  
@@ -160,6 +161,23 @@ if (isset ($_SESSION['yics_user'])){
          $_SESSION['pesan'] = "Data Berhasil Diubah";
          header('location: ../../page/dashboard.php');
         }
+      }else{
+         $UbahProposal = "UPDATE  proposal SET id_kat='$kategori',id_dep='$depart',proposal='$proposal',cost='$cost',benefit='$benefit' WHERE id_prop = '$id'"; 
+         echo $UbahProposal;
+         $sql = mysqli_query($link_yics, $UbahProposal)or die(mysqli_error($link_yics));
+      // logika pakai session
+         if(mysqli_num_rows($sql)>0){
+          // echo "tes1";kategori_proposal
+           $_SESSION['info'] = "Gagal Diubah";
+           $_SESSION['pesan'] = "Data User Sudah Ada di Database";
+           header('location: ../../page/dashboard.php');
+         }else{
+           $_SESSION['info'] = "Diubah";
+           $_SESSION['pesan'] = "Data Berhasil Diubah";
+           header('location: ../../page/dashboard.php');
+          }
+
+      }
       }else if(isset ($_GET['proses'])){
       // print_r($_POST['check']);
          foreach($_POST['check']as $id){
