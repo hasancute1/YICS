@@ -343,7 +343,8 @@ include '../elemen/footer.php';?>
                                                 <option value=""> Pilih periode fiscal..</option>
                                                 <?php  
                                             for($i = 0 ; $i <= 4 ; $i++){?>
-                                                <option value="<?php echo date('Y')+$i; ?>"><?php echo date('Y')+$i; ?>
+                                                <option value="<?php echo( date('Y')-1)+$i; ?>">
+                                                    <?php echo date( date('Y')-1)+$i; ?>
                                                 </option>
                                                 <?php } ?>
                                             </select>
@@ -366,8 +367,8 @@ include '../elemen/footer.php';?>
                                     <div class="form-group row">
                                         <label class="col-md-4 col-form-label" style="color:black;">STATUS</label>
                                         <div class="col-md-8">
-                                            <select name="status" class="form-control">
-                                                <option>Pilih aktifasi data</option>
+                                            <select name="status" class="form-control" required>
+                                                <option value="">Pilih aktifasi data</option>
                                                 <?php
                                                 $status = mysqli_query($link_yics, "SELECT * FROM `status`") or die(mysqli_error($link_yics));
                                                 if (mysqli_num_rows($status) > 0) {

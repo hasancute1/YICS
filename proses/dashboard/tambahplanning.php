@@ -41,12 +41,10 @@ if (isset ($_SESSION['yics_user'])){
          move_uploaded_file($_FILES["lampiran"]["tmp_name"], $target_file);
       
       } 
-
-        // cek username sudah ada apa blm?
-        $qry = mysqli_query($link_yics, "SELECT proposal FROM proposal WHERE proposal = '$proposal' ")or die(mysqli_error($link_yics));
-      
-    // logika pakai session
-        if(mysqli_num_rows($qry)>0){
+       
+         $inputproposal = "INSERT INTO proposal (`id_dep`,`username`,`id_kat`,`proposal`,`cost`,`id_fis`,`lampiran`,`id_matauang`,`benefit`,`hp`) VALUES ('$depart',$username,'$kategori','$proposal','$cost','$id_fis','$file_name','$id_matauang','$benefit','$hp')"; 
+         $sql = mysqli_query($link_yics, $inputproposal)or die(mysqli_error($link_yics));
+         if(mysqli_num_rows($sql)<0){
             $_SESSION['info'] = "Gagal Disimpan";
             $_SESSION['pesan'] = "Data User Sudah Ada di Database";
             header('location: ../../page/dashboard.php');
@@ -55,8 +53,6 @@ if (isset ($_SESSION['yics_user'])){
             $_SESSION['pesan'] = "Data Berhasil Disimpan";
             header('location: ../../page/dashboard.php');
          }
-         $inputproposal = "INSERT INTO proposal (`id_dep`,`username`,`id_kat`,`proposal`,`cost`,`id_fis`,`lampiran`,`id_matauang`,`benefit`,`hp`) VALUES ('$depart',$username,'$kategori','$proposal','$cost','$id_fis','$file_name','$id_matauang','$benefit','$hp')"; 
-         $sql = mysqli_query($link_yics, $inputproposal)or die(mysqli_error($link_yics));
 
          $last_id = mysqli_insert_id($link_yics);
         

@@ -31,16 +31,7 @@ $qry = mysqli_query($link_yics, "SELECT ia FROM ia WHERE ia = '$ia' ")or die(mys
     }else{
         $_SESSION['info'] = "Disimpan";
         $_SESSION['pesan'] = "Data Berhasil Disimpan";
-
-
-        // Notifikasi 
-        $notif = TRUE;
-        $pesan_notif = "IA dengan nomor : " .$ia. " Telah Ditambahkan";
-
-        header('location: ../../page/formnambah_ia.php?add='.$id_prop);
-    }
-
-
+        
         $inputproposal = "INSERT INTO ia (`id_prop`,`ia`,`deskripsi`,`cost_ia`,`time_ia`,`pic_ia`,`validuntil`) VALUES ('$id_prop','$ia','$ia_desc','$cost_ia','$time_ia','$pic_ia','$validuntil')"; 
         $sql = mysqli_query($link_yics, $inputproposal)or die(mysqli_error($link_yics));
 
@@ -53,6 +44,17 @@ $qry = mysqli_query($link_yics, "SELECT ia FROM ia WHERE ia = '$ia' ")or die(mys
                  'id_type' => $id_prop
             ]);
        }
+
+
+        // Notifikasi 
+        $notif = TRUE;
+        $pesan_notif = "IA dengan nomor : " .$ia. " Telah Ditambahkan";
+
+        header('location: ../../page/formnambah_ia.php?add='.$id_prop);
+    }
+
+
+       
 
 
     }else if(isset($_GET['del'])){

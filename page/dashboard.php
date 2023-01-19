@@ -430,13 +430,8 @@ if (!isset($_SESSION['yics_user'])) {
                          
                        
                             // jika yang login general admin
-                            $proposal = mysqli_query($link_yics ,"SELECT id_prop,
-                            depart.id_dep AS id_dep,
-                            depart.depart AS depart,
-                            kategori_proposal.kategori AS kategori,
-                            time_fiscal.status,
-                            proposal.proposal AS proposal,
-                            proposal.lampiran
+                            $proposal = mysqli_query($link_yics ,"SELECT *
+                           
                             FROM proposal 
                             LEFT JOIN depart ON proposal.id_dep = depart.id_dep
                             LEFT JOIN kategori_proposal  ON proposal.id_kat = kategori_proposal.id_kat
@@ -463,19 +458,34 @@ if (!isset($_SESSION['yics_user'])) {
                                                         <td class="align-middle text-center">
                                                             <?php echo $data['kategori']; ?></td>
                                                         <td class="align-middle text-center text-uppercase">
-                                                            <?php if($data['lampiran']){ ?>
+                                                            <?php 
+                                                            
+                                                           if($_SESSION['yics_level'] == '2'){
+                                                            if($data['lampiran']){ ?>
                                                             <a href="../image/uploads/<?= $data['lampiran'] ?>"
                                                                 target="_blank">
                                                                 <?php echo $data['proposal']; ?>
                                                             </a>
 
                                                             <?php
-
                                                              }else{ 
                                                                 echo $data['proposal']; 
                                                             } 
-                                                            
-                                                            ?>
+                                                        }else if($_SESSION['yics_user'] == $data['username']){ 
+                                                            if($data['lampiran']){ ?>
+
+                                                            <a href="../image/uploads/<?= $data['lampiran'] ?>"
+                                                                target="_blank">
+                                                                <?php echo $data['proposal']; ?>
+                                                            </a>
+
+
+                                                            <?php
+                                                                 }else{ 
+                                                                    echo $data['proposal']; 
+                                                                }
+                                                            }else{echo $data['proposal'];}
+                                                                ?>
 
                                                         </td>
                                                         <td class="align-middle text-center">
@@ -549,30 +559,39 @@ if (!isset($_SESSION['yics_user'])) {
 							
 							?>
                                                         </td>
-                                                        <td class=" text-center ">
-                                                            <a class="btn btn-icon btn-info btn-xs"
+                                                        <td class=" text-center">
+                                                            <a class=" btn btn-icon btn-info btn-xs"
                                                                 href="viewplan.php?ubah=<?php echo $data['id_prop']; ?>">
                                                                 <i class="icon wb-eye" aria-hidden="true"></i>
                                                             </a>
                                                             <?php if($_SESSION['yics_level'] == '2'){ ?>
-                                                            <a class="btn btn-icon btn-success edit_proposal btn-xs"
-                                                                href="formupdate.php?ubah=<?php echo $data['id_prop']; ?>">
-                                                                <i class="icon wb-upload" aria-hidden="true"></i>
-                                                            </a>
                                                             <a href="formedit.php?edit=<?php echo $data['id_prop']; ?>"
                                                                 class="btn btn-icon btn-warning edit_proposal btn-xs">
                                                                 <i class=" icon wb-edit" aria-hidden="true"></i>
                                                             </a>
-
                                                             <a class="HapusData1 btn btn-icon btn-danger btn-xs "
                                                                 href="../proses/dashboard/tambahplanning.php?del=<?php echo $data['id_prop']; ?>">
                                                                 <i class="icon oi-trashcan" aria-hidden="true"></i>
+                                                            </a>
+                                                            <a class="btn btn-icon btn-success edit_proposal btn-xs"
+                                                                href="formupdate.php?ubah=<?php echo $data['id_prop']; ?>">
+                                                                <i class="icon wb-upload" aria-hidden="true"></i>
                                                             </a>
                                                             <button type="button"
                                                                 class="btn btn-icon btn-danger kontak btn-xs"
                                                                 data-id="<?php echo $data['id_prop']; ?>">
                                                                 <i class="icon fa-address-card" aria-hidden="true"></i>
                                                             </button>
+                                                            <?php }else if($_SESSION['yics_user'] == $data['username']){ ?>
+                                                            <a href="formedit.php?edit=<?php echo $data['id_prop']; ?>"
+                                                                class="btn btn-icon btn-warning edit_proposal btn-xs <?= ($persen > "0" or $text_progress =="STOP" )? "noedit":""; ?>">
+                                                                <i class=" icon wb-edit" aria-hidden="true"></i>
+                                                            </a>
+                                                            <a class="HapusData1 btn btn-icon btn-danger btn-xs <?= ($persen > "0" or $text_progress =="STOP" )? "noedit":""; ?>"
+                                                                href="../proses/dashboard/tambahplanning.php?del=<?php echo $data['id_prop']; ?>">
+                                                                <i class="icon oi-trashcan" aria-hidden="true"></i>
+                                                            </a>
+
                                                             <?php } ?>
 
                                                         </td>
@@ -965,11 +984,11 @@ if(mysqli_num_rows($proposal)>0){
 
     <!-- Modal tambah plannning proposal -->
     <?php 
-                        $user_m=$_SESSION['yics_user'] ;
+                       
                                     $datauser= single_query("SELECT * FROM data_user 
                                     JOIN area ON area.id_area = data_user.id_area                                                
                                     JOIN depart ON area.id_dep = depart.id_dep                                               
-                                    where username='$user_m'");
+                                    where username={$_SESSION['yics_user']}");
                                     $nama = $datauser['nama'];
                                     $npk = $datauser['username'];
                                     $depart = $datauser['depart'];
@@ -1271,6 +1290,18 @@ if(mysqli_num_rows($proposal)>0){
             title: '<strong></strong>' + noia,
             icon: 'info',
             html: '' + reason,
+            showCloseButton: true,
+            focusConfirm: false,
+            confirmButtonText: '<i">Laporan Diterima !!</i>',
+            cancelButtonAriaLabel: 'Close'
+        })
+    })
+    $(document).on('click', '.noedit', function() {
+        $(this).removeAttr('href');
+        Swal.fire({
+            title: '<strong>PROPOSAL DIPROSES ADMIN</strong>',
+            icon: 'warning',
+            html: 'Silahkan buat proposal baru atau minta ADMIN untuk menghapusnya',
             showCloseButton: true,
             focusConfirm: false,
             confirmButtonText: '<i">Laporan Diterima !!</i>',
