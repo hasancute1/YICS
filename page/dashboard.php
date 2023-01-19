@@ -163,6 +163,7 @@ if (!isset($_SESSION['yics_user'])) {
                                                         if(mysqli_num_rows($editalokasi)>0){$rows_editalokasi = mysqli_fetch_assoc($editalokasi)?>
                                                         <a href="forminputalokasibudget.php?input=<?php echo $rows_editalokasi['id_fis']; ?>"
                                                             data-toggle="tooltip" data-original-title="Edit">
+
                                                             <button type="button"
                                                                 class="btn btn-info btn-icon btn-outline btn-xs">
                                                                 <i class="icon wb-plus" aria-hidden="true"></i>
@@ -460,7 +461,7 @@ if (!isset($_SESSION['yics_user'])) {
                                                         <td class="align-middle text-center text-uppercase">
                                                             <?php 
                                                             
-                                                           if($_SESSION['yics_level'] == '2'){
+                                                           if($_SESSION['yics_level'] == '2' or $_SESSION['yics_user'] == $data['username']){
                                                             if($data['lampiran']){ ?>
                                                             <a href="../image/uploads/<?= $data['lampiran'] ?>"
                                                                 target="_blank">
@@ -470,20 +471,7 @@ if (!isset($_SESSION['yics_user'])) {
                                                             <?php
                                                              }else{ 
                                                                 echo $data['proposal']; 
-                                                            } 
-                                                        }else if($_SESSION['yics_user'] == $data['username']){ 
-                                                            if($data['lampiran']){ ?>
-
-                                                            <a href="../image/uploads/<?= $data['lampiran'] ?>"
-                                                                target="_blank">
-                                                                <?php echo $data['proposal']; ?>
-                                                            </a>
-
-
-                                                            <?php
-                                                                 }else{ 
-                                                                    echo $data['proposal']; 
-                                                                }
+                                                            }                                                        
                                                             }else{echo $data['proposal'];}
                                                                 ?>
 
@@ -560,6 +548,7 @@ if (!isset($_SESSION['yics_user'])) {
 							?>
                                                         </td>
                                                         <td class=" text-center">
+
                                                             <a class=" btn btn-icon btn-info btn-xs"
                                                                 href="viewplan.php?ubah=<?php echo $data['id_prop']; ?>">
                                                                 <i class="icon wb-eye" aria-hidden="true"></i>

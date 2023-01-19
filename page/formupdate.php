@@ -446,7 +446,7 @@ include '../elemen/header.php';?>
                                         <input type="text" name="id_prop" class="form-control" value="<?= $id; ?>"
                                             hidden>
                                         <input type="text" name="reason" class="form-control " id="reason"
-                                            placeholder="Alasan kenapa no ia dihentikan..." required
+                                            placeholder="Alasan kenapa proposal dihentikan..." required
                                             style=”width:500%;”>
                                     </div>
                                 </div>
