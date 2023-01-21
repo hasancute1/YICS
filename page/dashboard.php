@@ -357,7 +357,6 @@ if (!isset($_SESSION['yics_user'])) {
                                     </div>
                                 </div>
 
-
                                 <!-- End Second Row -->
                                 <!-- Third Row -->
                                 <!-- Third Left -->
@@ -371,7 +370,6 @@ if (!isset($_SESSION['yics_user'])) {
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4 col-md-4 ">
-
                                                     <div class="float-right">
                                                         <i href="" data-toggle="tooltip"
                                                             data-original-title="Tambah Data">
@@ -1097,12 +1095,12 @@ if(mysqli_num_rows($proposal)>0){
                                 <div class="input-group input-group-file" data-plugin="inputGroupFile">
                                     <div class="input-group-append">
                                         <span class="btn btn-warning btn-file">
-                                            <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
+                                            <i class="icon fa-file-archive-o" aria-hidden="true"></i>
                                             <input type="file" name="lampiran" multiple="" required>
                                         </span>
                                     </div>
                                     <input type="text" class="form-control" readonly=""
-                                        placeholder="Upload Scan Proposal ekstensi Anda..">
+                                        placeholder="Upload Proposal (full tdd) dan lampirannya dengan format zip..">
                                 </div>
 
                             </div>
@@ -1300,20 +1298,8 @@ if(mysqli_num_rows($proposal)>0){
     </script>
     <script>
     $(document).ready(function() {
-        var owl = $('.owl-carousel');
-        owl.owlCarousel({
-            items: 1,
-            loop: true,
-            margin: 10,
-            autoplay: true,
-            autoplayTimeout: 3000,
-            autoplayHoverPause: true
-        });
-        $('.play').on('click', function() {
-            owl.trigger('play.owl.autoplay', [1000])
-        })
-        $('.stop').on('click', function() {
-            owl.trigger('stop.owl.autoplay')
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip()
         })
     });
     </script>

@@ -101,7 +101,7 @@ Config.set('assets', '../base/assets');
     <script src="../global/js/Plugin/material.js"></script>
     <script src="../global/js/Plugin/jquery-placeholder.js"></script>
     <script src="../global/vendor/moment/moment.min.js"></script>
-    <script src="../global/vendor/footable/footable.min.js"></script>
+
 
 
     <!-- <script src="../base/assets/examples/js/charts/chartjs.js"></script> -->
@@ -125,6 +125,7 @@ Config.set('assets', '../base/assets');
     <script src="../base/assets/datatable/vfs_fonts.js"></script>
     <script src="../base/assets/datatable/buttons.html5.min.js"></script>
     <script src="../base/assets/datatable/buttons.print.min.js"></script>
+    <script src="../base/assets/examples/js/uikit/tooltip-popover.js"></script>
     <!-- for export datatable -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>

@@ -207,8 +207,9 @@ include '../elemen/header.php';?>
                                                             <input type="text" class="form-control" readonly value=""
                                                                 name="file_dulu" hidden>
                                                             <div class="input-group-append">
-                                                                <span class="btn btn-success btn-file">
-                                                                    <i class="icon wb-upload" aria-hidden="true"></i>
+                                                                <span class="btn btn-warning btn-file">
+                                                                    <i class="icon fa-file-archive-o"
+                                                                        aria-hidden="true"></i>
 
                                                                     <input class="form-control-file" type="file"
                                                                         name="lampiran">
