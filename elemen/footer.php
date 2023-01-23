@@ -43,18 +43,10 @@
 
 
     <!-- data  table -->
-    <script src="../global/vendor/datatables/jquery.dataTables.min.js"></script>
-    <!-- <script src="../global/vendor/datatables.net/jquery.dataTables.js"></script> -->
-    <script src="../global/vendor/datatables.net-bs4/dataTables.bootstrap4.min.js"></script>
-    <script src="../global/vendor/datatables.net-responsive/dataTables.responsive.min.js"></script>
-    <script src="../global/vendor/datatables.net-responsive-bs4/responsive.bootstrap4.min.js"></script>
+    <script src="../global/vendor/datatables.net/jquery.dataTables.js"></script>
+    <script src="../global/vendor/datatables.net-bs4/dataTables.bootstrap4.js"></script>
     <script src="../global/vendor/aspaginator/jquery-asPaginator.min.js"></script>
-    <script src="../global/vendor/jquery-ui/jquery-ui.js"></script>
-    <script src="../global/vendor/blueimp-tmpl/tmpl.js"></script>
 
-
-
-    <script src="../global/vendor/jquery-placeholder/jquery.placeholder.js"></script>
 
 
 
@@ -126,6 +118,10 @@ Config.set('assets', '../base/assets');
     <script src="../base/assets/datatable/buttons.html5.min.js"></script>
     <script src="../base/assets/datatable/buttons.print.min.js"></script>
     <script src="../base/assets/examples/js/uikit/tooltip-popover.js"></script>
+    <script src="../global/vendor/owl-carousel/owl.carousel.js"></script>
+    <script src="../global/vendor/slick-carousel/slick.js"></script>
+    <script src="../global/js/Plugin/owl-carousel.js"></script>
+
     <!-- for export datatable -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
@@ -232,6 +228,14 @@ $('.uang').keyup(function(event) {
         return value
             .replace(/\D/g, "")
             .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    });
+});
+    </script>
+    <script>
+$(function() {
+    $('[data-toggle="tooltip"]').tooltip({
+        boundary: "window",
+        template: '<div class="tooltip tooltip-custom" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>',
     });
 });
     </script>

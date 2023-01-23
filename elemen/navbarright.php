@@ -123,6 +123,18 @@ $notif_pending = get_notif_pending();
             </div>
         </div>
     </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="javascript:void(0)" title="Notifications" aria-expanded="false"
+            data-animation="scale-up" role="button">
+            <i class="icon fa-shopping-cart" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu" role="menu">
+            <a href="" class="dropdown-item active" role="menuitem" data-toggle="modal"
+                data-target="#TambahPlaningProposal">
+                <i class="icon wb-order" aria-hidden="true"></i>
+                Add Planning Proposal</a>
+        </div>
+    </li>
 
     <li class="nav-link">
         <div style="width: 0px; height: 20px; border: 1px #000 solid;" class="bg-dark"></div>
@@ -140,9 +152,9 @@ $notif_pending = get_notif_pending();
             </span>
         </a>
         <div class="dropdown-menu" role="menu">
-            <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon wb-user"
+            <!-- <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon wb-user"
                     aria-hidden="true"></i> My Profile</a>
-            <div class="dropdown-divider" role="presentation"></div>
+            <div class="dropdown-divider" role="presentation"></div> -->
             <a class="dropdown-item" href="../logout.php" role="menuitem"><i class="icon wb-power"
                     aria-hidden="true"></i> Logout</a>
         </div>

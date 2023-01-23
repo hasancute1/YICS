@@ -118,7 +118,8 @@ $id=$_POST['id'];
                     placeholder=" Judul Proposal..." autocomplete="off" value="<?= $proposal_m ?>" required readonly>
                 <div class="input-group-prepend ">
                     <a href="../image/uploads/<?= $lampiran; ?>" target="_blank" class="input-group-text bg-red-100">
-                        <i class="icon fa-file-pdf-o " style="font-size:20px;"></i></a>
+
+                        <i class="icon  fa-file-archive-o " style="font-size:20px;"></i></a>
                 </div>
             </div>
 

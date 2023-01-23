@@ -75,17 +75,19 @@ include '../elemen/header.php';?>
                                                         <label for="periode">
                                                             <h4>PERIODE</h4>
                                                         </label>
-                                                        <select class="form-control" name="periode" id="periode">
+                                                        <select class="form-control text-uppercase" name="periode"
+                                                            id="periode">
                                                             <option>Pilih Periode</option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-2 col-md-2">
-                                                    <div class="form-group">
+                                                    <div class="form-group text-uppercase">
                                                         <label for="depart">
                                                             <h4>DEPARTMENT</h4>
                                                         </label>
-                                                        <select class="form-control" name="depart" id="depart">
+                                                        <select class="form-control text-uppercase" name="depart"
+                                                            id="depart">
                                                             <option>Pilih Department</option>
                                                         </select>
                                                     </div>
@@ -95,7 +97,8 @@ include '../elemen/header.php';?>
                                                         <label for="area">
                                                             <h4>AREA</h4>
                                                         </label>
-                                                        <select class="form-control" name="area" id="area">
+                                                        <select class="form-control text-uppercase" name="area"
+                                                            id="area">
                                                             <option>Pilih Area</option>
                                                         </select>
                                                     </div>
@@ -105,7 +108,8 @@ include '../elemen/header.php';?>
                                                         <label for="cost_type">
                                                             <h4>Category</h4>
                                                         </label>
-                                                        <select class="form-control" name="cost_type" id="cost_type">
+                                                        <select class="form-control text-uppercase" name="cost_type"
+                                                            id="cost_type">
                                                             <option>Pilih Category</option>
                                                         </select>
                                                     </div>
@@ -116,7 +120,8 @@ include '../elemen/header.php';?>
                                                         <label for="cost_type">
                                                             <h4>PROPOSAL</h4>
                                                         </label>
-                                                        <select class="form-control" name="proposal" id="proposal">
+                                                        <select class="form-control text-uppercase" name="proposal"
+                                                            id="proposal">
                                                             <option value="0">Pilih Proposal</option>
                                                         </select>
                                                     </div>
@@ -128,7 +133,7 @@ include '../elemen/header.php';?>
                                                         <label for="cost_type">
                                                             <h4>NO. IA</h4>
                                                         </label>
-                                                        <select class="form-control" name="ia_selected"
+                                                        <select class="form-control text-uppercase" name="ia_selected"
                                                             id="ia_selected">
                                                             <option value="0">Pilih NO IA.</option>
                                                         </select>

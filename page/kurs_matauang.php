@@ -142,6 +142,7 @@ include '../elemen/header.php';?>
                                                                 </td>
                                                                 <td class="align-middle text-center">
                                                                     <i href="" data-toggle="tooltip"
+                                                                        data-placement="left"
                                                                         data-original-title="Edit">
                                                                         <a href="form_kurs_matauang.php?ubah=<?php echo $data['id_matauang']; ?>"
                                                                             class="btn btn-success btn-icon btn-outline btn-xs">
@@ -183,6 +184,7 @@ include '../elemen/header.php';?>
                                                                 </td>
                                                                 <td class="align-middle text-center">
                                                                     <i href="" data-toggle="tooltip"
+                                                                        data-placement="left"
                                                                         data-original-title="Edit">
                                                                         <a href="form_kurs_matauang.php?ubah=<?php echo $data['id_matauang']; ?>"
                                                                             class="btn btn-success btn-icon btn-outline btn-xs">

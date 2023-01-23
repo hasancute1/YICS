@@ -77,7 +77,7 @@ include '../elemen/header.php';?>
                                                 <div class="col-lg-4 col-md-4">
                                                     <div class="text-right">
                                                         <!-- icon tambah data    -->
-                                                        <i href="" data-toggle="tooltip"
+                                                        <i href="" data-toggle="tooltip" data-placement="left"
                                                             data-original-title="Tambah Data">
                                                             <button type="button" id="TambahAlokasiBudget"
                                                                 class="btn btn-icon btn-outline btn-info btn-xs add"
@@ -197,6 +197,7 @@ include '../elemen/header.php';?>
                                                                                             <td>
                                                                                                 <i href=""
                                                                                                     data-toggle="tooltip"
+                                                                                                    data-placement="left"
                                                                                                     data-original-title="Edit">
                                                                                                     <a href="formubaharea.php?ubah=<?php echo $data['id_area']; ?>"
                                                                                                         class="btn btn-success btn-icon btn-outline btn-xs">
@@ -206,6 +207,7 @@ include '../elemen/header.php';?>
                                                                                                 </i>
                                                                                                 <i href="javascript:void(0)"
                                                                                                     data-toggle="tooltip"
+                                                                                                    data-placement="left"
                                                                                                     data-original-title="Hapus">
                                                                                                     <a href="../proses/usersetting/area.php?del=<?php echo $data['id_area']; ?>"
                                                                                                         class="btn btn-icon btn-danger btn-icon btn-outline btn-xs HapusData <?= $tombol_hidup ?>">

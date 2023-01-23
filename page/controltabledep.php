@@ -614,7 +614,9 @@ $id_dept = $_GET['dept'];
 
                                                         <td>
                                                             <a href="Tracking.php?id_ia=<?= $data['id_ia'] ?>"
-                                                                class="<?= $tombol_hidup ?> btn btn-icon btn-info">
+                                                                class="<?= $tombol_hidup ?> btn btn-icon btn-info"
+                                                                data-toggle="tooltip" data-placement="left"
+                                                                data-original-title="view ia">
 
                                                                 <i class="icon wb-eye" aria-hidden="true"></i>
 
@@ -623,20 +625,26 @@ $id_dept = $_GET['dept'];
                                                             <?php if( $_SESSION['yics_level'] != "1"){ ?>
 
                                                             <a href="formupdate_ia.php?id_ia=<?= $data['id_ia'] ?>"
-                                                                class="<?= $tombol_hidup ?> btn btn-icon btn-success">
+                                                                class="<?= $tombol_hidup ?> btn btn-icon btn-success"
+                                                                data-toggle="tooltip" data-placement="left"
+                                                                data-original-title="update progress ia">
 
                                                                 <i class="icon wb-upload" aria-hidden="true"></i>
 
                                                             </a>
 
                                                             <a href="formeditia_ctrl.php?id_ia=<?= $data['id_ia']?>"
-                                                                class="<?= $tombol_hidup ?> btn btn-icon btn-warning">
+                                                                class="<?= $tombol_hidup ?> btn btn-icon btn-warning"
+                                                                data-toggle="tooltip" data-placement="left"
+                                                                data-original-title="edit ia">
 
                                                                 <i class="icon wb-edit" aria-hidden="true"></i>
 
                                                             </a>
                                                             <a href="../proses/ia/hapus_ia.php?del=<?= $data['id_ia']?>&page=<?= $data['id_dep']?>"
-                                                                class="<?= $tombol_hidup ?> HapusData btn btn-icon btn-danger">
+                                                                class="<?= $tombol_hidup ?> HapusData btn btn-icon btn-danger"
+                                                                data-toggle="tooltip" data-placement="left"
+                                                                data-original-title="hapus ia">
 
                                                                 <i class="icon oi-trashcan" aria-hidden="true"></i>
 

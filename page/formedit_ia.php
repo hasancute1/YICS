@@ -476,17 +476,22 @@ where depart.id_dep = {$id_dep} and plan_proposal.id_fis={$id_fis}");
                                                                             <td><?= $IDR." ".number_format($row['cost_ia'], 2, ',', '.');?>
                                                                             <td>
                                                                                 <a href="formedit_ia.php?id_ia=<?= $row['id_ia']?>"
-                                                                                    class="btn btn-icon btn-warning  edit_ia">
+                                                                                    class="btn btn-icon btn-warning  edit_ia"
+                                                                                    data-toggle="tooltip"
+                                                                                    data-placement="left"
+                                                                                    data-original-title="Edit">
                                                                                     <i class="icon wb-edit"
                                                                                         aria-hidden="true"></i>
                                                                                 </a>
                                                                                 <a href="../proses/ia/tambah_ia.php?del=<?= $row['id_ia']?>&page=<?= $id?>"
-                                                                                    class="HapusData">
-                                                                                    <button type="button"
-                                                                                        class="btn btn-icon btn-danger">
-                                                                                        <i class="icon oi-trashcan"
-                                                                                            aria-hidden="true"></i>
-                                                                                    </button>
+                                                                                    class="HapusDat btn btn-icon btn-danger"
+                                                                                    data-toggle="tooltip"
+                                                                                    data-placement="left"
+                                                                                    data-original-title="Delete">
+
+                                                                                    <i class="icon oi-trashcan"
+                                                                                        aria-hidden="true"></i>
+
                                                                                 </a>
                                                                             </td>
                                                                         </tr>

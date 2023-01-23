@@ -16,6 +16,7 @@ if (isset ($_SESSION['yics_user'])){
          $data_ia = single_query("SELECT * FROM ia 
          join plan_proposal on ia.id_prop = plan_proposal.id_prop
          join area on plan_proposal.id_area = area.id_area     
+         join data_user on data_user.id_area = area.id_area     
          join depart on depart.id_dep = area.id_dep
         
          WHERE id_ia={$id_ia}");

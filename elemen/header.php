@@ -121,6 +121,18 @@
         color: white;
     }
 
+    .dropdown-menu>a:hover,
+    .dropdown-menu>a:focus {
+        background-image: none !important;
+    }
+
+    .dropdown-menu>a:hover,
+    .dropdown-menu>a:focus {
+        color: white;
+        background-color: #589FFC;
+    }
+
+
     /* .anim {
         width: 300px;
         height: 200px;
@@ -204,6 +216,9 @@
     <link rel='stylesheet' href='../base/assets/datatable/css.css'>
     <link rel="stylesheet" href="../global/vendor/nprogress/nprogress.css">
     <link rel="stylesheet" href="../base/assets/examples/css/advanced/animation.css">
+    <link rel="stylesheet" href="../global/vendor/owl-carousel/owl.carousel.css">
+    <link rel="stylesheet" href="../global/vendor/slick-carousel/slick.css">
+    <link rel="stylesheet" href="../base/assets/examples/css/uikit/carousel.css">
 
 
 
@@ -227,4 +242,5 @@
     <script src="../global/vendor/morris/morris.min.js"></script>
     <script src="../global/vendor/raphael/raphael.min.js"></script>
     <script src="../base/assets/datatable/jquery.min.js"></script>
+    <script src="../global/js/apex/apexcharts.js"></script>
 </head>

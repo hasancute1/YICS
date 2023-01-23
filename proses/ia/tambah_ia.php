@@ -34,21 +34,22 @@ $qry = mysqli_query($link_yics, "SELECT ia FROM ia WHERE ia = '$ia' ")or die(mys
         
         $inputproposal = "INSERT INTO ia (`id_prop`,`ia`,`deskripsi`,`cost_ia`,`time_ia`,`pic_ia`,`validuntil`) VALUES ('$id_prop','$ia','$ia_desc','$cost_ia','$time_ia','$pic_ia','$validuntil')"; 
         $sql = mysqli_query($link_yics, $inputproposal)or die(mysqli_error($link_yics));
-
+        $last_id = mysqli_insert_id($link_yics);
+        $notif = TRUE;
+        $pesan_notif = "IA dengan nomor : " .$ia. " Telah Ditambahkan";
         if($notif){
 
             kirim_notif([         
                  'dest' => $data_prop['username'],
                  'message' => $pesan_notif,
-                 'type' => "proposal",
-                 'id_type' => $id_prop
+                 'type' => "ia",
+                 'id_type' => $last_id
             ]);
        }
 
 
         // Notifikasi 
-        $notif = TRUE;
-        $pesan_notif = "IA dengan nomor : " .$ia. " Telah Ditambahkan";
+     
 
         header('location: ../../page/formnambah_ia.php?add='.$id_prop);
     }

@@ -162,12 +162,10 @@ if (!isset($_SESSION['yics_user'])) {
                                                         $editalokasi = mysqli_query($link_yics, "SELECT * FROM time_fiscal WHERE status='aktif'") or die(mysqli_error($link_yics));
                                                         if(mysqli_num_rows($editalokasi)>0){$rows_editalokasi = mysqli_fetch_assoc($editalokasi)?>
                                                         <a href="forminputalokasibudget.php?input=<?php echo $rows_editalokasi['id_fis']; ?>"
-                                                            data-toggle="tooltip" data-original-title="Edit">
-
-                                                            <button type="button"
-                                                                class="btn btn-info btn-icon btn-outline btn-xs">
-                                                                <i class="icon wb-plus" aria-hidden="true"></i>
-                                                            </button>
+                                                            class="btn btn-info btn-icon btn-outline btn-xs "
+                                                            data-toggle="tooltip" data-placement="left"
+                                                            data-original-title="setting budget">
+                                                            <i class="icon wb-plus" aria-hidden="true"></i>
                                                         </a>
                                                         <!-- end query edit data  -->
                                                     </div>
@@ -246,15 +244,40 @@ if (!isset($_SESSION['yics_user'])) {
                                                         <i class="iicon fa-database" aria-hidden="true"></i>
                                                     </div>
                                                     <div class="counter counter-md counter-inverse text-left">
-                                                        <div class="counter-label text-capitalize">SISA BUDGET</div>
-                                                        <span style="font-size:25px;">IDR
-                                                            <?= number_format(($card['total'] -  $total_consumtion_budget),2,',','.')?></span>
+                                                        <div class="owl-carousel owl-theme owl-loaded owl-drag">
+                                                            <div class="owl-stage-outer">
+                                                                <div class="owl-stage"
+                                                                    style="transform: translate3d(-1527px, 0px, 0px); transition: all 0.25s ease 0s; width: 3334px;">
+                                                                    <div class="owl-item cloned"
+                                                                        style="width: 128.906px; margin-right: 10px;">
+                                                                        <div class="item">
+                                                                            <div class="counter-label text-capitalize">
+                                                                                SISA BUDGET
+                                                                            </div>
+                                                                            <span style="font-size:25px;">IDR
+                                                                                <?= number_format(($card['total'] -  $total_consumtion_budget),2,',','.')?></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="owl-item cloned"
+                                                                        style="width: 128.906px; margin-right: 10px;">
+                                                                        <div class="item">
+                                                                            <div class="counter-label text-capitalize">
+                                                                                BUDGET
+                                                                            </div>
+                                                                            <span style="font-size:25px;">IDR
+                                                                                <?php echo number_format ($card['total'],2,',','.'); ?></span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                         <div class=" counter-label text-capitalize line-height">
                                                             ( MILLION )
                                                         </div>
                                                         <!-- <div class="counter-label text-capitalize line-height">
                                                             "Budget IDR
-                                                            <?php echo number_format ($card['total'],2,',','.')." "."Million"; ?>"
+                                                            <?php echo number_format ($card['total'],2,',','.')." "."Million"; ?>
+                                                            <?= number_format(($card['total'] -  $total_consumtion_budget),2,',','.')?>"
                                                         </div> -->
                                                     </div>
                                                 </div>
@@ -301,20 +324,41 @@ if (!isset($_SESSION['yics_user'])) {
                                                     </div>
                                                     <div class=" card-body card-block p-30 bg-<?= $warna; ?>-600">
                                                         <div class="card-watermark darker font-size-60 m-2">
-                                                            <i class="iicon fa-database" aria-hidden="true"></i>
+                                                            <i class="icon fa-database" aria-hidden="true"></i>
                                                         </div>
                                                         <div class="counter counter-md counter-inverse text-left">
-                                                            <div class="counter-label text-capitalize">SISA BUDGET
+                                                            <div class="owl-carousel owl-theme owl-loaded owl-drag">
+                                                                <div class="owl-stage-outer">
+                                                                    <div class="owl-stage"
+                                                                        style="transform: translate3d(-1527px, 0px, 0px); transition: all 0.25s ease 0s; width: 3334px;">
+                                                                        <div class="owl-item cloned"
+                                                                            style="width: 128.906px; margin-right: 10px;">
+                                                                            <div class="item">
+                                                                                <div
+                                                                                    class="counter-label text-capitalize">
+                                                                                    SISA BUDGET
+                                                                                </div>
+                                                                                <span style="font-size:25px;">IDR
+                                                                                    <?= number_format($sisa_budget,2,',','.')." "; ?></span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="owl-item cloned"
+                                                                            style="width: 128.906px; margin-right: 10px;">
+                                                                            <div class="item">
+                                                                                <div
+                                                                                    class="counter-label text-capitalize">
+                                                                                    BUDGET
+                                                                                </div>
+                                                                                <span style="font-size:25px;">IDR
+                                                                                    <?php echo number_format ($row_card['budget'],2,',','.')." "; ?></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                            <span style="font-size:25px;">IDR
-                                                                <?= number_format($sisa_budget,2,',','.')." "; ?></span>
                                                             <div class=" counter-label text-capitalize line-height">
                                                                 ( MILLION )
                                                             </div>
-                                                            <!-- <div class="counter-label text-capitalize line-height">
-                                                            "Budget IDR
-                                                            <?php echo number_format ($row_card['budget'],2,',','.')." "; ?>"
-                                                        </div> -->
                                                         </div>
                                                     </div>
                                                 </div>
@@ -361,6 +405,8 @@ if (!isset($_SESSION['yics_user'])) {
                                 <!-- Third Row -->
                                 <!-- Third Left -->
                                 <div class="col-lg-12 col-md-12">
+
+
                                     <div class="card card-shadow">
                                         <div class="card-header card-header-transparent bg-dark">
                                             <div class="row">
@@ -369,7 +415,7 @@ if (!isset($_SESSION['yics_user'])) {
                                                         <span class="font-size-20 bold">Planning Proposal</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-4 col-md-4 ">
+                                                <!-- <div class="col-lg-4 col-md-4 ">
                                                     <div class="float-right">
                                                         <i href="" data-toggle="tooltip"
                                                             data-original-title="Tambah Data">
@@ -380,7 +426,7 @@ if (!isset($_SESSION['yics_user'])) {
                                                                 <i class="icon wb-plus" aria-hidden="true"></i></button>
                                                         </i>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                         <div
@@ -547,35 +593,49 @@ if (!isset($_SESSION['yics_user'])) {
                                                         </td>
                                                         <td class=" text-center">
 
-                                                            <a class=" btn btn-icon btn-info btn-xs"
-                                                                href="viewplan.php?ubah=<?php echo $data['id_prop']; ?>">
+                                                            <a href="viewplan.php?ubah=<?php echo $data['id_prop']; ?>"
+                                                                class=" btn btn-icon btn-info btn-xs  "
+                                                                data-toggle="tooltip" data-placement="left"
+                                                                data-original-title="view">
                                                                 <i class="icon wb-eye" aria-hidden="true"></i>
                                                             </a>
                                                             <?php if($_SESSION['yics_level'] == '2'){ ?>
                                                             <a href="formedit.php?edit=<?php echo $data['id_prop']; ?>"
-                                                                class="btn btn-icon btn-warning edit_proposal btn-xs">
+                                                                class="btn btn-icon btn-warning edit_proposal btn-xs"
+                                                                data-toggle="tooltip" data-placement="left"
+                                                                data-original-title="edit">
                                                                 <i class=" icon wb-edit" aria-hidden="true"></i>
                                                             </a>
                                                             <a class="HapusData1 btn btn-icon btn-danger btn-xs "
-                                                                href="../proses/dashboard/tambahplanning.php?del=<?php echo $data['id_prop']; ?>">
+                                                                href="../proses/dashboard/tambahplanning.php?del=<?php echo $data['id_prop']; ?>"
+                                                                data-toggle="tooltip" data-placement="left"
+                                                                data-original-title="delete">
                                                                 <i class="icon oi-trashcan" aria-hidden="true"></i>
                                                             </a>
                                                             <a class="btn btn-icon btn-success edit_proposal btn-xs"
-                                                                href="formupdate.php?ubah=<?php echo $data['id_prop']; ?>">
+                                                                href="formupdate.php?ubah=<?php echo $data['id_prop']; ?>"
+                                                                data-toggle="tooltip" data-placement="left"
+                                                                data-original-title="update">
                                                                 <i class="icon wb-upload" aria-hidden="true"></i>
                                                             </a>
                                                             <button type="button"
                                                                 class="btn btn-icon btn-danger kontak btn-xs"
-                                                                data-id="<?php echo $data['id_prop']; ?>">
+                                                                data-id="<?php echo $data['id_prop']; ?>"
+                                                                data-toggle="tooltip" data-placement="left"
+                                                                data-original-title="kontak">
                                                                 <i class="icon fa-address-card" aria-hidden="true"></i>
                                                             </button>
                                                             <?php }else if($_SESSION['yics_user'] == $data['username']){ ?>
                                                             <a href="formedit.php?edit=<?php echo $data['id_prop']; ?>"
-                                                                class="btn btn-icon btn-warning edit_proposal btn-xs <?= ($persen > "0" or $text_progress =="STOP" )? "noedit":""; ?>">
+                                                                class="btn btn-icon btn-warning edit_proposal btn-xs <?= ($persen > "0" or $text_progress =="STOP" )? "noedit":""; ?>"
+                                                                data-toggle="tooltip" data-placement="left"
+                                                                data-original-title="edit">
                                                                 <i class=" icon wb-edit" aria-hidden="true"></i>
                                                             </a>
                                                             <a class="HapusData1 btn btn-icon btn-danger btn-xs <?= ($persen > "0" or $text_progress =="STOP" )? "noedit":""; ?>"
-                                                                href="../proses/dashboard/tambahplanning.php?del=<?php echo $data['id_prop']; ?>">
+                                                                href="../proses/dashboard/tambahplanning.php?del=<?php echo $data['id_prop']; ?>"
+                                                                data-toggle="tooltip" data-placement="left"
+                                                                data-original-title="delete">
                                                                 <i class="icon oi-trashcan" aria-hidden="true"></i>
                                                             </a>
 
@@ -632,7 +692,7 @@ include '../elemen/footer.php';?>
 
     if(mysqli_num_rows($query_budget)>0){
 
-        for ($i=0; $i <= 12; $i++) { 
+        for ($i=0; $i < 12; $i++) { 
             $array_alokasi_budget[] = intval( $batas_bugdet_bulanan); 
         }
        
@@ -755,7 +815,7 @@ include '../elemen/footer.php';?>
                     data: <?= json_encode( get_comsumtion_budget(1) ) ?>
                 },
                 {
-                    label: "BODY PLANT  2",
+                    label: "BODY PLANT 2",
                     backgroundColor: "rgba(255, 99, 132, 0.2)",
                     borderColor: Config.colors("red", 800),
                     hoverBackgroundColor: "rgba(255, 99, 132, 0.2)",
@@ -780,7 +840,6 @@ include '../elemen/footer.php';?>
                         display: true,
                         labelString: 'Million'
                     },
-
                     ticks: {
                         beginAtZero: true
                     },
@@ -793,6 +852,12 @@ include '../elemen/footer.php';?>
                     },
                     stacked: false
                 }]
+            },
+            legend: {
+                labels: {
+                    usePointStyle: true,
+                    boxWidth: 6
+                }
             }
         }
     });
@@ -818,6 +883,7 @@ include '../elemen/footer.php';?>
         $array_donut_dept[] = array('label' => $dep_m, 'value' => $bud_m);  
     }
 
+$json_morris = json_encode($array_donut_dept);
 $json_morris = json_encode($array_donut_dept);
   ?>
 
@@ -1233,6 +1299,19 @@ if(mysqli_num_rows($proposal)>0){
                 }
             })
         })
+        var owl = $('.owl-carousel');
+        owl.owlCarousel({
+            items: 1,
+            // items change number for slider display on desktop
+
+            dots: false,
+            loop: true,
+            margin: 10,
+            autoplay: true,
+            autoplayTimeout: 3000,
+            autoplayHoverPause: true
+        });
+
     })
     $(document).ready(function() {
         $('.HapusData').click(function(a) {
@@ -1295,11 +1374,87 @@ if(mysqli_num_rows($proposal)>0){
             cancelButtonAriaLabel: 'Close'
         })
     })
-    </script>
-    <script>
-    $(document).ready(function() {
-        $(function() {
-            $('[data-toggle="tooltip"]').tooltip()
-        })
-    });
+
+    var options = {
+        series: [{
+            name: 'BODY PLANT 1',
+            type: 'column',
+            data: [3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        }, {
+            name: 'BODY PLANT 2',
+            type: 'column',
+            data: [3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        }, {
+            name: 'BQC',
+            type: 'column',
+            data: [3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        }, {
+            name: 'AKUMULASI KONSUMSI',
+            type: 'area',
+            data: [3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        }, {
+            name: 'BUDGET  BODY DIVISION',
+            type: 'line',
+            data: [3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        }],
+        chart: {
+            height: 350,
+            type: 'line',
+            stacked: false,
+        },
+        stroke: {
+            width: [0, 2, 5],
+            curve: 'smooth'
+        },
+        plotOptions: {
+            bar: {
+                columnWidth: '50%'
+            }
+        },
+
+        fill: {
+            opacity: [0.85, 0.25, 1],
+            gradient: {
+                inverseColors: false,
+                shade: 'light',
+                type: "vertical",
+                opacityFrom: 0.85,
+                opacityTo: 0.55,
+                stops: [0, 100, 100, 100]
+            }
+        },
+        labels: ["Aprl", "Mei", "Jun", "July", "Agst", "Sept", "Oct", "Nov", "Dec", "Jan", "Feb",
+            "March"
+        ],
+        markers: {
+            size: 0
+        },
+        xaxis: {
+            type: 'string'
+        },
+        yaxis: {
+            type: 'string',
+            title: {
+                text: 'Points',
+            },
+            min: 0,
+
+        },
+        tooltip: {
+            shared: true,
+            intersect: false,
+            y: {
+                formatter: function(y) {
+                    if (typeof y !== "undefined") {
+                        return y.toFixed(0) + " points";
+                    }
+                    return y;
+
+                }
+            }
+        }
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart"), options);
+    chart.render();
     </script>

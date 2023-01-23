@@ -507,35 +507,14 @@ $kolom=mysqli_num_rows($kol);
 
                                                             <td>
                                                                 <a href="Tracking.php?id_ia=<?= $data['id_ia'] ?>"
-                                                                    class="<?= $tombol_hidup ?> btn btn-icon btn-info">
+                                                                    class="<?= $tombol_hidup ?> btn btn-icon btn-info"
+                                                                    data-toggle="tooltip" data-placement="left"
+                                                                    data-original-title="view ia">
 
                                                                     <i class="icon wb-eye" aria-hidden="true"></i>
 
                                                                 </a>
 
-                                                                <?php if( $_SESSION['yics_level'] != "1"){ ?>
-
-                                                                <a href="formupdate_ia.php?id_ia=<?= $data['id_ia'] ?>"
-                                                                    class="<?= $tombol_hidup ?> btn btn-icon btn-success">
-
-                                                                    <i class="icon wb-upload" aria-hidden="true"></i>
-
-                                                                </a>
-
-                                                                <a href="formeditia_ctrl.php?id_ia=<?= $data['id_ia']?>"
-                                                                    class="<?= $tombol_hidup ?> btn btn-icon btn-warning">
-
-                                                                    <i class="icon wb-edit" aria-hidden="true"></i>
-
-                                                                </a>
-                                                                <a href="../proses/ia/hapus_ia.php?del=<?= $data['id_ia']?>&page=<?= $data['id_dep']?>"
-                                                                    class="<?= $tombol_hidup ?> HapusData btn btn-icon btn-danger">
-
-                                                                    <i class="icon oi-trashcan" aria-hidden="true"></i>
-
-                                                                </a>
-
-                                                                <?php } ?>
 
                                                             </td>
                                                         </tr>

@@ -561,6 +561,22 @@ if($id_ia == 0){
         </div>
         <div class="col-md-1"></div>
     </div>
+    <div class="col-md-12 col-lg-12">
+        <h5 class="font-black">*) Untuk IA dengan budget <mark>kurang dari 50
+                juta</mark>BP tidak membutuhkan
+            approval :
+            <span style="font-style: italic;"> DIR (INA), DIR (JPN), FIN (INA), FIN
+                (JPN), VPD & PD </span>
+        </h5>
+        <h5 class="font-black">*) Untuk IA dengan budget <mark>diantara 50
+                juta - 500 juta</mark>BP tidak membutuhkan
+            approval : <span style="font-style: italic;">VPD & PD </span>
+        </h5>
+        <h5 class="font-black">*) Untuk IA dengan budget <mark>lebih dari 500
+                juta</mark>BP membutuhkan
+            approval :<span style="font-style: italic;">
+                DIR (INA), DIR (JPN), FIN (INA), FIN (JPN), VPD & PD </span></h5>
+    </div>
 </div>
 
 

@@ -171,7 +171,8 @@ include '../elemen/header.php';?>
                                                                         <?php echo $data['id_kat']; ?></td>
                                                                     <td class="align-middle text-center">
                                                                         <i href="" data-toggle="tooltip"
-                                                                            data-original-title="Edit">
+                                                                            data-original-title="Edit"
+                                                                            data-placement="left">
                                                                             <a href="formubahcategorysetting.php?ubah=<?php echo $data['id_kat']; ?>"
                                                                                 class="btn btn-success btn-icon btn-outline btn-xs">
                                                                                 <i class="icon wb-edit"
@@ -180,7 +181,8 @@ include '../elemen/header.php';?>
                                                                         </i>
                                                                         <i href="javascript:void(0)"
                                                                             data-toggle="tooltip"
-                                                                            data-original-title="Hapus">
+                                                                            data-original-title="Delete"
+                                                                            data-placement="left">
                                                                             <a href="../proses/usersetting/category.php?del=<?php echo $data['id_kat']; ?>"
                                                                                 class="btn btn-icon btn-danger btn-icon btn-outline btn-xs HapusData">
                                                                                 <i class="icon oi-trashcan"

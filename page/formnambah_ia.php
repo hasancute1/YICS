@@ -460,12 +460,18 @@ if(mysqli_num_rows($budget_reject)>0){
                                                                             <td><?= $IDR." ".number_format($row['cost_ia'], 2, ',', '.');?>
                                                                             <td>
                                                                                 <a href="formedit_ia.php?id_ia=<?= $row['id_ia']?>"
-                                                                                    class="btn btn-icon btn-warning  edit_ia">
+                                                                                    class="btn btn-icon btn-warning  edit_ia"
+                                                                                    data-toggle="tooltip"
+                                                                                    data-placement="left"
+                                                                                    data-original-title="Edit">
                                                                                     <i class="icon wb-edit"
                                                                                         aria-hidden="true"></i>
                                                                                 </a>
                                                                                 <a href="../proses/ia/tambah_ia.php?del=<?= $row['id_ia']?>&page=<?= $id?>"
-                                                                                    class="HapusData">
+                                                                                    class="HapusData"
+                                                                                    data-toggle="tooltip"
+                                                                                    data-placement="left"
+                                                                                    data-original-title="Delete">
                                                                                     <button type="button"
                                                                                         class="btn btn-icon btn-danger">
                                                                                         <i class="icon oi-trashcan"

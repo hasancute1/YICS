@@ -28,22 +28,16 @@ $akhirf = date("d M Y", strtotime($fiscal_aktif['akhir']));
     </div>
 </div>
 <?php 
-$proposal = mysqli_query($link_yics ,"SELECT id_prop,
-                            depart.id_dep AS id_dep,
-                            depart.depart AS depart,
-                            kategori_proposal.kategori AS kategori,
-                            time_fiscal.status,
-                            proposal.proposal AS proposal,
-                            proposal.cost AS cost,
-                            proposal.benefit AS benefit,
-                            proposal.lampiran
-                            FROM proposal 
-                            LEFT JOIN depart ON proposal.id_dep = depart.id_dep
-                            LEFT JOIN kategori_proposal  ON proposal.id_kat = kategori_proposal.id_kat
-                            LEFT JOIN time_fiscal  ON proposal.id_fis = time_fiscal.id_fis  
+$proposal = mysqli_query($link_yics ,"SELECT *
+                            FROM plan_proposal 
+                            JOIN area ON plan_proposal.id_area = area.id_area
+                            JOIN data_user ON data_user.id_area = area.id_area
+                            JOIN depart ON depart.id_dep = area.id_dep
+                            JOIN kategori_proposal  ON plan_proposal.id_kat = kategori_proposal.id_kat
+                            JOIN time_fiscal  ON plan_proposal.id_fis = time_fiscal.id_fis  
                             
 
-WHERE time_fiscal.id_fis = '$id_fis' AND proposal.username= {$_SESSION['yics_user']} GROUP BY proposal.proposal ASC")or die (mysqli_error($link_yics));
+WHERE time_fiscal.id_fis = '$id_fis' AND data_user.username= {$_SESSION['yics_user']} GROUP BY plan_proposal.proposal ASC")or die (mysqli_error($link_yics));
 if(mysqli_num_rows($proposal)>0){
 while($data = mysqli_fetch_assoc($proposal)){?>
 <?php $id_prop=$data['id_prop']; ?>
@@ -62,55 +56,17 @@ while($data = mysqli_fetch_assoc($proposal)){?>
                 <td class="judul align-middle text-left " width="700px">
                     <?php echo $data['depart']; ?>
                 </td>
-
-                <td class="judul align-middle text-center bg-yellow-100" width="200px">
-                    <!-- query update progress -->
-                    <?php   
-$track_prop = mysqli_query($link_yics ,"SELECT
-tracking_prop.id_prog AS id_prog, 
-tracking_prop.id_approval AS id_approval,
-`time`,
-progress.step AS step,
-progress.nama_progress AS progress,
-approval.approval AS approval
-FROM tracking_prop   
-LEFT JOIN 
-
-( SELECT  progress.step, progress.id_prog, progress.nama_progress AS nama_progress 
-FROM progress JOIN tracking_prop ON tracking_prop.id_prog = progress.id_prog 
-WHERE tracking_prop.id_prop = '$data[id_prop]'
-ORDER BY progress.step DESC) progress 
-ON tracking_prop.id_prog = progress.id_prog  
-LEFT JOIN approval ON tracking_prop.id_approval = approval.id_approval
-WHERE tracking_prop.id_prop = '$data[id_prop]' ORDER BY progress.step DESC LIMIT 1") or die (mysqli_error($link_yics));
-
-if(mysqli_num_rows($track_prop)>0){
-$data_track = mysqli_fetch_assoc($track_prop); 
-// mencatak angka persenan
-$persen = ($data_track['id_approval'] == 1 )?(($data_track['step']/5)*100):100;
-$lacak=$data_track['progress'];
-if($data_track['id_approval'] == 1 ){
-$text_progress = $persen."%";
-$color_progress = "bg-green-100";
-}else{
-$text_progress = "STOP";
-$color_progress = "bg-danger";
-}
-?>
-
-                    <?php 
-}else{
-$persen = 0;
-$color_progress = "bg-green-100";
-$text_progress = "0%";
-$lacak="Belum diproses";
-}
-?>
-                    <?= $lacak;?>
+            </tr>
+            <tr>
+                <td class="judul align-middle text-left " width="100px">
+                    Area
                 </td>
-
-
-
+                <td class="judul align-middle text-left " width="5px">
+                    &nbsp;:&nbsp;
+                </td>
+                <td class="judul align-middle text-left " width="700px">
+                    <?php echo $data['area']; ?>
+                </td>
             </tr>
             <tr>
                 <td class="judul align-middle text-left " width="100px">
@@ -122,9 +78,7 @@ $lacak="Belum diproses";
 
                 </td>
                 </td>
-                <td class="judul align-middle text-center font-size-60 <?= $color_progress ?>" rowspan="3">
-                    <?=  $text_progress; ?>
-                </td>
+
             </tr>
             <tr>
                 <td class="judul align-middle text-left " width="100px">
@@ -132,9 +86,7 @@ $lacak="Belum diproses";
                 </td>
                 <td> &nbsp;:&nbsp;</td>
                 <td><?php echo $data['proposal']; ?>&nbsp;&nbsp;
-                    <a href="../image/uploads/<?= $data['lampiran'] ?>" target="_blank">
 
-                        <i class="icon fa-file-pdf-o " style="font-size:20px;"></i></a>
                 </td>
 
             </tr>
@@ -148,19 +100,7 @@ $lacak="Belum diproses";
                     <?= number_format ($data['cost'],0,',','.')." "."Million"; ?>
                 </td>
             </tr>
-            <tr>
-                <td class="text-left" style="color:black;" width="10px">
-                    Benefit</td>
-                <td> &nbsp;:&nbsp;</td>
-                <td class="judul align-middle text-left ">
-                    <?= $data['benefit']; ?>
-                </td>
-                <td class="judul align-middle text-center bg-blue-100 "><a
-                        href="viewplan.php?ubah=<?php echo $data['id_prop']; ?>">VIEW
-                        >></a>
 
-                </td>
-            </tr>
 
             <tr>
                 <td colspan="7">
@@ -212,10 +152,10 @@ data-toggle="dropdown" aria-expanded="false">
                             <?php 
 $ia = mysqli_query($link_yics ,"SELECT *
 FROM ia 
-JOIN proposal ON proposal.id_prop = ia.id_prop
+JOIN plan_proposal ON plan_proposal.id_prop = ia.id_prop
 JOIN data_user ON data_user.username = ia.pic_ia
 
-WHERE proposal.id_prop= '$id_prop' GROUP BY id_ia ")or die (mysqli_error($link_yics));
+WHERE plan_proposal.id_prop= '$id_prop' GROUP BY id_ia ")or die (mysqli_error($link_yics));
 $no=1;
 if(mysqli_num_rows($ia)>0){ 
 while($data_ia = mysqli_fetch_assoc($ia)){?>
