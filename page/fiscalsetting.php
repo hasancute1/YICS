@@ -80,7 +80,7 @@ include '../elemen/header.php';?>
                                                     <div class="text-right">
                                                         <!-- icon tambah data    -->
                                                         <i href="" data-toggle="tooltip"
-                                                            data-original-title="Tambah Data">
+                                                            data-original-title="Tambah Data" data-placement="left">
                                                             <button type="button" id="TambahAlokasiBudget"
                                                                 class="btn btn-icon btn-outline btn-info btn-xs"
                                                                 data-toggle="modal" data-target="#ModalAlokasiBudget">
@@ -181,7 +181,8 @@ include '../elemen/header.php';?>
                                                                         <?php echo $data['status']; ?></td>
                                                                     <td class="align-middle text-center">
                                                                         <i href="" data-toggle="tooltip"
-                                                                            data-original-title="Edit">
+                                                                            data-original-title="Edit"
+                                                                            data-placement="left">
                                                                             <a href="formubahfiscalsetting.php?ubah=<?php echo $data['id_fis']; ?>"
                                                                                 class="btn btn-success btn-icon btn-outline btn-xs">
                                                                                 <i class="icon wb-edit"
@@ -190,7 +191,8 @@ include '../elemen/header.php';?>
                                                                         </i>
                                                                         <i href="javascript:void(0)"
                                                                             data-toggle="tooltip"
-                                                                            data-original-title="Hapus">
+                                                                            data-original-title="Hapus"
+                                                                            data-placement="left">
                                                                             <a href="../proses/usersetting/timefiscal.php?del=<?php echo $data['id_fis']; ?>"
                                                                                 class="btn btn-icon btn-danger btn-icon btn-outline btn-xs HapusData">
                                                                                 <i class="icon oi-trashcan"
