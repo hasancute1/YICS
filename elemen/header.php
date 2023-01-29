@@ -131,6 +131,56 @@
         color: white;
         background-color: #589FFC;
     }
+
+    .image_area {
+        position: relative;
+    }
+
+    img {
+        display: block;
+        max-width: 100%;
+    }
+
+    .preview {
+        overflow: hidden;
+        width: 160px;
+        height: 160px;
+        margin: 10px;
+        border: 1px solid red;
+    }
+
+    .modal-lg {
+        max-width: 1000px !important;
+    }
+
+    .overlaytext {
+        position: absolute;
+        bottom: 10px;
+        left: 0;
+        right: 0;
+        background-color: rgba(255, 255, 255, 0.5);
+        overflow: hidden;
+        height: 0;
+        transition: .5s ease;
+        width: 100%;
+    }
+
+    .image_area:hover .overlaytext {
+        height: 50%;
+        cursor: pointer;
+    }
+
+    .textiam {
+        color: #333;
+        font-size: 20px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
     </style>
 
 
@@ -234,4 +284,7 @@
     <script src="../global/vendor/raphael/raphael.min.js"></script>
     <script src="../base/assets/datatable/jquery.min.js"></script>
     <script src="../global/js/apex/apexcharts.js"></script>
+    <link rel="stylesheet" href=../global/crop/dropzone.css" />
+    <link rel="stylesheet" href="../global/crop/cropper.css" />
+
 </head>

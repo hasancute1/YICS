@@ -142,12 +142,19 @@ $notif_pending = get_notif_pending();
     <li class="nav-link">
         Hi, <?= $_SESSION['yics_nama']; ?> / <?php echo $_SESSION ["yics_user"]; ?>
     </li>
-
+    <?php  
+$npk = $_SESSION ["yics_user"];
+?>
     <li class="nav-item dropdown">
         <a class="nav-link navbar-avatar" data-toggle="dropdown" href="#" aria-expanded="false"
             data-animation="scale-up" role="button">
             <span class="avatar avatar-online">
-                <img src="../global/portraits/unfoto.png" alt="...">
+                <img src="../global/portraits/<?php
+                if(is_file("../global/portraits/$npk.png")){
+                    echo "$npk.png";
+                }else{
+                    echo "unfoto.png";
+                } ?>" alt="...">
                 <i></i>
             </span>
         </a>

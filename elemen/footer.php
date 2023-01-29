@@ -121,6 +121,8 @@ Config.set('assets', '../base/assets');
     <script src="../global/vendor/owl-carousel/owl.carousel.js"></script>
     <script src="../global/vendor/slick-carousel/slick.js"></script>
     <script src="../global/js/Plugin/owl-carousel.js"></script>
+    <script src="../global/crop/dropzone.js"></script>
+    <script src="../global/crop/cropper.js"></script>
 
     <!-- for export datatable -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
