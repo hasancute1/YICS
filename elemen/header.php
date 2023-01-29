@@ -131,15 +131,6 @@
         color: white;
         background-color: #589FFC;
     }
-
-
-    /* .anim {
-        width: 300px;
-        height: 200px;
-        background-color: blue;
-        position: relative;
-        animation: slide-left 1s infinite;
-    } */
     </style>
 
 
