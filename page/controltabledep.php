@@ -83,23 +83,8 @@ $id_dept = $_GET['dept'];
                         <div class="page-header">
                             <h1 class="page-title font-size-26 font-weight-600">Control Table <?= $judul[$id_dept] ?> (x
                                 Million)
-
                             </h1>
                         </div>
-                        <!-- <table class="table ">
-                            <tr>
-                                <td>
-                                    Print Area
-                                </td>
-                            </tr>
-                            <td>
-
-                                Print Area
-
-                            </td>
-
-                        </table> -->
-
                         <div class="page-content container-fluid">
                             <div class="row">
                                 <div class="col-lg-6 col-md-6  mb-2">
@@ -118,11 +103,130 @@ $id_dept = $_GET['dept'];
                                         $akhirf="Pilih tahun aktif";
                                         $awa="Pilih tahun aktif";
                                         $akhr="Pilih tahun aktif";
+                                    }    
+// -------------------------------------------RESUME PROPOSAL-------------------------------------------------------------------                                   
+                                    $baris_pro = mysqli_query($link_yics, "SELECT * FROM plan_proposal
+                                    join area on plan_proposal.id_area = area.id_area                                   
+                                    join time_fiscal on time_fiscal.id_fis = plan_proposal.id_fis
+                                    WHERE area.id_dep='$id_dept' AND time_fiscal.status = 'aktif'") or die(mysqli_error($link_yics));
+                                    if(mysqli_num_rows($baris_pro)>0){
+                                        $baris_prop=mysqli_num_rows($baris_pro);    
+                                    }else{
+                                        $baris_prop='0';
+                                    }  
+
+                                    $proses_pro = mysqli_query($link_yics, "SELECT ia.id_prop FROM ia
+                                    join plan_proposal on plan_proposal.id_prop = ia.id_prop
+                                    join area on plan_proposal.id_area = area.id_area                                   
+                                    join time_fiscal on time_fiscal.id_fis = plan_proposal.id_fis
+                                    WHERE area.id_dep='$id_dept' AND time_fiscal.status = 'aktif' GROUP BY ia.id_prop ") or die(mysqli_error($link_yics));
+                                    if(mysqli_num_rows($proses_pro)>0){
+                                        $proses_prop=mysqli_num_rows($proses_pro);    
+                                    }else{
+                                        $proses_prop='0';
+                                    } 
+                                    $waiting_prop = $baris_prop-$proses_prop;
+// -------------------------------------------END PROPOSAL-------------------------------------------------------------------
+
+// -------------------------------------------RESUME IA-------------------------------------------------------------------
+                                    $baris_ia = mysqli_query($link_yics, "SELECT * FROM ia
+                                    join plan_proposal on plan_proposal.id_prop = ia.id_prop
+                                    join area on plan_proposal.id_area = area.id_area                                   
+                                    join time_fiscal on time_fiscal.id_fis = plan_proposal.id_fis
+                                     WHERE area.id_dep='$id_dept' AND time_fiscal.status = 'aktif'") or die(mysqli_error($link_yics));
+                                    if(mysqli_num_rows($baris_ia)>0){
+                                        $barisia=mysqli_num_rows($baris_ia);
+                                        
+                                    }else{
+                                        $barisia='0';
                                     }
+
+                                    $pro_ia = mysqli_query($link_yics, "SELECT * FROM tracking_ia
+                                    join ia on ia.id_ia = tracking_ia.id_ia
+                                    join plan_proposal on plan_proposal.id_prop = ia.id_prop
+                                    join area on plan_proposal.id_area = area.id_area                                   
+                                    join time_fiscal on time_fiscal.id_fis = plan_proposal.id_fis
+                                     WHERE area.id_dep='$id_dept' AND time_fiscal.status = 'aktif' GROUP BY tracking_ia.id_ia") or die(mysqli_error($link_yics));
+                                    if(mysqli_num_rows($pro_ia)>0){                                        
+                                        $proses_ia = mysqli_num_rows($pro_ia);
+                                    }else{
+                                        $proses_ia='0';
+                                    }                                    
+                                   $waiting_ia = $barisia-$proses_ia;
+
+                                    $suk_ia = mysqli_query($link_yics, "SELECT * FROM tracking_ia
+                                    join ia on ia.id_ia = tracking_ia.id_ia
+                                    join progress on progress.id_prog = tracking_ia.id_prog
+                                    join plan_proposal on plan_proposal.id_prop = ia.id_prop
+                                    join area on plan_proposal.id_area = area.id_area                                   
+                                    join time_fiscal on time_fiscal.id_fis = plan_proposal.id_fis
+                                     WHERE area.id_dep='$id_dept' AND time_fiscal.status = 'aktif' AND tracking_ia.id_prog = '25'  GROUP BY tracking_ia.id_ia") or die(mysqli_error($link_yics));
+                                    if(mysqli_num_rows($suk_ia)>0){                                        
+                                        $sukses_ia = mysqli_num_rows($suk_ia);
+                                    }else{
+                                        $sukses_ia='0';
+                                    }   
+
+                                    $ga_ia = mysqli_query($link_yics, "SELECT * FROM tracking_ia
+                                    join ia on ia.id_ia = tracking_ia.id_ia
+                                    join approval on approval.id_approval = tracking_ia.approval
+                                    join plan_proposal on plan_proposal.id_prop = ia.id_prop
+                                    join area on plan_proposal.id_area = area.id_area                                   
+                                    join time_fiscal on time_fiscal.id_fis = plan_proposal.id_fis
+                                     WHERE area.id_dep='$id_dept' AND time_fiscal.status = 'aktif' AND approval.id_approval = '0'  GROUP BY tracking_ia.id_ia") or die(mysqli_error($link_yics));
+                                    if(mysqli_num_rows($ga_ia)>0){                                        
+                                        $gagal_ia = mysqli_num_rows($ga_ia);
+                                    }else{
+                                        $gagal_ia='0';
+                                    }  
+// ------------------------------------------- END RESUME IA-------------------------------------------------------------------
+                                $baris_kat = mysqli_query($link_yics, "SELECT * FROM plan_proposal
+                                join kategori_proposal  on plan_proposal.id_kat = kategori_proposal.id_kat    
+                                join area on plan_proposal.id_area = area.id_area                                   
+                                join time_fiscal on time_fiscal.id_fis = plan_proposal.id_fis
+                                WHERE area.id_dep='$id_dept' AND time_fiscal.status = 'aktif' GROUP BY kategori_proposal.id_kat ") or die(mysqli_error($link_yics));
+                                if(mysqli_num_rows($baris_kat)>0){
+                                    $baris_kateg=mysqli_num_rows($baris_kat);    
+                                }else{
+                                    $baris_kateg='0';
+                                }  
+
+                                $kat_imp = mysqli_query($link_yics, "SELECT * FROM plan_proposal
+                                join kategori_proposal  on plan_proposal.id_kat = kategori_proposal.id_kat    
+                                join area on plan_proposal.id_area = area.id_area                                   
+                                join time_fiscal on time_fiscal.id_fis = plan_proposal.id_fis
+                                WHERE area.id_dep='$id_dept' AND time_fiscal.status = 'aktif' AND kategori_proposal.id_kat='1' ") or die(mysqli_error($link_yics));
+                                if(mysqli_num_rows($kat_imp)>0){
+                                    $kat_impr=mysqli_num_rows($kat_imp);    
+                                }else{
+                                    $kat_impr='0';
+                                }  
+
+                                $kat_rep = mysqli_query($link_yics, "SELECT * FROM plan_proposal
+                                join kategori_proposal  on plan_proposal.id_kat = kategori_proposal.id_kat    
+                                join area on plan_proposal.id_area = area.id_area                                   
+                                join time_fiscal on time_fiscal.id_fis = plan_proposal.id_fis
+                                WHERE area.id_dep='$id_dept' AND time_fiscal.status = 'aktif' AND kategori_proposal.id_kat='2' ") or die(mysqli_error($link_yics));
+                                if(mysqli_num_rows($kat_rep)>0){
+                                    $kat_repl=mysqli_num_rows($kat_rep);    
+                                }else{
+                                    $kat_repl='0';
+                                }  
+
+                                $kat_oth = mysqli_query($link_yics, "SELECT * FROM plan_proposal
+                                join kategori_proposal  on plan_proposal.id_kat = kategori_proposal.id_kat    
+                                join area on plan_proposal.id_area = area.id_area                                   
+                                join time_fiscal on time_fiscal.id_fis = plan_proposal.id_fis
+                                WHERE area.id_dep='$id_dept' AND time_fiscal.status = 'aktif' AND kategori_proposal.id_kat='3' ") or die(mysqli_error($link_yics));
+                                if(mysqli_num_rows($kat_oth)>0){
+                                    $kat_other=mysqli_num_rows($kat_oth);    
+                                }else{
+                                    $kat_other='0';
+                                }  
                                         ?>
 
-                                    <h6 class="font-size-18 font-weight-400">Periode ( <span
-                                            style="color:red;"><?= $periode; ?> </span> ) :
+                                    <h6 class="font-size-18 font-weight-400">Periode (
+                                        <span style="color:red;"><?= $periode; ?> </span> ) :
                                         <span style="color:red;"><?= $awalf; ?></span>
                                         s.d
                                         <span style="color:red;"><?= $akhirf; ?>
@@ -169,6 +273,162 @@ $id_dept = $_GET['dept'];
                                         </div>
                                     </form>
 
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="card p-20 bg-transparent ">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="row no-space">
+                                                    <div class="col-md-4 col-sm-12">
+                                                        <div
+                                                            class="card-plain card-stats bg-transparent h-100 my-0 border-right border-left">
+                                                            <div class="card-body ">
+                                                                <div class="row">
+                                                                    <div class="col-5 col-md-4">
+                                                                        <i
+                                                                            class="icon pe-note2  text-center text-warning font-size-80 "></i>
+                                                                    </div>
+                                                                    <div class="col-7">
+                                                                        <div class="owl-carousel text-right">
+                                                                            <div class="numbers">
+                                                                                <p style="font-size:15px;">TOTAL
+                                                                                    PROPOSAL
+                                                                                </p>
+                                                                                <p style="font-size:30px"
+                                                                                    style="color:black;">
+                                                                                    <?= $baris_prop ?>
+                                                                                <p>
+                                                                            </div>
+                                                                            <div class="numbers ">
+                                                                                <p style="font-size:15px;">WAITING
+                                                                                </p>
+                                                                                <p style="font-size:30px"
+                                                                                    style="color:black;">
+                                                                                    <?= $waiting_prop ?>
+                                                                                <p>
+                                                                            </div>
+                                                                            <div class="numbers ">
+                                                                                <p style="font-size:15px;">DIPROSES</p>
+                                                                                <p style="font-size:30px"
+                                                                                    style="color:black;">
+                                                                                    <?= $proses_prop ?>
+                                                                                <p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-12">
+                                                        <div
+                                                            class="card-plain card-stats bg-transparent h-100 my-0 border-right border-left">
+                                                            <div class="card-body ">
+                                                                <div class="row">
+                                                                    <div class="col-5 col-md-4">
+                                                                        <i
+                                                                            class="icon pe-news-paper  text-center text-info font-size-80 "></i>
+                                                                    </div>
+                                                                    <div class="col-7">
+                                                                        <div class="owl-carousel text-right">
+                                                                            <div class="numbers">
+                                                                                <p style="font-size:15px;">TOTAL
+                                                                                    IA
+                                                                                </p>
+                                                                                <p style="font-size:30px"
+                                                                                    style="color:black;">
+                                                                                    <?=  $barisia; ?>
+                                                                                <p>
+                                                                            </div>
+                                                                            <div class="numbers ">
+                                                                                <p style="font-size:15px;">WAITING
+                                                                                </p>
+                                                                                <p style="font-size:30px"
+                                                                                    style="color:black;">
+                                                                                    <?=  $waiting_ia; ?>
+                                                                                <p>
+                                                                            </div>
+                                                                            <div class="numbers ">
+                                                                                <p style="font-size:15px;">DIPROSES</p>
+                                                                                <p style="font-size:30px"
+                                                                                    style="color:black;">
+                                                                                    <?=  $proses_ia; ?>
+                                                                                <p>
+                                                                            </div>
+                                                                            <div class="numbers ">
+                                                                                <p style="font-size:15px;">SUKSES</p>
+                                                                                <p style="font-size:30px"
+                                                                                    style="color:black;">
+                                                                                    <?=  $sukses_ia ?>
+                                                                                <p>
+                                                                            </div>
+                                                                            <div class="numbers ">
+                                                                                <p style="font-size:15px;">STOP</p>
+                                                                                <p style="font-size:30px"
+                                                                                    style="color:black;">
+                                                                                    <?= $gagal_ia ?>
+                                                                                <p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-12">
+                                                        <div
+                                                            class="card-plain card-stats bg-transparent h-100 my-0 border-right border-left">
+                                                            <div class="card-body ">
+                                                                <div class="row">
+                                                                    <div class="col-5 col-md-4">
+                                                                        <i
+                                                                            class="icon pe-display2  text-center text-danger font-size-80 "></i>
+                                                                    </div>
+                                                                    <div class="col-7">
+                                                                        <div class="owl-carousel text-right">
+                                                                            <div class="numbers">
+                                                                                <p style="font-size:15px;">TOTAL
+                                                                                    KATEGORY
+                                                                                </p>
+                                                                                <p style="font-size:30px"
+                                                                                    style="color:black;">
+                                                                                    <?= $baris_kateg ?>
+                                                                                <p>
+                                                                            </div>
+                                                                            <div class="numbers ">
+                                                                                <p style="font-size:15px;">IMPROVEMENT
+                                                                                </p>
+                                                                                <p style="font-size:30px"
+                                                                                    style="color:black;">
+                                                                                    <?= $kat_impr ?>
+                                                                                <p>
+                                                                            </div>
+                                                                            <div class="numbers ">
+                                                                                <p style="font-size:15px;">REPLACEMENT
+                                                                                </p>
+                                                                                <p style="font-size:30px"
+                                                                                    style="color:black;">
+                                                                                    <?= $kat_repl ?>
+                                                                                <p>
+                                                                            </div>
+                                                                            <div class="numbers ">
+                                                                                <p style="font-size:15px;">OTHER</p>
+                                                                                <p style="font-size:30px"
+                                                                                    style="color:black;">
+                                                                                    <?= $kat_other ?>
+                                                                                <p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
                                 <div class="col-lg-12 col-md-12">
                                     <div class="card card-transparent">
@@ -830,7 +1090,18 @@ $id_dept = $_GET['dept'];
                             }
                         })
                     })
+                    var owl = $('.owl-carousel');
+                    owl.owlCarousel({
+                        items: 1,
+                        // items change number for slider display on desktop
 
+                        dots: false,
+                        loop: true,
+                        margin: 10,
+                        autoplay: true,
+                        autoplayTimeout: 3000,
+                        autoplayHoverPause: true
+                    });
 
                     $('.reason').click(function() {
                         var reason = $(this).attr('data-reason');

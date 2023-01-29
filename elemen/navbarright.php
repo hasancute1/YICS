@@ -152,12 +152,13 @@ $notif_pending = get_notif_pending();
             </span>
         </a>
         <div class="dropdown-menu" role="menu">
-            <!-- <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon wb-user"
+            <a class="dropdown-item" href="../page/profile.php" role="menuitem"><i class="icon wb-user"
                     aria-hidden="true"></i> My Profile</a>
-            <div class="dropdown-divider" role="presentation"></div> -->
             <a class="dropdown-item" href="../logout.php" role="menuitem"><i class="icon wb-power"
-                    aria-hidden="true"></i> Logout</a>
+                    aria-hidden="true"></i>
+                Logout</a>
         </div>
+
     </li>
 
 </ul>

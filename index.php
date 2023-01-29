@@ -52,7 +52,7 @@ if (isset($_POST['submit'])) {
     <link rel="stylesheet" href="global/vendor/intro-js/introjs.css">
     <link rel="stylesheet" href="global/vendor/slidepanel/slidePanel.css">
     <link rel="stylesheet" href="global/vendor/flag-icon-css/flag-icon.css">
-    <link rel="stylesheet" href="global/vendor/waves/waves.css">
+
     <link rel="stylesheet" href="base/assets/examples/css/pages/login.css">
 
 
@@ -151,7 +151,7 @@ if (isset($_POST['submit'])) {
     <script src="global/vendor/asscrollbar/jquery-asScrollbar.js"></script>
     <script src="global/vendor/asscrollable/jquery-asScrollable.js"></script>
     <script src="global/vendor/ashoverscroll/jquery-asHoverScroll.js"></script>
-    <script src="global/vendor/waves/waves.js"></script>
+
 
     <!-- Plugins -->
     <script src="global/vendor/switchery/switchery.js"></script>
@@ -166,7 +166,8 @@ if (isset($_POST['submit'])) {
     <script src="global/js/Base.js"></script>
     <script src="global/js/Config.js"></script>
 
-    <script src="base/assets/js/Section/Menubar.js"></script>
+
+
     <script src="base/assets/js/Section/GridMenu.js"></script>
     <script src="base/assets/js/Section/Sidebar.js"></script>
     <script src="base/assets/js/Section/PageAside.js"></script>

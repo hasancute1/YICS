@@ -95,7 +95,7 @@ include '../elemen/header.php';?>
                                                         Tahun Fiscal</h4>
                                                 </div>
                                                 <div class="form-group row ">
-                                                    <label class="col-md-2 col-form-label   "
+                                                    <label class="col-md-3 col-form-label   "
                                                         style="color:black;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PERIODE
                                                         TAHUN
                                                     </label>
@@ -161,9 +161,9 @@ include '../elemen/header.php';?>
                                                                 aria-expanded="false" data-id="<?= $i; ?>"
                                                                 data-dept="<?= $i; ?>">
                                                                 <div class="form-group row">
-                                                                    <label class="col-md-2 col-form-label"
+                                                                    <label class="col-md-3 col-form-label"
                                                                         style="color:black;"><?php echo $rows_depart['depart']; ?></label>
-                                                                    <div class="col-md-9">
+                                                                    <div class="col-md-8">
                                                                         <div class="input-group">
                                                                             <div class="input-group-prepend">
                                                                                 <span
@@ -386,7 +386,7 @@ include '../elemen/header.php';?>
                           }
                             ?>
                                                 <div class="form-group row">
-                                                    <label class="col-md-2 col-form-label"
+                                                    <label class="col-md-3 col-form-label"
                                                         style="color:black;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TOTAL
                                                         BUDGET</label>
                                                     <div class="col-md-5">

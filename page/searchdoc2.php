@@ -67,7 +67,8 @@ include '../elemen/header.php';?>
                             <div class="row">
                                 <!-- First Row -->
                                 <div class="col-lg-12 col-md-12">
-                                    <div class="card card-shadow bg-blue-100" style="border-radius: 10px;">
+                                    <div class="card card-shadow bg-blue-100"
+                                        style="border-radius: 10px;overflow: hidden; perspective: 1px;">
                                         <form autocomplete="off" method="get" action="" id="formulir">
                                             <div class="row card-body">
                                                 <div class="col-lg-2 col-md-2">

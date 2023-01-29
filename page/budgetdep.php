@@ -414,7 +414,8 @@ $labelcos=json_encode($labelcos);
                                     <div class="col-lg-12 col-md-6">
                                         <div class="row">
                                             <div class="col-lg-4 col-md-6 ">
-                                                <div class="card " style="border-radius: 15px;height:200px;">
+                                                <div class="card "
+                                                    style="border-radius: 10px;overflow: hidden; perspective: 1px;height:200px;">
                                                     <div class="card-header bg-<?= $warna; ?>-900 white px-30 py-10">
                                                         <i class="icon fa-bank mr-5" aria-hidden="true"></i>
                                                         <span><?= $get_data_budget['depart']?></span>
@@ -544,8 +545,9 @@ $labelcos=json_encode($labelcos);
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-12 col-md-12" id="ecommerceRecentOrder">
-                                        <div class="card card-shadow">
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="card card-shadow"
+                                            style="border-radius: 10px;overflow: hidden; perspective: 1px;">
                                             <div class="card-header card-header-transparent bg-dark">
                                                 <div class="row">
                                                     <div class="col-lg-6 col-md-6">
@@ -563,129 +565,134 @@ $labelcos=json_encode($labelcos);
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 col-md-12 col-print-12">
-                                                <canvas id="chart" height="46" width="150%"></canvas>
+                                                <canvas id="chart" height="50" width="150%"></canvas>
 
                                             </div>
 
-                                            <br>
-                                            <br>
-                                            <div class="table-responsive text-nowrap">
-                                                <table class="table   w-full display table-bordered  example0">
-                                                    <thead class="text-center">
-                                                        <tr class="bg-info align-">
-                                                            <th class="align-middle text-center" style="color: white;">
-                                                                N0</th>
-                                                            <th class="align-middle text-center" height="10px"
-                                                                style="color: white;">
-                                                                CATEGORY</th>
-                                                            <th class="align-middle text-center" height="10px"
-                                                                style="color: white;">
-                                                                NO. IA</th>
-                                                            <th class="align-middle text-center" height="10px"
-                                                                style="color: white;">
-                                                                DESCRIPTION</th>
-
-                                                            <th class="align-middle text-center" height="10px"
-                                                                style="color: white;">
-                                                                DATE</th>
-                                                            <th class="align-middle text-center" height="10px"
-                                                                style="color: white;">
-                                                                TOTAL TRANSC</th>
-                                                            <th class="align-middle text-center" height="10px"
-                                                                style="color: white;">
-                                                                STATUS</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-
-                                                        <?php $i=1; ?>
-
-                                                        <?php foreach ($data_ia as $row) { ?>
-                                                        <tr class="text-wrap">
-                                                            <td class="align-middle text-center"><?= $i ?></td>
-                                                            <td class="align-middle text-center"><?= $row['kategori'] ?>
-                                                            </td>
-                                                            <td class="align-middle text-center"><?= $row['ia'] ?></td>
-                                                            <td class="align-middle text-center">
-                                                                <?= $row['deskripsi'] ?>
-                                                            </td>
 
 
-                                                            <td class="align-middle text-center">
-                                                                <?= date('d M Y' , strtotime($row['time_ia']))  ?></td>
-                                                            <td class="align-middle text-center">IDR
-                                                                <?= number_format($row['cost_ia'],2,',','.') ?></td>
-                                                            <td class="align-middle text-center">Closed</td>
-                                                        </tr>
+                                        </div>
 
-                                                        <?php $i++; } ?>
+                                        <div class="table-responsive text-nowrap">
+                                            <table class="table   w-full display table-bordered  example0">
+                                                <thead class="text-center">
+                                                    <tr class="bg-info align-">
+                                                        <th class="align-middle text-center" style="color: white;">
+                                                            N0</th>
+                                                        <th class="align-middle text-center" height="10px"
+                                                            style="color: white;">
+                                                            CATEGORY</th>
+                                                        <th class="align-middle text-center" height="10px"
+                                                            style="color: white;">
+                                                            NO. IA</th>
+                                                        <th class="align-middle text-center" height="10px"
+                                                            style="color: white;">
+                                                            DESCRIPTION</th>
+
+                                                        <th class="align-middle text-center" height="10px"
+                                                            style="color: white;">
+                                                            DATE</th>
+                                                        <th class="align-middle text-center" height="10px"
+                                                            style="color: white;">
+                                                            TOTAL TRANSC</th>
+                                                        <th class="align-middle text-center" height="10px"
+                                                            style="color: white;">
+                                                            STATUS</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    <?php $i=1; ?>
+
+                                                    <?php foreach ($data_ia as $row) { ?>
+                                                    <tr class="text-wrap">
+                                                        <td class="align-middle text-center"><?= $i ?></td>
+                                                        <td class="align-middle text-center">
+                                                            <?= $row['kategori'] ?>
+                                                        </td>
+                                                        <td class="align-middle text-center"><?= $row['ia'] ?>
+                                                        </td>
+                                                        <td class="align-middle text-center">
+                                                            <?= $row['deskripsi'] ?>
+                                                        </td>
 
 
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                                        <td class="align-middle text-center">
+                                                            <?= date('d M Y' , strtotime($row['time_ia']))  ?>
+                                                        </td>
+                                                        <td class="align-middle text-center">IDR
+                                                            <?= number_format($row['cost_ia'],2,',','.') ?></td>
+                                                        <td class="align-middle text-center">Closed</td>
+                                                    </tr>
+
+                                                    <?php $i++; } ?>
+
+
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- End Third Right -->
-                                <!-- End Third Row -->
                             </div>
+                            <!-- End Third Right -->
+                            <!-- End Third Row -->
                         </div>
                     </div>
-                    <!-- End Page -->
+                </div>
+                <!-- End Page -->
 
-                    <!-- Footer -->
-                    <?php
+                <!-- Footer -->
+                <?php
 include '../elemen/footer.php';?>
 
-                    <script>
-                    var canvas = document.getElementById('chart');
-                    new Chart(canvas, {
-                        type: 'bar',
-                        data: {
-                            labels: <?= $labelX ?>,
-                            datasets: [{
-                                type: 'line',
-                                label: "PLAN PROPOSAL  <?= $get_data_budget['depart']?>",
-                                borderColor: Config.colors("grey", 800),
-                                data: <?= $cost_t ?>,
-                                order: 1,
-                                yAxisID: 'A'
-                            }, {
-                                label: "ACTUAL PROPOSAL <?= $get_data_budget['depart']?>",
-                                backgroundColor: Config.colors("<?= $warna ?>", 100),
-                                borderColor: Config.colors("<?= $warna ?>", 800),
-                                hoverBackgroundColor: Config.colors("<?= $warna ?>", 100),
-                                borderWidth: 2,
-                                data: <?=$labelcos?>,
-                                yAxisID: 'A',
+                <script>
+                var canvas = document.getElementById('chart');
+                new Chart(canvas, {
+                    type: 'bar',
+                    data: {
+                        labels: <?= $labelX ?>,
+                        datasets: [{
+                            type: 'line',
+                            label: "PLAN PROPOSAL  <?= $get_data_budget['depart']?>",
+                            borderColor: Config.colors("grey", 800),
+                            data: <?= $cost_t ?>,
+                            order: 1,
+                            yAxisID: 'A'
+                        }, {
+                            label: "ACTUAL PROPOSAL <?= $get_data_budget['depart']?>",
+                            backgroundColor: Config.colors("<?= $warna ?>", 100),
+                            borderColor: Config.colors("<?= $warna ?>", 800),
+                            hoverBackgroundColor: Config.colors("<?= $warna ?>", 100),
+                            borderWidth: 2,
+                            data: <?=$labelcos?>,
+                            yAxisID: 'A',
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                id: 'A',
+                                type: 'linear',
+                                position: 'left',
+                                ticks: {
+                                    beginAtZero: true,
+                                    steps: 10,
+                                    stepValue: 5,
+                                    min: 0
+                                },
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'M I L L I O N'
+                                },
+                            }],
+                            xAxes: [{
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'P R O P O S A L'
+                                },
+                                stacked: false
                             }]
-                        },
-                        options: {
-                            scales: {
-                                yAxes: [{
-                                    id: 'A',
-                                    type: 'linear',
-                                    position: 'left',
-                                    ticks: {
-                                        beginAtZero: true,
-                                        steps: 10,
-                                        stepValue: 5,
-                                        min: 0
-                                    },
-                                    scaleLabel: {
-                                        display: true,
-                                        labelString: 'M I L L I O N'
-                                    },
-                                }],
-                                xAxes: [{
-                                    scaleLabel: {
-                                        display: true,
-                                        labelString: 'P R O P O S A L'
-                                    },
-                                    stacked: false
-                                }]
-                            }
                         }
-                    });
-                    </script>
+                    }
+                });
+                </script>

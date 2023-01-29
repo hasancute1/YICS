@@ -76,6 +76,7 @@ if (!isset($_SESSION['yics_user'])) {
                         </div>
 
                         <div class="page-content container-fluid">
+
                             <div class="row">
                                 <div class="col-lg-6 col-md-6  mb-2">
                                     <?php 
@@ -146,8 +147,9 @@ if (!isset($_SESSION['yics_user'])) {
 
 
 
+
                                 <div class="col-lg-4">
-                                    <div class="card ">
+                                    <div class="card " style="border-radius: 10px;overflow: hidden; perspective: 1px;">
                                         <div class="card-header bg-dark">
                                             <div class="row">
                                                 <div class="col-lg-10 col-md-10">
@@ -163,7 +165,7 @@ if (!isset($_SESSION['yics_user'])) {
                                                         if(mysqli_num_rows($editalokasi)>0){$rows_editalokasi = mysqli_fetch_assoc($editalokasi)?>
                                                         <a href="forminputalokasibudget.php?input=<?php echo $rows_editalokasi['id_fis']; ?>"
                                                             class="btn btn-info btn-icon btn-outline btn-xs "
-                                                            data-toggle="tooltip" data-placement="left"
+                                                            data-toggle="tooltip" data-placement="bottom"
                                                             data-original-title="setting budget">
                                                             <i class="icon wb-plus" aria-hidden="true"></i>
                                                         </a>
@@ -183,7 +185,7 @@ if (!isset($_SESSION['yics_user'])) {
                                     </div>
                                 </div>
                                 <div class="col-lg-8 col-md-8">
-                                    <div class="card ">
+                                    <div class="card " style="border-radius: 10px;overflow: hidden; perspective: 1px;">
                                         <div class="card-header bg-dark">
                                             <span class="font-size-20 bold">Consumtion Budget Yearly
                                                 Investmment</span>
@@ -234,7 +236,8 @@ if (!isset($_SESSION['yics_user'])) {
                                 <div class="col-md-12">
                                     <div class="row">
                                         <div class="col-md-3 col-sm-6">
-                                            <div class="card " style="border-radius: 15px;">
+                                            <div class="card "
+                                                style="border-radius: 10px;overflow: hidden; perspective: 1px;">
                                                 <div class="card-header bg-blue-900 white px-30 py-10">
                                                     <i class="icon fa-bank mr-5" aria-hidden="true"></i>
                                                     <span><?= $row_card1 ['divisi']; ?></span>
@@ -317,7 +320,8 @@ if (!isset($_SESSION['yics_user'])) {
 
                                         <div class="col-md-3 col-sm-6">
                                             <a href="budgetdep.php?dep=<?= $i ?>">
-                                                <div class="card h-100" style="border-radius: 15px;">
+                                                <div class="card"
+                                                    style="border-radius: 10px;overflow: hidden; perspective: 1px;">
                                                     <div class="card-header bg-<?= $warna; ?>-900 white px-30 py-10">
                                                         <i class="icon fa-bank mr-5" aria-hidden="true"></i>
                                                         <span><?= $row_card['depart']; ?></span>
@@ -407,7 +411,8 @@ if (!isset($_SESSION['yics_user'])) {
                                 <div class="col-lg-12 col-md-12">
 
 
-                                    <div class="card card-shadow">
+                                    <div class="card card-shadow"
+                                        style="border-radius: 10px;overflow: hidden; perspective: 1px;">
                                         <div class="card-header card-header-transparent bg-dark">
                                             <div class="row">
                                                 <div class="col-lg-8 col-md-8">
@@ -1299,6 +1304,7 @@ if(mysqli_num_rows($proposal)>0){
                 }
             })
         })
+
         var owl = $('.owl-carousel');
         owl.owlCarousel({
             items: 1,
